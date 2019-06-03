@@ -1,27 +1,47 @@
+# import logging
+#
+# formatter = logging.Formatter(
+#     '[%(asctime)s] p%(process)s {%(pathname)s %(filename)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
+#
+# logging.basicConfig(
+#     filename='debug.log',
+#     format='%(asctime)s,%(msecs)d %(levelname)-8s [%(pathname)s :%(lineno)d - %(funcName)5s()] %(message)s',
+#     datefmt='%Y-%m-%d:%H:%M:%S',
+#     level=logging.DEBUG)
+#
+# logger = logging.getLogger(__name__)
+#
+
+
 import logging
+import sys
+from logging.handlers import TimedRotatingFileHandler
+FORMATTER = logging.Formatter("%(asctime)s — %(levelname) — %(username)s — %(name)s — (pathname)s :%(lineno)d - %(funcName)s — %(message)s")
+LOG_FILE = "my_app.log"
 
-formatter = logging.Formatter(
-    '[%(asctime)s] p%(process)s {%(pathname)s %(filename)s:%(lineno)d} %(levelname)s - %(message)s', '%m-%d %H:%M:%S')
-
-logging.basicConfig(
-    filename='debug.log',
-    format='%(asctime)s,%(msecs)d %(levelname)-8s [%(pathname)s :%(lineno)d - %(funcName)5s()] %(message)s',
-    datefmt='%Y-%m-%d:%H:%M:%S',
-    level=logging.DEBUG)
-
-logger = logging.getLogger(__name__)
+def get_console_handler():
+   console_handler = logging.StreamHandler(sys.stdout)
+   console_handler.setFormatter(FORMATTER)
+   return console_handler
+def get_file_handler():
+   file_handler = TimedRotatingFileHandler(LOG_FILE, when='midnight')
+   file_handler.setFormatter(FORMATTER)
+   return file_handler
+def get_logger(logger_name):
+   logger = logging.getLogger(logger_name)
+   logger.setLevel(logging.DEBUG)
+   logger.addHandler(get_console_handler())
+   logger.addHandler(get_file_handler())
+   # with this pattern, it's rarely necessary to propagate the error up to parent
+   logger.propagate = False
+   return logger
 
 
 class Msg:
     START = "function is called--"
     END = "function finished successfully--"
     ADDING_ERR = "adding model to database encountered a problem  "
-    Q_TYPE_ADDITION = "question type added to model  "
-    Q_ADDITION = "question  added to model  "
-    ANSWER_ADDITION = "answer added to model  "
-    CREATOR_ADDITION = "creator added to model  "
     DATETIME_ADDITION = "date time added to model  "
-    DURATION_ADDITION = "duration added to model  "
     DATA_ADDITION = "data added to model  "
     DB_ADD = "model added to database  "
     AUTH_CHECKING = "going to check authentication  "
@@ -50,8 +70,6 @@ class Msg:
     DELETE_RELATIVE = 'the reletive {} is going to be delete'
     UPLOAD_NOT_ALLOWED = 'no more uploads supports in edit'
     POST_ALREADY_LIKED = 'user liked the post before'
-    POST_NOT_FOUND = 'no such post found'
-    UNLIKED_POST = 'post {} is unliked by {} '
     USER_XISTS = 'user by this username ={} already exists'
     PARENT_INVALID = 'parent entity doesnt exist'
     CHECK_REDIS_FOR_EXISTANCE = 'checking redis if cell number already ' \
@@ -76,8 +94,3 @@ class Msg:
     SET_SEEN_ERROR = 'username is not reciever of message and message cant set as seen'
 
 
-
-#
-# def logger(mood, message, func_name, func_path=None):
-#     if mood == "info":
-#         logging.info(message, func_name, func_path)

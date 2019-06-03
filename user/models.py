@@ -14,4 +14,4 @@ class User(PrimaryModel,Base):
     addresses = Column(ARRAY(String))
     phones = Column(ARRAY(String))
     image = Column(UUID)
-    basket = Column(ARRAY(String))
+    library = Column(ARRAY(String))
