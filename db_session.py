@@ -18,6 +18,8 @@ class PrimaryModel:
     id = Column(UUID,nullable=False, primary_key=True)
     version = Column(Integer, default=1)
     tags = Column(ARRAY(String))
+    creator = Column(String)
+    modifier = Column(String)
 
 def recreate_database():
     Base.metadata.drop_all(engine)

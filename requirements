@@ -10,7 +10,9 @@ alembic
 
 python-magic
 
+redis
 
+python-gammu
 
 
 

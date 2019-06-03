@@ -27,6 +27,7 @@ config.set_main_option('sqlalchemy.url', my_config.DATABASE_URI)
 # target_metadata = mymodel.Base.metadata
 
 from user import models
+from app_token import models
 from books import models
 from db_session import  Base
 import db_session
