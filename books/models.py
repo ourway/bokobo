@@ -13,4 +13,6 @@ class Book(Base,PrimaryModel):
     narrators = Column(ARRAY(String))
     pub_year = Column(Integer)
     types = Column(ARRAY(String))
-    language = Column(String)
+    language = Column(String, default='farsi')
+
+
