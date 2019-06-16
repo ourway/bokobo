@@ -1,9 +1,13 @@
-from celery import Celery
+from __future__ import absolute_import, unicode_literals
 
-app = Celery('tasks', backend='rpc://',broker='pyamqp://guest@localhost//')
-app.config_from_object('celeryconfig')
+from .celery import app
 
 
 @app.task
 def test():
     return 'nasim is here'
+
+
+@app.task(name='jjp.sms',bind=True)
+def xsum(numbers):
+    return sum(numbers)

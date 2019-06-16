@@ -1,5 +1,4 @@
 import json
-import random
 from uuid import uuid4
 import logging
 from log import Msg

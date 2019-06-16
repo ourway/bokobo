@@ -26,13 +26,15 @@ config.set_main_option('sqlalchemy.url', my_config.DATABASE_URI)
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 
-from user import models
-from app_token import models
-from books import models
+# from user import models
+# from app_token import models
+# from books import models
 from db_session import  Base
 import db_session
+from infrastructure.module_loader import load_all
 
 target_metadata = db_session.Base.metadata
+load_all('models')
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

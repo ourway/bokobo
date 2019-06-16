@@ -1,0 +1,3 @@
+import configs
+
+ADMINISTRATORS_USERNAMES = configs.ADMINISTRATORS

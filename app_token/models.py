@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Integer
-from sqlalchemy.dialects.postgresql import UUID, ARRAY
+from sqlalchemy.dialects.postgresql import UUID
 from db_session import Base
 
 
