@@ -36,6 +36,9 @@ def get_logger(logger_name):
    logger.propagate = False
    return logger
 
+logger  = get_logger(__name__)
+
+
 
 class Msg:
     START = "function is called--"

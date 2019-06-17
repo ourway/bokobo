@@ -15,9 +15,11 @@ engine = create_engine(DATABASE_URI)
 class PrimaryModel:
     creation_date = Column(Integer, nullable=False)
     modification_date = Column(Integer)
-    id = Column(UUID,nullable=False, primary_key=True)
+    id = Column(UUID,nullable=False, primary_key=True,unique=True)
     version = Column(Integer, default=1)
     tags = Column(ARRAY(String))
+    creator = Column(String)
+    modifier = Column(String)
 
 def recreate_database():
     Base.metadata.drop_all(engine)

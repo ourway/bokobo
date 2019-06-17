@@ -10,15 +10,133 @@ alembic
 
 python-magic
 
+redis
+
+rabbitmq
+
+celery
+
+flower
 
 
-
-
-
+------------------------------------------------------
 
 
 alembic revision --autogenerate -m "comment"
 
 alembic upgrade head
+
+------------------------------------------------------
+
+CELERY:
+
+
+for limiting processing rate in celery can use:
+
+    celery -A tasks control rate_limit tasks.add 10/m
+    -c concurrency
+    -l log
+    -b specify a broker
+    -Q specify a queue
+        multiple queues:
+            celery -A proj worker -Q hipri,celery
+
+
+    controling and inspect:
+        celery -A proj inspect active
+
+
+
+     --app=celery_works
+
+     test.apply_async((2, 2), queue='lopri', countdown=10)
+
+     for executing a task:
+     __call__
+     delay()
+     apply)async()
+
+     signature() ----> for partial argument setting,API calling or sending to another func:
+
+        res = add.signature(2,8)
+        res.delay()
+
+        or:
+        res1 = add.signature(2)
+        res2 = res1.delay(8)
+
+    group:
+    for executing parallel tasks
+
+        group(add.s(i, i) for i in xrange(10))().get()
+       res = [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+
+    Chains:
+    executing tasks sequentially one by one
+
+        # (4 + 4) * 8
+        chain(add.s(4, 4) | mul.s(8))().get()     or   (add.s(4, 4) | mul.s(8))().get()
+        res = 64
+
+        or:
+        partial chain:
+
+        # (? + 4) * 8
+         g = chain(add.s(4) | mul.s(8))
+         g(4).get()
+
+         res = 64
+
+    chords:
+    chain of group tasks is a chord:
+
+        chord((add.s(i, i) for i in xrange(10)), xsum.s())().get()
+        res = 90
+
+        or
+
+        (group(add.s(i, i) for i in xrange(10)) | xsum.s())().get()
+
+
+
+
+
+
+for working in background:
+
+    celery multi start w1 -A celery_works -l info
+
+    restart:
+    celery  multi restart w1 -A celery_works -l info
+
+    stop:
+    celery multi stop w1 -A celery_works -l info
+
+    The stop command is asynchronous so it won’t wait for the worker to shutdown.
+    You’ll probably want to use the stopwait command instead, this ensures all currently
+    executing tasks are completed before exiting:
+
+    celery multi stopwait w1 -A celery_works -l info
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+http://docs.celeryproject.org/en/latest/getting-started/next-steps.html#next-steps
+
+
+
+
+
+
 
 
