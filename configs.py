@@ -47,3 +47,5 @@ CELERY_DATABASE_URI = 'db+postgresql+psycopg2://{}:{}@{}:{}/{}'.format(CeleryCon
                                                                                 CeleryConfigs.db_name)
 
 ADMINISTRATORS = ['admin']
+SIGNUP_USER = 'signup_user'
+

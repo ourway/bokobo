@@ -16,15 +16,19 @@
 import logging
 import sys
 from logging.handlers import TimedRotatingFileHandler
-FORMATTER = logging.Formatter("%(asctime)s — %(levelname) — %(username)s — %(name)s — (pathname)s :%(lineno)d - %(funcName)s — %(message)s")
-LOG_FILE = "my_app.log"
 
+import os
+
+FORMATTER = logging.Formatter("%(asctime)s — %(levelname) — %(username)s — %(name)s — (pathname)s :%(lineno)d - %(funcName)s — %(message)s")
+log_file = os.environ.get('log_file')
 def get_console_handler():
    console_handler = logging.StreamHandler(sys.stdout)
    console_handler.setFormatter(FORMATTER)
    return console_handler
 def get_file_handler():
-   file_handler = TimedRotatingFileHandler(LOG_FILE, when='midnight')
+   print("log file: {}".format(log_file))
+   file_handler = TimedRotatingFileHandler(log_file, when='midnight')
+   # file_handler = TimedRotatingFileHandler(b'jafarlog',  when='midnight')
    file_handler.setFormatter(FORMATTER)
    return file_handler
 def get_logger(logger_name):
@@ -37,7 +41,6 @@ def get_logger(logger_name):
    return logger
 
 logger  = get_logger(__name__)
-
 
 
 class Msg:
@@ -87,13 +90,13 @@ class Msg:
     REGISTER_KEY_INVALID = 'your register activation_code is wrong '
     REGISTER_KEY_DOESNT_EXIST = 'the activation_code expired or doesnt exist '
     USR_ADDING = 'user is going to create...'
-    NAME_NOT_UNIQUE = 'name must be unique.this name already exists'
+    USER_BY_CELL_EXIST = 'user with this cell no already exist'
     NOT_UNIQUE = 'must be unique,change it please'
     NOT_ACCESSED ='this user can not access to this section'
-    INVALID_TAG = 'tag with this title doesnt exists.'
-    INVALID_CATEGORY = 'category with this title doesnt exists'
     SCROLL_UNDEFINED = 'scrolling mood is undefined.it should be up or down'
     SCHEMA_CHECKED = 'schema checked for required data'
-    SET_SEEN_ERROR = 'username is not reciever of message and message cant set as seen'
+    USERNAME_NOT_UNIQUE = 'this username already exists'
+    TOKEN_KEY_DOESNT_EXIST = 'the token is expired or doesnt exists'
+    PERSON_EXISTS = 'person by this {} exists'
 
 

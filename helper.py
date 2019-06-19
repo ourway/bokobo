@@ -9,7 +9,7 @@ import magic
 from bottle import request, HTTPResponse
 
 from log import Msg
-# from app_token.model import APP_Token
+from app_token.models import APP_Token
 from user.models import User
 from db_session import Session
 import json
@@ -24,6 +24,13 @@ def model_to_dict(obj):
         del object_dict['metadata']
     print(object_dict)
     return object_dict
+
+def multi_model_to_dict(obj_list):
+    result = {}
+    for item in obj_list:
+        obj = model_to_dict(item)
+        result.update(obj)
+    return result
 
 
 def check_auth(func):
@@ -171,7 +178,8 @@ def inject_db(func):
         try:
             db_session.commit()
         except:
-            raise Http_error(500, Msg.COMMIT_FAILED)
+
+            raise Http_error(500, {Msg.COMMIT_FAILED:db_session.transaction._rollback_exception.orig.pgerror})
         return rtn
 
     return wrapper
@@ -205,7 +213,7 @@ def pass_data(func):
             for key in data_list.keys():
                 my_data[key] = data_list[key][0]
             if (request.files != None) and (request.files.dict != None):
-                my_data['upload'] = request.files.dict.get('upload')
+                my_data['image'] = request.files.dict.get('image')
 
             kwargs['data'] = my_data
 
@@ -232,12 +240,12 @@ def value(name, default):
     return environ.get(name) or default
 
 
-# def validate_token(id, db_session):
-#     result = db_session.query(APP_Token).filter(APP_Token.id == id).first()
-#     if result is None or result.expiration_date < Now():
-#         raise Http_error(401,{"id":Msg.TOKEN_INVALID} )
-#     return result
-#
+def validate_token(id, db_session):
+    result = db_session.query(APP_Token).filter(APP_Token.id == id).first()
+    if result is None or result.expiration_date < Now():
+        raise Http_error(401,{"id":Msg.TOKEN_INVALID} )
+    return result
+
 
 def file_mime_type(filename):
     # m = magic.open(magic.MAGIC_MIME)

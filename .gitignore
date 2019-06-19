@@ -108,3 +108,11 @@ venv.bak/
 __pycache__
 
 
+ pictures/
+* pictures/
+* pictures/*
+logs/
+/logs*
+/pictures
+lpictures*
+
