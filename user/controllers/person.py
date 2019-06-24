@@ -33,7 +33,7 @@ def add(db_session,data,username):
     model_instance.creator = username
     model_instance.version = 1
 
-    images = data.get('image',[])
+    images = data.get('image')or[]
     image = None
     if len(images)> 0:
         image = images[0]

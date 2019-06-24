@@ -1,3 +1,5 @@
+import logging
+
 from configs import SIGNUP_USER
 from helper import Http_error, model_to_dict
 from log import  logger, Msg
@@ -9,17 +11,19 @@ from user.controllers.person import add as add_person
 
 def signup(data,db_session,*args,**kwargs):
 
+    logging.debug('signup start')
+
 
     cell_no = data.get('cell_no')
 
     signup_token = redis.get(cell_no)
     if signup_token is None:
-        logger.error(Msg.REGISTER_KEY_DOESNT_EXIST)
+        logging.error(Msg.REGISTER_KEY_DOESNT_EXIST)
         raise Http_error(404, {"signup_token": Msg.TOKEN_KEY_DOESNT_EXIST})
 
     signup_token = signup_token.decode("utf-8")
     if signup_token != data.get('signup_token'):
-        logger.error(Msg.REGISTER_KEY_INVALID)
+        logging.error(Msg.REGISTER_KEY_INVALID)
         raise Http_error(400, {"signup_token": Msg.TOKEN_INVALID})
 
 
