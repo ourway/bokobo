@@ -20,7 +20,7 @@ from logging.handlers import TimedRotatingFileHandler
 import os
 
 FORMATTER = logging.Formatter("%(asctime)s — %(levelname) — %(username)s — %(name)s — (pathname)s :%(lineno)d - %(funcName)s — %(message)s")
-log_file = os.environ.get('log_file')
+log_file = os.environ.get('log_path')
 def get_console_handler():
    console_handler = logging.StreamHandler(sys.stdout)
    console_handler.setFormatter(FORMATTER)
