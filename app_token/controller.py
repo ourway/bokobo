@@ -17,7 +17,7 @@ def add(db_session, data, username):
 
     if current_token is not None and \
             current_token.expiration_date > Now() + int(new_token_request_valid_interval):
-        raise Http_error(409, "already have a valid token")
+        return current_token
 
     model_instance = APP_Token()
     model_instance.id = str(uuid4())
