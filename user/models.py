@@ -13,10 +13,9 @@ class Person(PrimaryModel,Base):
     last_name = Column(String)
     address = Column(String)
     phone = Column(String)
-    image = Column(UUID,unique=True)
+    image = Column(UUID)
     email = Column(String,unique=True)
     cell_no = Column(String,unique=True)
-
 
 
 class User(PrimaryModel,Base):

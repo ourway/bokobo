@@ -16,8 +16,12 @@ def add(db_session,data,username):
     if person_cell_exists(db_session,data.get('cell_no')):
         raise Http_error(409,Msg.PERSON_EXISTS.format('cell_no'))
 
-    if person_mail_exists(db_session,data.get('email')):
+    email = data.get('email')
+
+    if email and person_mail_exists(db_session,email):
         raise Http_error(409,Msg.PERSON_EXISTS.format('email'))
+
+
 
     # logger.info(Msg.START,extra={'data':data,'user':username})
 
