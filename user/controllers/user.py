@@ -96,7 +96,7 @@ def get_profile(username, db_session):
         logging.debug(Msg.MODEL_GETTING_FAILED)
         raise Http_error(404, {"user": Msg.NOT_FOUND})
 
-    logging.info(Msg.END + model_to_dict(model_instance))
+    logging.info(Msg.END)
 
     return result
 
