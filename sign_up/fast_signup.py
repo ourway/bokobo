@@ -28,7 +28,8 @@ def signup(data,db_session,*args,**kwargs):
 
     person = add_person(db_session,person_data,SIGNUP_USER)
 
-    user_data.update({'person_id':person.id})
+    if user_data:
+        user_data.update({'person_id':person.id})
     user = add_user(db_session,user_data,SIGNUP_USER)
 
     result = {'user':user_to_dict(user),'person':model_to_dict(person)}
