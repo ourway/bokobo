@@ -2,27 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0c5a2ed-fec7-4eec-812d-b527afe676e3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app_configs.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repository/file_delivery.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repository/person_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repository/user_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sign_up/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sign_up/fast_signup.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sign_up/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user/controllers/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/user/controllers/person.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alembic/versions/4c15073a6a9a_library_added.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/books/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs.py" beforeDir="false" afterPath="$PROJECT_DIR$/configs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/helper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_configs.sh" beforeDir="false" afterPath="$PROJECT_DIR$/app_configs.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/books/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/books/controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/log.py" beforeDir="false" afterPath="$PROJECT_DIR$/log.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/register/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/register/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/register/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/register/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/user_register.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/controllers/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sign_up/fast_signup.py" beforeDir="false" afterPath="$PROJECT_DIR$/sign_up/fast_signup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/controllers/person.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/controllers/person.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/controllers/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/controllers/user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -33,9 +19,117 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="770">
+              <caret line="182" lean-forward="true" selection-start-line="143" selection-start-column="4" selection-end-line="182" />
+              <folding>
+                <element signature="e#1#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/log.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="770">
+              <caret line="104" column="77" selection-start-line="104" selection-start-column="77" selection-end-line="104" selection-end-column="77" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/user/controllers/person.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="513">
+              <caret line="31" selection-end-line="153" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#1888#1984#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/books/controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="54">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#1894#1990#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/configs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="25" column="15" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/logs/app.log">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/books/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="500">
+              <caret line="40" column="6" lean-forward="true" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+              <folding>
+                <element signature="e#0#53#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sign_up/fast_signup.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="392">
+              <caret line="30" column="35" lean-forward="true" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app_token/controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="446">
+              <caret line="87" lean-forward="true" selection-start-line="58" selection-end-line="87" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app_configs.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="8" column="11" selection-end-line="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/user/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="621">
+              <caret line="27" column="7" selection-start-line="27" selection-start-column="7" selection-end-line="27" selection-end-column="7" />
+              <folding>
+                <element signature="e#0#67#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
     </leaf>
@@ -72,14 +166,12 @@
         <option value="$PROJECT_DIR$/app_token/urls.py" />
         <option value="$PROJECT_DIR$/alembic/versions/ac5a6b8b7bc4_user_controller_and_token_added_to_.py" />
         <option value="$PROJECT_DIR$/order/models.py" />
-        <option value="$PROJECT_DIR$/books/controller.py" />
         <option value="$PROJECT_DIR$/app_token/models.py" />
         <option value="$PROJECT_DIR$/app_token/controller.py" />
         <option value="$PROJECT_DIR$/register.py" />
         <option value="$PROJECT_DIR$/celery/celery_app.py" />
         <option value="$PROJECT_DIR$/send_message/send_message.py" />
         <option value="$PROJECT_DIR$/celery_works/celery_app.py" />
-        <option value="$PROJECT_DIR$/requirements" />
         <option value="$PROJECT_DIR$/celery_works/tasks.py" />
         <option value="$PROJECT_DIR$/celery_works/celery.py" />
         <option value="$PROJECT_DIR$/celery_works/celeryconfig.py" />
@@ -95,30 +187,32 @@
         <option value="$PROJECT_DIR$/user/controller.py" />
         <option value="$PROJECT_DIR$/books/models.py" />
         <option value="$PROJECT_DIR$/repository/file_delivery.py" />
-        <option value="$PROJECT_DIR$/user/urls.py" />
-        <option value="$PROJECT_DIR$/user/models.py" />
-        <option value="$PROJECT_DIR$/app_configs.sh" />
-        <option value="$PROJECT_DIR$/log.py" />
         <option value="$PROJECT_DIR$/repository/person_repo.py" />
         <option value="$PROJECT_DIR$/sign_up/urls.py" />
-        <option value="$PROJECT_DIR$/user/controllers/person.py" />
         <option value="$PROJECT_DIR$/repository/user_repo.py" />
         <option value="$PROJECT_DIR$/helper.py" />
-        <option value="$PROJECT_DIR$/sign_up/fast_signup.py" />
         <option value="$PROJECT_DIR$/configs.py" />
-        <option value="$PROJECT_DIR$/user/controllers/user.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/../main.py" />
         <option value="$PROJECT_DIR$/../log.py" />
         <option value="$PROJECT_DIR$/../sign_up/fast_signup.py" />
+        <option value="$PROJECT_DIR$/app_configs.sh" />
+        <option value="$PROJECT_DIR$/user/models.py" />
+        <option value="$PROJECT_DIR$/user/urls.py" />
+        <option value="$PROJECT_DIR$/sign_up/fast_signup.py" />
+        <option value="$PROJECT_DIR$/user/controllers/user.py" />
+        <option value="$PROJECT_DIR$/requirements" />
+        <option value="$PROJECT_DIR$/log.py" />
+        <option value="$PROJECT_DIR$/user/controllers/person.py" />
+        <option value="$PROJECT_DIR$/books/controller.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="293" />
-    <option name="y" value="53" />
-    <option name="width" value="1400" />
-    <option name="height" value="1000" />
+    <option name="x" value="67" />
+    <option name="y" value="25" />
+    <option name="width" value="927" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -139,7 +233,38 @@
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="logs" type="462c0819:PsiDirectoryNode" />
+              <item name="app_token" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="books" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="register" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="repository" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="sign_up" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -212,19 +337,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16346681" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3293124" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32998884" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.4303233" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4960981" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.37904125" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3779264" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32998884" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -261,27 +387,27 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/user/controllers/user.py</url>
-          <line>75</line>
+          <line>80</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/user/controllers/person.py</url>
-          <line>19</line>
+          <line>21</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/user/controllers/person.py</url>
-          <line>49</line>
+          <line>51</line>
           <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/sign_up/fast_signup.py</url>
-          <line>35</line>
+          <line>28</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/user/controllers/person.py</url>
-          <line>13</line>
+          <line>15</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -291,8 +417,28 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/user/controllers/user.py</url>
-          <line>63</line>
+          <line>68</line>
           <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/user/controllers/user.py</url>
+          <line>187</line>
+          <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/user/controllers/user.py</url>
+          <line>127</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/user/controllers/user.py</url>
+          <line>168</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/user/controllers/user.py</url>
+          <line>143</line>
+          <option name="timeStamp" value="37" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -354,24 +500,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/alembic/versions/aa0340b0ef5e_new_classes_added.py" />
-    <entry file="file://$PROJECT_DIR$/../constraint_handler/models.py" />
-    <entry file="file://$PROJECT_DIR$/../infrastructure/module_loader.py" />
-    <entry file="file://$PROJECT_DIR$/../order/models.py" />
-    <entry file="file://$PROJECT_DIR$/../requirements" />
-    <entry file="file://$PROJECT_DIR$/../alembic/env.py" />
-    <entry file="file://$PROJECT_DIR$/../send_message/send_message.py" />
-    <entry file="file://$PROJECT_DIR$/alembic/versions/519092322df9_new_updates_in_user_and_book.py" />
-    <entry file="file://$PROJECT_DIR$/alembic/versions/0966ad699c48_adding_booktype_library_and_book_role_.py" />
-    <entry file="file://$PROJECT_DIR$/alembic/versions/a36230cbc9f0_library_added.py" />
-    <entry file="file://$PROJECT_DIR$/../db_session.py" />
-    <entry file="file://$PROJECT_DIR$/../alembic/versions/9b50737deed8_new_classes_added_to_book_module.py" />
-    <entry file="file://$PROJECT_DIR$/alembic/versions/4c15073a6a9a_library_added.py" />
-    <entry file="file://$PROJECT_DIR$/../alembic/versions/4473e6dd7e1d_adding_booktype_library_and_book_role_.py" />
-    <entry file="file://$PROJECT_DIR$/alembic/versions/20008da861a2_library_added_to_book_module.py" />
-    <entry file="file://$PROJECT_DIR$/alembic/versions/9d6eafdd4413_library_added_to_book_module.py" />
-    <entry file="file://$PROJECT_DIR$/../alembic/versions/b956f59b0557_removing_unique_constraints_on_library.py" />
-    <entry file="file://$PROJECT_DIR$/../alembic/versions/b8fd6cb54013_removed_library_relation_from_user.py" />
     <entry file="file://$PROJECT_DIR$/../alembic/versions/c40db208c708_library_added_to_book_module_after_.py" />
     <entry file="file://$PROJECT_DIR$/../alembic/versions/27387eff89b4_library_added_to_book_module.py" />
     <entry file="file://$APPLICATION_CONFIG_DIR$/pycharm64.vmoptions">
@@ -417,7 +545,158 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/logs/app.log">
+      <provider selected="true" editor-type-id="LogFileEditorProvider" />
+      <provider editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-237">
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/bottle.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="861" selection-start-line="861" selection-end-line="861" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="194" selection-start-line="194" selection-end-line="194" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alembic/versions/485d8bdb8738_user_id_deleted_to_persons.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repository/user_repo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="22" column="15" selection-start-line="22" selection-start-column="4" selection-end-line="22" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alembic/versions/d81349db17d3_user_id_added_to_persons.py">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="18" column="6" selection-start-line="18" selection-end-line="18" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sign_up/fast_signup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="30" column="35" lean-forward="true" selection-start-line="30" selection-start-column="35" selection-end-line="30" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_token/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="446">
+          <caret line="87" lean-forward="true" selection-start-line="58" selection-end-line="87" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="770">
+          <caret line="104" column="77" selection-start-line="104" selection-start-column="77" selection-end-line="104" selection-end-column="77" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="770">
+          <caret line="182" lean-forward="true" selection-start-line="143" selection-start-column="4" selection-end-line="182" />
+          <folding>
+            <element signature="e#1#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/controllers/person.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="31" selection-end-line="153" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#1888#1984#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="25" column="15" selection-start-line="25" selection-start-column="6" selection-end-line="25" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/books/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#1894#1990#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_configs.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="8" column="11" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="27" column="7" selection-start-line="27" selection-start-column="7" selection-end-line="27" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#67#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/books/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="40" column="6" lean-forward="true" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
   </component>
 </project>

@@ -98,5 +98,8 @@ class Msg:
     USERNAME_NOT_UNIQUE = 'this username already exists'
     TOKEN_KEY_DOESNT_EXIST = 'the token is expired or doesnt exists'
     PERSON_EXISTS = 'person by this {} exists'
-
-
+    NOT_RIGTH_ENTITY_PASSED = 'your entity type is not {}'
+    PERSON_NOT_EXISTS = 'person by this id = {} not exists'
+    NOT_EDITABLE = 'field is not editable'
+    ENTITY_DELETED = 'the entity deleted successfully'
+    RELATED_USER_DELETE = 'related user_id of person is {} is going to delete'
