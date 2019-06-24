@@ -14,7 +14,7 @@ class Person(PrimaryModel,Base):
     address = Column(String)
     phone = Column(String)
     image = Column(UUID)
-    email = Column(String,unique=True)
+    email = Column(String,unique=True,nullable=True)
     cell_no = Column(String,unique=True)
 
 
