@@ -8,7 +8,7 @@ from base64 import b64encode, b64decode
 import magic
 from bottle import request, HTTPResponse
 
-from log import Msg
+from log import LogMsg
 from app_token.models import APP_Token
 from user.models import User
 from db_session import Session
@@ -35,11 +35,11 @@ def multi_model_to_dict(obj_list):
 
 def check_auth(func):
     def wrapper(*args, **kwargs):
-        logging.debug(Msg.AUTH_CHECKING)
+        logging.debug(LogMsg.AUTH_CHECKING)
 
         kwargs['username'] = check_Authorization()['username']
 
-        logging.debug(Msg.AUTH_SUCCEED)
+        logging.debug(LogMsg.AUTH_SUCCEED)
         logging.debug("user is {}".format(kwargs['username']))
 
         rtn = func(*args, **kwargs)
@@ -49,11 +49,11 @@ def check_auth(func):
 
 def if_login(func):
     def wrapper(*args, **kwargs):
-        logging.debug(Msg.AUTH_CHECKING)
+        logging.debug(LogMsg.AUTH_CHECKING)
 
         kwargs['username'] = check_login()['username']
 
-        logging.debug(Msg.AUTH_SUCCEED)
+        logging.debug(LogMsg.AUTH_SUCCEED)
         logging.debug("user is {}".format(kwargs['username']))
 
         rtn = func(*args, **kwargs)
@@ -179,7 +179,7 @@ def inject_db(func):
             db_session.commit()
         except:
 
-            raise Http_error(500, {Msg.COMMIT_FAILED:db_session.transaction._rollback_exception.orig.pgerror})
+            raise Http_error(500, {LogMsg.COMMIT_FAILED:db_session.transaction._rollback_exception.orig.pgerror})
         return rtn
 
     return wrapper
@@ -243,7 +243,7 @@ def value(name, default):
 def validate_token(id, db_session):
     result = db_session.query(APP_Token).filter(APP_Token.id == id).first()
     if result is None or result.expiration_date < Now():
-        raise Http_error(401,{"id":Msg.TOKEN_INVALID} )
+        raise Http_error(401,{"id":LogMsg.TOKEN_INVALID} )
     return result
 
 

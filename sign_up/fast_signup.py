@@ -2,7 +2,7 @@ import logging
 
 from configs import SIGNUP_USER
 from helper import Http_error, model_to_dict
-from log import  logger, Msg
+from log import  logger, LogMsg
 from app_redis import app_redis as redis
 from repository.user_repo import check_by_id
 
@@ -18,13 +18,13 @@ def signup(data,db_session,*args,**kwargs):
 
     signup_token = redis.get(cell_no)
     if signup_token is None:
-        logging.error(Msg.REGISTER_KEY_DOESNT_EXIST)
-        raise Http_error(404, {"signup_token": Msg.TOKEN_KEY_DOESNT_EXIST})
+        logging.error(LogMsg.REGISTER_KEY_DOESNT_EXIST)
+        raise Http_error(404, {"signup_token": LogMsg.TOKEN_KEY_DOESNT_EXIST})
 
     signup_token = signup_token.decode("utf-8")
     if signup_token != data.get('signup_token'):
-        logging.error(Msg.REGISTER_KEY_INVALID)
-        raise Http_error(400, {"signup_token": Msg.TOKEN_INVALID})
+        logging.error(LogMsg.REGISTER_KEY_INVALID)
+        raise Http_error(400, {"signup_token": LogMsg.TOKEN_INVALID})
 
 
     user_data = {k: v for k, v in data.items() if k in ['username','password']}

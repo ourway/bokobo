@@ -1,4 +1,4 @@
-import enum
+
 
 class Database:
     db_user ='libuser'
@@ -14,30 +14,6 @@ class CeleryConfigs:
     db_port = '5432'
     db_name = 'celery'
 
-class Roles(enum.Enum):
-    Author = 'author'
-    Writer = 'writer'
-    Translator = 'translator'
-    Press = 'press'
-    Contributer = 'contributer'
-    Designer = 'designer'
-
-
-class BookTypes(enum.Enum):
-    DVD = 'dvd'
-    Audio = 'audio'
-    Hard_Copy = 'hard_copy'
-    Pdf = 'pdf'
-    Epub = 'epub'
-
-class Genre(enum.Enum):
-    Comedy = 'comedy'
-    Drama = 'drama'
-    Romance = 'romance'
-    Social = 'social'
-    Religious = 'religious'
-    Historical = 'historical'
-
 
 DATABASE_URI = 'postgres+psycopg2://{}:{}@{}:{}/{}'.format(Database.db_user, Database.db_pass,
                                                                                 Database.db_host, Database.db_port,
@@ -48,4 +24,5 @@ CELERY_DATABASE_URI = 'db+postgresql+psycopg2://{}:{}@{}:{}/{}'.format(CeleryCon
 
 ADMINISTRATORS = ['admin']
 SIGNUP_USER = 'signup_user'
+
 

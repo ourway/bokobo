@@ -43,7 +43,7 @@ def get_logger(logger_name):
 logger  = get_logger(__name__)
 
 
-class Msg:
+class LogMsg:
     START = "function is called--"
     END = "function finished successfully--"
     ADDING_ERR = "adding model to database encountered a problem  "
