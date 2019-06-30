@@ -11,8 +11,8 @@ def call_router(app):
     app.route('/books/<id>', 'GET', book.get, apply=readonly_wrappers)
     app.route('/books', 'GET', book.get_all, apply=readonly_wrappers)
     app.route('/books/<id>', 'DELETE', book.delete, apply=[check_auth, inject_db])
-    app.route('/books', 'POST', book.add, apply=data_plus_wrappers)
-    app.route('/books/multiple-type', 'POST', book.add_multiple_type_books, apply=data_plus_wrappers)
+    # app.route('/books', 'POST', book.add, apply=data_plus_wrappers)
+    app.route('/books', 'POST', book.add_multiple_type_books, apply=data_plus_wrappers)
 
 
     app.route('/book-roles/<id>', 'GET', book_roles.get, apply=readonly_wrappers)

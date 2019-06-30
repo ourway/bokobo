@@ -42,7 +42,7 @@ def add(db_session, data, username):
             image.save(save_path)
         del (data['image'])
 
-        model_instance.images = model_images
+    model_instance.images = model_images
 
 # logger.debug(LogMsg.DATA_ADDITION)
 
@@ -62,6 +62,7 @@ def get(id, db_session):
 
         logging.debug(LogMsg.GET_SUCCESS +
                       json.dumps(book_to_dict(model_instance)))
+
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, {"id": LogMsg.NOT_FOUND})
@@ -79,7 +80,7 @@ def edit(db_session, data, username):
         del data["id"]
         logging.debug(LogMsg.EDIT_REQUST)
 
-    model_instance = get(id, db_session, username)
+    model_instance = db_session.query(Book).filter(Book.id == id).first()
     if model_instance:
         logging.debug(LogMsg.MODEL_GETTING)
     else:
@@ -103,7 +104,7 @@ def edit(db_session, data, username):
     logging.debug(LogMsg.MODEL_ALTERED)
 
     logging.debug(LogMsg.EDIT_SUCCESS +
-                  json.dumps(model_to_dict(model_instance)))
+                  json.dumps(book_to_dict(model_instance)))
 
     logging.info(LogMsg.END)
 
@@ -111,7 +112,7 @@ def edit(db_session, data, username):
 
 
 def delete(id, db_session, username):
-    logging.info(LogMsg.START + "user is {}  ".format(username) + "token_id = {}".format(id))
+    logging.info(LogMsg.START + "user is {}  ".format(username) + "book_id = {}".format(id))
 
     logging.info(LogMsg.DELETE_REQUEST + "user is {}".format(username))
 
@@ -184,12 +185,16 @@ def add_multiple_type_books(db_session, data, username):
 
     result = []
 
-    for type in types:
-        book_data.update({'type': type})
-        book = add(db_session, data, username)
-        add_book_roles(book.id, roles, db_session, username)
+    try:
+        for type in types:
+            book_data.update({'type': type})
+            book = add(db_session, book_data, username)
+            add_book_roles(book.id, roles, db_session, username)
 
-        result.append(book_to_dict(book))
+    except:
+        raise Http_error(500,LogMsg.ADDING_ERR)
 
-    return result
+
+
+    return True
 

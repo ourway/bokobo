@@ -5,6 +5,7 @@ from uuid import uuid4
 
 from log import LogMsg
 from helper import Now, model_to_dict, Http_error, multi_model_to_dict
+from messages import Message
 from repository.person_repo import validate_person
 from repository.user_repo import check_by_username, check_by_cell_no, check_by_id
 from user.models import User, Person
@@ -16,15 +17,18 @@ def add(db_session, data,username):
     cell_no = data.get('cell_no')
     name = data.get('name')
     new_username = data.get('username')
-    user = check_by_username(new_username,db_session)
-    if user:
-        logging.error(LogMsg.USER_XISTS.format(new_username))
-        raise Http_error(409, {"username": LogMsg.USER_XISTS.format(new_username)})
+
 
     user_by_cell = check_by_cell_no(cell_no,db_session)
     if user_by_cell != None:
-        logging.error(LogMsg.USERNAME_NOT_UNIQUE)
-        raise Http_error(409, {"cell_no": LogMsg.USER_BY_CELL_EXIST})
+        logging.error(LogMsg.USER_XISTS.format(cell_no))
+        raise Http_error(409, Message.MSG1)
+
+    user = check_by_username(new_username,db_session)
+    if user:
+        logging.error(LogMsg.USER_XISTS.format(new_username))
+        raise Http_error(409,Message.MSG8)
+
 
 
 

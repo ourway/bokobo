@@ -1,4 +1,8 @@
-from helper import Now
+import json
+import logging
+
+from helper import Now, Http_error, model_to_dict
+from log import LogMsg
 from ..models import BookRole
 from uuid import uuid4
 
@@ -30,13 +34,107 @@ def add_book_roles(book_id,roles_dict,db_session,username):
 
     return result
 
-def get(db_session,id):
-    pass
 
-def delete(db_session,id,username):
-    pass
-def get_all(db_session,id):
-    pass
-def edit(db_session,id,username):
-    pass
+def get(id, db_session):
+    logging.info(LogMsg.START)
+    logging.debug(LogMsg.MODEL_GETTING)
+    model_instance = db_session.query(BookRole).filter(BookRole.id == id).first()
+    if model_instance:
+
+        logging.debug(LogMsg.GET_SUCCESS +
+                      json.dumps(model_to_dict(model_instance)))
+    else:
+        logging.debug(LogMsg.MODEL_GETTING_FAILED)
+        raise Http_error(404, {"id": LogMsg.NOT_FOUND})
+
+    logging.error(LogMsg.GET_FAILED + json.dumps({"id": id}))
+
+    logging.info(LogMsg.END)
+
+    return model_instance
+
+
+def edit(db_session, data, username):
+    logging.info(LogMsg.START + " user is {}".format(username))
+    if "id" in data.keys():
+        del data["id"]
+        logging.debug(LogMsg.EDIT_REQUST)
+
+    model_instance = db_session.query(BookRole).filter(BookRole.id == id).first()
+    if model_instance:
+        logging.debug(LogMsg.MODEL_GETTING)
+    else:
+        logging.debug(LogMsg.MODEL_GETTING_FAILED)
+        raise Http_error(404, {"id": LogMsg.NOT_FOUND})
+
+    if data.get('tags') is not None:
+        tags = (data.get('tags')).split(',')
+        for item in tags:
+            item.strip()
+        model_instance.tags = tags
+
+        del data['tags']
+
+    for key, value in data.items():
+        # TODO  if key is valid attribute of class
+        setattr(model_instance, key, value)
+    model_instance.modification_date = Now()
+    model_instance.modifier = username
+
+    logging.debug(LogMsg.MODEL_ALTERED)
+
+    logging.debug(LogMsg.EDIT_SUCCESS +
+                  json.dumps(model_to_dict(model_instance)))
+
+    logging.info(LogMsg.END)
+
+    return model_instance
+
+
+def delete(id, db_session, username):
+    logging.info(LogMsg.START + "user is {}  ".format(username) + "book_id = {}".format(id))
+
+    logging.info(LogMsg.DELETE_REQUEST + "user is {}".format(username))
+
+    try:
+        db_session.query(BookRole).filter(BookRole.id == id).delete()
+
+        logging.debug(LogMsg.ENTITY_DELETED + "book_role.id {}".format(id))
+
+    except:
+        logging.error(LogMsg.DELETE_FAILED)
+        raise Http_error(500, LogMsg.DELETE_FAILED)
+
+    logging.info(LogMsg.END)
+    return {}
+
+
+def get_all(db_session):
+    logging.info(LogMsg.START )
+    try:
+        result = db_session.query(BookRole).all()
+        logging.debug(LogMsg.GET_SUCCESS)
+
+    except:
+        logging.error(LogMsg.GET_FAILED)
+        raise Http_error(500, LogMsg.GET_FAILED)
+
+    logging.debug(LogMsg.END)
+    return result
+
+def get_book_roles(book_id,db_session,username):
+    logging.info(LogMsg.START )
+
+    try:
+        result = db_session.query(BookRole).filter(BookRole.book_id==book_id).all()
+        logging.debug(LogMsg.GET_SUCCESS)
+
+    except:
+        logging.error(LogMsg.GET_FAILED)
+        raise Http_error(500, LogMsg.GET_FAILED)
+
+
+    logging.debug(LogMsg.END)
+    return result
+
 
