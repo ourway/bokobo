@@ -196,5 +196,5 @@ def add_multiple_type_books(db_session, data, username):
 
 
 
-    return True
+    return {'msg':'successful'}
 

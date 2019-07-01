@@ -13,6 +13,11 @@ class Message:
     MSG12 = 'msg12'
     MSG13 = 'msg13'
     MSG14 = 'msg14'
+    MSG15 = 'msg15'
+    MSG16 = 'msg16'
+    MSG17 = 'msg17'
+    MSG18 = 'msg18'
+
 
 
 

@@ -3,6 +3,7 @@ from uuid import uuid4
 import logging
 from log import LogMsg
 from helper import Now, Http_error, value
+from messages import Message
 from send_message import send_message
 from .models import APP_Token
 
@@ -16,7 +17,7 @@ def add(db_session, data, username):
     current_token = get_current_token(db_session, username)
 
     if current_token is not None and \
-            current_token.expiration_date > Now() + int(new_token_request_valid_interval):
+            current_token.expiration_date > Now():
         return current_token
 
     model_instance = APP_Token()
@@ -44,13 +45,13 @@ def get(id, db_session, username):
         logging.info(LogMsg.MODEL_GETTING)
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, LogMsg.NOT_FOUND)
+        raise Http_error(404, Message.MSG11)
 
     logging.debug(LogMsg.GET_SUCCESS)
 
     if model_instance.expiration_date < Now():
         logging.error(LogMsg.TOKEN_EXPIRED)
-        raise Http_error(401,'not valid token')
+        raise Http_error(401,Message.MSG12)
 
     logging.info(LogMsg.END)
     return model_instance
@@ -68,7 +69,7 @@ def delete(id, db_session, username):
 
     except:
         logging.error(LogMsg.DELETE_FAILED)
-        raise Http_error(500, LogMsg.DELETE_FAILED)
+        raise Http_error(500, Message.MSG13)
 
     logging.info(LogMsg.END)
     return {}
@@ -81,7 +82,7 @@ def get_all(db_session, username):
         logging.debug(LogMsg.GET_SUCCESS)
     except:
         logging.error(LogMsg.GET_FAILED)
-        raise Http_error(500, LogMsg.GET_FAILED)
+        raise Http_error(500, Message.MSG14)
 
     logging.debug(LogMsg.END)
     return result

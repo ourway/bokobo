@@ -18,8 +18,8 @@ class Book(Base,PrimaryModel):
     rate = Column(Float)
     images = Column(ARRAY(UUID))
 
-    persons = relationship('BookRole', uselist=True, backref='books')
-    users = relationship('Library', uselist=True, backref='books')
+    roles = relationship('BookRole', uselist=True)
+    # users = relationship('Library', uselist=True)
 
 
 
@@ -30,7 +30,7 @@ class BookRole(Base,PrimaryModel):
     person_id = Column(UUID,ForeignKey(Person.id),nullable=False)
     role = Column(Enum(Roles),nullable=False)
 
-    book = relationship(Book, primaryjoin=book_id == Book.id , backref='book_roles')
+    # book = relationship(Book, primaryjoin=book_id == Book.id , backref='book_roles')
     person = relationship(Person, primaryjoin=person_id == Person.id )
 
 

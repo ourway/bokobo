@@ -10,6 +10,7 @@ from bottle import request, HTTPResponse
 
 from log import LogMsg
 from app_token.models import APP_Token
+from messages import Message
 from user.models import User
 from db_session import Session
 import json
@@ -87,7 +88,7 @@ def check_Authorization():
     db_session = get_db_session()
     auth = request.get_header('Authorization')
     if auth is None:
-        raise Http_error(401, 'no auth found')
+        raise Http_error(401, Message.MSG17)
 
     username, password = decode(auth)
     print(username, password)
@@ -100,7 +101,7 @@ def check_Authorization():
                                              User.password == password).first()
 
         if user is None:
-            raise Http_error(401, {'username':'not valid'})
+            raise Http_error(401, Message.MSG18)
         return model_to_dict(user)
 
 
@@ -128,7 +129,7 @@ def decode(encoded_str):
         try:
             username, password = b64decode(split[0]).decode().split(':', 1)
         except:
-            raise Http_error(400, "Basic Authentication decoding failed")
+            raise Http_error(400, Message.MSG15)
 
     # If there are only two elements, check the first and ensure it says
     # 'basic' so that we know we're about to decode the right thing. If not,
@@ -139,7 +140,7 @@ def decode(encoded_str):
             try:
                 username, password = b64decode(split[1]).decode().split(':', 1)
             except:
-                raise Http_error(400, " Authentication decoding failed")
+                raise Http_error(400, Message.MSG15)
 
         elif split[0].strip().lower() == 'bearer':
             logging.debug("auth is bearer")
@@ -149,12 +150,12 @@ def decode(encoded_str):
             logging.debug(
                 "token is {} and pass is {}".format(username, password))
         else:
-            raise Http_error(400, " Bearer authentication decoding failed")
+            raise Http_error(400, Message.MSG15)
 
     # If there are more than 2 elements, something crazy must be happening.
     # Bail.
     else:
-        raise Http_error(400, "Basic Authentication decoding failed")
+        raise Http_error(400, Message.MSG15)
 
     if password is None:
         return str(username), password
@@ -179,7 +180,9 @@ def inject_db(func):
             db_session.commit()
         except:
 
-            raise Http_error(500, {LogMsg.COMMIT_FAILED:db_session.transaction._rollback_exception.orig.pgerror})
+            logging.error(db_session.transaction._rollback_exception.orig.pgerror)
+
+            raise Http_error(500, {'msg':Message.MSG16})
         return rtn
 
     return wrapper
@@ -243,7 +246,7 @@ def value(name, default):
 def validate_token(id, db_session):
     result = db_session.query(APP_Token).filter(APP_Token.id == id).first()
     if result is None or result.expiration_date < Now():
-        raise Http_error(401,{"id":LogMsg.TOKEN_INVALID} )
+        raise Http_error(401,Message.MSG11 )
     return result
 
 
@@ -262,6 +265,7 @@ def check_schema(required_list,data_keys):
     result = required.issubset(keys)
 
     if result==False:
+        #TODO raising is not in standard format
         raise Http_error(400,{'data':'{} are required'.format(required_list)})
 
     return result
