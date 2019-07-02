@@ -7,26 +7,24 @@ from db_session import PrimaryModel, Base
 
 class Person(PrimaryModel,Base):
 
-    __tablename__ = 'presons'
+    __tablename__ = 'persons'
 
-    name = Column(String)
+    name = Column(String,nullable=False)
     last_name = Column(String)
-    addresses = Column(ARRAY(String))
-    phones = Column(ARRAY(String))
+    address = Column(String)
+    phone = Column(String)
     image = Column(UUID)
-    email = Column(String)
-    cell_no = Column(String)
-
+    email = Column(String,unique=True,nullable=True)
+    cell_no = Column(String,unique=True)
 
 
 class User(PrimaryModel,Base):
     __tablename__ = 'users'
     username = Column(String, nullable=False,unique=True)
     password = Column(String,nullable=False)
-    person_id = Column(UUID,ForeignKey('presons.id'))
+    person_id = Column(UUID,ForeignKey('persons.id'))
 
-    library = relationship('Library', uselist=True, backref='users')
-    person = relationship(Person, primaryjoin=person_id == Person.id , lazy='dynamic')
+    person = relationship(Person, primaryjoin=person_id == Person.id , lazy=True)
 
 
 

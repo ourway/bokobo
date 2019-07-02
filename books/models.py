@@ -3,45 +3,45 @@ from sqlalchemy import String, Integer, Column, ForeignKey, Float, Enum, UniqueC
 from sqlalchemy.orm import relationship
 
 from db_session import Base, PrimaryModel
-from configs import Roles,BookTypes,Genre
+from enums import Roles,BookTypes,Genre
 from user.models import Person, User
 
 
 class Book(Base,PrimaryModel):
     __tablename__ = 'books'
     title = Column(String,nullable=False)
-    edition = Column(String,default=1)
-    pub_year = Column(Integer)
+    edition = Column(String,default='1')
+    pub_year = Column(String)
     type = Column(Enum(BookTypes))
-    genre = Column(Enum(Genre))
+    genre = Column(ARRAY(String))
     language = Column(String)
     rate = Column(Float)
-    persons = relationship('BookRole', uselist=True, backref='books')
-    users = relationship('Library', uselist=True, backref='books')
+    images = Column(ARRAY(UUID))
+
+    # roles = relationship('BookRole')
+    # users = relationship('Library', uselist=True)
 
 
 
 class BookRole(Base,PrimaryModel):
     __tablename__ = 'book_roles'
 
-    book_id = Column(UUID,ForeignKey('books.id'),nullable=False)
-    preson_id = Column(UUID,ForeignKey(Person.id),nullable=False)
+    book_id = Column(UUID,ForeignKey(Book.id),nullable=False)
+    person_id = Column(UUID,ForeignKey(Person.id),nullable=False)
     role = Column(Enum(Roles),nullable=False)
 
-    book = relationship(Book, primaryjoin=book_id == Book.id , lazy='dynamic', backref='book_roles')
-    person = relationship(Person, primaryjoin=preson_id == Person.id , lazy='dynamic')
+    book_roles = relationship(Book, primaryjoin=book_id == Book.id )
+    person = relationship(Person, primaryjoin=person_id == Person.id )
 
 
 class Library(Base,PrimaryModel):
 
     __tablename__ = 'library'
 
-    book_id = Column(UUID,ForeignKey('books.id'),nullable=False)
+    book_id = Column(UUID,ForeignKey(Book.id),nullable=False)
     user_id = Column(UUID,ForeignKey(User.id),nullable=False)
 
-    UniqueConstraint(book_id,user_id)
-
-    book = relationship(Book, primaryjoin=book_id == Book.id, lazy='dynamic',backref='library')
-    user = relationship(User, primaryjoin=user_id == User.id, lazy='dynamic')
+    book = relationship(Book, primaryjoin=book_id == Book.id)
+    user = relationship(User, primaryjoin=user_id == User.id,backref = 'library')
 
 

@@ -1,0 +1,21 @@
+MSG1 = user already exists
+MSG2 = there is no valid activation code for cell_no, expired or doesnt exist
+MSG3 = activation code is invalid
+MSG4 = already has valid key
+MSG5 = message not sent to users cell_no
+MSG6 = cell_no is required
+MSG7 = message sent to cell_no successfully
+MSG8 = username already exists.please choose another one
+MSG9 = signup_token is expired or doesnt exist
+MSG10 = signup_token is invalid
+MSG11 = token invalid
+MSG12 = token expired
+
+MSG13 = deleting failed
+MSG14 = getting failed
+MSG15 = Authentication decoding failed
+MSG16 = commiting to database failed
+MSG17 = no auth found
+MSG18 = username is not valid
+MSG19 = enum is not correct  type
+MSG20 = entity not found

@@ -8,8 +8,9 @@ from base64 import b64encode, b64decode
 import magic
 from bottle import request, HTTPResponse
 
-from log import Msg
-# from app_token.model import APP_Token
+from log import LogMsg
+from app_token.models import APP_Token
+from messages import Message
 from user.models import User
 from db_session import Session
 import json
@@ -25,14 +26,21 @@ def model_to_dict(obj):
     print(object_dict)
     return object_dict
 
+def multi_model_to_dict(obj_list):
+    result = {}
+    for item in obj_list:
+        obj = model_to_dict(item)
+        result.update(obj)
+    return result
+
 
 def check_auth(func):
     def wrapper(*args, **kwargs):
-        logging.debug(Msg.AUTH_CHECKING)
+        logging.debug(LogMsg.AUTH_CHECKING)
 
         kwargs['username'] = check_Authorization()['username']
 
-        logging.debug(Msg.AUTH_SUCCEED)
+        logging.debug(LogMsg.AUTH_SUCCEED)
         logging.debug("user is {}".format(kwargs['username']))
 
         rtn = func(*args, **kwargs)
@@ -42,11 +50,11 @@ def check_auth(func):
 
 def if_login(func):
     def wrapper(*args, **kwargs):
-        logging.debug(Msg.AUTH_CHECKING)
+        logging.debug(LogMsg.AUTH_CHECKING)
 
         kwargs['username'] = check_login()['username']
 
-        logging.debug(Msg.AUTH_SUCCEED)
+        logging.debug(LogMsg.AUTH_SUCCEED)
         logging.debug("user is {}".format(kwargs['username']))
 
         rtn = func(*args, **kwargs)
@@ -80,7 +88,7 @@ def check_Authorization():
     db_session = get_db_session()
     auth = request.get_header('Authorization')
     if auth is None:
-        raise Http_error(401, 'no auth found')
+        raise Http_error(401, Message.MSG17)
 
     username, password = decode(auth)
     print(username, password)
@@ -93,7 +101,7 @@ def check_Authorization():
                                              User.password == password).first()
 
         if user is None:
-            raise Http_error(401, {'username':'not valid'})
+            raise Http_error(401, Message.MSG18)
         return model_to_dict(user)
 
 
@@ -121,7 +129,7 @@ def decode(encoded_str):
         try:
             username, password = b64decode(split[0]).decode().split(':', 1)
         except:
-            raise Http_error(400, "Basic Authentication decoding failed")
+            raise Http_error(400, Message.MSG15)
 
     # If there are only two elements, check the first and ensure it says
     # 'basic' so that we know we're about to decode the right thing. If not,
@@ -132,7 +140,7 @@ def decode(encoded_str):
             try:
                 username, password = b64decode(split[1]).decode().split(':', 1)
             except:
-                raise Http_error(400, " Authentication decoding failed")
+                raise Http_error(400, Message.MSG15)
 
         elif split[0].strip().lower() == 'bearer':
             logging.debug("auth is bearer")
@@ -142,12 +150,12 @@ def decode(encoded_str):
             logging.debug(
                 "token is {} and pass is {}".format(username, password))
         else:
-            raise Http_error(400, " Bearer authentication decoding failed")
+            raise Http_error(400, Message.MSG15)
 
     # If there are more than 2 elements, something crazy must be happening.
     # Bail.
     else:
-        raise Http_error(400, "Basic Authentication decoding failed")
+        raise Http_error(400, Message.MSG15)
 
     if password is None:
         return str(username), password
@@ -171,7 +179,10 @@ def inject_db(func):
         try:
             db_session.commit()
         except:
-            raise Http_error(500, Msg.COMMIT_FAILED)
+
+            logging.error(db_session.transaction._rollback_exception.orig.pgerror)
+
+            raise Http_error(500, {'msg':Message.MSG16})
         return rtn
 
     return wrapper
@@ -205,7 +216,7 @@ def pass_data(func):
             for key in data_list.keys():
                 my_data[key] = data_list[key][0]
             if (request.files != None) and (request.files.dict != None):
-                my_data['upload'] = request.files.dict.get('upload')
+                my_data['image'] = request.files.dict.get('image')
 
             kwargs['data'] = my_data
 
@@ -222,7 +233,7 @@ def Now():
 
 def Http_error(code, message):
     if isinstance(message,str):
-        message = {'error':message}
+        message = {'msg':message}
     result = HTTPResponse(body=json.dumps(message), status=code,
         headers = {'Content-type': 'application/json'})
     return result
@@ -232,12 +243,12 @@ def value(name, default):
     return environ.get(name) or default
 
 
-# def validate_token(id, db_session):
-#     result = db_session.query(APP_Token).filter(APP_Token.id == id).first()
-#     if result is None or result.expiration_date < Now():
-#         raise Http_error(401,{"id":Msg.TOKEN_INVALID} )
-#     return result
-#
+def validate_token(id, db_session):
+    result = db_session.query(APP_Token).filter(APP_Token.id == id).first()
+    if result is None or result.expiration_date < Now():
+        raise Http_error(401,Message.MSG11 )
+    return result
+
 
 def file_mime_type(filename):
     # m = magic.open(magic.MAGIC_MIME)
@@ -254,6 +265,7 @@ def check_schema(required_list,data_keys):
     result = required.issubset(keys)
 
     if result==False:
+        #TODO raising is not in standard format
         raise Http_error(400,{'data':'{} are required'.format(required_list)})
 
     return result
