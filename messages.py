@@ -17,7 +17,19 @@ class Message:
     MSG16 = 'msg16'
     MSG17 = 'msg17'
     MSG18 = 'msg18'
-
+    MSG19 = 'msg19'
+    MSG20 = 'msg20'
+    MSG21 = 'msg21'
+    MSG22 = 'msg22'
+    MSG23 = 'msg23'
+    MSG24 = 'msg24'
+    MSG25 = 'msg25'
+    MSG26 = 'msg26'
+    MSG27 = 'msg27'
+    MSG28 = 'msg28'
+    MSG29 = 'msg29'
+    MSG30 = 'msg30'
+    MSG31 = 'msg31'
 
 
 

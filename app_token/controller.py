@@ -80,6 +80,7 @@ def get_all(db_session, username):
     try:
         result = db_session.query(APP_Token).all()
         logging.debug(LogMsg.GET_SUCCESS)
+
     except:
         logging.error(LogMsg.GET_FAILED)
         raise Http_error(500, Message.MSG14)

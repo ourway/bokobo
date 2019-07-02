@@ -3,6 +3,7 @@ import logging
 
 from helper import Now, Http_error, model_to_dict
 from log import LogMsg
+from messages import Message
 from ..models import BookRole
 from uuid import uuid4
 
@@ -122,19 +123,59 @@ def get_all(db_session):
     logging.debug(LogMsg.END)
     return result
 
-def get_book_roles(book_id,db_session,username):
+def get_book_roles(book_id,db_session):
     logging.info(LogMsg.START )
 
     try:
         result = db_session.query(BookRole).filter(BookRole.book_id==book_id).all()
         logging.debug(LogMsg.GET_SUCCESS)
 
+
     except:
         logging.error(LogMsg.GET_FAILED)
-        raise Http_error(500, LogMsg.GET_FAILED)
-
+        raise Http_error(500, Message.MSG14)
 
     logging.debug(LogMsg.END)
     return result
 
 
+def delete_book_roles(book_id,db_session):
+    logging.info(LogMsg.START)
+
+    try:
+        db_session.query(BookRole).filter(BookRole.book_id == book_id).delete()
+        logging.debug(LogMsg.GET_SUCCESS)
+
+
+    except:
+        logging.error(LogMsg.GET_FAILED)
+        raise Http_error(500, Message.MSG13)
+
+    logging.debug(LogMsg.END)
+    return {'status':'successful'}
+
+def append_book_roles_dict(book_id,db_session):
+    result = []
+    roles = get_book_roles(book_id,db_session)
+    for role in roles:
+        result.append(book_role_to_dict(role))
+
+    return result
+
+def book_role_to_dict(obj):
+    if not isinstance(obj, BookRole):
+        raise Http_error(500, LogMsg.NOT_RIGTH_ENTITY_PASSED.format('BookRole'))
+
+    result = {
+        'creation_date': obj.creation_date,
+        'creator': obj.creator,
+        'id': obj.id,
+        'modification_date': obj.modification_date,
+        'modifier': obj.modifier,
+        'role':obj.role.name,
+        'person':model_to_dict(obj.person),
+        'tags': obj.tags,
+        'version': obj.version
+    }
+
+    return result

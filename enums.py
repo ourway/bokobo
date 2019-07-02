@@ -1,5 +1,6 @@
 import enum
 from helper import Http_error
+from messages import Message
 
 
 class Roles(enum.Enum):
@@ -31,5 +32,5 @@ class Genre(enum.Enum):
 def check_enums(data,enum_class):
     for type in data:
         if type not in enum_class.__members__:
-            raise Http_error(404,{type:'it is not correct enum'})
+            raise Http_error(404,Message.MSG19)
     return data

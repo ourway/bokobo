@@ -6,6 +6,7 @@ from log import  logger, LogMsg
 from app_redis import app_redis as redis
 from messages import Message
 from repository.user_repo import check_by_id
+from send_message.send_message import send_message
 
 from user.controllers.user import add as add_user, user_to_dict
 from user.controllers.person import add as add_person
@@ -36,6 +37,9 @@ def signup(data,db_session,*args,**kwargs):
     if user_data:
         user_data.update({'person_id':person.id})
     user = add_user(db_session,user_data,SIGNUP_USER)
+
+    user_welcoming_data = {'receptor':cell_no,'message':' کاربر عزیز به سرویس کتابخوان جام جم خوش آمدید.\n لحظات خوش مطالعه به سبک مدرن '}
+    send_message(user_welcoming_data)
 
     result = {'user':user_to_dict(user),'person':model_to_dict(person)}
 

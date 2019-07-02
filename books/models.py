@@ -13,12 +13,12 @@ class Book(Base,PrimaryModel):
     edition = Column(String,default='1')
     pub_year = Column(String)
     type = Column(Enum(BookTypes))
-    genre = Column(ARRAY(Enum(Genre)))
+    genre = Column(ARRAY(String))
     language = Column(String)
     rate = Column(Float)
     images = Column(ARRAY(UUID))
 
-    roles = relationship('BookRole', uselist=True)
+    # roles = relationship('BookRole')
     # users = relationship('Library', uselist=True)
 
 
@@ -26,11 +26,11 @@ class Book(Base,PrimaryModel):
 class BookRole(Base,PrimaryModel):
     __tablename__ = 'book_roles'
 
-    book_id = Column(UUID,ForeignKey('books.id'),nullable=False)
+    book_id = Column(UUID,ForeignKey(Book.id),nullable=False)
     person_id = Column(UUID,ForeignKey(Person.id),nullable=False)
     role = Column(Enum(Roles),nullable=False)
 
-    # book = relationship(Book, primaryjoin=book_id == Book.id , backref='book_roles')
+    book_roles = relationship(Book, primaryjoin=book_id == Book.id )
     person = relationship(Person, primaryjoin=person_id == Person.id )
 
 
@@ -41,7 +41,7 @@ class Library(Base,PrimaryModel):
     book_id = Column(UUID,ForeignKey(Book.id),nullable=False)
     user_id = Column(UUID,ForeignKey(User.id),nullable=False)
 
-    book = relationship(Book, primaryjoin=book_id == Book.id,backref='library')
+    book = relationship(Book, primaryjoin=book_id == Book.id)
     user = relationship(User, primaryjoin=user_id == User.id,backref = 'library')
 
 
