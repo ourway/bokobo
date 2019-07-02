@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c0c5a2ed-fec7-4eec-812d-b527afe676e3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sign_up/fast_signup.py" beforeDir="false" afterPath="$PROJECT_DIR$/sign_up/fast_signup.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,8 +37,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sign_up/fast_signup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="41" column="18" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
+            <state relative-caret-position="176">
+              <caret line="43" selection-start-line="43" selection-end-line="43" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -808,8 +809,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sign_up/fast_signup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="41" column="18" selection-start-line="41" selection-start-column="18" selection-end-line="41" selection-end-column="18" />
+        <state relative-caret-position="176">
+          <caret line="43" selection-start-line="43" selection-end-line="43" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
