@@ -5,8 +5,10 @@ from uuid import uuid4
 
 from helper import model_to_dict, Now, value, Http_error
 from  log import logger,LogMsg
+from messages import Message
 from ..models import Person, User
 from repository.person_repo import person_cell_exists,person_mail_exists
+from books.controllers.book import get as get_book
 
 save_path = os.environ.get('save_path')
 
@@ -64,7 +66,7 @@ def get(id, db_session, username):
                       json.dumps(model_to_dict(model_instance)))
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, {"id": LogMsg.NOT_FOUND})
+        raise Http_error(404, Message.MSG20)
     #TODO: as mentioned before, "{} id:{}".format(LogMsg.GET_FAILED, id)
     logging.error(LogMsg.GET_FAILED + json.dumps({"id": id}))
     logging.info(LogMsg.END)
@@ -153,3 +155,24 @@ def get_all(db_session, username):
     logging.debug(LogMsg.END)
     return result
 
+
+def get_person_profile(id, db_session, username):
+    #TODO: for string manipulation use format and dont use '+' for string concatation "{} user is {} getting user_id={}".format(LogMsg.START, username, id)
+    logging.info(LogMsg.START
+                 + "user is {}  ".format(username)
+                 + "getting user_id = {}".format(id))
+    logging.debug(LogMsg.MODEL_GETTING)
+    model_instance = db_session.query(Person).filter(Person.id == id).first()
+    if model_instance:
+        result = model_to_dict(model_instance)
+        result['current_book']=get_book(model_instance.current_book,db_session)
+        logging.debug(LogMsg.GET_SUCCESS +
+                      json.dumps(result))
+    else:
+        logging.debug(LogMsg.MODEL_GETTING_FAILED)
+        raise Http_error(404, Message.MSG20)
+    #TODO: as mentioned before, "{} id:{}".format(LogMsg.GET_FAILED, id)
+    logging.error(LogMsg.GET_FAILED +  json.dumps(result))
+    logging.info(LogMsg.END)
+
+    return result

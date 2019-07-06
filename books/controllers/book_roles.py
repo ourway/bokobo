@@ -184,3 +184,11 @@ def book_role_to_dict(obj):
     }
 
     return result
+
+
+def books_by_person(person_id,db_session):
+    result = db_session.query(BookRole.book_id).filter(BookRole.person_id == person_id).all()
+    final_res = []
+    for item in result:
+        final_res.append(item.book_id)
+    return final_res

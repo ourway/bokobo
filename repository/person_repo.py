@@ -1,3 +1,5 @@
+from sqlalchemy import or_
+
 from helper import Http_error
 from messages import Message
 from user.models import Person
@@ -19,3 +21,7 @@ def validate_persons(person_list,db_session):
             return result
         else:
             raise Http_error(404,Message.Invalid_persons)
+
+
+def person_by_name(search_key,db_session):
+    result = db_session.query(Person).filter(or_(Person.name.Like(search_key),Person.last_name.Like(search_key)))

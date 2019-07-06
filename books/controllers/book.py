@@ -7,8 +7,8 @@ from log import LogMsg
 from books.models import Book
 from enums import BookTypes as legal_types, Roles, check_enums, Genre, str_genre
 from messages import Message
-from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delete_book_roles, append_book_roles_dict
-
+from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delete_book_roles, append_book_roles_dict, \
+    books_by_person
 
 
 def add(db_session, data, username):
@@ -54,22 +54,15 @@ def get(id, db_session):
     if model_instance:
 
         logging.debug(LogMsg.GET_SUCCESS +
-                      json.dumps(book_to_dict(model_instance)))
+                      json.dumps(book_to_dict(db_session,model_instance)))
 
-        roles = get_book_roles(model_instance.id, db_session)
-        for item in roles:
-            book_roles.append(book_role_to_dict(item))
-
-        book_dict = book_to_dict(model_instance)
-        book_dict['roles'] = book_roles
-
-
+        book_dict = book_to_dict(db_session,model_instance)
 
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, Message.MSG20)
 
-    logging.error(LogMsg.GET_FAILED + json.dumps({"id": id}))
+    logging.error(LogMsg.GET_FAILED + json.dumps(book_dict))
 
     logging.info(LogMsg.END)
 
@@ -107,11 +100,11 @@ def edit(db_session, data, username):
     logging.debug(LogMsg.MODEL_ALTERED)
 
     logging.debug(LogMsg.EDIT_SUCCESS +
-                  json.dumps(book_to_dict(model_instance)))
+                  json.dumps(book_to_dict(db_session,model_instance)))
 
     logging.info(LogMsg.END)
 
-    return book_to_dict(model_instance)
+    return book_to_dict(db_session,model_instance)
 
 
 def delete(id, db_session, username):
@@ -145,7 +138,7 @@ def get_all(db_session):
             for role in roles:
                 book_roles.append(book_role_to_dict(role))
 
-            book_dict = book_to_dict(item)
+            book_dict = book_to_dict(db_session,item)
             book_dict['roles'] = book_roles
             final_res.append(book_dict)
     except:
@@ -156,7 +149,7 @@ def get_all(db_session):
     return final_res
 
 
-def book_to_dict(book):
+def book_to_dict(db_session,book):
     if not isinstance(book, Book):
         raise Http_error(500, LogMsg.NOT_RIGTH_ENTITY_PASSED.format('Book'))
 
@@ -175,7 +168,9 @@ def book_to_dict(book):
         'tags': book.tags,
         'title': book.title,
         'type': model_to_dict(book.type),
-        'version': book.version
+        'version': book.version,
+        'roles' : append_book_roles_dict(book.id, db_session)
+
     }
 
     return result
@@ -238,7 +233,7 @@ def edit_book(db_session, data, username):
     for role in roles:
         new_roles.append(book_role_to_dict(role))
 
-    edited_book = book_to_dict(model_instance)
+    edited_book = book_to_dict(db_session,model_instance)
     edited_book['roles'] = new_roles
 
 
@@ -279,9 +274,23 @@ def search_by_title(data,db_session):
     result = []
     books = db_session.query(Book).filter(Book.title.like('%{}%'.format(search_key))).all()
     for book in books:
-        book_dict = book_to_dict(book)
-        book_dict['roles'] = append_book_roles_dict(book.id,db_session)
-        result.append(book_dict)
+        result.append(book_to_dict(db_session,book))
+    return result
+
+
+def search_by_writer(data,db_session,username):
+    logging.info(LogMsg.START)
+    logging.debug(LogMsg.MODEL_GETTING)
+
+    person_id = data.get('person_id')
+    book_id = data.get('book_id')
+    result = []
+    book_ids = books_by_person(person_id,db_session)
+    book_ids = set(book_ids)
+    book_ids.remove(book_id)
+    books = db_session.query(Book).filter(Book.id.in_(book_ids)).all()
+    for book in books:
+        result.append(book_to_dict(db_session,book))
     return result
 
 
@@ -293,9 +302,7 @@ def search_by_genre(data, db_session):
     result = []
     books = db_session.query(Book).filter(Book.genre.any(search_key)).all()
     for book in books:
-        book_dict = book_to_dict(book)
-        book_dict['roles'] = append_book_roles_dict(book.id, db_session)
-        result.append(book_dict)
+        result.append(book_to_dict(db_session,book))
     return result
 
 

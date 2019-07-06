@@ -8,8 +8,8 @@ from helper import Now, model_to_dict, Http_error, multi_model_to_dict
 from messages import Message
 from repository.person_repo import validate_person
 from repository.user_repo import check_by_username, check_by_cell_no, check_by_id
-from user.models import User, Person
-from .person import get as get_person , add as add_person, edit as edit_person
+from user.models import User
+from .person import get as get_person , add as add_person, edit as edit_person, get_person_profile
 
 
 def add(db_session, data,username):
@@ -92,17 +92,18 @@ def get_profile(username, db_session):
     model_instance = db_session.query(User).filter(User.username == username).first()
 
     if model_instance:
-        result = user_to_dict(model_instance)
+        profile = get_person_profile(model_instance.person_id,db_session,username)
+        profile['username']=username
         logging.debug(LogMsg.GET_SUCCESS +
-                      json.dumps(result))
+                      json.dumps(profile))
 
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, {"user": LogMsg.NOT_FOUND})
+        raise Http_error(404, Message.MSG20)
 
     logging.info(LogMsg.END)
 
-    return result
+    return profile
 
 
 def delete(id, db_session, username):

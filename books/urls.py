@@ -17,6 +17,11 @@ def call_router(app):
 
 
 
+    app.route('/books/recommended', 'POST', book.search_by_writer,
+              apply=data_plus_wrappers)
+
+
+
     app.route('/book-roles/<id>', 'GET', book_roles.get, apply=readonly_wrappers)
     app.route('/books-roles', 'GET', book_roles.get_all, apply=readonly_wrappers)
     app.route('/books-roles/<id>', 'DELETE', book_roles.delete, apply=[check_auth, inject_db])

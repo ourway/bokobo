@@ -6,7 +6,7 @@ save_path = value('save_path',None)
 
 
 def upload_files(data,username,db_session):
-    files_list = data.get('')
+    files_list = data.get('files')
     model_files  =[]
     if len(files_list) > 0:
         for file in files_list:
