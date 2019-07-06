@@ -20,6 +20,7 @@ def call_router(app):
     app.route('/books/recommended', 'POST', book.search_by_writer,
               apply=data_plus_wrappers)
 
+    app.route('/books/newest', 'GET', book.newest_books, apply=wrappers)
 
 
     app.route('/book-roles/<id>', 'GET', book_roles.get, apply=readonly_wrappers)

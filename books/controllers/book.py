@@ -310,3 +310,13 @@ def search_book(data, db_session, username):
     result = search_by_title(data,db_session)
     result.extend(search_by_genre(data,db_session))
     return result
+
+
+def newest_books(db_session,username):
+    news = db_session.query(Book).order_by(Book.creation_date.desc()).all()
+    res = []
+    for book in news:
+        res.append(book_to_dict(db_session,book))
+
+    return res
+
