@@ -1,5 +1,5 @@
 from sqlalchemy.dialects.postgresql import ARRAY,UUID
-from sqlalchemy import String, Integer, Column, ForeignKey, Float, Enum, UniqueConstraint
+from sqlalchemy import String, JSON, Column, ForeignKey, Float, Enum, UniqueConstraint
 from sqlalchemy.orm import relationship
 
 from db_session import Base, PrimaryModel
@@ -17,6 +17,7 @@ class Book(Base,PrimaryModel):
     language = Column(String)
     rate = Column(Float)
     images = Column(ARRAY(UUID))
+    files = Column(ARRAY(UUID))
 
     # roles = relationship('BookRole')
     # users = relationship('Library', uselist=True)
@@ -40,6 +41,7 @@ class Library(Base,PrimaryModel):
 
     book_id = Column(UUID,ForeignKey(Book.id),nullable=False)
     user_id = Column(UUID,ForeignKey(User.id),nullable=False)
+    status = Column(JSON)
 
     book = relationship(Book, primaryjoin=book_id == Book.id)
     user = relationship(User, primaryjoin=user_id == User.id,backref = 'library')

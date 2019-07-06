@@ -37,15 +37,7 @@ def add(db_session,data,username):
     model_instance.creator = username
     model_instance.version = 1
 
-    images = data.get('image')or[]
-    image = images[0] if len(images) > 0 else None
-
-    if image:
-        image.filename = str(uuid4())
-        model_instance.image = image.filename
-
-        image.save(save_path)
-        del (data['image'])
+    model_instance.image = data.get('image')
 
 
 
@@ -84,7 +76,9 @@ def edit(db_session,data,username):
     #      records, to prevent conflict when we received two different edit request
     #      concurrently. check KAVEH codes (edit functions) to better understanding
     #      version field usage
+
     logging.info(LogMsg.START + " user is {}".format(username))
+
     if "id" in data.keys():
         del data["id"]
         logging.debug(LogMsg.EDIT_REQUST)
@@ -102,13 +96,14 @@ def edit(db_session,data,username):
             item.strip()
         model_instance.tags = tags
 
-        del data['tags']
+    del data['tags']
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
         setattr(model_instance, key, value)
     model_instance.modification_date = Now()
     model_instance.modifier = username
+    model_instance.version +=1
 
     logging.debug(LogMsg.MODEL_ALTERED)
 
@@ -157,3 +152,4 @@ def get_all(db_session, username):
 
     logging.debug(LogMsg.END)
     return result
+

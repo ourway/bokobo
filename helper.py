@@ -27,10 +27,10 @@ def model_to_dict(obj):
     return object_dict
 
 def multi_model_to_dict(obj_list):
-    result = {}
+    result = []
     for item in obj_list:
         obj = model_to_dict(item)
-        result.update(obj)
+        result.append(obj)
     return result
 
 
@@ -216,7 +216,7 @@ def pass_data(func):
             for key in data_list.keys():
                 my_data[key] = data_list[key][0]
             if (request.files != None) and (request.files.dict != None):
-                my_data['image'] = request.files.dict.get('image')
+                my_data['files'] = request.files.dict.get('files')
 
             kwargs['data'] = my_data
 

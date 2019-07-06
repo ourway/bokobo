@@ -38,7 +38,7 @@ def signup(data,db_session,*args,**kwargs):
         user_data.update({'person_id':person.id})
     user = add_user(db_session,user_data,SIGNUP_USER)
 
-    user_welcoming_data = {'receptor':cell_no,'message':' کاربر عزیز به سرویس کتابخوان جام جم خوش آمدید.\n لحظات خوش مطالعه به سبک مدرن '}
+    user_welcoming_data = {'receptor':cell_no,'message':' کاربر عزیز به سرویس کتابخوان جام جم خوش آمدید.\n\n    لحظات خوش مطالعه    به سبک مدرن '}
     send_message(user_welcoming_data)
 
     result = {'user':user_to_dict(user),'person':model_to_dict(person)}

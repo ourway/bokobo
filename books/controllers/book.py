@@ -1,17 +1,13 @@
 import json
 import logging
-import os
 from uuid import uuid4
 
-from helper import model_to_dict, Now, value, Http_error, multi_model_to_dict
-from log import logger, LogMsg
+from helper import model_to_dict, Now, Http_error
+from log import LogMsg
 from books.models import Book
-from enums import BookTypes as legal_types, Roles, check_enums, Genre
+from enums import BookTypes as legal_types, Roles, check_enums, Genre, str_genre
 from messages import Message
-from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delete_book_roles
-
-save_path = os.environ.get('save_path')
-
+from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delete_book_roles, append_book_roles_dict
 
 
 
@@ -23,6 +19,7 @@ def add(db_session, data, username):
             check_enums(genre,Genre)
 
 
+
     model_instance = Book()
     model_instance.id = str(uuid4())
     model_instance.title = data.get('title')
@@ -30,24 +27,14 @@ def add(db_session, data, username):
     model_instance.pub_year = data.get('pub_year')
     model_instance.type = data.get('type')
     model_instance.genre = genre
+    model_instance.images = data.get('images')
+    model_instance.files = data.get('files')
     model_instance.language = data.get('language')
     model_instance.rate = data.get('rate')
     model_instance.creation_date = Now()
     model_instance.creator = username
     model_instance.version = 1
 
-    images = data.get('image', [])
-    model_images  =[]
-    if len(images) > 0:
-        for image in images:
-            if image:
-                image.filename = str(uuid4())
-                model_images.append(image.filename)
-
-            image.save(save_path)
-        del (data['image'])
-
-    model_instance.images = model_images
 
 # logger.debug(LogMsg.DATA_ADDITION)
 
@@ -107,8 +94,9 @@ def edit(db_session, data, username):
         for item in tags:
             item.strip()
         model_instance.tags = tags
+        model_instance.version +=1
 
-        del data['tags']
+    del data['tags']
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
@@ -150,11 +138,12 @@ def get_all(db_session):
         final_res = []
         result = db_session.query(Book).all()
         logging.debug(LogMsg.GET_SUCCESS)
-        book_roles=[]
+
         for item in result:
+            book_roles = []
             roles = get_book_roles(item.id,db_session)
-            for item in roles:
-                book_roles.append(book_role_to_dict(item))
+            for role in roles:
+                book_roles.append(book_role_to_dict(role))
 
             book_dict = book_to_dict(item)
             book_dict['roles'] = book_roles
@@ -166,33 +155,30 @@ def get_all(db_session):
     logging.debug(LogMsg.END)
     return final_res
 
+
 def book_to_dict(book):
     if not isinstance(book, Book):
         raise Http_error(500, LogMsg.NOT_RIGTH_ENTITY_PASSED.format('Book'))
 
     result = {
-        # 'book_roles': model_to_dict(book.book_roles),
         'creation_date': book.creation_date,
         'creator': book.creator,
         'edition': book.edition,
-        'genre': model_to_dict(book.genre),
+        'genre': str_genre(book.genre),
         'id': book.id,
         'images': book.images,
         'language': book.language,
         'modification_date': book.modification_date,
         'modifier': book.modifier,
-        # 'persons': model_to_dict(book.persons),
         'pub_year': book.pub_year,
         'rate': book.rate,
         'tags': book.tags,
         'title': book.title,
         'type': model_to_dict(book.type),
-        # 'users': model_to_dict(book.users),
         'version': book.version
     }
 
     return result
-
 
 
 def add_multiple_type_books(db_session, data, username):
@@ -237,13 +223,14 @@ def edit_book(db_session, data, username):
             item.strip()
         model_instance.tags = tags
 
-        del data['tags']
+    del data['tags']
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
         setattr(model_instance, key, value)
     model_instance.modification_date = Now()
     model_instance.modifier = username
+    model_instance.version += 1
 
     delete_book_roles(model_instance.id,db_session)
     roles = add_book_roles(model_instance.id,data.get('roles'),db_session,username)
@@ -264,6 +251,7 @@ def edit_book(db_session, data, username):
 
     return edited_book
 
+
 def delete_book(id, db_session, username):
     logging.info(LogMsg.START + "user is {}  ".format(username) + "book_id = {}".format(id))
 
@@ -283,6 +271,35 @@ def delete_book(id, db_session, username):
     return {}
 
 
+def search_by_title(data,db_session):
+    logging.info(LogMsg.START)
+    logging.debug(LogMsg.MODEL_GETTING)
+
+    search_key = data.get('search_key')
+    result = []
+    books = db_session.query(Book).filter(Book.title.like('%{}%'.format(search_key))).all()
+    for book in books:
+        book_dict = book_to_dict(book)
+        book_dict['roles'] = append_book_roles_dict(book.id,db_session)
+        result.append(book_dict)
+    return result
 
 
+def search_by_genre(data, db_session):
+    logging.info(LogMsg.START)
+    logging.debug(LogMsg.MODEL_GETTING)
 
+    search_key = data.get('search_key')
+    result = []
+    books = db_session.query(Book).filter(Book.genre.any(search_key)).all()
+    for book in books:
+        book_dict = book_to_dict(book)
+        book_dict['roles'] = append_book_roles_dict(book.id, db_session)
+        result.append(book_dict)
+    return result
+
+
+def search_book(data, db_session, username):
+    result = search_by_title(data,db_session)
+    result.extend(search_by_genre(data,db_session))
+    return result

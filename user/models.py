@@ -16,6 +16,7 @@ class Person(PrimaryModel,Base):
     image = Column(UUID)
     email = Column(String,unique=True,nullable=True)
     cell_no = Column(String,unique=True)
+    current_book = Column(UUID)
 
 
 class User(PrimaryModel,Base):
