@@ -15,7 +15,7 @@ def app_ping():
 
 
 def activate_account(data,db_session):
-    valid_activating_intervall = value('valid_registering_intervall',86400)
+    valid_activating_intervall = value('valid_activating_intervall',86400)
 
     logging.info(LogMsg.START + ' data is: '+str(data))
 
@@ -51,7 +51,7 @@ def activate_account(data,db_session):
     return data
 
 def register(data,db_session):
-    valid_registering_intervall = value('valid_registering_intervall', 60)
+    valid_registering_intervall = value('valid_registering_intervall', 200)
 
     logging.info(LogMsg.START + ' data is: ' + str(data))
 
