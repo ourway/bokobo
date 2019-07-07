@@ -169,7 +169,8 @@ def book_to_dict(db_session,book):
         'title': book.title,
         'type': model_to_dict(book.type),
         'version': book.version,
-        'roles' : append_book_roles_dict(book.id, db_session)
+        'roles' : append_book_roles_dict(book.id, db_session),
+        'files': book.files
 
     }
 
@@ -270,27 +271,35 @@ def search_by_title(data,db_session):
     logging.info(LogMsg.START)
     logging.debug(LogMsg.MODEL_GETTING)
 
-    search_key = data.get('search_key')
-    result = []
-    books = db_session.query(Book).filter(Book.title.like('%{}%'.format(search_key))).all()
-    for book in books:
-        result.append(book_to_dict(db_session,book))
+    try:
+        search_key = data.get('search_key')
+        result = []
+        books = db_session.query(Book).filter(Book.title.like('%{}%'.format(search_key))).all()
+        for book in books:
+            result.append(book_to_dict(db_session, book))
+    except:
+        raise Http_error(404,Message.MSG20)
+
     return result
 
 
 def search_by_writer(data,db_session,username):
     logging.info(LogMsg.START)
     logging.debug(LogMsg.MODEL_GETTING)
-
-    person_id = data.get('person_id')
-    book_id = data.get('book_id')
     result = []
-    book_ids = books_by_person(person_id,db_session)
-    book_ids = set(book_ids)
-    book_ids.remove(book_id)
-    books = db_session.query(Book).filter(Book.id.in_(book_ids)).all()
-    for book in books:
-        result.append(book_to_dict(db_session,book))
+
+    try:
+        person_id = data.get('person_id')
+        book_id = data.get('book_id')
+        book_ids = books_by_person(person_id, db_session)
+        book_ids = set(book_ids)
+        book_ids.remove(book_id)
+        books = db_session.query(Book).filter(Book.id.in_(book_ids)).all()
+        for book in books:
+            result.append(book_to_dict(db_session, book))
+    except:
+        raise Http_error(404,Message.MSG20)
+
     return result
 
 
@@ -300,9 +309,13 @@ def search_by_genre(data, db_session):
 
     search_key = data.get('search_key')
     result = []
-    books = db_session.query(Book).filter(Book.genre.any(search_key)).all()
-    for book in books:
-        result.append(book_to_dict(db_session,book))
+    try:
+
+        books = db_session.query(Book).filter(Book.genre.any(search_key)).all()
+        for book in books:
+            result.append(book_to_dict(db_session,book))
+    except:
+        raise Http_error(404,Message.MSG20)
     return result
 
 
@@ -313,10 +326,14 @@ def search_book(data, db_session, username):
 
 
 def newest_books(db_session,username):
-    news = db_session.query(Book).order_by(Book.creation_date.desc()).all()
-    res = []
-    for book in news:
-        res.append(book_to_dict(db_session,book))
+
+    try:
+        news = db_session.query(Book).order_by(Book.creation_date.desc()).all()
+        res = []
+        for book in news:
+            res.append(book_to_dict(db_session,book))
+    except:
+        raise Http_error(404,Message.MSG20)
 
     return res
 
