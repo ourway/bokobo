@@ -84,8 +84,7 @@ def register(data,db_session):
             raise Http_error(403, {'msg':Message.MSG4,'time':redis.ttl(cell_no)})
         else:
             logging.error((LogMsg.USER_HAS_SIGNUP_TOKEN))
-            raise Http_error(403, {'msg': Message.MSG4})
-
+            redis.delete(cell_no)
     logging.debug(LogMsg.GENERATING_REGISTERY_CODE.format(cell_no))
 
     password = str(random.randint(1000, 9999))
