@@ -1,3 +1,4 @@
+import json
 import logging
 import random
 from uuid import uuid4
@@ -32,19 +33,23 @@ def activate_account(data,db_session):
 
     logging.debug(LogMsg.CHECK_REDIS_FOR_EXISTANCE)
 
-    activation_code = redis.get(cell_no)
-    if activation_code is None:
+    cell_data = redis.get(cell_no)
+    if cell_data is None:
         logging.error(LogMsg.REGISTER_KEY_DOESNT_EXIST)
         raise Http_error(404,Message.MSG2)
 
-    activation_code = activation_code.decode("utf-8")
+    activation_code = (json.loads(cell_data.decode("utf-8"))).get('activation_code',None)
+    if activation_code is None:
+        logging.error(LogMsg.USER_HAS_SIGNUP_TOKEN)
+        raise Http_error(404, Message.MSG2)
+
     if activation_code != data.get('activation_code'):
         logging.error(LogMsg.REGISTER_KEY_INVALID)
         raise Http_error(409, Message.MSG3)
 
     signup_token = str(uuid4())
     redis.delete(cell_no)
-    redis.set(cell_no, signup_token, ex=valid_activating_intervall)
+    redis.set(cell_no, json.dumps({'signup_token':signup_token}), ex=valid_activating_intervall)
 
     data = {'cell_no': cell_no, 'signup_token':signup_token}
 
@@ -68,9 +73,17 @@ def register(data,db_session):
 
     logging.debug(LogMsg.CHECK_REDIS_FOR_EXISTANCE)
 
-    if redis.get(cell_no):
+    cell_data = redis.get(cell_no)
+
+    if cell_data:
         logging.error(LogMsg.REGISTER_XISTS)
-        raise Http_error(403, {'msg':Message.MSG4,'time':redis.ttl(cell_no)})
+        activation_code = (json.loads(cell_data.decode('utf-8'))).get('activation_code',None)
+        if activation_code:
+            logging.error(LogMsg.USER_HAS_ACTIVATION_CODE)
+            raise Http_error(403, {'msg':Message.MSG4,'time':redis.ttl(cell_no)})
+        else:
+            logging.error((LogMsg.USER_HAS_SIGNUP_TOKEN))
+            raise Http_error(403, {'msg': Message.MSG4})
 
     logging.debug(LogMsg.GENERATING_REGISTERY_CODE.format(cell_no))
 
@@ -85,7 +98,7 @@ def register(data,db_session):
     if sent_data.get('status') != 200:
         raise Http_error(501,Message.MSG5)
 
-    redis.set(cell_no, password, ex=valid_registering_intervall)
+    redis.set(cell_no, json.dumps({'activation_code':password}), ex=valid_registering_intervall)
     result = {'msg':Message.MSG7,'cell_no':cell_no,'time':redis.ttl(cell_no)}
     logging.debug(LogMsg.SMS_SENT.format(cell_no))
 

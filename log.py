@@ -103,3 +103,5 @@ class LogMsg:
     NOT_EDITABLE = 'field is not editable'
     ENTITY_DELETED = 'the entity deleted successfully'
     RELATED_USER_DELETE = 'related user_id of person is {} is going to delete'
+    USER_HAS_SIGNUP_TOKEN = 'user has sign up token and new code cant send'
+    USER_HAS_ACTIVATION_CODE = 'user already has valid activation code and cant resend code now'
