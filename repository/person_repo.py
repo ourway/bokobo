@@ -16,8 +16,8 @@ def person_mail_exists(db_session,email):
 
 
 def validate_persons(person_list,db_session):
-        result = db_session.query(Person).filter(Person.id.in_(person_list)).first()
-        if len(person_list) == len(result):
+        result = db_session.query(Person).filter(Person.id.in_(set(person_list))).all()
+        if (result is not None) and (len(set(person_list)) == len(result)):
             return result
         else:
             raise Http_error(404,Message.Invalid_persons)
