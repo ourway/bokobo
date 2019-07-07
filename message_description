@@ -21,3 +21,4 @@ MSG19 = enum is not correct  type
 MSG20 = entity not found
 
 Invalid_persons = there is invalid person id in list
+ADDITION_ERROR = adding model to database failed

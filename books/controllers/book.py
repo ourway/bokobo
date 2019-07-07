@@ -187,15 +187,10 @@ def add_multiple_type_books(db_session, data, username):
     book_data = data.get('book')
 
     result = []
-
-    try:
-        for type in types:
-            book_data.update({'type': type})
-            book = add(db_session, book_data, username)
-            add_book_roles(book.id, roles, db_session, username)
-
-    except:
-        raise Http_error(500,LogMsg.ADDING_ERR)
+    for type in types:
+        book_data.update({'type': type})
+        book = add(db_session, book_data, username)
+        add_book_roles(book.id, roles, db_session, username)
 
     return {'msg':'successful'}
 
