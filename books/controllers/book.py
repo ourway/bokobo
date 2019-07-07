@@ -167,7 +167,7 @@ def book_to_dict(db_session,book):
         'rate': book.rate,
         'tags': book.tags,
         'title': book.title,
-        'type': model_to_dict(book.type),
+        'type': book.type.name,
         'version': book.version,
         'roles' : append_book_roles_dict(book.id, db_session),
         'files': book.files
