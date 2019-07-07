@@ -73,7 +73,7 @@ def get(id, db_session, username):
 
     return model_instance
 
-def edit(db_session,data,username):
+def edit(id,db_session,data,username):
     #TODO: you never checked version of passed data, we have version field in our
     #      records, to prevent conflict when we received two different edit request
     #      concurrently. check KAVEH codes (edit functions) to better understanding

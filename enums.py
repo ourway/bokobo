@@ -26,6 +26,8 @@ class Genre(enum.Enum):
     Social = 'Social'
     Religious = 'Religious'
     Historical = 'Historical'
+    Classic = 'Classic'
+    Science = 'Science'
 
 
 
