@@ -88,7 +88,7 @@ def register(data,db_session):
 
     logging.debug(LogMsg.GENERATING_REGISTERY_CODE.format(cell_no))
 
-    password = random.randint(1000, 9999)
+    password = str(random.randint(1000, 9999))
 
 
     message = '  کتابخوان جام جم \n کد احراز هویت شما : {}'.format(password)
