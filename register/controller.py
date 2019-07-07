@@ -39,6 +39,7 @@ def activate_account(data,db_session):
         raise Http_error(404,Message.MSG2)
 
     activation_code = (json.loads(cell_data.decode("utf-8"))).get('activation_code',None)
+    print(activation_code)
     if activation_code is None:
         logging.error(LogMsg.USER_HAS_SIGNUP_TOKEN)
         raise Http_error(404, Message.MSG2)
