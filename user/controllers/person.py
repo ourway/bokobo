@@ -98,7 +98,7 @@ def edit(id,db_session,data,username):
             item.strip()
         model_instance.tags = tags
 
-    del data['tags']
+        del data['tags']
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
