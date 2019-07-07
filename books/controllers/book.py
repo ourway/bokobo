@@ -332,3 +332,24 @@ def newest_books(db_session,username):
 
     return res
 
+
+
+def get_current_book(id, db_session):
+    logging.info(LogMsg.START)
+    logging.debug(LogMsg.MODEL_GETTING)
+    model_instance = db_session.query(Book).filter(Book.id == id).first()
+    book_roles = []
+    book_dict = None
+    if model_instance:
+
+        logging.debug(LogMsg.GET_SUCCESS +
+                      json.dumps(book_to_dict(db_session,model_instance)))
+
+        book_dict = book_to_dict(db_session,model_instance)
+
+    else:
+        logging.debug(LogMsg.MODEL_GETTING_FAILED)
+
+    logging.info(LogMsg.END)
+
+    return book_dict

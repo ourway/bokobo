@@ -8,7 +8,7 @@ from  log import logger,LogMsg
 from messages import Message
 from ..models import Person, User
 from repository.person_repo import person_cell_exists,person_mail_exists
-from books.controllers.book import get as get_book
+from books.controllers.book import get as get_book, get_current_book
 
 save_path = os.environ.get('save_path')
 
@@ -165,7 +165,7 @@ def get_person_profile(id, db_session, username):
     model_instance = db_session.query(Person).filter(Person.id == id).first()
     if model_instance:
         result = model_to_dict(model_instance)
-        result['current_book']=get_book(model_instance.current_book,db_session)
+        result['current_book']=get_current_book(model_instance.current_book,db_session) or None
         logging.debug(LogMsg.GET_SUCCESS +
                       json.dumps(result))
     else:

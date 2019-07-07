@@ -31,6 +31,4 @@ class Message:
     MSG30 = 'msg30'
     MSG31 = 'msg31'
     Invalid_persons = 'invalid_persons'
-
-
-
+    ADDITION_ERROR = 'addition_error'
