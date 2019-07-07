@@ -39,7 +39,7 @@ def signup(data,db_session,*args,**kwargs):
         user_data.update({'person_id':person.id})
     user = add_user(db_session,user_data,SIGNUP_USER)
 
-    full_name = '{} {}'.format(data.get('last_name'),data.get('name'))
+    full_name = '{} {}'.format(data.get('last_name',''),data.get('name',''))
 
     user_welcoming_data = {'receptor':cell_no,'message':' {} به سرویس کتابخوان جام جم خوش آمدید.\n\n لحظات خوش مطالعه به سبک مدرن '.format(full_name)}
     send_message(user_welcoming_data)
