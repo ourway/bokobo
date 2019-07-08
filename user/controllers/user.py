@@ -96,7 +96,6 @@ def get_profile(username, db_session):
 
     if model_instance:
         profile = get_person_profile(model_instance.person_id,db_session,username)
-        profile['username']=username
         logging.debug(LogMsg.GET_SUCCESS +
                       json.dumps(profile))
 
@@ -105,8 +104,9 @@ def get_profile(username, db_session):
         raise Http_error(404, Message.MSG20)
 
     logging.info(LogMsg.END)
-
-    return profile
+    result = model_to_dict(model_instance)
+    result['person'] = profile
+    return result
 
 
 def delete(id, db_session, username):

@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c0c5a2ed-fec7-4eec-812d-b527afe676e3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/infrastructure/password_generator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/message_description" beforeDir="false" afterPath="$PROJECT_DIR$/message_description" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messages.py" beforeDir="false" afterPath="$PROJECT_DIR$/messages.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/user/controllers/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/controllers/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,14 +24,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="266" selection-start-line="266" selection-end-line="266" />
+            <state relative-caret-position="115">
+              <caret line="108" column="17" selection-start-line="108" selection-start-column="17" selection-end-line="108" selection-end-column="17" />
               <folding>
                 <element signature="e#1#12#0" expanded="true" />
                 <element signature="e#3158#3678#0" />
+                <element signature="e#3720#4056#0" />
                 <element signature="e#4105#5274#0" />
                 <element signature="e#5304#5808#0" />
                 <element signature="e#5864#6907#0" />
@@ -57,8 +53,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/user/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="17" column="37" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="37" />
+            <state relative-caret-position="6">
+              <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
               <folding>
                 <element signature="e#0#104#0" expanded="true" />
               </folding>
@@ -69,8 +65,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/message_description">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="25" column="12" selection-start-line="25" selection-end-line="25" selection-end-column="12" />
+            <state relative-caret-position="298">
+              <caret line="26" lean-forward="true" selection-start-line="24" selection-end-line="26" />
             </state>
           </provider>
         </entry>
@@ -78,16 +74,16 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/messages.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="35" column="16" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="16" />
+            <state relative-caret-position="195">
+              <caret line="32" column="39" lean-forward="true" selection-start-line="32" selection-start-column="39" selection-end-line="32" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/send_message/send_message.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
+            <state relative-caret-position="123">
               <caret line="24" column="18" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
@@ -190,8 +186,8 @@
         <option value="$PROJECT_DIR$/infrastructure/password_generator.py" />
         <option value="$PROJECT_DIR$/message_description" />
         <option value="$PROJECT_DIR$/messages.py" />
-        <option value="$PROJECT_DIR$/user/controllers/user.py" />
         <option value="$PROJECT_DIR$/user/urls.py" />
+        <option value="$PROJECT_DIR$/user/controllers/user.py" />
       </list>
     </option>
   </component>
@@ -984,30 +980,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/message_description">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="25" column="12" selection-start-line="25" selection-end-line="25" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/messages.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="35" column="16" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/user/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="17" column="37" selection-start-line="17" selection-start-column="15" selection-end-line="17" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#104#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/helper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="169">
@@ -1015,26 +987,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
+    <entry file="file://$PROJECT_DIR$/send_message/send_message.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="266" selection-start-line="266" selection-end-line="266" />
+        <state relative-caret-position="123">
+          <caret line="24" column="18" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
           <folding>
-            <element signature="e#1#12#0" expanded="true" />
-            <element signature="e#3158#3678#0" />
-            <element signature="e#4105#5274#0" />
-            <element signature="e#5304#5808#0" />
-            <element signature="e#5864#6907#0" />
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/send_message/send_message.py">
+    <entry file="file://$PROJECT_DIR$/message_description">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="24" column="18" selection-start-line="24" selection-start-column="18" selection-end-line="24" selection-end-column="18" />
+        <state relative-caret-position="298">
+          <caret line="26" lean-forward="true" selection-start-line="24" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/messages.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="32" column="39" lean-forward="true" selection-start-line="32" selection-start-column="39" selection-end-line="32" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6">
+          <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#104#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="108" column="17" selection-start-line="108" selection-start-column="17" selection-end-line="108" selection-end-column="17" />
+          <folding>
+            <element signature="e#1#12#0" expanded="true" />
+            <element signature="e#3158#3678#0" />
+            <element signature="e#3720#4056#0" />
+            <element signature="e#4105#5274#0" />
+            <element signature="e#5304#5808#0" />
+            <element signature="e#5864#6907#0" />
           </folding>
         </state>
       </provider>
