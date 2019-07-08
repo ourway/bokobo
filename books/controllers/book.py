@@ -182,9 +182,9 @@ def add_multiple_type_books(db_session, data, username):
     check_enums(types, legal_types)
 
     roles = data.get('roles')
-    check_enums(roles.keys(), Roles)
 
-    book_data = data.get('book')
+
+    book_data = {k: v for k, v in data.items() if k not in ['roles','types']}
 
     result = []
     for type in types:
@@ -214,7 +214,7 @@ def edit_book(db_session, data, username):
             item.strip()
         model_instance.tags = tags
 
-    del data['tags']
+        del data['tags']
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
@@ -278,7 +278,7 @@ def search_by_title(data,db_session):
     return result
 
 
-def search_by_writer(data,db_session,username):
+def search_by_writer(data,db_session):
     logging.info(LogMsg.START)
     logging.debug(LogMsg.MODEL_GETTING)
     result = []
@@ -314,13 +314,13 @@ def search_by_genre(data, db_session):
     return result
 
 
-def search_book(data, db_session, username):
+def search_book(data, db_session):
     result = search_by_title(data,db_session)
     result.extend(search_by_genre(data,db_session))
     return result
 
 
-def newest_books(db_session,username):
+def newest_books(db_session):
 
     try:
         news = db_session.query(Book).order_by(Book.creation_date.desc()).all()

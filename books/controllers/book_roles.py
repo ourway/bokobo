@@ -1,6 +1,7 @@
 import json
 import logging
 
+from enums import Roles, check_enums
 from helper import Now, Http_error, model_to_dict
 from log import LogMsg
 from messages import Message
@@ -25,12 +26,18 @@ def add(db_session,data,username):
 
     return model_instance
 
-def add_book_roles(book_id,roles_dict,db_session,username):
+def add_book_roles(book_id,roles_dict_list,db_session,username):
     result = []
+    role_person={}
 
-    validate_persons(roles_dict.values(),db_session)
+    for item in roles_dict_list:
+        person = item.get('person')
+        role_person.update({item.get('role'):person.get('id')})
+    check_enums(role_person.keys(), Roles)
 
-    for role,person_id in roles_dict.items():
+    validate_persons(role_person.values(),db_session)
+
+    for role,person_id in role_person.items():
         data = {'role':role,
                 'book_id':book_id,
                 'person_id':person_id}
