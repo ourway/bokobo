@@ -32,3 +32,5 @@ class Message:
     MSG31 = 'msg31'
     Invalid_persons = 'invalid_persons'
     ADDITION_ERROR = 'addition_error'
+    USERNAME_CELLNO_REQUIRED = 'username_cellno_required'
+    INVALID_USER = 'invalid_user'

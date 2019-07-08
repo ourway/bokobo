@@ -1,13 +1,16 @@
 
 import json
 import logging
+import random
 from uuid import uuid4
 
+from infrastructure.password_generator import randompassword
 from log import LogMsg
 from helper import Now, model_to_dict, Http_error, multi_model_to_dict
 from messages import Message
 from repository.person_repo import validate_person
 from repository.user_repo import check_by_username, check_by_cell_no, check_by_id
+from send_message.send_message import send_message
 from user.models import User
 from .person import get as get_person , add as add_person, edit as edit_person, get_person_profile
 
@@ -241,3 +244,31 @@ def edit_profile(id, db_session, data, username):
     logging.info(LogMsg.END)
 
     return user_to_dict(user)
+
+
+def forget_pass(data,db_session):
+
+    username = data.get('username')
+    cell_no = data.get('cell_no')
+
+    user = None
+    if username:
+        user = check_by_username(username, db_session)
+    elif cell_no:
+        user = check_by_cell_no(cell_no, db_session)
+    else:
+        raise Http_error(400, Message.USERNAME_CELLNO_REQUIRED)
+
+    if user:
+        person = get_person(user.person_id, db_session, username)
+        password = randompassword()
+        message = 'با کلمه عبور زیر وارد شده و سپس کلمه عبور خود را تغییر دهید n/  {}'.format(password)
+        sending_data = {'receptor': person.cell_no, 'message': message}
+        send_message(sending_data)
+        user.password = password
+        return {'msg':'successful'}
+
+    raise Http_error(404,Message.INVALID_USER)
+
+
+

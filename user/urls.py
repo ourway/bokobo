@@ -1,4 +1,4 @@
-from user.controllers.user import add as add_user, get, get_all, delete, edit, get_profile, edit_profile
+from user.controllers.user import add as add_user, get, get_all, delete, edit, get_profile, edit_profile, forget_pass
 from user.controllers import person
 from helper import check_auth, inject_db, jsonify, pass_data
 
@@ -15,6 +15,8 @@ def call_router(app):
     app.route('/users/<id>', 'PUT', edit, apply=data_plus_wrappers)
     app.route('/users/profile', 'GET', get_profile, apply=wrappers)
     app.route('/profile/<id>', 'PUT', edit_profile, apply=data_plus_wrappers)
+    app.route('/users/forget-password', 'POST', forget_pass, apply=[inject_db,jsonify,pass_data])
+
 
     app.route('/persons', 'POST', person.add, apply=data_plus_wrappers)
     app.route('/persons', 'GET', person.get_all, apply=wrappers)
