@@ -34,3 +34,4 @@ class Message:
     ADDITION_ERROR = 'addition_error'
     USERNAME_CELLNO_REQUIRED = 'username_cellno_required'
     INVALID_USER = 'invalid_user'
+    INVALID_CODE = 'invalid_code'

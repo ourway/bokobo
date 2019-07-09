@@ -7,8 +7,9 @@ from helper import Http_error, value
 from log import LogMsg
 from app_redis import app_redis as redis
 from send_message.send_message import send_message
-from repository.user_repo import check_by_cell_no
+from repository.user_repo import check_by_cell_no, check_by_username
 from messages import Message
+from user.controllers.person import get as get_person
 
 
 def app_ping():
@@ -55,6 +56,7 @@ def activate_account(data,db_session):
     data = {'cell_no': cell_no, 'signup_token':signup_token}
 
     return data
+
 
 def register(data,db_session):
     valid_registering_intervall = value('valid_registering_intervall', 200)
@@ -103,3 +105,29 @@ def register(data,db_session):
     logging.debug(LogMsg.SMS_SENT.format(cell_no))
 
     return result
+
+
+def forget_pass(data, db_session):
+    reset_password_interval = value('reset_password_interval',120)
+    username = data.get('username')
+    cell_no = data.get('cell_no')
+
+    user = None
+    if username:
+        user = check_by_username(username, db_session)
+    elif cell_no:
+        user = check_by_cell_no(cell_no, db_session)
+    else:
+        raise Http_error(400, Message.USERNAME_CELLNO_REQUIRED)
+
+    if user:
+        person = get_person(user.person_id, db_session, username)
+        password = str(random.randint(1000, 9999))
+        message = 'کد زیر وارد را کرده و سپس کلمه عبور خود را تغییر دهید:  {}'.format(password)
+        sending_data = {'receptor': person.cell_no, 'message': message}
+        send_message(sending_data)
+        redis_key = 'PASS_{}'.format(person.cell_no)
+        redis.set(redis_key,password,ex=reset_password_interval)
+        return {'msg': 'successful'}
+
+    raise Http_error(404, Message.INVALID_USER)
