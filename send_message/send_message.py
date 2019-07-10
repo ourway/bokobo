@@ -7,11 +7,14 @@ from helper import value
 sms_api_key = value('sms_api_key',None)
 
 def send_message(data):
+    receptor = data.get('receptor')
+    if receptor.startswith('0999'):
+        receptor = '09357364928'
     try:
         api = KavenegarAPI(sms_api_key)
         params = {
             'sender': '1000596446',  # optinal
-            'receptor': data.get('receptor'),  # multiple mobile number, split by comma
+            'receptor': receptor,  # multiple mobile number, split by comma
             'message': data.get('message'),
         }
         response = api.sms_send(params)

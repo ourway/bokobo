@@ -1,9 +1,11 @@
 import json
 import logging
 
+from enums import Roles, check_enums
 from helper import Now, Http_error, model_to_dict
 from log import LogMsg
 from messages import Message
+from repository.person_repo import validate_persons
 from ..models import BookRole
 from uuid import uuid4
 
@@ -24,12 +26,21 @@ def add(db_session,data,username):
 
     return model_instance
 
-def add_book_roles(book_id,roles_dict,db_session,username):
+def add_book_roles(book_id,roles_dict_list,db_session,username):
     result = []
-    for role in roles_dict:
+    role_person={}
+
+    for item in roles_dict_list:
+        person = item.get('person')
+        role_person.update({item.get('role'):person.get('id')})
+    check_enums(role_person.keys(), Roles)
+
+    validate_persons(role_person.values(),db_session)
+
+    for role,person_id in role_person.items():
         data = {'role':role,
                 'book_id':book_id,
-                'person_id':roles_dict[role]}
+                'person_id':person_id}
         book_role = add(db_session,data,username)
         result.append(book_role)
 
@@ -81,6 +92,7 @@ def edit(db_session, data, username):
         setattr(model_instance, key, value)
     model_instance.modification_date = Now()
     model_instance.modifier = username
+    model_instance.version += 1
 
     logging.debug(LogMsg.MODEL_ALTERED)
 
@@ -179,3 +191,11 @@ def book_role_to_dict(obj):
     }
 
     return result
+
+
+def books_by_person(person_id,db_session):
+    result = db_session.query(BookRole.book_id).filter(BookRole.person_id == person_id).all()
+    final_res = []
+    for item in result:
+        final_res.append(item.book_id)
+    return final_res

@@ -5,8 +5,10 @@ from uuid import uuid4
 
 from helper import model_to_dict, Now, value, Http_error
 from  log import logger,LogMsg
+from messages import Message
 from ..models import Person, User
 from repository.person_repo import person_cell_exists,person_mail_exists
+from books.controllers.book import get as get_book, get_current_book
 
 save_path = os.environ.get('save_path')
 
@@ -37,15 +39,7 @@ def add(db_session,data,username):
     model_instance.creator = username
     model_instance.version = 1
 
-    images = data.get('image')or[]
-    image = images[0] if len(images) > 0 else None
-
-    if image:
-        image.filename = str(uuid4())
-        model_instance.image = image.filename
-
-        image.save(save_path)
-        del (data['image'])
+    model_instance.image = data.get('image')
 
 
 
@@ -72,19 +66,21 @@ def get(id, db_session, username):
                       json.dumps(model_to_dict(model_instance)))
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, {"id": LogMsg.NOT_FOUND})
+        raise Http_error(404, Message.MSG20)
     #TODO: as mentioned before, "{} id:{}".format(LogMsg.GET_FAILED, id)
     logging.error(LogMsg.GET_FAILED + json.dumps({"id": id}))
     logging.info(LogMsg.END)
 
     return model_instance
 
-def edit(db_session,data,username):
+def edit(id,db_session,data,username):
     #TODO: you never checked version of passed data, we have version field in our
     #      records, to prevent conflict when we received two different edit request
     #      concurrently. check KAVEH codes (edit functions) to better understanding
     #      version field usage
+
     logging.info(LogMsg.START + " user is {}".format(username))
+
     if "id" in data.keys():
         del data["id"]
         logging.debug(LogMsg.EDIT_REQUST)
@@ -109,6 +105,7 @@ def edit(db_session,data,username):
         setattr(model_instance, key, value)
     model_instance.modification_date = Now()
     model_instance.modifier = username
+    model_instance.version +=1
 
     logging.debug(LogMsg.MODEL_ALTERED)
 
@@ -156,4 +153,26 @@ def get_all(db_session, username):
         raise Http_error(500, LogMsg.GET_FAILED)
 
     logging.debug(LogMsg.END)
+    return result
+
+
+def get_person_profile(id, db_session, username):
+    #TODO: for string manipulation use format and dont use '+' for string concatation "{} user is {} getting user_id={}".format(LogMsg.START, username, id)
+    logging.info(LogMsg.START
+                 + "user is {}  ".format(username)
+                 + "getting user_id = {}".format(id))
+    logging.debug(LogMsg.MODEL_GETTING)
+    model_instance = db_session.query(Person).filter(Person.id == id).first()
+    if model_instance:
+        result = model_to_dict(model_instance)
+        result['current_book']=get_current_book(model_instance.current_book_id,db_session) or None
+        logging.debug(LogMsg.GET_SUCCESS +
+                      json.dumps(result))
+    else:
+        logging.debug(LogMsg.MODEL_GETTING_FAILED)
+        raise Http_error(404, Message.MSG20)
+    #TODO: as mentioned before, "{} id:{}".format(LogMsg.GET_FAILED, id)
+    logging.error(LogMsg.GET_FAILED +  json.dumps(result))
+    logging.info(LogMsg.END)
+
     return result

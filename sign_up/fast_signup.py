@@ -1,3 +1,4 @@
+import json
 import logging
 
 from configs import SIGNUP_USER
@@ -23,8 +24,8 @@ def signup(data,db_session,*args,**kwargs):
         logging.error(LogMsg.REGISTER_KEY_DOESNT_EXIST)
         raise Http_error(404, Message.MSG9)
 
-    signup_token = signup_token.decode("utf-8")
-    if signup_token != data.get('signup_token'):
+    signup_token = json.loads(signup_token.decode("utf-8")).get('signup_token',None)
+    if (signup_token is None) or (signup_token != data.get('signup_token')):
         logging.error(LogMsg.REGISTER_KEY_INVALID)
         raise Http_error(409, Message.MSG10)
 
@@ -38,7 +39,9 @@ def signup(data,db_session,*args,**kwargs):
         user_data.update({'person_id':person.id})
     user = add_user(db_session,user_data,SIGNUP_USER)
 
-    user_welcoming_data = {'receptor':cell_no,'message':' کاربر عزیز به سرویس کتابخوان جام جم خوش آمدید.\n لحظات خوش مطالعه به سبک مدرن '}
+    full_name = '{} {}'.format(data.get('last_name',''),data.get('name',''))
+
+    user_welcoming_data = {'receptor':cell_no,'message':' {} به سرویس کتابخوان جام جم خوش آمدید.\n\n لحظات خوش مطالعه به سبک مدرن '.format(full_name)}
     send_message(user_welcoming_data)
 
     result = {'user':user_to_dict(user),'person':model_to_dict(person)}

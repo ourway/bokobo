@@ -19,3 +19,9 @@ MSG17 = no auth found
 MSG18 = username is not valid
 MSG19 = enum is not correct  type
 MSG20 = entity not found
+
+Invalid_persons = there is invalid person id in list
+ADDITION_ERROR = adding model to database failed
+USERNAME_CELLNO_REQUIRED = for retrieving password username or cell_no must send
+INVALID_USER = the user by this data doesnt exist
+INVALID_CODE = the code is invalid

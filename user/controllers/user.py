@@ -1,15 +1,17 @@
 
 import json
 import logging
+import random
 from uuid import uuid4
+from app_redis import app_redis as redis
 
 from log import LogMsg
-from helper import Now, model_to_dict, Http_error, multi_model_to_dict
+from helper import Now, model_to_dict, Http_error
 from messages import Message
 from repository.person_repo import validate_person
 from repository.user_repo import check_by_username, check_by_cell_no, check_by_id
-from user.models import User, Person
-from .person import get as get_person , add as add_person, edit as edit_person
+from user.models import User
+from .person import get as get_person , add as add_person, edit as edit_person, get_person_profile
 
 
 def add(db_session, data,username):
@@ -92,16 +94,17 @@ def get_profile(username, db_session):
     model_instance = db_session.query(User).filter(User.username == username).first()
 
     if model_instance:
-        result = user_to_dict(model_instance)
+        profile = get_person_profile(model_instance.person_id,db_session,username)
         logging.debug(LogMsg.GET_SUCCESS +
-                      json.dumps(result))
+                      json.dumps(profile))
 
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, {"user": LogMsg.NOT_FOUND})
+        raise Http_error(404, Message.MSG20)
 
     logging.info(LogMsg.END)
-
+    result = model_to_dict(model_instance)
+    result['person'] = profile
     return result
 
 
@@ -240,3 +243,26 @@ def edit_profile(id, db_session, data, username):
     logging.info(LogMsg.END)
 
     return user_to_dict(user)
+
+
+def reset_pass(data,db_session):
+    cell_no = data.get('cell_no')
+    redis_key = 'PASS_{}'.format(cell_no)
+    code = redis.get(redis_key)
+    if code is None:
+        logging.error(LogMsg.REGISTER_KEY_DOESNT_EXIST)
+        raise Http_error(404, Message.INVALID_CODE)
+
+    code = code.decode("utf-8")
+    if (code is None) or (code != data.get('code')):
+        logging.error(LogMsg.REGISTER_KEY_INVALID)
+        raise Http_error(409, Message.INVALID_CODE)
+
+    user = check_by_cell_no(cell_no,db_session)
+
+    if user:
+        user.password = data.get('password')
+        return {'msg':'successful'}
+    raise Http_error(404, Message.INVALID_USER)
+
+
