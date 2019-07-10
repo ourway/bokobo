@@ -121,9 +121,9 @@ def forget_pass(data, db_session):
         raise Http_error(400, Message.USERNAME_CELLNO_REQUIRED)
 
     if user:
-        person = get_person(user.person_id, db_session, username)
+        person = get_person(user.person_id, db_session, user.username)
         password = str(random.randint(1000, 9999))
-        message = 'کد زیر وارد را کرده و سپس کلمه عبور خود را تغییر دهید:  {}'.format(password)
+        message = 'کاربر {} کد زیر وارد را کرده و سپس کلمه عبور خود را تغییر دهید:  {}'.format(password,user.username)
         sending_data = {'receptor': person.cell_no, 'message': message}
         send_message(sending_data)
         redis_key = 'PASS_{}'.format(person.cell_no)
