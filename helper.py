@@ -196,7 +196,10 @@ def jsonify(func):
             result = []
             for item in rtn:
                 print("list is here: ", rtn)
-                result.append(model_to_dict(item))
+                if isinstance(item,str):
+                    result.append(item)
+                else:
+                    result.append(model_to_dict(item))
             result = {"result": result}
         else:
             result = model_to_dict(rtn)
@@ -210,9 +213,9 @@ def pass_data(func):
     def wrapper(*args, **kwargs):
         if request.json:
             kwargs['data'] = request.json
-        elif request.forms:
+        elif request.files:
             my_data = {}
-            data_list = request.forms.dict
+            data_list = request.files.dict
             for key in data_list.keys():
                 my_data[key] = data_list[key][0]
             if (request.files != None) and (request.files.dict != None):

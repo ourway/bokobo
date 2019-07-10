@@ -1,3 +1,4 @@
+import os
 from uuid import uuid4
 
 from helper import value
@@ -5,10 +6,10 @@ from helper import value
 save_path = value('save_path',None)
 
 
-def upload_files(data,username,db_session):
+def upload_files(data,username):
     files_list = data.get('files')
     model_files  =[]
-    if len(files_list) > 0:
+    if files_list and len(files_list) > 0:
         for file in files_list:
             if file:
                 file.filename = str(uuid4())
@@ -18,3 +19,10 @@ def upload_files(data,username,db_session):
             file.save(save_path)
 
     return model_files
+
+
+def delete_files(data,username):
+    files = data.get('files')
+    for file in files:
+
+        os.remove(file)

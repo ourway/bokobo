@@ -2,6 +2,7 @@ import json
 import logging
 from uuid import uuid4
 
+from file_handler.save_file import delete_files, upload_files
 from helper import model_to_dict, Now, Http_error
 from log import LogMsg
 from books.models import Book
@@ -87,9 +88,20 @@ def edit(db_session, data, username):
         for item in tags:
             item.strip()
         model_instance.tags = tags
-        model_instance.version +=1
+    model_instance.version +=1
 
     del data['tags']
+
+    files = data.get('files',None)
+    images = data.get('images',None)
+    if files:
+        delete_files(model_instance.files)
+
+
+    if images:
+        delete_files(model_instance.images)
+
+
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
@@ -113,8 +125,12 @@ def delete(id, db_session, username):
     logging.info(LogMsg.DELETE_REQUEST + "user is {}".format(username))
 
     try:
+        book = db_session.query(Book).filter(Book.id == id).first()
+        if book.images:
+            delete_files(book.images)
+        if book.files:
+            delete_files(book.files)
         db_session.query(Book).filter(Book.id == id).delete()
-
         logging.debug(LogMsg.ENTITY_DELETED + "Book.id {}".format(id))
 
     except:
