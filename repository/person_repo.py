@@ -24,4 +24,24 @@ def validate_persons(person_list,db_session):
 
 
 def person_by_name(search_key,db_session):
-    result = db_session.query(Person).filter(or_(Person.name.Like(search_key),Person.last_name.Like(search_key)))
+    return db_session.query(Person).filter(or_(Person.name.Like(search_key),Person.last_name.Like(search_key)))
+
+
+def full_name_by_id(person_id,db_session):
+    person = db_session.query(Person).filter(Person.id == person_id).first()
+    last_name = person.last_name or ''
+    first_name = person.name or ''
+    full_name = '{} {}'.format(last_name,first_name)
+    return full_name
+
+def fullname_persons(person_list, db_session):
+    res=[]
+    result = db_session.query(Person).filter(Person.id.in_(set(person_list))).all()
+    if (result is not None) and (len(set(person_list)) == len(result)):
+        for person in result:
+            name = person.name or ''
+            last_name = person.last_name or ''
+            res.append('{} {}'.format(last_name,name))
+        return res
+    else:
+        raise Http_error(404, Message.Invalid_persons)

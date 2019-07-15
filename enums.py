@@ -45,3 +45,16 @@ def str_genre(genre_list):
     for genre in genre_list:
         res.append((getattr(Genre,genre)).value)
     return res
+
+
+def str_type(btype):
+    if btype is not None:
+        return (getattr(BookTypes,btype)).value
+    else:
+        return ''
+
+def str_role(role):
+    if role is not None:
+        return (getattr(Roles,role)).value
+    else:
+        return ''
