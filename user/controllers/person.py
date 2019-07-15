@@ -35,6 +35,10 @@ def add(db_session,data,username):
     model_instance.phone = data.get('phone')
     model_instance.email = data.get('email')
     model_instance.cell_no = data.get('cell_no')
+    model_instance.bio = data.get('bio')
+    model_instance.following_list = data.get('following_list')
+    model_instance.follower_list = data.get('follower_list')
+    model_instance.tags = data.get('tags')
     model_instance.creation_date = Now()
     model_instance.creator = username
     model_instance.version = 1
@@ -91,14 +95,6 @@ def edit(id,db_session,data,username):
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, {"id": LogMsg.NOT_FOUND})
-
-    if data.get('tags') is not None:
-        tags = (data.get('tags')).split(',')
-        for item in tags:
-            item.strip()
-        model_instance.tags = tags
-
-        del data['tags']
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class

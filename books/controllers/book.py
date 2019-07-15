@@ -12,13 +12,11 @@ from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delet
     books_by_person
 
 
-def add(db_session, data, username):
-        # logger.info(LogMsg.START,extra={'data':data,'user':username})
+def add(db_session, data, username,**kwargs):
 
     genre = data.get('genre',[])
     if genre and len(genre)>0:
             check_enums(genre,Genre)
-
 
     model_instance = Book()
     model_instance.id = str(uuid4())
@@ -31,12 +29,15 @@ def add(db_session, data, username):
     model_instance.files = data.get('files')
     model_instance.language = data.get('language')
     model_instance.rate = data.get('rate')
+    model_instance.description = data.get('description')
+    model_instance.pages = data.get('pages')
+    model_instance.duration = data.get('duration')
+    model_instance.size = data.get('size')
+    model_instance.isben = data.get('isben')
+    model_instance.tags = data.get('tags')
     model_instance.creation_date = Now()
     model_instance.creator = username
     model_instance.version = 1
-
-
-# logger.debug(LogMsg.DATA_ADDITION)
 
     db_session.add(model_instance)
 
@@ -47,10 +48,11 @@ def add(db_session, data, username):
 
 
 def get(id, db_session):
+
     logging.info(LogMsg.START)
     logging.debug(LogMsg.MODEL_GETTING)
+
     model_instance = db_session.query(Book).filter(Book.id == id).first()
-    book_roles = []
     if model_instance:
 
         logging.debug(LogMsg.GET_SUCCESS +
@@ -81,15 +83,6 @@ def edit(db_session, data, username):
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, Message.MSG20)
-
-    if data.get('tags') is not None:
-        tags = (data.get('tags')).split(',')
-        for item in tags:
-            item.strip()
-        model_instance.tags = tags
-    model_instance.version +=1
-
-    del data['tags']
 
     files = data.get('files',None)
     images = data.get('images',None)
@@ -185,7 +178,12 @@ def book_to_dict(db_session,book):
         'type': book.type.name,
         'version': book.version,
         'roles' : append_book_roles_dict(book.id, db_session),
-        'files': book.files
+        'files': book.files,
+        'description': book.description,
+        'pages': book.pages,
+        'duration': book.duration,
+        'size': book.size,
+        'isben': book.isben,
 
     }
 
@@ -222,14 +220,6 @@ def edit_book(db_session, data, username):
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, Message.MSG20)
-
-    if data.get('tags') is not None:
-        tags = (data.get('tags')).split(',')
-        for item in tags:
-            item.strip()
-        model_instance.tags = tags
-
-        del data['tags']
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
