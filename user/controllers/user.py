@@ -105,6 +105,7 @@ def get_profile(username, db_session):
     logging.info(LogMsg.END)
     result = model_to_dict(model_instance)
     result['person'] = profile
+    del result['password']
     return result
 
 

@@ -2,11 +2,11 @@ import json
 import logging
 from uuid import uuid4
 
-from file_handler.save_file import delete_files, upload_files
-from helper import model_to_dict, Now, Http_error
+from file_handler.handle_file import delete_files
+from helper import Now, Http_error
 from log import LogMsg
 from books.models import Book
-from enums import BookTypes as legal_types, Roles, check_enums, Genre, str_genre
+from enums import BookTypes as legal_types, check_enums, Genre, str_genre
 from messages import Message
 from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delete_book_roles, append_book_roles_dict, \
     books_by_person
@@ -18,7 +18,6 @@ def add(db_session, data, username):
     genre = data.get('genre',[])
     if genre and len(genre)>0:
             check_enums(genre,Genre)
-
 
 
     model_instance = Book()
