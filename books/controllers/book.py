@@ -119,7 +119,6 @@ def delete(id, db_session, username):
         if book.files:
             delete_files(book.files)
         db_session.query(Book).filter(Book.id == id).delete()
-        client.delete_object(book)
         logging.debug(LogMsg.ENTITY_DELETED + "Book.id {}".format(id))
 
     except:
@@ -227,6 +226,13 @@ def edit_book(id, db_session, data, username):
         del data["id"]
     logging.debug(LogMsg.EDIT_REQUST)
 
+    roles =[]
+    elastic_data = {}
+
+    if 'roles' in data.keys():
+        roles = data.get('roles')
+        del data['role']
+
     if model_instance:
         logging.debug(LogMsg.MODEL_GETTING)
     else:
@@ -240,17 +246,16 @@ def edit_book(id, db_session, data, username):
     model_instance.modifier = username
     model_instance.version += 1
 
-    delete_book_roles(model_instance.id, db_session)
-    roles, elastic_data = add_book_roles(model_instance.id, data.get('roles'), db_session, username)
-    new_roles = []
-    for role in roles:
-        new_roles.append(book_role_to_dict(role))
+    if len(roles)>0:
 
-    indexing_data = data
-    indexing_data.update(elastic_data)
+        delete_book_roles(model_instance.id, db_session)
+        roles, elastic_data = add_book_roles(model_instance.id, roles, db_session, username)
+        new_roles = []
+        for role in roles:
+            new_roles.append(book_role_to_dict(role))
+
+    indexing_data = book_to_dict(db_session,model_instance)
     indexing_data['book_id'] = model_instance.id
-    indexing_data['type'] = model_instance.type
-    indexing_data['tags'] = model_instance.tags
 
     delete_book_index(model_instance.id)
     index_book(indexing_data, db_session)

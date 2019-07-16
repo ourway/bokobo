@@ -120,6 +120,7 @@ lpictures*
 * files/
 * files/*
 /files
+files/*
 
 *.idea/
 *.idea/*

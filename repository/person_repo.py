@@ -28,6 +28,8 @@ def person_by_name(search_key,db_session):
 
 
 def full_name_by_id(person_id,db_session):
+    if person_id is None:
+        return ''
     person = db_session.query(Person).filter(Person.id == person_id).first()
     last_name = person.last_name or ''
     first_name = person.name or ''
@@ -36,6 +38,9 @@ def full_name_by_id(person_id,db_session):
 
 def fullname_persons(person_list, db_session):
     res=[]
+    if len(person_list) <1 :
+        return res
+
     result = db_session.query(Person).filter(Person.id.in_(set(person_list))).all()
     if (result is not None) and (len(set(person_list)) == len(result)):
         for person in result:

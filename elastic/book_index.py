@@ -31,14 +31,14 @@ if not es.indices.exists('online_library'):
 def prepare_book_index_data(data, db_session):
     index_data = {
         'title': data.get('title', None),
-        'genre': str_genre(data.get('genre', None)),
-        'persons': fullname_persons(data.get('persons', None), db_session),
+        'genre': data.get('genre', None),
+        'persons': fullname_persons(data.get('persons', []), db_session),
         'rate': data.get('rate', None),
         'pub_year': data.get('pub_year', None),
         'press': full_name_by_id(data.get('Press', None), db_session),
         'writer': full_name_by_id(data.get('Writer', None), db_session),
         'language': data.get('language', None),
-        'type': str_type(data.get('type')),
+        'type': data.get('type',None),
         'tags': data.get('tags', None),
         'book_id': data.get('book_id', None),
         'description': data.get('description', None),
@@ -47,6 +47,7 @@ def prepare_book_index_data(data, db_session):
         'size': data.get('size', None)
 
     }
+
     return index_data
 
 
