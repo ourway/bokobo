@@ -36,3 +36,4 @@ class Message:
     INVALID_USER = 'invalid_user'
     INVALID_CODE = 'invalid_code'
     FILTER_REQUIRED = 'filter_required'
+    UPLOAD_FAILED = 'upload_failed'
