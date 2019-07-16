@@ -8,4 +8,4 @@ def call_router(app):
     data_plus_wrappers.append(pass_data)
 
     app.route('/upload', 'POST', upload_files, apply=data_plus_wrappers)
-    app.route('/serve-files/<file_path>', 'GET', return_file)
+    app.route('/serve-files/<filename>', 'GET', return_file)

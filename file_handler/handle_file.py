@@ -16,25 +16,25 @@ def upload_files(data, **kwargs):
         for file in files_list:
             if file:
                 file.filename = str(uuid4())
-                file_path = save_path+'/'+file.filename
-                model_files.append(file_path)
+                model_files.append(file.filename)
 
-            file.save(save_path)
+                file.save(save_path)
 
     return model_files
 
 
 def delete_files(files, **kwargs):
 
-    for file in files:
+    for filename in files:
+        file_path = '{}/{}'.format(save_path,filename)
 
-        os.remove(file)
+        os.remove(file_path)
 
 
-def return_file(file_path, **kwargs):
-    filename = file_path.split('/')[-1]
+def return_file(filename, **kwargs):
     response.body = static_file(filename, root=save_path)
-    response.content_type = file_mime_type(filename)
+    file_path = '{}/{}'.format(save_path,filename)
+    response.content_type = file_mime_type(file_path)
     return response
 
 

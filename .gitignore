@@ -116,3 +116,5 @@ logs/
 /pictures
 lpictures*
 
+*.idea/
+*.idea/*
