@@ -90,9 +90,10 @@ def search_phrase(data):
         count = hits.get('total')
 
         print('count ==> {}'.format(count))
+        rs = hits.get('hits')
+        print('hits ==> {} , len_hits = {}'.format(rs,len(rs)))
 
-        if count > 0:
-            rs = hits.get('hits')
+        if len(rs) > 0:
             for item in rs:
                 result.append(item.get('_id'))
     return result
