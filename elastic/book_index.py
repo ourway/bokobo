@@ -91,7 +91,7 @@ def search_phrase(data):
 
         print('count ==> {}'.format(count))
         rs = hits.get('hits')
-        print('hits ==> {} , len_hits = {}'.format(rs,len(rs)))
+        print('hits ==> {} ,\n\n\n\n\n\n len_hits = {}\n\n\n\n\n\n'.format(rs,len(rs)))
 
         if len(rs) > 0:
             for item in rs:
