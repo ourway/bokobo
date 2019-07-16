@@ -196,7 +196,10 @@ def jsonify(func):
             result = []
             for item in rtn:
                 print("list is here: ", rtn)
-                result.append(model_to_dict(item))
+                if isinstance(item,str):
+                    result.append(item)
+                else:
+                    result.append(model_to_dict(item))
             result = {"result": result}
         else:
             result = model_to_dict(rtn)
@@ -208,9 +211,9 @@ def jsonify(func):
 
 def pass_data(func):
     def wrapper(*args, **kwargs):
-        if request.json:
+        if request.json is not None:
             kwargs['data'] = request.json
-        elif request.forms:
+        elif request.forms is not None:
             my_data = {}
             data_list = request.forms.dict
             for key in data_list.keys():
@@ -248,14 +251,6 @@ def validate_token(id, db_session):
     if result is None or result.expiration_date < Now():
         raise Http_error(401,Message.MSG11 )
     return result
-
-
-def file_mime_type(filename):
-    # m = magic.open(magic.MAGIC_MIME)
-    m = magic.from_file(filename, mime=True)
-    print(m)
-
-    return str(m)
 
 
 def check_schema(required_list,data_keys):

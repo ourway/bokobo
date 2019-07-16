@@ -2,23 +2,21 @@ import json
 import logging
 from uuid import uuid4
 
-from helper import model_to_dict, Now, Http_error
+from file_handler.handle_file import delete_files
+from helper import Now, Http_error
 from log import LogMsg
 from books.models import Book
-from enums import BookTypes as legal_types, Roles, check_enums, Genre, str_genre
+from enums import BookTypes as legal_types, check_enums, Genre, str_genre
 from messages import Message
 from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delete_book_roles, append_book_roles_dict, \
     books_by_person
 
 
-def add(db_session, data, username):
-        # logger.info(LogMsg.START,extra={'data':data,'user':username})
+def add(db_session, data, username,**kwargs):
 
     genre = data.get('genre',[])
     if genre and len(genre)>0:
             check_enums(genre,Genre)
-
-
 
     model_instance = Book()
     model_instance.id = str(uuid4())
@@ -31,12 +29,15 @@ def add(db_session, data, username):
     model_instance.files = data.get('files')
     model_instance.language = data.get('language')
     model_instance.rate = data.get('rate')
+    model_instance.description = data.get('description')
+    model_instance.pages = data.get('pages')
+    model_instance.duration = data.get('duration')
+    model_instance.size = data.get('size')
+    model_instance.isben = data.get('isben')
+    model_instance.tags = data.get('tags')
     model_instance.creation_date = Now()
     model_instance.creator = username
     model_instance.version = 1
-
-
-# logger.debug(LogMsg.DATA_ADDITION)
 
     db_session.add(model_instance)
 
@@ -47,10 +48,11 @@ def add(db_session, data, username):
 
 
 def get(id, db_session):
+
     logging.info(LogMsg.START)
     logging.debug(LogMsg.MODEL_GETTING)
+
     model_instance = db_session.query(Book).filter(Book.id == id).first()
-    book_roles = []
     if model_instance:
 
         logging.debug(LogMsg.GET_SUCCESS +
@@ -82,14 +84,16 @@ def edit(db_session, data, username):
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, Message.MSG20)
 
-    if data.get('tags') is not None:
-        tags = (data.get('tags')).split(',')
-        for item in tags:
-            item.strip()
-        model_instance.tags = tags
-        model_instance.version +=1
+    files = data.get('files',None)
+    images = data.get('images',None)
+    if files:
+        delete_files(model_instance.files)
 
-    del data['tags']
+
+    if images:
+        delete_files(model_instance.images)
+
+
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
@@ -113,8 +117,12 @@ def delete(id, db_session, username):
     logging.info(LogMsg.DELETE_REQUEST + "user is {}".format(username))
 
     try:
+        book = db_session.query(Book).filter(Book.id == id).first()
+        if book.images:
+            delete_files(book.images)
+        if book.files:
+            delete_files(book.files)
         db_session.query(Book).filter(Book.id == id).delete()
-
         logging.debug(LogMsg.ENTITY_DELETED + "Book.id {}".format(id))
 
     except:
@@ -170,7 +178,12 @@ def book_to_dict(db_session,book):
         'type': book.type.name,
         'version': book.version,
         'roles' : append_book_roles_dict(book.id, db_session),
-        'files': book.files
+        'files': book.files,
+        'description': book.description,
+        'pages': book.pages,
+        'duration': book.duration,
+        'size': book.size,
+        'isben': book.isben,
 
     }
 
@@ -207,14 +220,6 @@ def edit_book(db_session, data, username):
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, Message.MSG20)
-
-    if data.get('tags') is not None:
-        tags = (data.get('tags')).split(',')
-        for item in tags:
-            item.strip()
-        model_instance.tags = tags
-
-        del data['tags']
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
@@ -266,10 +271,13 @@ def search_by_title(data,db_session):
     logging.info(LogMsg.START)
     logging.debug(LogMsg.MODEL_GETTING)
 
+    search_phrase = data.get('search_phrase')
+    offset = data.get('offset')
+    limit = data.get('limit')
+
     try:
-        search_key = data.get('search_key')
         result = []
-        books = db_session.query(Book).filter(Book.title.like('%{}%'.format(search_key))).all()
+        books = db_session.query(Book).filter(Book.title.like('%{}%'.format(search_phrase))).slice(offset,offset+limit)
         for book in books:
             result.append(book_to_dict(db_session, book))
     except:
@@ -283,13 +291,18 @@ def search_by_writer(data,db_session):
     logging.debug(LogMsg.MODEL_GETTING)
     result = []
 
+    offset = data.get('offset')
+    limit = data.get('limit')
+    person_id = data.get('search_phrase')
+    book_id = data.get('book_id', None)
+
     try:
-        person_id = data.get('person_id')
-        book_id = data.get('book_id')
+
         book_ids = books_by_person(person_id, db_session)
         book_ids = set(book_ids)
-        book_ids.remove(book_id)
-        books = db_session.query(Book).filter(Book.id.in_(book_ids)).all()
+        if book_id is not None:
+            book_ids.remove(book_id)
+        books = db_session.query(Book).filter(Book.id.in_(book_ids)).slice(offset,offset+limit)
         for book in books:
             result.append(book_to_dict(db_session, book))
     except:
@@ -302,11 +315,13 @@ def search_by_genre(data, db_session):
     logging.info(LogMsg.START)
     logging.debug(LogMsg.MODEL_GETTING)
 
-    search_key = data.get('search_key')
+    search_phrase = data.get('search_phrase')
+    offset = data.get('offset')
+    limit = data.get('limit')
     result = []
     try:
 
-        books = db_session.query(Book).filter(Book.genre.any(search_key)).all()
+        books = db_session.query(Book).filter(Book.genre.any(search_phrase)).slice(offset,offset+limit)
         for book in books:
             result.append(book_to_dict(db_session,book))
     except:
@@ -314,16 +329,57 @@ def search_by_genre(data, db_session):
     return result
 
 
-def search_book(data, db_session):
-    result = search_by_title(data,db_session)
-    result.extend(search_by_genre(data,db_session))
+def search_by_tags(data,db_session):
+    logging.info(LogMsg.START)
+    logging.debug(LogMsg.MODEL_GETTING)
+
+    search_phrase = data.get('search_phrase')
+    offset = data.get('offset')
+    limit = data.get('limit')
+    result = []
+    try:
+
+        books = db_session.query(Book).filter(Book.tags.any(search_phrase)).slice(offset, offset + limit)
+        for book in books:
+            result.append(book_to_dict(db_session, book))
+    except:
+        raise Http_error(404, Message.MSG20)
     return result
 
 
-def newest_books(db_session):
+def search_book(data, db_session):
+    offset = data.get('offset',0)
+    limit= data.get('limit',100)
+    filter = data.get('filter',None)
+    result = []
+
+    if filter is None:
+        raise Http_error(400,Message.FILTER_REQUIRED)
+
+    search_key= next(iter(filter.keys()))
+    search_phrase = filter.get(search_key)
+
+    search_data = {'limit':limit,'offset':offset,'search_phrase':search_phrase}
+    if search_key == 'genre':
+        result = search_by_genre(search_data,db_session)
+    elif search_key == 'title':
+        result = search_by_title(search_data,db_session)
+    elif search_key == 'writer':
+        book_id = filter.get('book_id',None)
+        search_data['book_id'] = book_id
+        result = search_by_writer(search_data,db_session)
+    elif search_key == 'tag':
+        result = search_by_tags(search_data,db_session)
+
+    return result
+
+
+def newest_books(data,db_session):
+    offset = data.get('offset')
+    limit = data.get('limit')
 
     try:
-        news = db_session.query(Book).order_by(Book.creation_date.desc()).all()
+        news = db_session.query(Book).order_by(Book.creation_date.desc()).slice(offset,offset+limit)
         res = []
         for book in news:
             res.append(book_to_dict(db_session,book))

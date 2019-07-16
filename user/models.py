@@ -17,6 +17,9 @@ class Person(PrimaryModel,Base):
     email = Column(String,unique=True,nullable=True)
     cell_no = Column(String,unique=True)
     current_book_id = Column(UUID)
+    bio = Column(String)
+    following_list = Column(ARRAY(UUID))
+    follower_list = Column(ARRAY(UUID))
 
 
 class User(PrimaryModel,Base):

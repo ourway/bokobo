@@ -43,6 +43,8 @@ def add(db_session, data,username):
     model_instance.id = str(uuid4())
     model_instance.creation_date = Now()
     model_instance.creator = username
+    model_instance.tags = data.get('tags')
+
 
     person_is_valid = None
     person_id = data.get('person_id')
@@ -105,6 +107,7 @@ def get_profile(username, db_session):
     logging.info(LogMsg.END)
     result = model_to_dict(model_instance)
     result['person'] = profile
+    del result['password']
     return result
 
 
@@ -165,13 +168,7 @@ def edit(id, db_session, data, username):
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, {"id": LogMsg.NOT_FOUND})
 
-    if data.get('tags') is not None:
-        tags = (data.get('tags')).split(',')
-        for item in tags:
-            item.strip()
-        model_instance.tags = tags
 
-        del data['tags']
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class

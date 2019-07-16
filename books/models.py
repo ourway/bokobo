@@ -18,6 +18,12 @@ class Book(Base,PrimaryModel):
     rate = Column(Float)
     images = Column(ARRAY(UUID))
     files = Column(ARRAY(UUID))
+    description = Column(String)
+    pages = Column(String)
+    duration = Column(String)
+    size = Column(String)
+    isben = Column(String)
+
 
     # roles = relationship('BookRole')
     # users = relationship('Library', uselist=True)
