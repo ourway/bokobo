@@ -196,7 +196,7 @@ def book_role_to_dict(obj):
         'version': obj.version
     }
 
-    if isinstance(obj.type,str):
+    if isinstance(obj.role,str):
         result['role'] = obj.role
     else:
         result['role'] = obj.role.name
