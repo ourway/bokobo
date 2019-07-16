@@ -2,13 +2,12 @@ import json
 import logging
 from uuid import uuid4
 
-from db_session import client
-from elastic.book_index import index_book, delete_book_index, search_phrase, wildcard_es
+from elastic.book_index import index_book, delete_book_index, search_phrase
 from file_handler.handle_file import delete_files
 from helper import Now, Http_error
 from log import LogMsg
 from books.models import Book
-from enums import BookTypes as legal_types, check_enums, Genre, str_genre, str_type
+from enums import BookTypes as legal_types, check_enums, Genre, str_genre
 from messages import Message
 from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delete_book_roles, append_book_roles_dict, \
     books_by_person
@@ -43,7 +42,6 @@ def add(db_session, data, username, **kwargs):
 
     db_session.add(model_instance)
 
-    # logger.debug(LogMsg.DB_ADD,extra = {'person':model_to_dict(model_instance)})
 
     # logger.info(LogMsg.END)
     return model_instance
