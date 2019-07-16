@@ -13,6 +13,7 @@ def call_router(app):
     app.route('/books/<id>', 'DELETE', book.delete_book, apply=[check_auth, inject_db])
     app.route('/books', 'POST', book.add_multiple_type_books, apply=data_plus_wrappers)
     app.route('/books/_search', 'POST', book.search_book, apply=[inject_db, jsonify,pass_data])
+    app.route('/books/search-phrase', 'POST', book.search_by_phrase, apply=[inject_db, jsonify,pass_data])
     app.route('/books/<id>', 'PUT', book.edit_book, apply=data_plus_wrappers)
 
 

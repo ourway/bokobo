@@ -23,11 +23,12 @@ mapping = {
     }
 }
 
+# es.indices.delete('online_library')
 if not es.indices.exists('online_library'):
     es.indices.create('online_library')
 
 
-def index_book(data, db_session):
+def prepare_book_index_data(data, db_session):
     index_data = {
         'title': data.get('title', None),
         'genre': str_genre(data.get('genre', None)),
@@ -40,12 +41,19 @@ def index_book(data, db_session):
         'type': str_type(data.get('type')),
         'tags': data.get('tags', None),
         'book_id': data.get('book_id', None),
-        'description': data.get('description', None)
-    }
+        'description': data.get('description', None),
+        'pages': data.get('pages', None),
+        'duration': data.get('duration', None),
+        'size': data.get('size', None)
 
+    }
+    return index_data
+
+
+def index_book(data, db_session):
+    index_data = prepare_book_index_data(data, db_session)
     rs = es.index(index='online_library', doc_type='book', body=index_data, id=data.get('book_id'))
     print(rs)
-
     return {'msg': 'successful'}
 
 
@@ -64,17 +72,23 @@ def get(book_id):
     return es.get(index='online_library', id=book_id)
 
 
-def search_phrase(search_phrase):
+def search_phrase(data):
     result = []
     fields = get_fields_by_boost()
-    es_res = es.search(index='online_library', body={'from': 0, 'size': 4, 'query': {
-        'multi_match': {'query': search_phrase, 'type': 'most_fields', 'fields': fields, 'fuzziness': 'AUTO'}}})
 
-    hits = es_res.get('hits',None)
-    count =0
+    es_res = es.search(index='online_library',
+                       body={'from': data.get('from'), 'size': data.get('size'), 'query': {'query_string': {
+                           'query': '*{}*'.format(data.get('search_phrase')), 'fields': fields,
+                           'rewrite': 'constant_score'}}})
+    #
+    # es_res = es.search(index='online_library', body={'from': 0, 'size': 4, 'query': {
+    #     'multi_match': {'query': search_phrase, 'type': 'most_fields', 'fields': fields, 'fuzziness': 'AUTO'}}})
+
+    hits = es_res.get('hits', None)
+    count = 0
     if hits is not None:
         count = hits.get('total')
-        if count > 0 :
+        if count > 0:
             rs = hits.get('hits')
             for item in rs:
                 result.append(item.get('_id'))
@@ -82,7 +96,7 @@ def search_phrase(search_phrase):
 
 
 def get_fields_by_boost():
-    fields = ['title^5', 'writer^4', 'press^3', 'persons^2', 'genre^3', 'tags^2', 'type^1', 'description', 'rate',
+    fields = ['title^10', 'writer^8', 'press^7', 'persons^6', 'genre^6', 'tags^7', 'type', 'description', 'rate',
               'pub_year', 'language']
     return fields
 
