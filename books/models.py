@@ -1,9 +1,8 @@
 from sqlalchemy.dialects.postgresql import ARRAY,UUID
-from sqlalchemy import String, JSON, Column, ForeignKey, Float, Enum, UniqueConstraint
+from sqlalchemy import String, JSON, Column, ForeignKey, Float, Enum
 from sqlalchemy.orm import relationship
-
 from db_session import Base, PrimaryModel
-from enums import Roles,BookTypes,Genre
+from enums import Roles,BookTypes
 from user.models import Person, User
 
 
@@ -23,7 +22,6 @@ class Book(Base,PrimaryModel):
     duration = Column(String)
     size = Column(String)
     isben = Column(String)
-
 
     # roles = relationship('BookRole')
     # users = relationship('Library', uselist=True)

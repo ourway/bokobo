@@ -1,7 +1,7 @@
 import json
 import logging
 
-from enums import Roles, check_enums
+from enums import Roles, check_enums, str_role
 from helper import Now, Http_error, model_to_dict
 from log import LogMsg
 from messages import Message
@@ -37,14 +37,21 @@ def add_book_roles(book_id,roles_dict_list,db_session,username):
 
     validate_persons(role_person.values(),db_session)
 
+    elastic_data = {'persons': list(role_person.values())}
+
     for role,person_id in role_person.items():
         data = {'role':role,
                 'book_id':book_id,
                 'person_id':person_id}
+        if role =='Writer':
+            elastic_data['Writer'] = person_id
+        elif role == 'Press':
+            elastic_data['Press'] = person_id
+
         book_role = add(db_session,data,username)
         result.append(book_role)
 
-    return result
+    return result, elastic_data
 
 
 def get(id, db_session):
@@ -184,7 +191,7 @@ def book_role_to_dict(obj):
         'id': obj.id,
         'modification_date': obj.modification_date,
         'modifier': obj.modifier,
-        'role':obj.role.name,
+        'role':str_role(obj.role),
         'person':model_to_dict(obj.person),
         'tags': obj.tags,
         'version': obj.version

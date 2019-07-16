@@ -1,15 +1,22 @@
 from contextlib import contextmanager
 
-
+from bottle import request
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.dialects.postgresql import UUID, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from configs import DATABASE_URI
+from pyramid_es import get_client
 
 Base = declarative_base()
 
 engine = create_engine(DATABASE_URI)
+
+# from elastic.elastic_engine import es
+# client = get_client(es)
+from pyramid_es import  ElasticClient
+client = ElasticClient(['localhost:9200'],index='books')
+
 
 
 class PrimaryModel:
