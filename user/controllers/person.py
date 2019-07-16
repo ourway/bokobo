@@ -15,7 +15,8 @@ save_path = os.environ.get('save_path')
 
 def add(db_session,data,username):
 
-    if person_cell_exists(db_session,data.get('cell_no')):
+    cell_no = data.get('cell_no')
+    if cell_no and person_cell_exists(db_session,cell_no):
         raise Http_error(409,LogMsg.PERSON_EXISTS.format('cell_no'))
 
     email = data.get('email')
