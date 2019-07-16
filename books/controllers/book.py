@@ -172,7 +172,6 @@ def book_to_dict(db_session, book):
         'rate': book.rate,
         'tags': book.tags,
         'title': book.title,
-        'type': book.type.name,
         'version': book.version,
         'roles': append_book_roles_dict(book.id, db_session),
         'files': book.files,
@@ -183,6 +182,10 @@ def book_to_dict(db_session, book):
         'isben': book.isben,
 
     }
+    if isinstance(book.type,str):
+        result['type'] = book.type
+    else:
+        result['type'] = book.type.name
 
     return result
 

@@ -191,11 +191,15 @@ def book_role_to_dict(obj):
         'id': obj.id,
         'modification_date': obj.modification_date,
         'modifier': obj.modifier,
-        'role':obj.role.name,
         'person':model_to_dict(obj.person),
         'tags': obj.tags,
         'version': obj.version
     }
+
+    if isinstance(obj.type,str):
+        result['role'] = obj.role
+    else:
+        result['role'] = obj.role.name
 
     return result
 
