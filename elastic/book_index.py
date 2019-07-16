@@ -88,6 +88,9 @@ def search_phrase(data):
     count = 0
     if hits is not None:
         count = hits.get('total')
+
+        print('count ==> {}'.format(count))
+
         if count > 0:
             rs = hits.get('hits')
             for item in rs:
