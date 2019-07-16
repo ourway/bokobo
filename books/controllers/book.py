@@ -395,8 +395,18 @@ def book_by_ids(id_list, db_session):
     final_res = []
     try:
         result = db_session.query(Book).filter(Book.id.in_(id_list)).all()
+
+        result = sorted(result, key=lambda o: id_list.index(o.id))
+
         for item in result:
             final_res.append(book_to_dict(db_session, item))
+
+        # for book_id in id_list:
+        #
+        #     for item in result:
+        #         if item.id == book_id:
+        #             final_res.append(book_to_dict(db_session, item))
+        #             pass
 
     except:
         raise Http_error(500, Message.MSG14)
