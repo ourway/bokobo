@@ -39,3 +39,8 @@ class Message:
     UPLOAD_FAILED = 'upload_failed'
     INVALID_ENTITY = 'invalid_entity'
     ACCESS_DENIED = 'access_denied'
+    ALREADY_LIKED = 'already_liked'
+    COMMENT_NOT_FOUND = 'comment_not_found'
+    ALREADY_REPORTED = 'already_reported'
+    REPORT_NOT_FOUND = 'report_not_found'
+    PARENT_NOT_FOUND = 'parent_not_found'

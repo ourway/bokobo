@@ -12,3 +12,12 @@ def delete_book_comments(book_id,db_session):
         raise Http_error(404,Message.MSG20)
 
     return {}
+
+def get_comment(id,db_session,**kwargs):
+
+    try:
+        result = db_session.query(Comment).filter(Comment.id == id).first()
+
+    except:
+        Http_error(404,Message.MSG20)
+    return result

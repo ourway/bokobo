@@ -4,12 +4,12 @@ from uuid import uuid4
 
 from books.controllers.book import book_to_dict
 from books.controllers.book import get as get_book
+from comment.controllers.actions import get_comment_like_count, get_comment_reports
 from comment.models import Comment
-from enums import ReportComment, str_report, check_enum
 from helper import Now, Http_error, model_to_dict
 from log import LogMsg
 from messages import Message
-from repository.comment_repo import delete_book_comments
+from repository.comment_repo import delete_book_comments, get_comment
 from repository.person_repo import validate_person
 from repository.user_repo import check_user
 
@@ -17,9 +17,7 @@ from repository.user_repo import check_user
 def add(db_session, data, username):
     logging.info(LogMsg.START)
 
-    report = data.get('report',None)
-    if report :
-        check_enum(report, ReportComment)
+
 
     book_id = data.get('book_id')
     book = get_book(book_id,db_session)
@@ -30,7 +28,18 @@ def add(db_session, data, username):
     if user is None:
         raise Http_error(400,Message.INVALID_USER)
 
+    if user.person_id is None:
+        raise Http_error(400,Message.Invalid_persons)
+
     validate_person(user.person_id,db_session)
+
+    parent_id = data.get('parent_id',None)
+    if parent_id:
+        parent_comment = get_comment(parent_id,db_session)
+        if parent_comment is None:
+            raise Http_error(404,Message.PARENT_NOT_FOUND)
+        if parent_comment.book_id != book_id:
+            raise Http_error(400,Message.ACCESS_DENIED)
 
     model_instance = Comment()
     model_instance.id = str(uuid4())
@@ -42,8 +51,6 @@ def add(db_session, data, username):
     model_instance.body = data.get('body')
     model_instance.tags = data.get('tags')
     model_instance.parent_id = data.get('parent_id')
-    model_instance.helpful = data.get('helpful')
-    model_instance.report = report
 
     db_session.add(model_instance)
 
@@ -59,7 +66,24 @@ def get(id,db_session,**kwargs):
         Http_error(404,Message.MSG20)
     return comment_to_dict(db_session,result)
 
-def delete(id,db_session,**kwargs):
+def delete(id,db_session,username,**kwargs):
+
+    model_instance = db_session.query(Comment).filter(Comment.id == id).first()
+    if model_instance:
+        logging.debug(LogMsg.MODEL_GETTING)
+    else:
+        logging.debug(LogMsg.MODEL_GETTING_FAILED)
+        raise Http_error(404, Message.MSG20)
+
+    user = check_user(username, db_session)
+    if user is None:
+        raise Http_error(400, Message.INVALID_USER)
+    if user.person_id is None:
+        raise Http_error(400,Message.Invalid_persons)
+
+    if model_instance.person_id != user.person_id:
+        raise Http_error(403, Message.ACCESS_DENIED)
+
     try:
         db_session.query(Comment).filter(Comment.id == id).delete()
     except:
@@ -104,13 +128,12 @@ def edit(id,data,db_session,username):
     if user is None:
         raise Http_error(400,Message.INVALID_USER)
 
+    if user.person_id is None:
+        raise Http_error(400,Message.Invalid_persons)
+
 
     if model_instance.person_id != user.person_id :
         raise Http_error(403,Message.ACCESS_DENIED)
-
-    report = data.get('report',None)
-    if report :
-        check_enum(report, ReportComment)
 
     if 'person_id' in data:
         del data['person_id']
@@ -149,12 +172,12 @@ def comment_to_dict(db_session,comment):
         'modification_date': comment.modification_date,
         'modifier': comment.modifier,
         'parent_id': comment.parent_id,
-        'helpful': comment.helpful,
-        'report': str_report( comment.report),
         'book_id': comment.book_id,
         'version': comment.version,
         'tags':comment.tags,
         'book':book_to_dict(db_session,comment.book),
-        'person':model_to_dict(comment.person)
+        'person':model_to_dict(comment.person),
+        'likes':get_comment_like_count(comment.id, db_session),
+        'reports':len(get_comment_reports(comment.id, db_session))
     }
     return result

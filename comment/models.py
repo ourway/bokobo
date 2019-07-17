@@ -1,5 +1,5 @@
-from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy import String, Column, ForeignKey, BOOLEAN, Enum
+from sqlalchemy.dialects.postgresql import UUID,ENUM
+from sqlalchemy import String, Column, ForeignKey, BOOLEAN
 from sqlalchemy.orm import relationship
 
 from books.models import Book
@@ -15,9 +15,18 @@ class Comment(Base,PrimaryModel):
     book_id = Column(UUID, ForeignKey('books.id'),nullable=False)
     person_id = Column(UUID, ForeignKey('persons.id'),nullable=False)
     parent_id = Column(UUID)
-    helpful = Column(BOOLEAN,default=False)
-    report = Column(Enum(ReportComment))
 
     person = relationship(Person, primaryjoin=person_id == Person.id , lazy=True)
     book = relationship(Book, primaryjoin=book_id == Book.id)
+
+
+class CommentAction(Base,PrimaryModel):
+
+    __tablename__ = 'comment_actions'
+
+    comment_id = Column(UUID, ForeignKey(Comment.id),nullable=False)
+    person_id = Column(UUID, ForeignKey('persons.id'),nullable=False)
+    like = Column(BOOLEAN, default=False)
+    report = Column(ENUM(ReportComment))
+
 
