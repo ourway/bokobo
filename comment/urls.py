@@ -9,6 +9,7 @@ def call_router(app):
     data_plus_wrappers.append(pass_data)
 
     app.route('/comments/<id>', 'GET', comment.get, apply=wrappers)
+    app.route('/comments/<id>', 'PUT', comment.edit, apply=data_plus_wrappers)
     app.route('/comments/book/<book_id>', 'GET', comment.get_book_comments, apply=wrappers)
     app.route('/comments/book/<book_id>', 'DELETE', comment.delete_comments, apply=[check_auth, inject_db])
     app.route('/comments/<id>', 'DELETE', comment.delete, apply=[check_auth, inject_db])

@@ -38,3 +38,4 @@ class Message:
     FILTER_REQUIRED = 'filter_required'
     UPLOAD_FAILED = 'upload_failed'
     INVALID_ENTITY = 'invalid_entity'
+    ACCESS_DENIED = 'access_denied'

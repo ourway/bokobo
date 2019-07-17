@@ -97,6 +97,7 @@ def edit(db_session, data, username):
         setattr(model_instance, key, value)
     model_instance.modification_date = Now()
     model_instance.modifier = username
+    model_instance.version +=1
 
     logging.debug(LogMsg.MODEL_ALTERED)
 

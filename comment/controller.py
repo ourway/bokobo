@@ -1,3 +1,4 @@
+import json
 import logging
 from uuid import uuid4
 
@@ -10,6 +11,7 @@ from log import LogMsg
 from messages import Message
 from repository.comment_repo import delete_book_comments
 from repository.person_repo import validate_person
+from repository.user_repo import check_user
 
 
 def add(db_session, data, username):
@@ -24,15 +26,18 @@ def add(db_session, data, username):
     if book is None:
         raise Http_error(404,Message.MSG20)
 
-    person_id = data.get('person_id')
-    validate_person(person_id,db_session)
+    user = check_user(username, db_session)
+    if user is None:
+        raise Http_error(400,Message.INVALID_USER)
+
+    validate_person(user.person_id,db_session)
 
     model_instance = Comment()
     model_instance.id = str(uuid4())
     model_instance.creation_date = Now()
     model_instance.creator = username
     model_instance.version = 1
-    model_instance.person_id = person_id
+    model_instance.person_id = user.person_id
     model_instance.book_id = book_id
     model_instance.body = data.get('body')
     model_instance.tags = data.get('tags')
@@ -52,7 +57,7 @@ def get(id,db_session,**kwargs):
 
     except:
         Http_error(404,Message.MSG20)
-    return comment_to_dict(result, db_session)
+    return comment_to_dict(db_session,result)
 
 def delete(id,db_session,**kwargs):
     try:
@@ -74,17 +79,67 @@ def get_book_comments(book_id,db_session,**kwargs):
         res = db_session.query(Comment).filter(Comment.book_id == book_id).all()
         result = []
         for item in res:
-            result.append(comment_to_dict(item, db_session))
+            result.append(comment_to_dict( db_session, item))
     except:
         raise Http_error(400,Message.MSG20)
 
     return result
 
 
-def comment_to_dict(comment,db_session):
+
+def edit(id,data,db_session,username):
+    logging.info(LogMsg.START + " user is {}".format(username))
+    if "id" in data.keys():
+        del data["id"]
+        logging.debug(LogMsg.EDIT_REQUST)
+
+    model_instance = db_session.query(Comment).filter(Comment.id == id).first()
+    if model_instance:
+        logging.debug(LogMsg.MODEL_GETTING)
+    else:
+        logging.debug(LogMsg.MODEL_GETTING_FAILED)
+        raise Http_error(404, Message.MSG20)
+
+    user = check_user(username, db_session)
+    if user is None:
+        raise Http_error(400,Message.INVALID_USER)
+
+
+    if model_instance.person_id != user.person_id :
+        raise Http_error(403,Message.ACCESS_DENIED)
+
+    report = data.get('report',None)
+    if report :
+        check_enum(report, ReportComment)
+
+    if 'person_id' in data:
+        del data['person_id']
+    if 'book_id' in data:
+        del data['book_id']
+
+
+    for key, value in data.items():
+        # TODO  if key is valid attribute of class
+        setattr(model_instance, key, value)
+    model_instance.modification_date = Now()
+    model_instance.modifier = username
+    model_instance.version +=1
+
+    logging.debug(LogMsg.MODEL_ALTERED)
+
+    logging.debug(LogMsg.EDIT_SUCCESS +
+                  json.dumps(comment_to_dict(db_session, model_instance)))
+
+    logging.info(LogMsg.END)
+
+    return comment_to_dict(db_session, model_instance)
+
+
+def comment_to_dict(db_session,comment):
 
     if not isinstance(comment,Comment):
         raise Http_error(404,Message.INVALID_ENTITY)
+
     result = {
         'creation_date': comment.creation_date,
         'creator': comment.creator,
