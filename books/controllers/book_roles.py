@@ -142,6 +142,7 @@ def get_all(db_session):
     logging.debug(LogMsg.END)
     return result
 
+
 def get_book_roles(book_id,db_session):
     logging.info(LogMsg.START )
 
@@ -173,6 +174,7 @@ def delete_book_roles(book_id,db_session):
     logging.debug(LogMsg.END)
     return {'status':'successful'}
 
+
 def append_book_roles_dict(book_id,db_session):
     result = []
     roles = get_book_roles(book_id,db_session)
@@ -180,6 +182,7 @@ def append_book_roles_dict(book_id,db_session):
         result.append(book_role_to_dict(role))
 
     return result
+
 
 def book_role_to_dict(obj):
     if not isinstance(obj, BookRole):
@@ -210,3 +213,18 @@ def books_by_person(person_id,db_session):
     for item in result:
         final_res.append(item.book_id)
     return final_res
+
+
+def persons_of_book(book_id,db_session):
+
+    res = db_session.query(BookRole).filter(BookRole.book_id == book_id).all()
+    persons = []
+    result = {}
+    for item in res:
+        persons.append(item.person_id)
+        if item.role.name == 'Writer':
+            result['Writer'] = item.person_id
+        elif item.role.name == 'Press':
+            result['Press'] = item.person_id
+    result.update({'persons':persons})
+    return result

@@ -51,7 +51,6 @@ def return_file(filename, **kwargs):
 
 
 
-def file_mime_type(filename):
-    # m = magic.open(magic.MAGIC_MIME)
-    m = magic.from_file(filename, mime=True)
+def file_mime_type(file_path):
+    m = magic.from_file(file_path, mime=True)
     return str(m)

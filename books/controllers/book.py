@@ -10,7 +10,7 @@ from books.models import Book
 from enums import BookTypes as legal_types, check_enums, Genre, str_genre
 from messages import Message
 from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delete_book_roles, append_book_roles_dict, \
-    books_by_person
+    books_by_person, persons_of_book
 
 
 def add(db_session, data, username, **kwargs):
@@ -253,9 +253,15 @@ def edit_book(id, db_session, data, username):
         new_roles = []
         for role in roles:
             new_roles.append(book_role_to_dict(role))
+    else:
+        elastic_data = persons_of_book(model_instance.id,db_session)
 
     indexing_data = book_to_dict(db_session,model_instance)
     indexing_data['book_id'] = model_instance.id
+    indexing_data.update(elastic_data)
+    del indexing_data['roles']
+
+    print(('indexing_data : {}').format(indexing_data))
 
     delete_book_index(model_instance.id)
     index_book(indexing_data, db_session)
