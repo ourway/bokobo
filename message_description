@@ -27,3 +27,4 @@ INVALID_USER = the user by this data doesnt exist
 INVALID_CODE = the code is invalid
 FILTER_REQUIRED = filter object is not in data
 UPLOAD_FAILED = uploading files encountered a problem
+INVALID_ENTITY = entity is not right instance of Class

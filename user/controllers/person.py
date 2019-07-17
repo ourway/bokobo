@@ -43,10 +43,7 @@ def add(db_session,data,username):
     model_instance.creation_date = Now()
     model_instance.creator = username
     model_instance.version = 1
-
     model_instance.image = data.get('image')
-
-
 
     # logger.debug(LogMsg.DATA_ADDITION)
 

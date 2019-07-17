@@ -2,6 +2,7 @@ import json
 import logging
 from uuid import uuid4
 
+from comment.controller import delete_book_comments
 from elastic.book_index import index_book, delete_book_index, search_phrase
 from file_handler.handle_file import delete_files
 from helper import Now, Http_error
@@ -283,6 +284,7 @@ def delete_book(id, db_session, username):
     try:
         delete(id, db_session, username)
         delete_book_roles(id, db_session)
+        delete_book_comments(id, db_session)
         delete_book_index(id)
 
         logging.debug(LogMsg.ENTITY_DELETED + "Book.id {}".format(id))

@@ -30,6 +30,9 @@ class Genre(enum.Enum):
     Science = 'Science'
 
 
+class ReportComment(enum.Enum):
+    Personal = 'Personal'
+    Invalid_Content = 'Invalid_Content'
 
 
 def check_enums(data,enum_class):
@@ -58,3 +61,15 @@ def str_role(role):
         return (getattr(Roles,role)).value
     else:
         return ''
+
+def str_report(report):
+    if report is not None:
+        return report.value
+    else:
+        return None
+
+def check_enum(type,enum_class):
+    if type not in enum_class.__members__:
+        raise Http_error(404, Message.MSG19)
+
+    return type

@@ -5,7 +5,11 @@ from messages import Message
 from user.models import Person
 
 def validate_person(person_id,db_session):
-    return db_session.query(Person).filter(Person.id == person_id).first()
+    try:
+        return db_session.query(Person).filter(Person.id == person_id).first()
+    except:
+        raise Http_error(404, Message.Invalid_persons)
+
 
 def person_cell_exists(db_session,cell_no):
     return  db_session.query(Person).filter(Person.cell_no == cell_no).first()
