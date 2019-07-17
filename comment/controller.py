@@ -1,12 +1,14 @@
 import logging
 from uuid import uuid4
 
-from books.controllers.book import book_to_dict,get as get_book
+from books.controllers.book import book_to_dict
+from books.controllers.book import get as get_book
 from comment.models import Comment
-from enums import check_enums, ReportComment, str_report, check_enum
+from enums import ReportComment, str_report, check_enum
 from helper import Now, Http_error, model_to_dict
 from log import LogMsg
 from messages import Message
+from repository.comment_repo import delete_book_comments
 from repository.person_repo import validate_person
 
 
@@ -61,16 +63,10 @@ def delete(id,db_session,**kwargs):
 
 
 
-def delete_book_comments(book_id,db_session,**kwargs):
-
-    try:
-        db_session.query(Comment).filter(Comment.book_id == book_id).delete()
-
-    except:
-        raise Http_error(404,Message.MSG20)
+def delete_comments(book_id,db_session,**kwargs):
+    delete_book_comments(book_id, db_session)
 
     return {}
-
 
 def get_book_comments(book_id,db_session,**kwargs):
 

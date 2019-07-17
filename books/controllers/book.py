@@ -2,7 +2,7 @@ import json
 import logging
 from uuid import uuid4
 
-from comment.controller import delete_book_comments
+from repository.comment_repo import delete_book_comments
 from elastic.book_index import index_book, delete_book_index, search_phrase
 from file_handler.handle_file import delete_files
 from helper import Now, Http_error
