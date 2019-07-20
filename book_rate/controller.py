@@ -30,22 +30,25 @@ def add(db_session, data, username):
 
     rate = get(data.get('book_id'), user.person_id, db_session)
     if rate:
-        raise Http_error(409, Message.ALREADY_RATED)
+        rate.rate = data.get('rate')
+        return rate
 
-    model_instance = Rate()
-    model_instance.id = str(uuid4())
-    model_instance.creation_date = Now()
-    model_instance.creator = username
-    model_instance.version = 1
-    model_instance.tags = data.get('tags')
+    else:
 
-    model_instance.person_id = user.person_id
-    model_instance.rate = data.get('rate')
-    model_instance.book_id = data.get('book_id')
+        model_instance = Rate()
+        model_instance.id = str(uuid4())
+        model_instance.creation_date = Now()
+        model_instance.creator = username
+        model_instance.version = 1
+        model_instance.tags = data.get('tags')
 
-    db_session.add(model_instance)
+        model_instance.person_id = user.person_id
+        model_instance.rate = data.get('rate')
+        model_instance.book_id = data.get('book_id')
 
-    return model_instance
+        db_session.add(model_instance)
+
+        return model_instance
 
 
 def get(book_id, person_id, db_session):
