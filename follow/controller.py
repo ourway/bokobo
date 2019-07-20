@@ -89,25 +89,26 @@ def get_follower_list(username, db_session):
 
 
 def delete(id, db_session, username, **kwargs):
-    model_instance = db_session.query(Follow).filter(Follow.following_id == id).first()
-    if model_instance:
-        logging.debug(LogMsg.MODEL_GETTING)
-    else:
-        logging.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, Message.MSG20)
-
     user = check_user(username, db_session)
     if user is None:
         raise Http_error(400, Message.INVALID_USER)
     if user.person_id is None:
         raise Http_error(400, Message.Invalid_persons)
 
+    model_instance = db_session.query(Follow).filter(
+        and_(Follow.following_id == id, Follow.follower_id == user.person_id)).first()
+    if model_instance:
+        logging.debug(LogMsg.MODEL_GETTING)
+    else:
+        logging.debug(LogMsg.MODEL_GETTING_FAILED)
+        raise Http_error(404, Message.MSG20)
+
     if model_instance.follower_id != user.person_id and \
             model_instance.following_id != user.person_id:
         raise Http_error(403, Message.ACCESS_DENIED)
 
     try:
-        db_session.query(Follow).filter(Follow.id == id).delete()
+        db_session.query(Follow).filter(and_(Follow.following_id == id, Follow.follower_id == user.person_id)).delete()
     except:
         raise Http_error(404, Message.MSG13)
     return {}
@@ -135,7 +136,7 @@ def get(follower_id, following_id, db_session):
         and_(Follow.following_id == following_id, Follow.follower_id == follower_id)).first()
 
 
-def get_following_list_internal(person_id,db_session):
+def get_following_list_internal(person_id, db_session):
     result = []
     res = db_session.query(Follow).filter(Follow.follower_id == person_id).all()
     for item in res:
