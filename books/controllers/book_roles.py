@@ -86,13 +86,6 @@ def edit(db_session, data, username):
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, {"id": LogMsg.NOT_FOUND})
 
-    if data.get('tags') is not None:
-        tags = (data.get('tags')).split(',')
-        for item in tags:
-            item.strip()
-        model_instance.tags = tags
-
-        del data['tags']
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class

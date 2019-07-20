@@ -46,3 +46,5 @@ class Message:
     PARENT_NOT_FOUND = 'parent_not_found'
     FOLLOW_DENIED = 'follow_denied'
     ALREADY_FOLLOWS = 'already_follows'
+    MISSING_REQUIERED_FIELD = 'missing_requiered_field'
+    ALREADY_RATED = 'already_rated'
