@@ -3,6 +3,7 @@ import logging
 import os
 from uuid import uuid4
 
+from follow.controller import get_following_list_internal
 from helper import model_to_dict, Now, value, Http_error
 from  log import logger,LogMsg
 from messages import Message
@@ -160,6 +161,8 @@ def get_person_profile(id, db_session, username):
     if model_instance:
         result = model_to_dict(model_instance)
         result['current_book']=get_current_book(model_instance.current_book_id,db_session) or None
+        result['following_list'] = get_following_list_internal(id,db_session)
+
         logging.debug(LogMsg.GET_SUCCESS +
                       json.dumps(result))
     else:

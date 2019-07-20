@@ -133,3 +133,12 @@ def follow_to_dict(follow_item):
 def get(follower_id, following_id, db_session):
     return db_session.query(Follow).filter(
         and_(Follow.following_id == following_id, Follow.follower_id == follower_id)).first()
+
+
+def get_following_list_internal(person_id,db_session):
+    result = []
+    res = db_session.query(Follow).filter(Follow.follower_id == person_id).all()
+    for item in res:
+        result.append(item.following_id)
+
+    return result
