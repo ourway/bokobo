@@ -40,6 +40,7 @@ def add(db_session, data, username, **kwargs):
     model_instance.creator = username
     model_instance.version = 1
     model_instance.description = data.get('description')
+    model_instance.from_editor = data.get('from_editor')
 
     db_session.add(model_instance)
 
@@ -181,6 +182,7 @@ def book_to_dict(db_session, book):
         'duration': book.duration,
         'size': book.size,
         'isben': book.isben,
+        'from_editor':book.from_editor
 
     }
     if isinstance(book.type,str):

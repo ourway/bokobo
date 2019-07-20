@@ -44,7 +44,8 @@ def prepare_book_index_data(data, db_session):
         'description': data.get('description', None),
         'pages': data.get('pages', None),
         'duration': data.get('duration', None),
-        'size': data.get('size', None)
+        'size': data.get('size', None),
+        'from_editor':data.get('from_editor',None)
 
     }
 
@@ -102,7 +103,7 @@ def search_phrase(data):
 
 def get_fields_by_boost():
     fields = ['title^10', 'writer^8', 'press^7', 'persons^6', 'genre^6', 'tags^7', 'type', 'description', 'rate',
-              'pub_year', 'language']
+              'pub_year', 'language','from_editor']
     return fields
 
 

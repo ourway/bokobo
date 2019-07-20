@@ -22,10 +22,7 @@ class Book(Base,PrimaryModel):
     duration = Column(String)
     size = Column(String)
     isben = Column(String)
-
-    # roles = relationship('BookRole')
-    # users = relationship('Library', uselist=True)
-
+    from_editor = Column(String)
 
 
 class BookRole(Base,PrimaryModel):
