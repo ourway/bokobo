@@ -89,7 +89,7 @@ def get_follower_list(username, db_session):
 
 
 def delete(id, db_session, username, **kwargs):
-    model_instance = db_session.query(Follow).filter(Follow.id == id).first()
+    model_instance = db_session.query(Follow).filter(Follow.following_id == id).first()
     if model_instance:
         logging.debug(LogMsg.MODEL_GETTING)
     else:
