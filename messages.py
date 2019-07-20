@@ -44,3 +44,5 @@ class Message:
     ALREADY_REPORTED = 'already_reported'
     REPORT_NOT_FOUND = 'report_not_found'
     PARENT_NOT_FOUND = 'parent_not_found'
+    FOLLOW_DENIED = 'follow_denied'
+    ALREADY_FOLLOWS = 'already_follows'

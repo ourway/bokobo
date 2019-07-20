@@ -7,6 +7,7 @@ from app_token.urls import call_router as token_routes
 from books.urls import call_router as book_routes
 from file_handler.urls import call_router as file_routes
 from comment.urls import call_router as comment_routes
+from follow.urls import call_router as follow_routes
 
 app = Bottle()
 
@@ -17,6 +18,7 @@ token_routes(app)
 book_routes(app)
 file_routes(app)
 comment_routes(app)
+follow_routes(app)
 
 if __name__ == '__main__':
     print('hello world')

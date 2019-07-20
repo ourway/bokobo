@@ -30,4 +30,3 @@ class CommentAction(Base,PrimaryModel):
     like = Column(BOOLEAN, default=False)
     report = Column(ENUM(ReportComment))
 
-

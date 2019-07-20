@@ -34,3 +34,5 @@ COMMENT_NOT_FOUND = comment not found
 ALREADY_REPORTED = user already reported the comment
 REPORT_NOT_FOUND = report by this user for this comment not found
 PARENT_NOT_FOUND = parent object cant found
+FOLLOW_DENIED = user cant follow him/her self
+ALREADY_FOLLOWS = user already follows target
