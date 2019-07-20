@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/comment/controllers/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/comment/controllers/actions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alembic/versions/e1b25e8a67a8_report_enum_added_to_comment_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/alembic/versions/e1b25e8a67a8_report_enum_added_to_comment_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comment/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/comment/controllers/comment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comment/controllers/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/comment/controllers/actions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/comment/controllers/comment.py" beforeDir="false" afterPath="$PROJECT_DIR$/comment/controllers/comment.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comment/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/comment/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/comment/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/comment/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/message_description" beforeDir="false" afterPath="$PROJECT_DIR$/message_description" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messages.py" beforeDir="false" afterPath="$PROJECT_DIR$/messages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/comment_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/repository/comment_repo.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,11 +15,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/repository/comment_repo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
+            <state relative-caret-position="351">
               <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
@@ -33,13 +28,27 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/comment/controllers/comment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="178" selection-start-line="178" selection-end-line="178" />
+            <state relative-caret-position="328">
+              <caret line="210" column="5" lean-forward="true" selection-start-line="210" selection-start-column="5" selection-end-line="210" selection-end-column="5" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#2049#2753#0" />
+                <element signature="e#3240#4559#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -48,7 +57,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/helper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
+            <state relative-caret-position="4806">
               <caret line="192" selection-start-line="192" selection-end-line="192" />
             </state>
           </provider>
@@ -57,8 +66,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/comment/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="482">
-              <caret line="19" column="110" selection-start-line="19" selection-start-column="110" selection-end-line="19" selection-end-column="110" />
+            <state relative-caret-position="335">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
               <folding>
                 <element signature="e#0#60#0" expanded="true" />
               </folding>
@@ -69,10 +78,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/comment/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="368">
-              <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+            <state relative-caret-position="65">
+              <caret line="24" column="14" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/books/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="945">
+              <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
               <folding>
-                <element signature="e#0#47#0" expanded="true" />
+                <element signature="e#0#53#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,8 +99,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/message_description">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="726">
-              <caret line="35" column="16" selection-start-line="35" selection-end-line="35" selection-end-column="16" />
+            <state relative-caret-position="372">
+              <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -90,17 +108,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/messages.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="689">
+            <state relative-caret-position="1215">
               <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/comment/controllers/actions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="220" selection-start-line="220" selection-end-line="220" />
+            <state relative-caret-position="662">
+              <caret line="267" column="46" selection-start-line="267" selection-start-column="46" selection-end-line="267" selection-end-column="46" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -121,8 +139,8 @@
     <findStrings>
       <find>book_t</find>
       <find>delete_book_comments</find>
-      <find>comment_to_dict</find>
       <find>helpful</find>
+      <find>comment_to_dict</find>
     </findStrings>
     <replaceStrings>
       <replace>like</replace>
@@ -158,12 +176,12 @@
         <option value="$PROJECT_DIR$/alembic/versions/80b95d7fd211_comment_actions_model_added.py" />
         <option value="$PROJECT_DIR$/alembic/versions/bb841c87160b_comment_actions_model_added_2.py" />
         <option value="$PROJECT_DIR$/alembic/versions/e1b25e8a67a8_report_enum_added_to_comment_model.py" />
-        <option value="$PROJECT_DIR$/comment/models.py" />
-        <option value="$PROJECT_DIR$/comment/urls.py" />
         <option value="$PROJECT_DIR$/repository/comment_repo.py" />
-        <option value="$PROJECT_DIR$/comment/controllers/actions.py" />
         <option value="$PROJECT_DIR$/message_description" />
         <option value="$PROJECT_DIR$/messages.py" />
+        <option value="$PROJECT_DIR$/comment/controllers/actions.py" />
+        <option value="$PROJECT_DIR$/comment/urls.py" />
+        <option value="$PROJECT_DIR$/comment/models.py" />
         <option value="$PROJECT_DIR$/comment/controllers/comment.py" />
       </list>
     </option>
@@ -311,45 +329,46 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24986057" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2532069" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" weight="0.32998884" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3645485" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.522854" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3645485" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.522854" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="ReST Console" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.3288889" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="ReST Console" order="3" />
     </layout>
     <layout-to-restore>
-      <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.24986057" />
-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Version Control" order="0" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.32998884" />
-      <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="3" />
-      <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="bottom" id="Find" order="5" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.3645485" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.5562988" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="10" />
-      <window_info anchor="right" id="ReST Console" order="0" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25376463" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3645485" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.522854" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.3288889" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="ReST Console" order="3" />
     </layout-to-restore>
   </component>
   <component name="XDebuggerManager">
@@ -528,23 +547,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/books/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/alembic/versions/cf3df5d11b0c_report_enum_added_to_comment_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="20" column="57" selection-start-line="20" selection-start-column="53" selection-end-line="20" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/alembic/versions/cf3df5d11b0c_report_enum_added_to_comment_model.py" />
     <entry file="file://$PROJECT_DIR$/alembic/versions/9b50737deed8_new_classes_added_to_book_module.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-651">
@@ -566,13 +569,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/alembic/versions/cc548f2c91ab_report_enum_added_to_comment_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="21" column="89" selection-start-line="21" selection-start-column="89" selection-end-line="21" selection-end-column="89" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/alembic/versions/cc548f2c91ab_report_enum_added_to_comment_model.py" />
     <entry file="file://$PROJECT_DIR$/alembic/versions/4473e6dd7e1d_adding_booktype_library_and_book_role_.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="783">
@@ -617,16 +614,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/repository/person_repo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="702">
@@ -654,13 +641,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/alembic/versions/a317f7ec8bae_comment_actions_model_added.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-108">
-          <caret line="19" column="65" selection-start-line="19" selection-start-column="65" selection-end-line="19" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/alembic/versions/a317f7ec8bae_comment_actions_model_added.py" />
     <entry file="file://$PROJECT_DIR$/alembic/versions/1a0b23f06d3a_comment_actions_model_added.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
@@ -668,13 +649,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/alembic/versions/80b95d7fd211_comment_actions_model_added.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="31" column="101" selection-start-line="31" selection-start-column="101" selection-end-line="31" selection-end-column="101" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/alembic/versions/80b95d7fd211_comment_actions_model_added.py" />
     <entry file="file://$PROJECT_DIR$/alembic/versions/bb841c87160b_comment_actions_model_added_2.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -711,26 +686,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/comment/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="28" column="8" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#47#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/comment/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="482">
-          <caret line="19" column="110" selection-start-line="19" selection-start-column="110" selection-end-line="19" selection-end-column="110" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -743,7 +698,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/repository/comment_repo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
+        <state relative-caret-position="351">
           <caret line="15" column="6" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
@@ -753,41 +708,80 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/helper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
+        <state relative-caret-position="4806">
           <caret line="192" selection-start-line="192" selection-end-line="192" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/message_description">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="726">
-          <caret line="35" column="16" selection-start-line="35" selection-end-line="35" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/messages.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="689">
+        <state relative-caret-position="1215">
           <caret line="45" column="40" selection-start-line="45" selection-start-column="40" selection-end-line="45" selection-end-column="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/comment/controllers/comment.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="178" selection-start-line="178" selection-end-line="178" />
+        <state relative-caret-position="187">
+          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
           <folding>
-            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/comment/controllers/actions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="220" selection-start-line="220" selection-end-line="220" />
+        <state relative-caret-position="662">
+          <caret line="267" column="46" selection-start-line="267" selection-start-column="46" selection-end-line="267" selection-end-column="46" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comment/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="335">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+          <folding>
+            <element signature="e#0#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/message_description">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="35" column="30" selection-start-line="35" selection-start-column="30" selection-end-line="35" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/books/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="945">
+          <caret line="35" column="24" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comment/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="24" column="14" selection-start-line="24" selection-start-column="14" selection-end-line="24" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comment/controllers/comment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="328">
+          <caret line="210" column="5" lean-forward="true" selection-start-line="210" selection-start-column="5" selection-end-line="210" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#2049#2753#0" />
+            <element signature="e#3240#4559#0" />
           </folding>
         </state>
       </provider>

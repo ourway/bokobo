@@ -9,6 +9,7 @@ from user.models import Person
 
 
 class Comment(Base,PrimaryModel):
+
     __tablename__ = 'comments'
 
     body = Column(String,nullable=False)

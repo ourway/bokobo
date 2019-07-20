@@ -21,5 +21,3 @@ def call_router(app):
     app.route('/comment-actions/like/<comment_id>', 'DELETE', actions.dislike, apply=[check_auth, inject_db])
     app.route('/comment-actions/report/<comment_id>', 'POST', actions.report, apply=data_plus_wrappers)
     app.route('/comment-actions/report/<comment_id>', 'DELETE', actions.dis_report, apply=[check_auth, inject_db])
-
-

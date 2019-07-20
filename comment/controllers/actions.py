@@ -238,3 +238,32 @@ def get_action_like(comment_id, person_id, db_session):
     return db_session.query(CommentAction).filter(
         and_(CommentAction.comment_id == comment_id, CommentAction.person_id == person_id,
              CommentAction.like ==True)).first()
+
+def liked_by_user(db_session,comment_id,username):
+    user = check_user(username,db_session)
+    if user is None:
+        if user is None:
+            raise Http_error(400, Message.INVALID_USER)
+
+    if user.person_id is None:
+        raise Http_error(400, Message.Invalid_persons)
+
+    validate_person(user.person_id, db_session)
+
+    like = get_action_like(comment_id, user.person_id, db_session)
+    return True if like is not None else False
+
+
+def reported_by_user(db_session, comment_id, username):
+    user = check_user(username, db_session)
+    if user is None:
+        if user is None:
+            raise Http_error(400, Message.INVALID_USER)
+
+    if user.person_id is None:
+        raise Http_error(400, Message.Invalid_persons)
+
+    validate_person(user.person_id, db_session)
+    report = get_action_report(comment_id, user.person_id, db_session)
+    return True if report is not None else False
+
