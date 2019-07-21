@@ -10,6 +10,7 @@ from comment.urls import call_router as comment_routes
 from follow.urls import call_router as follow_routes
 from book_rate.urls import call_router as rate_routes
 from wish_list.urls import call_router as wish_routes
+from book_collections.urls import call_router as collection_routes
 
 app = Bottle()
 
@@ -23,6 +24,7 @@ comment_routes(app)
 follow_routes(app)
 rate_routes(app)
 wish_routes(app)
+collection_routes(app)
 
 
 
