@@ -92,7 +92,15 @@ def delete(id,db_session,username,**kwargs):
 
 
 
-def delete_comments(book_id,db_session,**kwargs):
+def delete_comments(book_id,db_session,username,**kwargs):
+
+    user = check_user(username, db_session)
+    if user is None:
+        raise Http_error(400, Message.INVALID_USER)
+    if user.person_id is None:
+        raise Http_error(400, Message.Invalid_persons)
+
+
     delete_book_comments(book_id, db_session)
 
     return {}

@@ -33,6 +33,7 @@ class Genre(enum.Enum):
 class ReportComment(enum.Enum):
     Personal = 'Personal'
     Invalid_Content = 'Invalid_Content'
+    General = 'General'
 
 
 def check_enums(data,enum_class):

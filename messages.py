@@ -48,3 +48,4 @@ class Message:
     ALREADY_FOLLOWS = 'already_follows'
     MISSING_REQUIERED_FIELD = 'missing_requiered_field'
     ALREADY_RATED = 'already_rated'
+    ALREADY_EXISTS = 'already_exists'

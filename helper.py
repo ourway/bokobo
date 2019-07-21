@@ -242,6 +242,14 @@ def Http_error(code, message):
     return result
 
 
+def Http_response(code, message):
+    if isinstance(message,str):
+        message = {'msg':message}
+    result = HTTPResponse(body=json.dumps(message), status=code,
+        headers = {'Content-type': 'application/json'})
+    return result
+
+
 def value(name, default):
     return environ.get(name) or default
 

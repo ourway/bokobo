@@ -9,6 +9,7 @@ from file_handler.urls import call_router as file_routes
 from comment.urls import call_router as comment_routes
 from follow.urls import call_router as follow_routes
 from book_rate.urls import call_router as rate_routes
+from wish_list.urls import call_router as wish_routes
 
 app = Bottle()
 
@@ -21,6 +22,10 @@ file_routes(app)
 comment_routes(app)
 follow_routes(app)
 rate_routes(app)
+wish_routes(app)
+
+
+
 
 if __name__ == '__main__':
     print('hello world')

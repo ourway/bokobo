@@ -4,10 +4,9 @@ import logging
 from log import LogMsg
 from helper import Now, Http_error, value
 from messages import Message
-from send_message import send_message
 from .models import APP_Token
 
-token_expiration_interval = value('token_expiration_interval', '120')
+token_expiration_interval = value('token_expiration_interval', '1200')
 new_token_request_valid_interval = value('new_token_request_valid_interval','30')
 
 
@@ -17,7 +16,7 @@ def add(db_session, data, username):
     current_token = get_current_token(db_session, username)
 
     if current_token is not None and \
-            current_token.expiration_date > Now():
+            current_token.expiration_date > (Now()):
         return current_token
 
     model_instance = APP_Token()
