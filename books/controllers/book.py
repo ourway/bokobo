@@ -309,8 +309,8 @@ def search_by_title(data, db_session):
     logging.debug(LogMsg.MODEL_GETTING)
 
     search_phrase = data.get('search_phrase')
-    offset = data.get('offset')
-    limit = data.get('limit')
+    offset = data.get('offset',0)
+    limit = data.get('limit',20)
 
     try:
         result = []

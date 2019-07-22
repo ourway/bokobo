@@ -1,5 +1,5 @@
 from comment.models import Comment
-from helper import Http_error
+from helper import Http_error, Http_response
 from messages import Message
 
 
@@ -12,7 +12,7 @@ def delete_book_comments(book_id,db_session):
     except:
         raise Http_error(404,Message.MSG20)
 
-    return {}
+    return Http_response(204,True)
 
 def get_comment(id,db_session,**kwargs):
 
