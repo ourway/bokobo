@@ -11,4 +11,4 @@ class Rate(Base,PrimaryModel):
     __tablename__ = 'rates'
     book_id = Column(UUID,ForeignKey(Book.id),nullable=False)
     person_id = Column(UUID,ForeignKey(Person.id),nullable=False)
-    rate = Column(Float)
+    rate = Column(Float,default=0.0)

@@ -2,7 +2,7 @@ import json
 import logging
 from uuid import uuid4
 
-from books.controllers.book import book_to_dict
+from book_rate.controller import get as get_rate, get_users_rate
 from books.controllers.book import get as get_book
 from comment.controllers.actions import get_comment_like_count, get_comment_reports, liked_by_user, reported_by_user
 from comment.models import Comment
@@ -54,7 +54,7 @@ def add(db_session, data, username):
 
     db_session.add(model_instance)
 
-    return model_instance
+    return comment_to_dict(db_session,model_instance,username)
 
 
 def get(id,db_session,username,**kwargs):
@@ -183,13 +183,13 @@ def comment_to_dict(db_session,comment,username):
         'book_id': comment.book_id,
         'version': comment.version,
         'tags':comment.tags,
-        'book':book_to_dict(db_session,comment.book),
         'person':model_to_dict(comment.person),
         'likes':get_comment_like_count(comment.id, db_session),
         'reports':len(get_comment_reports(comment.id, db_session)),
         'liked_by_user':liked_by_user(db_session,comment.id,username),
         'reported_by_user':reported_by_user(db_session,comment.id,username),
-        'parent': return_parent(comment.parent_id,db_session,username)
+        'parent': return_parent(comment.parent_id,db_session,username),
+        'rate_by_user':get_users_rate(comment.book_id, comment.person_id, db_session)
     }
     return result
 
@@ -215,6 +215,6 @@ def return_parent(id,db_session,username):
         'likes':get_comment_like_count(comment.id, db_session),
         'reports':len(get_comment_reports(comment.id, db_session)),
         'liked_by_user':liked_by_user(db_session,comment.id,username),
-        'reported_by_user':reported_by_user(db_session,comment.id,username)
+        'reported_by_user':reported_by_user(db_session,comment.id,username).rate
     }
     return result

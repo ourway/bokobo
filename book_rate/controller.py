@@ -107,3 +107,11 @@ def delete(id, db_session, username, **kwargs):
     except:
         raise Http_error(404, Message.MSG13)
     return {}
+
+
+def get_users_rate(book_id, person_id, db_session):
+    model_instance = get(book_id, person_id, db_session)
+    if model_instance:
+        return model_instance.rate
+    else:
+        return 0.0

@@ -14,7 +14,7 @@ class Book(Base,PrimaryModel):
     type = Column(Enum(BookTypes))
     genre = Column(ARRAY(String))
     language = Column(String)
-    rate = Column(Float)
+    rate = Column(Float,default=0.0)
     images = Column(ARRAY(UUID))
     files = Column(ARRAY(UUID))
     description = Column(String)

@@ -18,7 +18,6 @@ class Comment(Base,PrimaryModel):
     parent_id = Column(UUID)
 
     person = relationship(Person, primaryjoin=person_id == Person.id , lazy=True)
-    book = relationship(Book, primaryjoin=book_id == Book.id)
 
 
 class CommentAction(Base,PrimaryModel):
