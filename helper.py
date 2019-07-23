@@ -4,6 +4,7 @@ import logging
 from os import environ
 import time
 from base64 import b64encode, b64decode
+from uuid import uuid4
 
 import magic
 from bottle import request, HTTPResponse
@@ -275,3 +276,11 @@ def check_schema(required_list,data_keys):
 
 
 
+def populate_basic_data(model_instance,username,tags):
+    model_instance.id = str(uuid4())
+    model_instance.creation_date = Now()
+    model_instance.creator = username
+    model_instance.version = 1
+    model_instance.tags = tags
+
+    return model_instance

@@ -3,7 +3,7 @@ from uuid import uuid4
 
 from sqlalchemy import and_
 
-from helper import Http_error, Now, Http_response
+from helper import Http_error, Now, Http_response, populate_basic_data
 from log import LogMsg
 from messages import Message
 from repository.person_repo import validate_person
@@ -31,14 +31,10 @@ def add(data, db_session, username):
 
         wish = get(item, user.person_id, db_session)
         if wish is not None:
-            raise Http_error(409,Message.ALREADY_EXISTS)
+            raise Http_error(409, Message.ALREADY_EXISTS)
 
         model_instance = WishList()
-        model_instance.id = str(uuid4())
-        model_instance.creation_date = Now()
-        model_instance.creator = username
-        model_instance.version = 1
-        model_instance.tags = data.get('tags')
+        populate_basic_data(model_instance, username, data.get('tags'))
 
         model_instance.person_id = user.person_id
         model_instance.book_id = item
@@ -48,7 +44,9 @@ def add(data, db_session, username):
     return data
 
 
-def get_wish_list(db_session, username):
+def get_wish_list(data, db_session, username):
+    offset = data.get('offset', 0)
+    limit = data.get('limit', 10)
     user = check_user(username, db_session)
     if user is None:
         raise Http_error(400, Message.INVALID_USER)
@@ -60,7 +58,7 @@ def get_wish_list(db_session, username):
     result = []
 
     book_ids = db_session.query(WishList).filter(
-        WishList.person_id == user.person_id).all()
+        WishList.person_id == user.person_id).slice(offset, offset + limit)
     for item in book_ids:
         book = get_book(item.book_id, db_session)
         result.append(book)
@@ -79,11 +77,12 @@ def delete_wish_list(db_session, username):
     validate_person(user.person_id, db_session)
 
     try:
-        db_session.query(WishList).filter(WishList.person_id == user.person_id).delete()
+        db_session.query(WishList).filter(
+            WishList.person_id == user.person_id).delete()
     except:
         raise Http_error(502, Message.MSG13)
 
-    return Http_response(204,True)
+    return Http_response(204, True)
 
 
 def delete_books_from_wish_list(data, db_session, username):
@@ -100,12 +99,13 @@ def delete_books_from_wish_list(data, db_session, username):
 
     try:
         for id in book_ids:
-            db_session.query(WishList).filter(and_(WishList.person_id == user.person_id,
-                                         WishList.book_id == id)).delete()
+            db_session.query(WishList).filter(
+                and_(WishList.person_id == user.person_id,
+                     WishList.book_id == id)).delete()
     except:
         raise Http_error(502, Message.MSG13)
 
-    return Http_response(204,True)
+    return Http_response(204, True)
 
 
 def get(book_id, person_id, db_session):

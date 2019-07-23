@@ -10,5 +10,5 @@ def call_router(app):
     app.route('/wish-list/remove-books', 'DELETE', delete_books_from_wish_list, apply=[check_auth, inject_db,pass_data])
     app.route('/wish-list', 'DELETE', delete_wish_list, apply=[check_auth, inject_db])
     app.route('/wish-list', 'POST', add, apply=data_plus_wrappers)
-    app.route('/wish-list', 'GET', get_wish_list, apply=wrappers)
+    app.route('/wish-list/_search', 'POST', get_wish_list, apply=data_plus_wrappers)
 

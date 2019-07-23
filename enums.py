@@ -36,6 +36,15 @@ class ReportComment(enum.Enum):
     General = 'General'
 
 
+class AccountTypes(enum.Enum):
+    Main = 'Main'
+    Star = 'Star'
+    Discount = 'Discount'
+    Postpaid = 'Postpaid'
+    Prepaid = 'Prepaid'
+
+
+
 def check_enums(data,enum_class):
     for type in data:
         if type not in enum_class.__members__:
