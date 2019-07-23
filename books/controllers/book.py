@@ -15,6 +15,9 @@ from repository.user_repo import check_user
 from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delete_book_roles, append_book_roles_dict, \
     books_by_person, persons_of_book
 
+from prices.controller import add as add_price
+from prices.controller import internal_edit as edit_price
+
 
 def add(db_session, data, username, **kwargs):
     genre = data.get('genre', [])
@@ -40,11 +43,15 @@ def add(db_session, data, username, **kwargs):
     model_instance.tags = data.get('tags')
     model_instance.creation_date = Now()
     model_instance.creator = username
-    model_instance.version = 1
+    model_instance.ata = 1
     model_instance.description = data.get('description')
     model_instance.from_editor = data.get('from_editor')
 
     db_session.add(model_instance)
+
+    price = data.get('price',None)
+    if price:
+        add_price({'book_id':model_instance.id,'price':price}, db_session, username)
 
 
     # logger.info(LogMsg.END)
@@ -105,6 +112,10 @@ def edit(db_session, data, username):
     model_instance.modification_date = Now()
     model_instance.modifier = username
     model_instance.version +=1
+
+    price = data.get('price', None)
+    if price:
+        edit_price(model_instance.id,price, db_session)
 
     logging.debug(LogMsg.MODEL_ALTERED)
 

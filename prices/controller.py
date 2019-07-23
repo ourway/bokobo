@@ -5,7 +5,7 @@ from helper import Http_error, populate_basic_data, Http_response, \
     model_to_dict, check_schema
 from log import LogMsg
 from messages import Message
-from books.controllers.book import get as get_book
+from repository.book_repo import get as get_book
 
 
 def add(data, db_session, username):
@@ -75,6 +75,22 @@ def edit(id,data, db_session,username=None):
 
     try:
         model_instance.price = data.get('price')
+    except:
+        raise Http_error(404, Message.MSG13)
+
+    return model_instance
+
+
+def internal_edit(book_id,price, db_session):
+
+
+    model_instance = get_by_book(book_id, db_session)
+
+    if model_instance is None:
+        raise Http_error(404, Message.MSG20)
+
+    try:
+        model_instance.price = price
     except:
         raise Http_error(404, Message.MSG13)
 
