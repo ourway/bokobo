@@ -11,6 +11,7 @@ from log import LogMsg
 from books.models import Book
 from enums import BookTypes as legal_types, check_enums, Genre, str_genre
 from messages import Message
+from repository.user_repo import check_user
 from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delete_book_roles, append_book_roles_dict, \
     books_by_person, persons_of_book
 
@@ -74,6 +75,7 @@ def get(id, db_session):
 
 
 def edit(db_session, data, username):
+
     logging.info(LogMsg.START + " user is {}".format(username))
     if "id" in data.keys():
         del data["id"]
@@ -85,6 +87,9 @@ def edit(db_session, data, username):
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, Message.MSG20)
+
+    if model_instance.creator != username:
+        raise Http_error(403,Message.ACCESS_DENIED)
 
     files = data.get('files', None)
     images = data.get('images', None)
@@ -118,6 +123,9 @@ def delete(id, db_session, username):
 
     try:
         book = db_session.query(Book).filter(Book.id == id).first()
+        if book.creator != username:
+            raise Http_error(403, Message.ACCESS_DENIED)
+
         if book.images:
             delete_files(book.images)
         if book.files:

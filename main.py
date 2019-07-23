@@ -13,6 +13,7 @@ from wish_list.urls import call_router as wish_routes
 from book_collections.urls import call_router as collection_routes
 from accounts.urls import call_router as account_routes
 from financial_transactions.urls import call_router as transaction_routes
+from prices.urls import call_router as price_routes
 
 app = Bottle()
 
@@ -29,7 +30,7 @@ wish_routes(app)
 collection_routes(app)
 account_routes(app)
 transaction_routes(app)
-
+price_routes(app)
 
 
 

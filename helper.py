@@ -269,8 +269,7 @@ def check_schema(required_list,data_keys):
     result = required.issubset(keys)
 
     if result==False:
-        #TODO raising is not in standard format
-        raise Http_error(400,{'data':'{} are required'.format(required_list)})
+        raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
 
     return result
 
