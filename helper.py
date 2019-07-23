@@ -276,7 +276,7 @@ def check_schema(required_list,data_keys):
 
 
 
-def populate_basic_data(model_instance,username,tags):
+def populate_basic_data(model_instance,username,tags=None):
     model_instance.id = str(uuid4())
     model_instance.creation_date = Now()
     model_instance.creator = username

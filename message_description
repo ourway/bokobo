@@ -39,3 +39,4 @@ ALREADY_FOLLOWS = user already follows target
 MISSING_REQUIERED_FIELD = missing requiered field
 ALREADY_RATED = user already rated to book
 ALREADY_EXISTS = entity already exists
+CREDIT_DEBIT_ERROR = credit and debit can not have amount at the same time

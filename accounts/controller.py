@@ -15,7 +15,7 @@ from repository.user_repo import check_user
 def add(data, db_session, username):
     logging.info(LogMsg.START)
 
-    check_enum(data.get('type'),AccountTypes)
+    check_enum(data.get('type'), AccountTypes)
 
     user = check_user(username, db_session)
     if user is None:
@@ -52,7 +52,8 @@ def get_all(data, db_session, username):
     limit = data.get('limit', 20)
 
     result = []
-    res = db_session.query(Account).slice(offset, offset + limit)
+    res = db_session.query(Account).order_by(
+        Account.creation_date.desc()).slice(offset, offset + limit)
     for account in res:
         result.append(account_to_dict(account))
     return result
@@ -69,7 +70,8 @@ def get_user_accounts(username, db_session):
     validate_person(user.person_id, db_session)
 
     result = db_session.query(Account).filter(
-        Account.person_id == user.person_id).all()
+        Account.person_id == user.person_id).order_by(
+        Account.creation_date.desc()).all()
     final_res = []
     for account in result:
         final_res.append(account_to_dict(account))
@@ -143,24 +145,25 @@ def get_by_id(id, db_session, username):
 
 
 def account_to_dict(account):
-    if not isinstance(account,Account):
-        raise Http_error(404,Message.INVALID_ENTITY)
+    if not isinstance(account, Account):
+        raise Http_error(404, Message.INVALID_ENTITY)
 
     result = model_basic_dict(account)
     model_properties = {
-        'person_id':account.person_id,
-        'value':account.value,
-        'type':str_account_type(account.type)
+        'person_id': account.person_id,
+        'value': account.value,
+        'type': str_account_type(account.type)
     }
     result.update(model_properties)
     return result
 
 
-def add_initial_account(person_id,db_session,username):
+def add_initial_account(person_id, db_session, username):
     model_instance = Account()
-    populate_basic_data(model_instance,username,[])
+    populate_basic_data(model_instance, username, [])
     model_instance.type = 'Main'
     model_instance.person_id = person_id
     db_session.add(model_instance)
 
     return model_instance
+

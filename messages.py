@@ -49,3 +49,4 @@ class Message:
     MISSING_REQUIERED_FIELD = 'missing_requiered_field'
     ALREADY_RATED = 'already_rated'
     ALREADY_EXISTS = 'already_exists'
+    CREDIT_DEBIT_ERROR = 'credit_debit_error'
