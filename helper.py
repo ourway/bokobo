@@ -284,3 +284,17 @@ def populate_basic_data(model_instance,username,tags):
     model_instance.tags = tags
 
     return model_instance
+
+
+def model_basic_dict(model_instance):
+    result ={
+
+        'creation_date': model_instance.creation_date,
+        'creator': model_instance.creator,
+        'id': model_instance.id,
+        'modification_date': model_instance.modification_date,
+        'modifier': model_instance.modifier,
+        'version': model_instance.version,
+        'tags': model_instance.tags
+    }
+    return result

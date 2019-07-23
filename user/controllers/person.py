@@ -3,14 +3,15 @@ import logging
 import os
 from uuid import uuid4
 
+from accounts.controller import add_initial_account
 from follow.controller import get_following_list_internal
-from helper import model_to_dict, Now, value, Http_error
-from  log import logger,LogMsg
+from helper import model_to_dict, Now, Http_error
+from  log import LogMsg
 from messages import Message
 from wish_list.controller import get_wish_list
 from ..models import Person, User
 from repository.person_repo import person_cell_exists,person_mail_exists
-from books.controllers.book import get as get_book, get_current_book
+from books.controllers.book import  get_current_book
 
 save_path = os.environ.get('save_path')
 
@@ -39,21 +40,15 @@ def add(db_session,data,username):
     model_instance.email = data.get('email')
     model_instance.cell_no = data.get('cell_no')
     model_instance.bio = data.get('bio')
-    model_instance.following_list = data.get('following_list')
-    model_instance.follower_list = data.get('follower_list')
     model_instance.tags = data.get('tags')
     model_instance.creation_date = Now()
     model_instance.creator = username
     model_instance.version = 1
     model_instance.image = data.get('image')
 
-    # logger.debug(LogMsg.DATA_ADDITION)
-
     db_session.add(model_instance)
+    add_initial_account(model_instance.id, db_session, username)
 
-    # logger.debug(LogMsg.DB_ADD,extra = {'person':model_to_dict(model_instance)})
-
-    # logger.info(LogMsg.END)
     return model_instance
 
 

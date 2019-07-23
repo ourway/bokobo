@@ -74,7 +74,10 @@ def str_role(role):
 
 def str_report(report):
     if report is not None:
-        return report.value
+        if isinstance(report,str):
+            return report
+        else:
+            return report.value
     else:
         return None
 
@@ -83,3 +86,13 @@ def check_enum(type,enum_class):
         raise Http_error(404, Message.MSG19)
 
     return type
+
+
+def str_account_type(account_type):
+    if account_type is not None:
+        if isinstance(account_type,str):
+            return account_type
+        else:
+            return account_type.value
+    else:
+        return None

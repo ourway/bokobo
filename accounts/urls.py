@@ -1,28 +1,14 @@
 from helper import check_auth, inject_db, jsonify, pass_data
-
+from .controller import add,delete,delete_all,get_by_id,get_all,get_user_accounts
 
 def call_router(app):
-    readonly_wrappers = [inject_db, jsonify]
     wrappers = [check_auth, inject_db, jsonify]
     data_plus_wrappers = (wrappers[:])
     data_plus_wrappers.append(pass_data)
 
-    app.route('/accounts/<id>', 'GET', comment.get, apply=wrappers)
-    app.route('/accounts/<id>', 'PUT', comment.edit, apply=data_plus_wrappers)
-    app.route('/accounts/book/<book_id>', 'POST', comment.get_book_accounts,
-              apply=data_plus_wrappers)
-    app.route('/comments/<id>', 'DELETE', comment.delete,
-              apply=[check_auth, inject_db])
-    app.route('/comments', 'POST', comment.add, apply=data_plus_wrappers)
-
-    app.route('/comment-actions/reports/<comment_id>', 'GET',
-              actions.get_comment_reports, apply=data_plus_wrappers)
-
-    app.route('/comment-actions/like/<comment_id>', 'POST', actions.like,
-              apply=[check_auth, inject_db, jsonify])
-    app.route('/comment-actions/like/<comment_id>', 'DELETE', actions.dislike,
-              apply=[check_auth, inject_db])
-    app.route('/comment-actions/report/<comment_id>', 'POST', actions.report,
-              apply=data_plus_wrappers)
-    app.route('/comment-actions/report/<comment_id>', 'DELETE',
-              actions.dis_report, apply=[check_auth, inject_db])
+    app.route('/accounts/<id>', 'GET', get_by_id, apply=wrappers)
+    app.route('/accounts', 'GET', get_user_accounts, apply=wrappers)
+    app.route('/accounts/_search', 'POST', get_all, apply=data_plus_wrappers)
+    app.route('/accounts', 'POST', add,apply=data_plus_wrappers)
+    app.route('/accounts/<id>', 'DELETE', delete,apply=[check_auth, inject_db])
+    app.route('/accounts', 'DELETE', delete_all, apply=[check_auth, inject_db])
