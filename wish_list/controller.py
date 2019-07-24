@@ -111,3 +111,17 @@ def delete_books_from_wish_list(data, db_session, username):
 def get(book_id, person_id, db_session):
     return db_session.query(WishList).filter(and_(WishList.book_id == book_id,
                                                   WishList.person_id == person_id)).first()
+
+
+
+def internal_wish_list( db_session, person_id):
+
+    result = []
+
+    book_ids = db_session.query(WishList).filter(
+        WishList.person_id == person_id).all()
+    for item in book_ids:
+        book = get_book(item.book_id, db_session)
+        result.append(book)
+
+    return result

@@ -8,7 +8,7 @@ from follow.controller import get_following_list_internal
 from helper import model_to_dict, Now, Http_error
 from  log import LogMsg
 from messages import Message
-from wish_list.controller import get_wish_list
+from wish_list.controller import get_wish_list, internal_wish_list
 from ..models import Person, User
 from repository.person_repo import person_cell_exists,person_mail_exists
 from books.controllers.book import  get_current_book
@@ -158,7 +158,7 @@ def get_person_profile(id, db_session, username):
         result = model_to_dict(model_instance)
         result['current_book']=get_current_book(model_instance.current_book_id,db_session) or None
         result['following_list'] = get_following_list_internal(id,db_session)
-        result['wish_list'] = get_wish_list(db_session, username)
+        result['wish_list'] = internal_wish_list(db_session, Person.id)
 
         logging.debug(LogMsg.GET_SUCCESS +
                       json.dumps(result))
