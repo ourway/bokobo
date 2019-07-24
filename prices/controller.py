@@ -95,3 +95,12 @@ def internal_edit(book_id,price, db_session):
         raise Http_error(404, Message.MSG13)
 
     return model_instance
+
+
+def get_book_price_internal(book_id, db_session):
+    model_instance =  db_session.query(Price).filter(Price.book_id == book_id).first()
+    if model_instance:
+        return model_instance.price
+    else:
+        return None
+

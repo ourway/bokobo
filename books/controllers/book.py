@@ -15,7 +15,7 @@ from repository.user_repo import check_user
 from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delete_book_roles, append_book_roles_dict, \
     books_by_person, persons_of_book
 
-from prices.controller import add as add_price
+from prices.controller import add as add_price, get_book_price_internal
 from prices.controller import internal_edit as edit_price
 
 
@@ -201,7 +201,8 @@ def book_to_dict(db_session, book):
         'duration': book.duration,
         'size': book.size,
         'isben': book.isben,
-        'from_editor':book.from_editor
+        'from_editor':book.from_editor,
+        'price': get_book_price_internal(book.id, db_session)
 
     }
     if isinstance(book.type,str):
