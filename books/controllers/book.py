@@ -11,8 +11,8 @@ from log import LogMsg
 from books.models import Book
 from enums import BookTypes as legal_types, check_enums, Genre, str_genre
 from messages import Message
-from repository.user_repo import check_user
-from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, delete_book_roles, append_book_roles_dict, \
+from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, \
+    delete_book_roles, append_book_roles_dict, \
     books_by_person, persons_of_book
 
 from prices.controller import add as add_price, get_book_price_internal
@@ -49,10 +49,10 @@ def add(db_session, data, username, **kwargs):
 
     db_session.add(model_instance)
 
-    price = data.get('price',None)
+    price = data.get('price', None)
     if price:
-        add_price({'book_id':model_instance.id,'price':price}, db_session, username)
-
+        add_price({'book_id': model_instance.id, 'price': price}, db_session,
+                  username)
 
     # logger.info(LogMsg.END)
     return model_instance
@@ -82,7 +82,6 @@ def get(id, db_session):
 
 
 def edit(db_session, data, username):
-
     logging.info(LogMsg.START + " user is {}".format(username))
     if "id" in data.keys():
         del data["id"]
@@ -96,7 +95,7 @@ def edit(db_session, data, username):
         raise Http_error(404, Message.MSG20)
 
     if model_instance.creator != username:
-        raise Http_error(403,Message.ACCESS_DENIED)
+        raise Http_error(403, Message.ACCESS_DENIED)
 
     files = data.get('files', None)
     images = data.get('images', None)
@@ -111,11 +110,11 @@ def edit(db_session, data, username):
         setattr(model_instance, key, value)
     model_instance.modification_date = Now()
     model_instance.modifier = username
-    model_instance.version +=1
+    model_instance.version += 1
 
     price = data.get('price', None)
     if price:
-        edit_price(model_instance.id,price, db_session)
+        edit_price(model_instance.id, price, db_session)
 
     logging.debug(LogMsg.MODEL_ALTERED)
 
@@ -128,7 +127,9 @@ def edit(db_session, data, username):
 
 
 def delete(id, db_session, username):
-    logging.info(LogMsg.START + "user is {}  ".format(username) + "book_id = {}".format(id))
+    logging.info(
+        LogMsg.START + "user is {}  ".format(username) + "book_id = {}".format(
+            id))
 
     logging.info(LogMsg.DELETE_REQUEST + "user is {}".format(username))
 
@@ -156,7 +157,8 @@ def get_all(db_session):
     logging.info(LogMsg.START)
     try:
         final_res = []
-        result = db_session.query(Book).all()
+        result = db_session.query(Book).order_by(
+            Book.creation_date.desc()).all()
         logging.debug(LogMsg.GET_SUCCESS)
 
         for item in result:
@@ -201,11 +203,11 @@ def book_to_dict(db_session, book):
         'duration': book.duration,
         'size': book.size,
         'isben': book.isben,
-        'from_editor':book.from_editor,
+        'from_editor': book.from_editor,
         'price': get_book_price_internal(book.id, db_session)
 
     }
-    if isinstance(book.type,str):
+    if isinstance(book.type, str):
         result['type'] = book.type
     else:
         result['type'] = book.type.name
@@ -229,7 +231,8 @@ def add_multiple_type_books(db_session, data, username):
     for type in types:
         book_data.update({'type': type})
         book = add(db_session, book_data, username)
-        roles, elastic_data = add_book_roles(book.id, roles, db_session, username)
+        roles, elastic_data = add_book_roles(book.id, roles, db_session,
+                                             username)
 
         result.append(book_to_dict(db_session, book))
 
@@ -254,7 +257,7 @@ def edit_book(id, db_session, data, username):
         del data["id"]
     logging.debug(LogMsg.EDIT_REQUST)
 
-    roles =[]
+    roles = []
     elastic_data = {}
 
     if 'roles' in data.keys():
@@ -274,17 +277,18 @@ def edit_book(id, db_session, data, username):
     model_instance.modifier = username
     model_instance.version += 1
 
-    if len(roles)>0:
+    if len(roles) > 0:
 
         delete_book_roles(model_instance.id, db_session)
-        roles, elastic_data = add_book_roles(model_instance.id, roles, db_session, username)
+        roles, elastic_data = add_book_roles(model_instance.id, roles,
+                                             db_session, username)
         new_roles = []
         for role in roles:
             new_roles.append(book_role_to_dict(role))
     else:
-        elastic_data = persons_of_book(model_instance.id,db_session)
+        elastic_data = persons_of_book(model_instance.id, db_session)
 
-    indexing_data = book_to_dict(db_session,model_instance)
+    indexing_data = book_to_dict(db_session, model_instance)
     indexing_data['book_id'] = model_instance.id
     indexing_data.update(elastic_data)
     del indexing_data['roles']
@@ -304,7 +308,9 @@ def edit_book(id, db_session, data, username):
 
 
 def delete_book(id, db_session, username):
-    logging.info(LogMsg.START + "user is {}  ".format(username) + "book_id = {}".format(id))
+    logging.info(
+        LogMsg.START + "user is {}  ".format(username) + "book_id = {}".format(
+            id))
 
     logging.info(LogMsg.DELETE_REQUEST + "user is {}".format(username))
 
@@ -329,13 +335,15 @@ def search_by_title(data, db_session):
     logging.debug(LogMsg.MODEL_GETTING)
 
     search_phrase = data.get('search_phrase')
-    offset = data.get('offset',0)
-    limit = data.get('limit',20)
+    offset = data.get('offset', 0)
+    limit = data.get('limit', 20)
 
     try:
         result = []
-        books = db_session.query(Book).filter(Book.title.like('%{}%'.format(search_phrase))).slice(offset,
-                                                                                                   offset + limit)
+        books = db_session.query(Book).filter(
+            Book.title.like('%{}%'.format(search_phrase))).order_by(
+            Book.creation_date.desc()).slice(offset,
+                                             offset + limit)
         for book in books:
             result.append(book_to_dict(db_session, book))
     except:
@@ -360,7 +368,8 @@ def search_by_writer(data, db_session):
         book_ids = set(book_ids)
         if book_id is not None:
             book_ids.remove(book_id)
-        books = db_session.query(Book).filter(Book.id.in_(book_ids)).slice(offset, offset + limit)
+        books = db_session.query(Book).filter(Book.id.in_(book_ids)).order_by(
+            Book.creation_date.desc()).slice(offset, offset + limit)
         for book in books:
             result.append(book_to_dict(db_session, book))
     except:
@@ -379,7 +388,9 @@ def search_by_genre(data, db_session):
     result = []
     try:
 
-        books = db_session.query(Book).filter(Book.genre.any(search_phrase)).slice(offset, offset + limit)
+        books = db_session.query(Book).filter(
+            Book.genre.any(search_phrase)).order_by(
+            Book.creation_date.desc()).slice(offset, offset + limit)
         for book in books:
             result.append(book_to_dict(db_session, book))
     except:
@@ -397,7 +408,9 @@ def search_by_tags(data, db_session):
     result = []
     try:
 
-        books = db_session.query(Book).filter(Book.tags.any(search_phrase)).slice(offset, offset + limit)
+        books = db_session.query(Book).filter(
+            Book.tags.any(search_phrase)).order_by(
+            Book.creation_date.desc()).slice(offset, offset + limit)
         for book in books:
             result.append(book_to_dict(db_session, book))
     except:
@@ -412,12 +425,13 @@ def search_book(data, db_session):
     result = []
 
     if filter is None:
-        raise Http_error(400, Message.FILTER_REQUIRED)
+        newest_books(data, db_session)
 
     search_key = next(iter(filter.keys()))
     search_phrase = filter.get(search_key)
 
-    search_data = {'limit': limit, 'offset': offset, 'search_phrase': search_phrase}
+    search_data = {'limit': limit, 'offset': offset,
+                   'search_phrase': search_phrase}
     if search_key == 'genre':
         result = search_by_genre(search_data, db_session)
     elif search_key == 'title':
@@ -435,19 +449,13 @@ def search_book(data, db_session):
 def book_by_ids(id_list, db_session):
     final_res = []
     try:
-        result = db_session.query(Book).filter(Book.id.in_(id_list)).all()
+        result = db_session.query(Book).filter(Book.id.in_(id_list)).order_by(
+            Book.creation_date.desc()).all()
 
         result = sorted(result, key=lambda o: id_list.index(o.id))
 
         for item in result:
             final_res.append(book_to_dict(db_session, item))
-
-        # for book_id in id_list:
-        #
-        #     for item in result:
-        #         if item.id == book_id:
-        #             final_res.append(book_to_dict(db_session, item))
-        #             pass
 
     except:
         raise Http_error(500, Message.MSG14)
@@ -469,7 +477,8 @@ def newest_books(data, db_session):
     limit = data.get('limit')
 
     try:
-        news = db_session.query(Book).order_by(Book.creation_date.desc()).slice(offset, offset + limit)
+        news = db_session.query(Book).order_by(Book.creation_date.desc()).slice(
+            offset, offset + limit)
         res = []
         for book in news:
             res.append(book_to_dict(db_session, book))

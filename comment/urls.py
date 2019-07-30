@@ -12,6 +12,8 @@ def call_router(app):
     app.route('/comments/<id>', 'PUT', comment.edit, apply=data_plus_wrappers)
     app.route('/comments/book/<book_id>', 'POST', comment.get_book_comments,
               apply=data_plus_wrappers)
+    app.route('/comments/_search', 'POST', comment.get_all,
+              apply=data_plus_wrappers)
     app.route('/comments/<id>', 'DELETE', comment.delete,
               apply=[check_auth, inject_db])
     app.route('/comments', 'POST', comment.add, apply=data_plus_wrappers)

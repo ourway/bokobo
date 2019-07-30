@@ -275,12 +275,24 @@ def check_schema(required_list,data_keys):
 
 
 
-def populate_basic_data(model_instance,username,tags=None):
+def populate_basic_data(model_instance,username=None,tags=None):
+
     model_instance.id = str(uuid4())
     model_instance.creation_date = Now()
     model_instance.creator = username
     model_instance.version = 1
     model_instance.tags = tags
+
+def edit_basic_data(model_instance, username, tags=None):
+
+    model_instance.modification_date = Now()
+    model_instance.modifier = username
+    model_instance.version += 1
+
+    if tags:
+        for tag in tags:
+            if tag not in model_instance.tags:
+                model_instance.tags.append(tag)
 
     return model_instance
 

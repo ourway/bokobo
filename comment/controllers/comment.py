@@ -122,6 +122,20 @@ def get_book_comments(book_id, data, db_session, username, **kwargs):
     return result
 
 
+def get_all(data, db_session, username, **kwargs):
+    limit = data.get('limit') or 10
+    offset = data.get('offset') or 0
+    try:
+        res = db_session.query(Comment).order_by(
+            Comment.creation_date.desc()).slice(offset,offset+limit)
+        result = []
+        for item in res:
+            result.append(comment_to_dict(db_session, item, username))
+    except:
+        raise Http_error(400, Message.MSG20)
+
+    return result
+
 def edit(id, data, db_session, username):
     logging.info(LogMsg.START + " user is {}".format(username))
     if "id" in data.keys():

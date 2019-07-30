@@ -7,7 +7,7 @@ from messages import Message
 from repository.account_repo import get_account
 
 
-def add(data, db_session, username):
+def add(data, db_session, username=None):
     logging.info(LogMsg.START)
 
     if data.get('credit') and data.get('debit'):

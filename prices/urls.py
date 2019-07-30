@@ -1,5 +1,5 @@
 from helper import check_auth, inject_db, jsonify, pass_data
-from .controller import delete, get_by_book, get_all, add, get_by_id, edit
+from .controller import delete, get_by_book, get_all, add, get_by_id, edit, calc_price
 
 
 def call_router(app):
@@ -13,3 +13,5 @@ def call_router(app):
     app.route('/prices/<id>', 'DELETE', delete,apply=[check_auth, inject_db])
     app.route('/prices', 'POST', add,apply=data_plus_wrappers)
     app.route('/prices/<id>', 'PUT', edit, apply=data_plus_wrappers)
+    app.route('/prices/calc-price', 'POST', calc_price,apply=data_plus_wrappers)
+

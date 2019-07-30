@@ -50,3 +50,6 @@ class Message:
     ALREADY_RATED = 'already_rated'
     ALREADY_EXISTS = 'already_exists'
     CREDIT_DEBIT_ERROR = 'credit_debit_error'
+    NO_PRICE_FOUND = 'no_price_found'
+    DISCOUNT_IS_FLOAT = 'discount_is_float'
+    INSUFFICIANT_BALANCE = 'insufficiant_balance'

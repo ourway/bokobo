@@ -44,6 +44,15 @@ class AccountTypes(enum.Enum):
     Prepaid = 'Prepaid'
 
 
+class OrderStatus(enum.Enum):
+    Created = 'Created'
+    Invoiced = 'Invoiced'
+    Canceled = 'Canceled'
+    Postponed = 'Postponed'
+
+
+
+
 
 def check_enums(data,enum_class):
     for type in data:

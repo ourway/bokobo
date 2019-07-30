@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 
 from books.models import Book
 from db_session import Base, PrimaryModel
-from user.models import User
+from user.models import Person
 
 
 class Library(Base,PrimaryModel):
@@ -12,10 +12,10 @@ class Library(Base,PrimaryModel):
     __tablename__ = 'library'
 
     book_id = Column(UUID,ForeignKey(Book.id),nullable=False)
-    user_id = Column(UUID,ForeignKey(User.id),nullable=False)
+    person_id = Column(UUID,ForeignKey(Person.id),nullable=False)
     status = Column(JSON)
 
     book = relationship(Book, primaryjoin=book_id == Book.id)
-    user = relationship(User, primaryjoin=user_id == User.id,backref = 'library')
+    user = relationship(Person, primaryjoin=person_id == Person.id,backref = 'library')
 
 
