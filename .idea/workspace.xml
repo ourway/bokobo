@@ -1,32 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/order/controllers/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order/controllers/checkout_order.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order/controllers/order.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order/controllers/order_items.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/order/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repository/order_repo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/repository/transaction_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_library/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/book_library/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_library/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/book_library/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/controllers/book.py" beforeDir="false" afterPath="$PROJECT_DIR$/books/controllers/book.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comment/controllers/comment.py" beforeDir="false" afterPath="$PROJECT_DIR$/comment/controllers/comment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comment/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/comment/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enums.py" beforeDir="false" afterPath="$PROJECT_DIR$/enums.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/financial_transactions/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/financial_transactions/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/message_description" beforeDir="false" afterPath="$PROJECT_DIR$/message_description" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messages.py" beforeDir="false" afterPath="$PROJECT_DIR$/messages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prices/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/prices/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prices/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/prices/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prices/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/prices/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/account_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/repository/account_repo.py" afterDir="false" />
-    </list>
+    <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,15 +10,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/order/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="24" column="11" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/repository/account_repo.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -94,11 +60,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/alembic/versions/cce5582bdca1_prices_added_to_database_book_id_in_.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="32" column="52" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="52" />
+            <state relative-caret-position="459">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/alembic/versions/8b8a552d9d24_library_entity_changed.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="24" column="71" selection-start-line="24" selection-start-column="71" selection-end-line="24" selection-end-column="71" />
             </state>
           </provider>
         </entry>
@@ -197,8 +172,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/venv/lib/python3.6/site-packages/sqlalchemy/event/registry.py" />
-        <option value="$PROJECT_DIR$/venv/lib/python3.6/site-packages/sqlalchemy/sql/util.py" />
         <option value="$PROJECT_DIR$/venv/lib/python3.6/site-packages/sqlalchemy/pool/base.py" />
         <option value="$PROJECT_DIR$/venv/lib/python3.6/site-packages/sqlalchemy/util/queue.py" />
         <option value="$PROJECT_DIR$/venv/lib/python3.6/site-packages/sqlalchemy/engine/result.py" />
@@ -248,6 +221,8 @@
         <option value="$PROJECT_DIR$/repository/transaction_repo.py" />
         <option value="$PROJECT_DIR$/repository/account_repo.py" />
         <option value="$PROJECT_DIR$/order/controllers/checkout_order.py" />
+        <option value="$PROJECT_DIR$/alembic/versions/cce5582bdca1_prices_added_to_database_book_id_in_.py" />
+        <option value="$PROJECT_DIR$/alembic/versions/8b8a552d9d24_library_entity_changed.py" />
       </list>
     </option>
   </component>
@@ -398,20 +373,19 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.02119353" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.42498606" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32998884" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3645485" />
-      <window_info anchor="bottom" id="Debug" order="3" visible="true" weight="0.522854" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.522854" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32998884" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49972114" weight="0.50167227" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49972114" visible="true" weight="0.50167227" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5002789" side_tool="true" weight="0.7380156" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32998884" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -627,16 +601,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="31">
-          <caret line="100" column="27" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/book_collections/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="108">
@@ -1091,8 +1055,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/alembic/versions/cce5582bdca1_prices_added_to_database_book_id_in_.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="32" column="52" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="52" />
+        <state relative-caret-position="459">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alembic/versions/8b8a552d9d24_library_entity_changed.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="24" column="71" selection-start-line="24" selection-start-column="71" selection-end-line="24" selection-end-column="71" />
         </state>
       </provider>
     </entry>
