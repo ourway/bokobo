@@ -150,7 +150,7 @@ def get_all(db_session, username):
     return result
 
 
-def search_person(data, db_session):
+def search_person(data, db_session,username):
     offset = data.get('offset', 0)
     limit = data.get('limit', 20)
     filter = data.get('filter', None)

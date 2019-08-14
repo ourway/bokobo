@@ -425,7 +425,7 @@ def search_book(data, db_session):
     result = []
 
     if filter is None:
-        newest_books(data, db_session)
+        return newest_books(data, db_session)
 
     search_key = next(iter(filter.keys()))
     search_phrase = filter.get(search_key)
