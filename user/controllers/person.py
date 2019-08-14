@@ -7,9 +7,10 @@ from sqlalchemy import or_
 
 from accounts.controller import add_initial_account
 from follow.controller import get_following_list_internal
-from helper import model_to_dict, Now, Http_error
+from helper import model_to_dict, Now, Http_error, model_basic_dict
 from log import LogMsg
 from messages import Message
+from repository.library_repo import library_to_dict
 from wish_list.controller import get_wish_list, internal_wish_list
 from ..models import Person, User
 from repository.person_repo import person_cell_exists, person_mail_exists
@@ -59,9 +60,9 @@ def get(id, db_session, username):
     logging.debug(LogMsg.MODEL_GETTING)
     model_instance = db_session.query(Person).filter(Person.id == id).first()
     if model_instance:
-
+        person_dict = person_to_dict(model_instance,db_session)
         logging.debug(LogMsg.GET_SUCCESS +
-                      json.dumps(model_to_dict(model_instance)))
+                      json.dumps(person_dict))
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, Message.MSG20)
@@ -69,7 +70,7 @@ def get(id, db_session, username):
     logging.error(LogMsg.GET_FAILED + json.dumps({"id": id}))
     logging.info(LogMsg.END)
 
-    return model_instance
+    return person_dict
 
 
 def edit(id, db_session, data, username):
@@ -207,4 +208,23 @@ def get_person_profile(id, db_session, username):
     logging.error(LogMsg.GET_FAILED + json.dumps(result))
     logging.info(LogMsg.END)
 
+    return result
+
+
+def person_to_dict(person,db_session):
+    result  = model_basic_dict(person)
+    model_attrs = {
+        'address':person.address,
+        'bio':person.bio,
+        'cell_no':person.cell_no,
+        'current_book_id':person.current_book_id,
+        'email':person.email,
+        'image':person.image,
+        'name':person.name,
+        'last_name':person.last_name,
+        'phone':person.phone,
+        'library':library_to_dict(person.library,db_session)
+
+    }
+    result.update(model_attrs)
     return result

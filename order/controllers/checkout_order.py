@@ -4,9 +4,10 @@ from helper import Http_error
 from messages import Message
 from order.controllers.order_items import recalc_order_price, get_orders_items
 from repository.account_repo import edit_account_value
-from .order import get as get_order
+from repository.order_repo import get as get_order
 from accounts.controller import get as get_account
 from financial_transactions.controller import add as add_transaction
+from configs import ADMINISTRATORS
 
 
 def checkout(order_id, data, db_session, username):
@@ -16,10 +17,12 @@ def checkout(order_id, data, db_session, username):
     if order is None:
         raise Http_error(404, Message.MSG20)
 
-    if order.creator != username:
+    if order.creator != username or username not in ADMINISTRATORS:
         raise Http_error(403, Message.ACCESS_DENIED)
 
     account = get_account(order.person_id, preferred_account, db_session)
+    if account is None:
+        raise Http_error(404,Message.USER_HAS_NO_ACCOUNT)
 
     order_price = recalc_order_price(order_id, db_session)
     if account.value < order_price:

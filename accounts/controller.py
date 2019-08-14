@@ -10,6 +10,7 @@ from log import LogMsg
 from messages import Message
 from repository.person_repo import validate_person
 from repository.user_repo import check_user
+from configs import ADMINISTRATORS
 
 
 def add(data, db_session, username):
@@ -45,6 +46,15 @@ def add(data, db_session, username):
 def get(person_id, type, db_session):
     return db_session.query(Account).filter(
         and_(Account.person_id == person_id, Account.type == type)).first()
+
+
+def get_person_accounts(person_id,db_session,username):
+    rtn = []
+    result = db_session.query(Account).filter(
+        Account.person_id == person_id).all()
+    for item in result:
+        rtn.append(account_to_dict(item))
+    return rtn
 
 
 def get_all(data, db_session, username):
@@ -123,7 +133,7 @@ def edit_account_value(account_id, value, db_session):
     if account is None:
         raise Http_error(404, Message.MSG20)
     account.value += value
-    return account
+    return account_to_dict(account)
 
 
 def get_by_id(id, db_session, username):
@@ -143,6 +153,16 @@ def get_by_id(id, db_session, username):
 
     return account_to_dict(result)
 
+
+def edit(id,data,db_session,username):
+    value = data.get('value')
+    account = db_session.query(Account).filter(Account.id == id).first()
+    if account is None:
+        raise Http_error(404,Message.MSG20)
+    if account.creator != username or username not in ADMINISTRATORS:
+        raise Http_error(403,Message.ACCESS_DENIED)
+    account.value+=value
+    return account_to_dict(account)
 
 def account_to_dict(account):
     if not isinstance(account, Account):
@@ -165,5 +185,5 @@ def add_initial_account(person_id, db_session, username):
     model_instance.person_id = person_id
     db_session.add(model_instance)
 
-    return model_instance
+    return account_to_dict(model_instance)
 

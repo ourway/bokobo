@@ -13,6 +13,8 @@ def call_router(app):
     app.route('/orders/<id>', 'GET', order.get, apply=wrappers)
     app.route('/orders/<id>', 'PUT', order.edit, apply=data_plus_wrappers)
     app.route('/orders/user', 'POST', order.get_user_orders, apply=data_plus_wrappers)
+    app.route('/orders/person', 'POST', order.get_person_orders, apply=data_plus_wrappers)
+
     app.route('/orders/checkout/<order_id>', 'POST', checkout_order.checkout,
               apply=data_plus_wrappers)
 

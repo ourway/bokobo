@@ -43,3 +43,8 @@ CREDIT_DEBIT_ERROR = credit and debit can not have amount at the same time
 NO_PRICE_FOUND = there is no price for this book in our tables
 DISCOUNT_IS_FLOAT = discount should be sent in float format
 INSUFFICIANT_BALANCE = your account value is lower than your reciept
+
+
+USER_HAS_NO_ACCOUNT = user has no account
+
+ORDER_INVOICED = order is invoiced and not deletable

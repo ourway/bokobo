@@ -1,5 +1,6 @@
 import logging
 
+from enums import OrderStatus
 from order.controllers.order_items import add_orders_items, \
     delete_orders_items_internal
 from repository.user_repo import check_user
@@ -15,7 +16,7 @@ administrator_users = value('administrator_users', ['admin'])
 def add(data, db_session, username):
     logging.info(LogMsg.START)
 
-    check_schema(['items'], data.keys())
+    check_schema(['items','person_id'], data.keys())
 
     user = check_user(username, db_session)
     if user is None:
@@ -27,7 +28,7 @@ def add(data, db_session, username):
     model_instance = Order()
 
     populate_basic_data(model_instance, username)
-    model_instance.person_id = user.person_id
+    model_instance.person_id = data.get('person_id')
 
     db_session.add(model_instance)
 
@@ -81,12 +82,32 @@ def get_user_orders(data, db_session, username=None):
     return res
 
 
+def get_person_orders(data, db_session, username=None):
+    offset = data.get('offset', 0)
+    limit = data.get('limit', 20)
+    filter = data.get('filter',None)
+    if filter is None:
+        raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
+    person_id = filter.get('person')
+
+    result = db_session.query(Order).filter(
+        Order.person_id == person_id).order_by(
+        Order.creation_date.desc()).slice(offset, offset + limit)
+    res = []
+    for item in result:
+        res.append(order_to_dict(item))
+
+    return res
+
+
 def delete(id, db_session, username=None):
     order = internal_get(id, db_session)
     if order is None:
         raise Http_error(404, Message.MSG20)
     if order.creator != username:
         raise Http_error(403, Message.ACCESS_DENIED)
+    if order.status == OrderStatus.Invoiced:
+        raise Http_error(403,Message.ORDER_INVOICED)
 
     try:
         delete_orders_items_internal(order.id, db_session)
@@ -104,6 +125,9 @@ def edit(id,data, db_session, username=None):
         raise Http_error(404, Message.MSG20)
     if model_instance.creator != username:
         raise Http_error(403, Message.ACCESS_DENIED)
+    if model_instance.status == OrderStatus.Invoiced:
+        raise Http_error(403,Message.ORDER_INVOICED)
+
     if 'id' in data:
         del data['id']
     if 'person_id'in data:
@@ -115,7 +139,11 @@ def edit(id,data, db_session, username=None):
         for key, value in data.items():
             # TODO  if key is valid attribute of class
             setattr(model_instance, key, value)
-
+        if 'items' in data:
+            delete_orders_items_internal(model_instance.id, db_session)
+            model_instance.total_price = add_orders_items(model_instance.id,
+                                                          data.get('items'),
+                                                          db_session, username)
         edit_basic_data(model_instance, username)
 
     except:

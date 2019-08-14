@@ -53,3 +53,5 @@ class Message:
     NO_PRICE_FOUND = 'no_price_found'
     DISCOUNT_IS_FLOAT = 'discount_is_float'
     INSUFFICIANT_BALANCE = 'insufficiant_balance'
+    USER_HAS_NO_ACCOUNT = 'user_has_no_account'
+    ORDER_INVOICED = 'order_invoiced'
