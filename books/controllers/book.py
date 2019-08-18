@@ -223,7 +223,7 @@ def add_multiple_type_books(db_session, data, username):
     types = data.get('types')
     check_enums(types, legal_types)
 
-    roles = data.get('roles')
+    roles_data = data.get('roles')
 
     book_data = {k: v for k, v in data.items() if k not in ['roles', 'types']}
 
@@ -231,7 +231,7 @@ def add_multiple_type_books(db_session, data, username):
     for type in types:
         book_data.update({'type': type})
         book = add(db_session, book_data, username)
-        roles, elastic_data = add_book_roles(book.id, roles, db_session,
+        roles, elastic_data = add_book_roles(book.id, roles_data, db_session,
                                              username)
 
         result.append(book_to_dict(db_session, book))
@@ -241,7 +241,8 @@ def add_multiple_type_books(db_session, data, username):
         index_data['book_id'] = book.id
         index_data['tags'] = book.tags
 
-        del index_data['roles']
+        if 'roles' in index_data:
+            del index_data['roles']
         index_data.update(elastic_data)
         index_book(index_data, db_session)
 

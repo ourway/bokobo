@@ -16,6 +16,6 @@ class Library(Base,PrimaryModel):
     status = Column(JSON)
 
     book = relationship(Book, primaryjoin=book_id == Book.id)
-    user = relationship(Person, primaryjoin=person_id == Person.id,backref = 'library')
+    person = relationship(Person, primaryjoin=person_id == Person.id)
 
 

@@ -222,8 +222,8 @@ def person_to_dict(person,db_session):
         'image':person.image,
         'name':person.name,
         'last_name':person.last_name,
-        'phone':person.phone,
-        'library':library_to_dict(person.library,db_session)
+        'phone':person.phone
+        # 'library':library_to_dict(person.library,db_session)
 
     }
     result.update(model_attrs)
