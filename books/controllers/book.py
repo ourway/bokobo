@@ -135,31 +135,26 @@ def delete(id, db_session, username):
 
     logger.info(LogMsg.DELETING_BOOK,id)
 
-    try:
-        logger.debug(LogMsg.MODEL_GETTING,id)
-        book = db_session.query(Book).filter(Book.id == id).first()
+    logger.debug(LogMsg.MODEL_GETTING, id)
+    book = db_session.query(Book).filter(Book.id == id).first()
 
-        if book is None:
-            logger.error(LogMsg.NOT_FOUND,{'book_id':id})
-            raise Http_error(404,Message.MSG20)
+    if book is None:
+        logger.error(LogMsg.NOT_FOUND, {'book_id': id})
+        raise Http_error(404, Message.MSG20)
 
-        if book.creator != username or username not in ADMINISTRATORS:
-            logger.error(LogMsg.NOT_ACCESSED)
-            raise Http_error(403, Message.ACCESS_DENIED)
+    if book.creator != username or username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED)
+        raise Http_error(403, Message.ACCESS_DENIED)
 
-        if book.images:
-            logger.debug(LogMsg.DELETE_BOOK_IMAGES)
-            delete_files(book.images)
-        if book.files:
-            logger.debug(LogMsg.DELETE_BOOK_FILES)
-            delete_files(book.files)
+    if book.images:
+        logger.debug(LogMsg.DELETE_BOOK_IMAGES)
+        delete_files(book.images)
+    if book.files:
+        logger.debug(LogMsg.DELETE_BOOK_FILES)
+        delete_files(book.files)
 
-        db_session.query(Book).filter(Book.id == id).delete()
-        logger.debug(LogMsg.ENTITY_DELETED,{"Book.id":id})
-
-    except:
-        logger.error(LogMsg.DELETE_FAILED,exc_info=True)
-        raise Http_error(500, Message.MSG13)
+    db_session.query(Book).filter(Book.id == id).delete()
+    logger.debug(LogMsg.ENTITY_DELETED, {"Book.id": id})
 
     logger.info(LogMsg.END)
     return Http_response(204,True)
@@ -185,7 +180,7 @@ def get_all(db_session):
             book_dict['roles'] = book_roles
             final_res.append(book_dict)
     except:
-        logger.error(LogMsg.GET_FAILED)
+        logger.exception(LogMsg.GET_FAILED,exc_info=True)
         raise Http_error(500, Message.MSG14)
 
     logger.debug(LogMsg.END)
@@ -345,28 +340,22 @@ def delete_book(id, db_session, username):
 
     logger.info(LogMsg.DELETE_REQUEST,{'book_id':id})
 
-    try:
-        logger.debug(LogMsg.DELETING_BOOK_ROLES,id)
-        delete_book_roles(id, db_session)
+    logger.debug(LogMsg.DELETING_BOOK_ROLES, id)
+    delete_book_roles(id, db_session)
 
+    logger.debug(LogMsg.DELETING_BOOK_COMMENTS, id)
+    delete_book_comments(id, db_session)
 
-        logger.debug(LogMsg.DELETING_BOOK_COMMENTS,id)
-        delete_book_comments(id, db_session)
+    delete(id, db_session, username)
 
-        delete(id, db_session, username)
+    logger.debug(LogMsg.ELASTIC_INDEX_DELETE, id)
+    delete_book_index(id)
 
+    logger.debug(LogMsg.ENTITY_DELETED, id)
 
-        logger.debug(LogMsg.ELASTIC_INDEX_DELETE,id)
-        delete_book_index(id)
-
-        logger.debug(LogMsg.ENTITY_DELETED,id)
-
-    except:
-        logger.error(LogMsg.DELETE_FAILED,exc_info=True)
-        raise Http_error(500, Message.MSG13)
 
     logger.info(LogMsg.END)
-    return {}
+    return Http_response(204,True)
 
 
 def search_by_title(data, db_session):

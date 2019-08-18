@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/accounts/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_token/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_token/controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/books/controllers/book.py" beforeDir="false" afterPath="$PROJECT_DIR$/books/controllers/book.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/books/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log.py" beforeDir="false" afterPath="$PROJECT_DIR$/log.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/comment_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/repository/comment_repo.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,11 +24,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="91">
-              <caret line="353" column="44" selection-start-line="353" selection-start-column="44" selection-end-line="353" selection-end-column="44" />
+            <state relative-caret-position="351">
+              <caret line="359" lean-forward="true" selection-start-line="359" selection-end-line="359" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <element signature="e#6209#7426#0" />
@@ -62,10 +56,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/logs/app.log">
           <provider selected="true" editor-type-id="LogFileEditorProvider">
-            <state relative-caret-position="-456">
+            <state relative-caret-position="-129">
               <caret line="1254" lean-forward="true" selection-start-line="1254" selection-end-line="1254" />
             </state>
           </provider>
@@ -221,8 +215,8 @@
         <option value="$PROJECT_DIR$/repository/comment_repo.py" />
         <option value="$PROJECT_DIR$/log.py" />
         <option value="$PROJECT_DIR$/books/urls.py" />
-        <option value="$PROJECT_DIR$/books/controllers/book.py" />
         <option value="$PROJECT_DIR$/files/fd0b79b1-8457-4daa-80d5-7c486907caa8" />
+        <option value="$PROJECT_DIR$/books/controllers/book.py" />
       </list>
     </option>
   </component>
@@ -351,19 +345,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1846068" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1846068" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32998884" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3645485" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3645485" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.522854" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32998884" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49972114" weight="0.5005574" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49972114" visible="true" weight="0.5005574" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5002789" side_tool="true" weight="0.7380156" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32998884" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -1038,27 +1033,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="353" column="44" selection-start-line="353" selection-start-column="44" selection-end-line="353" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#6209#7426#0" />
-            <element signature="e#7490#8651#0" />
-            <element signature="e#8705#10608#0" />
-            <element signature="e#11340#12091#0" />
-            <element signature="e#12850#13528#0" />
-            <element signature="e#13573#14289#0" />
-            <element signature="e#14332#15281#0" />
-            <element signature="e#15326#15882#0" />
-            <element signature="e#15930#16412#0" />
-            <element signature="e#16456#16915#0" />
-            <element signature="e#16960#17416#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/file_handler/handle_file.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="118">
@@ -1085,8 +1059,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/logs/app.log">
       <provider selected="true" editor-type-id="LogFileEditorProvider">
-        <state relative-caret-position="-456">
+        <state relative-caret-position="-129">
           <caret line="1254" lean-forward="true" selection-start-line="1254" selection-end-line="1254" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="359" lean-forward="true" selection-start-line="359" selection-end-line="359" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#6209#7426#0" />
+            <element signature="e#7490#8651#0" />
+            <element signature="e#8705#10608#0" />
+            <element signature="e#11340#12091#0" />
+            <element signature="e#12850#13528#0" />
+            <element signature="e#13573#14289#0" />
+            <element signature="e#14332#15281#0" />
+            <element signature="e#15326#15882#0" />
+            <element signature="e#15930#16412#0" />
+            <element signature="e#16456#16915#0" />
+            <element signature="e#16960#17416#0" />
+          </folding>
         </state>
       </provider>
     </entry>
