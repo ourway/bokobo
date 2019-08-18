@@ -142,7 +142,7 @@ def delete(id, db_session, username):
         logger.error(LogMsg.NOT_FOUND, {'book_id': id})
         raise Http_error(404, Message.MSG20)
 
-    if book.creator != username or username not in ADMINISTRATORS:
+    if book.creator != username and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
         raise Http_error(403, Message.ACCESS_DENIED)
 
@@ -280,6 +280,10 @@ def edit_book(id, db_session, data, username):
     if model_instance is None:
         logger.error(LogMsg.NOT_FOUND,{'book_id':id})
         raise Http_error(404,Message.MSG20)
+
+    if model_instance.creator !=username and username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED)
+        raise Http_error(403,Message.ACCESS_DENIED)
 
     logger.debug(LogMsg.GET_SUCCESS, id)
 
