@@ -1,7 +1,6 @@
 import json
 from uuid import uuid4
-import logging
-from log import LogMsg
+from log import LogMsg,logger
 from helper import Now, Http_error, value
 from messages import Message
 from .models import APP_Token
@@ -11,12 +10,15 @@ new_token_request_valid_interval = value('new_token_request_valid_interval','30'
 
 
 def add(db_session, data, username):
-    logging.info(LogMsg.START)
+    logger.info(LogMsg.START,username)
+
+    logger.debug(LogMsg.CHECKING_VALID_TOKEN,username)
 
     current_token = get_current_token(db_session, username)
 
     if current_token is not None and \
             current_token.expiration_date > (Now()):
+        logger.debug(LogMsg.USER_HAS_VALID_TOKEN,current_token.id)
         return current_token
 
     model_instance = APP_Token()
@@ -24,67 +26,67 @@ def add(db_session, data, username):
     model_instance.username = username
     model_instance.expiration_date = Now() + int(token_expiration_interval)
 
-    logging.debug(LogMsg.DATA_ADDITION + "  || Data :" + json.dumps(data))
+    logger.debug(LogMsg.DATA_ADDITION,data)
 
     db_session.add(model_instance)
 
-    logging.debug(LogMsg.TOKEN_CREATED)
+    logger.debug(LogMsg.TOKEN_CREATED)
 
-    logging.info(LogMsg.END)
+    logger.info(LogMsg.END)
 
     return model_instance
 
 
 def get(id, db_session, username):
-    logging.info(LogMsg.START + "user is {}".format(username))
+    logger.info(LogMsg.START ,username)
 
     model_instance = db_session.query(APP_Token) \
         .filter(APP_Token.id == id).first()
     if model_instance:
-        logging.info(LogMsg.MODEL_GETTING)
+        logger.info(LogMsg.MODEL_GETTING)
     else:
-        logging.debug(LogMsg.MODEL_GETTING_FAILED)
+        logger.error(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, Message.MSG11)
 
-    logging.debug(LogMsg.GET_SUCCESS)
+    logger.debug(LogMsg.GET_SUCCESS)
 
     if model_instance.expiration_date < Now():
-        logging.error(LogMsg.TOKEN_EXPIRED)
+        logger.error(LogMsg.TOKEN_EXPIRED)
         raise Http_error(401,Message.MSG12)
 
-    logging.info(LogMsg.END)
+    logger.info(LogMsg.END)
     return model_instance
 
 
 def delete(id, db_session, username):
-    logging.info(LogMsg.START + "user is {}  ".format(username) + "token_id = {}".format(id))
+    logger.info(LogMsg.START,username)
 
-    logging.info(LogMsg.DELETE_REQUEST + "user is {}".format(username))
+    logger.info(LogMsg.DELETE_REQUEST ,{'token_id':id})
 
     try:
         db_session.query(APP_Token).filter(APP_Token.id == id).delete()
 
-        logging.debug(LogMsg.TOKEN_DELETED + "APP_Token.id {}".format(id))
+        logger.debug(LogMsg.TOKEN_DELETED + "APP_Token.id {}".format(id))
 
     except:
-        logging.error(LogMsg.DELETE_FAILED)
+        logger.error(LogMsg.DELETE_FAILED)
         raise Http_error(500, Message.MSG13)
 
-    logging.info(LogMsg.END)
+    logger.info(LogMsg.END)
     return {}
 
 
 def get_all(db_session, username):
-    logging.info(LogMsg.START + "user is {}".format(username))
+    logger.info(LogMsg.START,username)
     try:
         result = db_session.query(APP_Token).all()
-        logging.debug(LogMsg.GET_SUCCESS)
+        logger.debug(LogMsg.GET_SUCCESS)
 
     except:
-        logging.error(LogMsg.GET_FAILED)
+        logger.error(LogMsg.GET_FAILED)
         raise Http_error(500, Message.MSG14)
 
-    logging.debug(LogMsg.END)
+    logger.debug(LogMsg.END)
     return result
 
 

@@ -21,7 +21,7 @@ def call_router(app):
     app.route('/books/recommended', 'POST', book.search_by_writer,
               apply=[inject_db, jsonify,pass_data])
 
-    app.route('/books/newest', 'GET', book.newest_books, apply=[inject_db, jsonify,pass_data])
+    app.route('/books/newest', 'POST', book.newest_books, apply=[inject_db, jsonify,pass_data])
 
 
     app.route('/book-roles/<id>', 'GET', book_roles.get, apply=readonly_wrappers)
