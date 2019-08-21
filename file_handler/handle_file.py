@@ -4,43 +4,53 @@ from uuid import uuid4
 import magic
 from bottle import response, static_file
 
-from helper import value
+from helper import value, Http_error
+from messages import Message
 
 save_path = value('save_path',None)
 
 
 def upload_files(data, **kwargs):
-    files_list = data.get('files')
-    model_files  =[]
-    if files_list and len(files_list) > 0:
-        for file in files_list:
-            if file:
-                file.filename = str(uuid4())
-                file_path = save_path+'/'+file.filename
-                model_files.append(file_path)
+    try:
+        files_list = data.get('files')
+        model_files  =[]
+        if files_list and len(files_list) > 0:
+            for file in files_list:
+                if file:
+                    file.filename = str(uuid4())
+                    model_files.append(file.filename)
 
-            file.save(save_path)
+                    file.save(save_path)
 
-    return model_files
+        return model_files
+    except:
+        raise Http_error(405,Message.UPLOAD_FAILED)
+
 
 
 def delete_files(files, **kwargs):
+    try:
+        for filename in files:
+            file_path = '{}/{}'.format(save_path,filename)
 
-    for file in files:
-
-        os.remove(file)
-
-
-def return_file(file_path, **kwargs):
-    filename = file_path.split('/')[-1]
-    response.body = static_file(filename, root=save_path)
-    response.content_type = file_mime_type(filename)
-    return response
+            os.remove(file_path)
+    except:
+        raise Http_error(404,Message.MSG20)
 
 
-def file_mime_type(filename):
-    # m = magic.open(magic.MAGIC_MIME)
-    m = magic.from_file(filename, mime=True)
-    print(m)
 
+def return_file(filename, **kwargs):
+    try:
+
+        response.body = static_file(filename, root=save_path)
+        file_path = '{}/{}'.format(save_path,filename)
+        response.content_type = file_mime_type(file_path)
+        return response
+    except:
+        raise Http_error(404,Message.MSG20)
+
+
+
+def file_mime_type(file_path):
+    m = magic.from_file(file_path, mime=True)
     return str(m)

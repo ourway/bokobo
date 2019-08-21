@@ -1,9 +1,8 @@
 from sqlalchemy.dialects.postgresql import ARRAY,UUID
-from sqlalchemy import String, JSON, Column, ForeignKey, Float, Enum, UniqueConstraint
+from sqlalchemy import String, JSON, Column, ForeignKey, Float, Enum
 from sqlalchemy.orm import relationship
-
 from db_session import Base, PrimaryModel
-from enums import Roles,BookTypes,Genre
+from enums import Roles,BookTypes
 from user.models import Person, User
 
 
@@ -15,7 +14,7 @@ class Book(Base,PrimaryModel):
     type = Column(Enum(BookTypes))
     genre = Column(ARRAY(String))
     language = Column(String)
-    rate = Column(Float)
+    rate = Column(Float,default=0.0)
     images = Column(ARRAY(UUID))
     files = Column(ARRAY(UUID))
     description = Column(String)
@@ -23,11 +22,7 @@ class Book(Base,PrimaryModel):
     duration = Column(String)
     size = Column(String)
     isben = Column(String)
-
-
-    # roles = relationship('BookRole')
-    # users = relationship('Library', uselist=True)
-
+    from_editor = Column(String)
 
 
 class BookRole(Base,PrimaryModel):
@@ -39,17 +34,4 @@ class BookRole(Base,PrimaryModel):
 
     book_roles = relationship(Book, primaryjoin=book_id == Book.id )
     person = relationship(Person, primaryjoin=person_id == Person.id )
-
-
-class Library(Base,PrimaryModel):
-
-    __tablename__ = 'library'
-
-    book_id = Column(UUID,ForeignKey(Book.id),nullable=False)
-    user_id = Column(UUID,ForeignKey(User.id),nullable=False)
-    status = Column(JSON)
-
-    book = relationship(Book, primaryjoin=book_id == Book.id)
-    user = relationship(User, primaryjoin=user_id == User.id,backref = 'library')
-
 

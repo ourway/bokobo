@@ -4,6 +4,7 @@ import logging
 from os import environ
 import time
 from base64 import b64encode, b64decode
+from uuid import uuid4
 
 import magic
 from bottle import request, HTTPResponse
@@ -242,6 +243,14 @@ def Http_error(code, message):
     return result
 
 
+def Http_response(code, message):
+    if isinstance(message,str):
+        message = {'msg':message}
+    result = HTTPResponse(body=json.dumps(message), status=code,
+        headers = {'Content-type': 'application/json'})
+    return result
+
+
 def value(name, default):
     return environ.get(name) or default
 
@@ -260,10 +269,43 @@ def check_schema(required_list,data_keys):
     result = required.issubset(keys)
 
     if result==False:
-        #TODO raising is not in standard format
-        raise Http_error(400,{'data':'{} are required'.format(required_list)})
+        raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
 
     return result
 
 
 
+def populate_basic_data(model_instance,username=None,tags=None):
+
+    model_instance.id = str(uuid4())
+    model_instance.creation_date = Now()
+    model_instance.creator = username
+    model_instance.version = 1
+    model_instance.tags = tags
+
+def edit_basic_data(model_instance, username, tags=None):
+
+    model_instance.modification_date = Now()
+    model_instance.modifier = username
+    model_instance.version += 1
+
+    if tags:
+        for tag in tags:
+            if tag not in model_instance.tags:
+                model_instance.tags.append(tag)
+
+    return model_instance
+
+
+def model_basic_dict(model_instance):
+    result ={
+
+        'creation_date': model_instance.creation_date,
+        'creator': model_instance.creator,
+        'id': model_instance.id,
+        'modification_date': model_instance.modification_date,
+        'modifier': model_instance.modifier,
+        'version': model_instance.version,
+        'tags': model_instance.tags
+    }
+    return result

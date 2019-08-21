@@ -23,3 +23,5 @@ def call_router(app):
     app.route('/persons/<id>', 'GET', person.get, apply=wrappers)
     app.route('/persons/<id>', 'PUT', person.edit, apply=data_plus_wrappers)
     app.route('/persons/<id>', 'DELETE', person.delete, apply=[check_auth, inject_db])
+    app.route('/persons/_search', 'POST', person.search_person, apply=data_plus_wrappers)
+

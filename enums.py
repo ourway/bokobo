@@ -30,6 +30,28 @@ class Genre(enum.Enum):
     Science = 'Science'
 
 
+class ReportComment(enum.Enum):
+    Personal = 'Personal'
+    Invalid_Content = 'Invalid_Content'
+    General = 'General'
+
+
+class AccountTypes(enum.Enum):
+    Main = 'Main'
+    Star = 'Star'
+    Discount = 'Discount'
+    Postpaid = 'Postpaid'
+    Prepaid = 'Prepaid'
+
+
+class OrderStatus(enum.Enum):
+    Created = 'Created'
+    Invoiced = 'Invoiced'
+    Canceled = 'Canceled'
+    Postponed = 'Postponed'
+
+
+
 
 
 def check_enums(data,enum_class):
@@ -45,3 +67,41 @@ def str_genre(genre_list):
     for genre in genre_list:
         res.append((getattr(Genre,genre)).value)
     return res
+
+
+def str_type(btype):
+    if btype is not None:
+        return (getattr(BookTypes,btype)).value
+    else:
+        return ''
+
+def str_role(role):
+    if role is not None:
+        return (getattr(Roles,role)).value
+    else:
+        return ''
+
+def str_report(report):
+    if report is not None:
+        if isinstance(report,str):
+            return report
+        else:
+            return report.value
+    else:
+        return None
+
+def check_enum(type,enum_class):
+    if type not in enum_class.__members__:
+        raise Http_error(404, Message.MSG19)
+
+    return type
+
+
+def str_account_type(account_type):
+    if account_type is not None:
+        if isinstance(account_type,str):
+            return account_type
+        else:
+            return account_type.value
+    else:
+        return None

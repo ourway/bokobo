@@ -26,3 +26,25 @@ USERNAME_CELLNO_REQUIRED = for retrieving password username or cell_no must send
 INVALID_USER = the user by this data doesnt exist
 INVALID_CODE = the code is invalid
 FILTER_REQUIRED = filter object is not in data
+UPLOAD_FAILED = uploading files encountered a problem
+INVALID_ENTITY = entity is not right instance of Class
+ACCESS_DENIED = user has not access to this action
+ALREADY_LIKED = user already liked this comment
+COMMENT_NOT_FOUND = comment not found
+ALREADY_REPORTED = user already reported the comment
+REPORT_NOT_FOUND = report by this user for this comment not found
+PARENT_NOT_FOUND = parent object cant found
+FOLLOW_DENIED = user cant follow him/her self
+ALREADY_FOLLOWS = user already follows target
+MISSING_REQUIERED_FIELD = missing requiered field
+ALREADY_RATED = user already rated to book
+ALREADY_EXISTS = entity already exists
+CREDIT_DEBIT_ERROR = credit and debit can not have amount at the same time
+NO_PRICE_FOUND = there is no price for this book in our tables
+DISCOUNT_IS_FLOAT = discount should be sent in float format
+INSUFFICIANT_BALANCE = your account value is lower than your reciept
+
+
+USER_HAS_NO_ACCOUNT = user has no account
+
+ORDER_INVOICED = order is invoiced and not deletable
