@@ -222,6 +222,30 @@ class LogMsg:
     GETTING_ROLES_OF_BOOK = 'getting all roles of book : %s'
     BOOKS_ROLES = 'the roles of book is : %s'
 
+    # COMMENT
+    COMMENT_VALIDATING_BOOK = 'getting book to validate commenting : %s'
+    COMMENT_CHECK_FOR_PARENT = 'checking if comment has a parent'
+    COMMENT_GETTING_PARENT = 'getting comment parent by id : %s'
+    COMMENT_PARENT_NOT_FOUND = 'comments parent by this id not found : %s'
+    COMMENT_PARENT_NOT_MATCH = 'this parent comment is not matching for this book id : %s'
+    COMMENT_DELETING_BOOK_COMMENTS = 'deleting all comments of book by id : %s '
+    COMMENT_GETTING_BOOK_COMMENTS = 'getting all comments of book by id :%s '
+
+    # COMMENT_ACTION
+
+    ACTION_CHECK_COMMENT = 'checking for comment existance by id : %s'
+    ACTION_REPORT_COMMENT = 'reporting comment by id : %s '
+    ACTION_DISREPORT_COMMENT = 'disreporting comment by id : %s '
+    ACTION_LIKE_COMMENT = 'liking comment by id : %s'
+    ACTION_DISLIKE_COMMENT = 'disliking comment by id : %s '
+    ACTION_GETTING_LIKES = 'getting comment likes by id : %s'
+    ACTION_GETTING_REPORTS = 'getting comment reports by id : %s '
+    ACTION_CHECK_USER_LIKED = 'checking if user liked comment already : %s'
+    ACTION_CHECK_USER_REPORTED = 'checking if user reported the comment : %s '
+    ACTION_ALREADY_LIKED = 'user already liked the comment '
+    ACTION_ALREADY_REPORTED = 'user already reported the comment'
+    ACTION_USER_CANT_DISLIKE = 'user not liked the comment so cant dislike it'
+    ACTION_USER_CANT_DISREPORT = 'user not reported the comment so cant desreport it'
 
 
     # Price
@@ -232,5 +256,10 @@ class LogMsg:
     ELASTIC_INDEX_DELETE = 'deleting book index in elastic search by id : %s'
     SEARCH_ELASTIC_INDEXES = 'searching in elastic search for indexes by phrase : %s '
     ELASTIC_SEARCH_RESULTS = 'elastic search result for book_id s is : %s '
+
+
+
+    # USER
+    USER_HAS_NO_PERSON = 'user by ths username has no related person : %s '
 
 

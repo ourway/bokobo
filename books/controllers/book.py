@@ -29,7 +29,7 @@ def add(db_session, data, username, **kwargs):
     logger.debug(LogMsg.ENUM_CHECK, {'genre': genre})
 
     model_instance = Book()
-    
+
     populate_basic_data(model_instance, username, data.get('tags'))
     logger.debug(LogMsg.POPULATING_BASIC_DATA)
 
@@ -55,7 +55,6 @@ def add(db_session, data, username, **kwargs):
 
     price = data.get('price', None)
     if price:
-        
         add_price({'book_id': model_instance.id, 'price': price}, db_session,
                   username)
 
@@ -64,17 +63,17 @@ def add(db_session, data, username, **kwargs):
 
 
 def get(id, db_session):
-    logger.info(LogMsg.START,None)
-    logger.debug(LogMsg.MODEL_GETTING,id)
+    logger.info(LogMsg.START, None)
+    logger.debug(LogMsg.MODEL_GETTING, id)
 
     model_instance = db_session.query(Book).filter(Book.id == id).first()
     if model_instance:
         book_dict = book_to_dict(db_session, model_instance)
 
-        logger.debug(LogMsg.GET_SUCCESS,book_dict)
+        logger.debug(LogMsg.GET_SUCCESS, book_dict)
 
     else:
-        logger.error(LogMsg.NOT_FOUND,{'book_id':id})
+        logger.error(LogMsg.NOT_FOUND, {'book_id': id})
         raise Http_error(404, Message.MSG20)
 
     logger.info(LogMsg.END)
@@ -82,29 +81,29 @@ def get(id, db_session):
     return book_dict
 
 
-def edit(id,db_session, data, username):
-    logger.info(LogMsg.START,username)
+def edit(id, db_session, data, username):
+    logger.info(LogMsg.START, username)
     if "id" in data.keys():
         del data["id"]
     logger.debug(LogMsg.EDIT_REQUST)
-    logger.debug(LogMsg.MODEL_GETTING,{'book_id':id})
+    logger.debug(LogMsg.MODEL_GETTING, {'book_id': id})
     model_instance = db_session.query(Book).filter(Book.id == id).first()
     if model_instance:
         logger.debug(LogMsg.GET_SUCCESS)
     else:
-        logger.debug(LogMsg.NOT_FOUND,{'book_id':id})
+        logger.debug(LogMsg.NOT_FOUND, {'book_id': id})
         raise Http_error(404, Message.MSG20)
 
     if model_instance.creator != username or username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
         raise Http_error(403, Message.ACCESS_DENIED)
 
-    logger.debug(LogMsg.EDITING_BOOK,id)
+    logger.debug(LogMsg.EDITING_BOOK, id)
 
     files = data.get('files', None)
     images = data.get('images', None)
     if files:
-        logger.debug(LogMsg.DELETE_BOOK_FILES,id)
+        logger.debug(LogMsg.DELETE_BOOK_FILES, id)
         delete_files(model_instance.files)
 
     if images:
@@ -122,7 +121,7 @@ def edit(id,db_session, data, username):
 
     logger.debug(LogMsg.MODEL_ALTERED)
 
-    logger.debug(LogMsg.EDIT_SUCCESS ,book_to_dict(db_session, model_instance))
+    logger.debug(LogMsg.EDIT_SUCCESS, book_to_dict(db_session, model_instance))
 
     logger.info(LogMsg.END)
 
@@ -131,9 +130,9 @@ def edit(id,db_session, data, username):
 
 def delete(id, db_session, username):
     logger.info(
-        LogMsg.START,username)
+        LogMsg.START, username)
 
-    logger.info(LogMsg.DELETING_BOOK,id)
+    logger.info(LogMsg.DELETING_BOOK, id)
 
     logger.debug(LogMsg.MODEL_GETTING, id)
     book = db_session.query(Book).filter(Book.id == id).first()
@@ -157,7 +156,7 @@ def delete(id, db_session, username):
     logger.debug(LogMsg.ENTITY_DELETED, {"Book.id": id})
 
     logger.info(LogMsg.END)
-    return Http_response(204,True)
+    return Http_response(204, True)
 
 
 def get_all(db_session):
@@ -180,7 +179,7 @@ def get_all(db_session):
             book_dict['roles'] = book_roles
             final_res.append(book_dict)
     except:
-        logger.exception(LogMsg.GET_FAILED,exc_info=True)
+        logger.exception(LogMsg.GET_FAILED, exc_info=True)
         raise Http_error(500, Message.MSG14)
 
     logger.debug(LogMsg.END)
@@ -229,9 +228,9 @@ def book_to_dict(db_session, book):
 
 
 def add_multiple_type_books(db_session, data, username):
-    logger.info(LogMsg.START,username)
+    logger.info(LogMsg.START, username)
     types = data.get('types')
-    logger.debug(LogMsg.ENUM_CHECK,{'book_types':types})
+    logger.debug(LogMsg.ENUM_CHECK, {'book_types': types})
     check_enums(types, legal_types)
 
     roles_data = data.get('roles')
@@ -239,15 +238,15 @@ def add_multiple_type_books(db_session, data, username):
     book_data = {k: v for k, v in data.items() if k not in ['roles', 'types']}
 
     result = []
-    logger.debug(LogMsg.ADDING_MULTIPLE_BOOKS,data)
+    logger.debug(LogMsg.ADDING_MULTIPLE_BOOKS, data)
 
     for type in types:
         book_data.update({'type': type})
 
-        logger.debug(LogMsg.ADD_BOOK,book_data)
+        logger.debug(LogMsg.ADD_BOOK, book_data)
         book = add(db_session, book_data, username)
 
-        logger.debug(LogMsg.ADDING_ROLES_TO_BOOK,roles_data)
+        logger.debug(LogMsg.ADDING_ROLES_TO_BOOK, roles_data)
         roles, elastic_data = add_book_roles(book.id, roles_data, db_session,
                                              username)
 
@@ -262,7 +261,7 @@ def add_multiple_type_books(db_session, data, username):
             del index_data['roles']
         index_data.update(elastic_data)
 
-        logger.debug(LogMsg.INDEXING_IN_ELASTIC,index_data)
+        logger.debug(LogMsg.INDEXING_IN_ELASTIC, index_data)
         index_book(index_data, db_session)
 
     logger.info(LogMsg.END)
@@ -271,25 +270,24 @@ def add_multiple_type_books(db_session, data, username):
 
 
 def edit_book(id, db_session, data, username):
-    logger.info(LogMsg.START,username)
+    logger.info(LogMsg.START, username)
 
-    logger.info(LogMsg.EDITING_BOOK,id)
-
+    logger.info(LogMsg.EDITING_BOOK, id)
 
     model_instance = db_session.query(Book).filter(Book.id == id).first()
     if model_instance is None:
-        logger.error(LogMsg.NOT_FOUND,{'book_id':id})
-        raise Http_error(404,Message.MSG20)
+        logger.error(LogMsg.NOT_FOUND, {'book_id': id})
+        raise Http_error(404, Message.MSG20)
 
-    if model_instance.creator !=username and username not in ADMINISTRATORS:
+    if model_instance.creator != username and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
-        raise Http_error(403,Message.ACCESS_DENIED)
+        raise Http_error(403, Message.ACCESS_DENIED)
 
     logger.debug(LogMsg.GET_SUCCESS, id)
 
     if "id" in data.keys():
         del data["id"]
-    logger.debug(LogMsg.EDIT_REQUST,{'book_id':id})
+    logger.debug(LogMsg.EDIT_REQUST, {'book_id': id})
 
     roles = []
     elastic_data = {}
@@ -301,17 +299,17 @@ def edit_book(id, db_session, data, username):
     for key, value in data.items():
         # TODO  if key is valid attribute of class
         setattr(model_instance, key, value)
-    edit_basic_data(model_instance,username,data.get('tags'))
+    edit_basic_data(model_instance, username, data.get('tags'))
 
     if len(roles) > 0:
-        logger.debug(LogMsg.DELETING_BOOK_ROLES,id)
+        logger.debug(LogMsg.DELETING_BOOK_ROLES, id)
         delete_book_roles(model_instance.id, db_session)
-        logger.debug(LogMsg.ADDING_ROLES_TO_BOOK,id)
+        logger.debug(LogMsg.ADDING_ROLES_TO_BOOK, id)
         roles, elastic_data = add_book_roles(model_instance.id, roles,
                                              db_session, username)
         new_roles = []
         for role in roles:
-            logger.debug(LogMsg.ATTACHING_ROLES_TO_BOOKS,id)
+            logger.debug(LogMsg.ATTACHING_ROLES_TO_BOOKS, id)
             new_roles.append(book_role_to_dict(role))
     else:
         elastic_data = persons_of_book(model_instance.id, db_session)
@@ -323,10 +321,10 @@ def edit_book(id, db_session, data, username):
 
     print(('indexing_data : {}').format(indexing_data))
 
-    logger.debug(LogMsg.ELASTIC_INDEX_DELETE,id)
+    logger.debug(LogMsg.ELASTIC_INDEX_DELETE, id)
     delete_book_index(model_instance.id)
 
-    logger.debug(LogMsg.INDEXING_IN_ELASTIC,indexing_data)
+    logger.debug(LogMsg.INDEXING_IN_ELASTIC, indexing_data)
     index_book(indexing_data, db_session)
 
     edited_book = book_to_dict(db_session, model_instance)
@@ -340,9 +338,9 @@ def edit_book(id, db_session, data, username):
 
 def delete_book(id, db_session, username):
     logger.info(
-        LogMsg.START ,username)
+        LogMsg.START, username)
 
-    logger.info(LogMsg.DELETE_REQUEST,{'book_id':id})
+    logger.info(LogMsg.DELETE_REQUEST, {'book_id': id})
 
     logger.debug(LogMsg.DELETING_BOOK_ROLES, id)
     delete_book_roles(id, db_session)
@@ -357,9 +355,8 @@ def delete_book(id, db_session, username):
 
     logger.debug(LogMsg.ENTITY_DELETED, id)
 
-
     logger.info(LogMsg.END)
-    return Http_response(204,True)
+    return Http_response(204, True)
 
 
 def search_by_title(data, db_session):
@@ -369,7 +366,7 @@ def search_by_title(data, db_session):
     offset = data.get('offset', 0)
     limit = data.get('limit', 20)
 
-    logger.debug(LogMsg.SEARCH_BOOK_BY_TITLE,search_phrase)
+    logger.debug(LogMsg.SEARCH_BOOK_BY_TITLE, search_phrase)
 
     try:
         result = []
@@ -381,7 +378,7 @@ def search_by_title(data, db_session):
             result.append(book_to_dict(db_session, book))
         logger.debug(LogMsg.GET_SUCCESS)
     except:
-        logger.exception(LogMsg.GET_FAILED,exc_info=True)
+        logger.exception(LogMsg.GET_FAILED, exc_info=True)
         raise Http_error(404, Message.MSG20)
 
     logger.info(LogMsg.END)
@@ -393,8 +390,8 @@ def search_by_writer(data, db_session):
     logger.info(LogMsg.START)
     result = []
 
-    offset = data.get('offset',0)
-    limit = data.get('limit',20)
+    offset = data.get('offset', 0)
+    limit = data.get('limit', 20)
     person_id = data.get('person_id')
     book_id = data.get('book_id', None)
 
@@ -409,7 +406,7 @@ def search_by_writer(data, db_session):
         for book in books:
             result.append(book_to_dict(db_session, book))
     except:
-        logger.exception(LogMsg.GET_FAILED,exc_info=True)
+        logger.exception(LogMsg.GET_FAILED, exc_info=True)
         raise Http_error(404, Message.MSG20)
 
     return result
@@ -421,7 +418,7 @@ def search_by_genre(data, db_session):
     search_phrase = data.get('search_phrase')
     offset = data.get('offset')
     limit = data.get('limit')
-    logger.debug(LogMsg.SEARCH_BOOK_BY_GENRE,search_phrase)
+    logger.debug(LogMsg.SEARCH_BOOK_BY_GENRE, search_phrase)
     result = []
     try:
 
@@ -433,7 +430,7 @@ def search_by_genre(data, db_session):
 
         logger.debug(LogMsg.GET_SUCCESS)
     except:
-        logger.exception(LogMsg.GET_FAILED,exc_info=True)
+        logger.exception(LogMsg.GET_FAILED, exc_info=True)
         raise Http_error(404, Message.MSG20)
 
     logger.info(LogMsg.END)
@@ -448,7 +445,7 @@ def search_by_tags(data, db_session):
     offset = data.get('offset')
     limit = data.get('limit')
 
-    logger.debug(LogMsg.SEARCH_BOOK_BY_TAGS,search_phrase)
+    logger.debug(LogMsg.SEARCH_BOOK_BY_TAGS, search_phrase)
     result = []
 
     try:
@@ -461,20 +458,19 @@ def search_by_tags(data, db_session):
 
         logger.debug(LogMsg.GET_SUCCESS)
     except:
-        logger.exception(LogMsg.GET_FAILED,exc_info=True)
+        logger.exception(LogMsg.GET_FAILED, exc_info=True)
         raise Http_error(404, Message.MSG20)
     logger.info(LogMsg.END)
     return result
 
 
 def search_book(data, db_session):
-
     logger.info(LogMsg.START)
     offset = data.get('offset', 0)
     limit = data.get('limit', 100)
     filter = data.get('filter', None)
 
-    logger.debug(LogMsg.SEARCH_BOOKS,filter)
+    logger.debug(LogMsg.SEARCH_BOOKS, filter)
     result = []
 
     if filter is None:
@@ -505,7 +501,7 @@ def book_by_ids(id_list, db_session):
     logger.info(LogMsg.START)
     final_res = []
     try:
-        logger.debug(LogMsg.GETTING_BOOKS_FROM_LIST,id_list)
+        logger.debug(LogMsg.GETTING_BOOKS_FROM_LIST, id_list)
         result = db_session.query(Book).filter(Book.id.in_(id_list)).all()
 
         result = sorted(result, key=lambda o: id_list.index(o.id))
@@ -516,7 +512,7 @@ def book_by_ids(id_list, db_session):
         logger.debug(LogMsg.GET_SUCCESS)
 
     except:
-        logger.exception(LogMsg.GET_FAILED,exc_info=True)
+        logger.exception(LogMsg.GET_FAILED, exc_info=True)
         raise Http_error(500, Message.MSG14)
 
     logger.info(LogMsg.END)
@@ -525,27 +521,25 @@ def book_by_ids(id_list, db_session):
 
 
 def search_by_phrase(data, db_session):
-
     logger.info(LogMsg.START)
     search_data = {'from': data.get('offset'), 'size': data.get('limit'),
                    'search_phrase': data.get('filter')['search_phrase']}
 
-    logger.debug(LogMsg.SEARCH_ELASTIC_INDEXES,search_data['search_phrase'])
+    logger.debug(LogMsg.SEARCH_ELASTIC_INDEXES, search_data['search_phrase'])
     res = search_phrase(search_data)
 
-    logger.debug(LogMsg.ELASTIC_SEARCH_RESULTS,res)
+    logger.debug(LogMsg.ELASTIC_SEARCH_RESULTS, res)
 
     result = book_by_ids(res, db_session)
-    logger.debug(LogMsg.GETTING_BOOKS_FROM_LIST,res)
+    logger.debug(LogMsg.GETTING_BOOKS_FROM_LIST, res)
     logger.info(LogMsg.END)
     return result
 
 
 def newest_books(data, db_session):
-
     logger.info(LogMsg.START)
-    offset = data.get('offset',0)
-    limit = data.get('limit',20)
+    offset = data.get('offset', 0)
+    limit = data.get('limit', 20)
 
     try:
         logger.debug(LogMsg.GETTING_NEWEST_BOOKS)
@@ -557,10 +551,10 @@ def newest_books(data, db_session):
 
         logger.debug(LogMsg.GET_SUCCESS)
     except:
-        logger.exception(LogMsg.GET_FAILED,exc_info=True)
+        logger.exception(LogMsg.GET_FAILED, exc_info=True)
         raise Http_error(404, Message.MSG20)
 
-    logger.debug(LogMsg.RESULT_BOOKS,res)
+    logger.debug(LogMsg.RESULT_BOOKS, res)
     logger.info(LogMsg.END)
 
     return res
@@ -569,17 +563,17 @@ def newest_books(data, db_session):
 def get_current_book(id, db_session):
     logger.info(LogMsg.START)
 
-    logger.debug(LogMsg.MODEL_GETTING,id)
+    logger.debug(LogMsg.MODEL_GETTING, id)
     model_instance = db_session.query(Book).filter(Book.id == id).first()
     book_roles = []
     book_dict = None
     if model_instance:
         book_dict = book_to_dict(db_session, model_instance)
 
-        logger.debug(LogMsg.GET_SUCCESS ,book_dict)
+        logger.debug(LogMsg.GET_SUCCESS, book_dict)
 
     else:
-        logger.debug(LogMsg.NOT_FOUND,id)
+        logger.debug(LogMsg.NOT_FOUND, id)
 
     logger.info(LogMsg.END)
 
