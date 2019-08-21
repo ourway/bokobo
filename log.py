@@ -125,7 +125,7 @@ class LogMsg:
     EDIT_FAILED = "editing the item encountered a problem  "
     MODEL_GETTING = "model_instance getting from database by id : %s "
     MODEL_GETTING_FAILED = "item is not exists in database  "
-    MODEL_ALTERED = "item altered successfully  "
+    MODEL_ALTERED = "item altered successfully : %s "
     GET_ALL_REQUEST = "getting all request from db..."
     NOT_FOUND = "no such item exists : %s"
     COMMIT_FAILED = 'commiting process failed'
@@ -172,6 +172,7 @@ class LogMsg:
     USER_CHECKING = 'checking user by username :  %s'
     INVALID_USER = 'user by this username doesnt exist : %s'
     POPULATING_BASIC_DATA = 'new model is populating with basic data'
+    EDITING_BASIC_DATA = 'editing basic data for model : %s'
 
     #Account
     GETTING_USER_ACCOUNTS = 'getting acount of user by type  : %s '
@@ -211,6 +212,15 @@ class LogMsg:
     GETTING_BOOKS_FROM_LIST = 'getting books from list id ids : %s'
     GETTING_NEWEST_BOOKS = 'getting newest book list'
     RESULT_BOOKS = 'result of books is : %s'
+
+    # BOOK_ROLE
+    ADDING_ROLES_OF_BOOK = 'adding roles of a book to DB by list : %s'
+    ROLE_ADDED = 'role added to book : %s'
+    DELETE_BOOK_ROLES = 'deleting all roles for book : %s '
+    GET_PERSONS_BOOKS = 'getting all books which person has a role in . the person is : %s'
+    PERSON_BOOK_LIST = 'persons list of books which has a role in is : %s '
+    GETTING_ROLES_OF_BOOK = 'getting all roles of book : %s'
+    BOOKS_ROLES = 'the roles of book is : %s'
 
 
 

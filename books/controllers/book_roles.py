@@ -1,41 +1,56 @@
 import json
-import logging
 
 from enums import Roles, check_enums, str_role
-from helper import Now, Http_error, model_to_dict
-from log import LogMsg
+from helper import Now, Http_error, model_to_dict, populate_basic_data, \
+    edit_basic_data, Http_response
+from log import LogMsg,logger
 from messages import Message
 from repository.person_repo import validate_persons
 from ..models import BookRole
-from uuid import uuid4
 
 
 def add(db_session,data,username):
+    
+    logger.info(LogMsg.START,username)
 
     model_instance = BookRole()
-    model_instance.id = str(uuid4())
-    model_instance.creation_date = Now()
-    model_instance.creator = username
-    model_instance.version = 1
-    model_instance.tags = data.get('tags')
+
+    logger.debug(LogMsg.POPULATING_BASIC_DATA)
+
+    populate_basic_data(model_instance,username,data.get('tags'))
+
     model_instance.person_id = data.get('person_id')
     model_instance.book_id = data.get('book_id')
     model_instance.role = data.get('role')
 
+    logger.debug(LogMsg.DATA_ADDITION,book_role_to_dict(model_instance))
+
     db_session.add(model_instance)
+    logger.debug(LogMsg.DB_ADD)
+
+    logger.info(LogMsg.END)
+
 
     return model_instance
 
 def add_book_roles(book_id,roles_dict_list,db_session,username):
+    logger.info(LogMsg.START,username)
+
     result = []
     role_person={}
+
+    logger.debug(LogMsg.ADDING_ROLES_OF_BOOK,{'book_id':book_id,'roles':roles_dict_list})
 
     for item in roles_dict_list:
         person = item.get('person')
         role_person.update({item.get('role'):person.get('id')})
+
+    logger.debug(LogMsg.ENUM_CHECK,{'BOOK_ROLES':role_person.keys()})
+
     check_enums(role_person.keys(), Roles)
 
     validate_persons(role_person.values(),db_session)
+    logger.debug(LogMsg.PERSON_EXISTS,{'persons':role_person.values()})
 
     elastic_data = {'persons': list(role_person.values())}
 
@@ -49,123 +64,133 @@ def add_book_roles(book_id,roles_dict_list,db_session,username):
             elastic_data['Press'] = person_id
 
         book_role = add(db_session,data,username)
+        logger.debug(LogMsg.ROLE_ADDED,book_role_to_dict(book_role))
+
         result.append(book_role)
+
+    logger.info(LogMsg.END)
+
 
     return result, elastic_data
 
 
 def get(id, db_session):
-    logging.info(LogMsg.START)
-    logging.debug(LogMsg.MODEL_GETTING)
+    logger.info(LogMsg.START)
+
+    logger.debug(LogMsg.MODEL_GETTING,id)
     model_instance = db_session.query(BookRole).filter(BookRole.id == id).first()
     if model_instance:
-
-        logging.debug(LogMsg.GET_SUCCESS +
-                      json.dumps(model_to_dict(model_instance)))
+        logger.debug(LogMsg.GET_SUCCESS ,book_role_to_dict(model_instance))
     else:
-        logging.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, {"id": LogMsg.NOT_FOUND})
+        logger.error(LogMsg.NOT_FOUND)
+        raise Http_error(404, Message.MSG20)
 
-    logging.error(LogMsg.GET_FAILED + json.dumps({"id": id}))
-
-    logging.info(LogMsg.END)
-
+    logger.info(LogMsg.END)
     return model_instance
 
 
 def edit(db_session, data, username):
-    logging.info(LogMsg.START + " user is {}".format(username))
+    logger.info(LogMsg.START,username)
+
     if "id" in data.keys():
         del data["id"]
-        logging.debug(LogMsg.EDIT_REQUST)
+    logger.debug(LogMsg.EDIT_REQUST,id)
+
+    logger.debug(LogMsg.MODEL_GETTING,id)
 
     model_instance = db_session.query(BookRole).filter(BookRole.id == id).first()
     if model_instance:
-        logging.debug(LogMsg.MODEL_GETTING)
+        logger.debug(LogMsg.GET_SUCCESS,book_role_to_dict(model_instance))
     else:
-        logging.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, {"id": LogMsg.NOT_FOUND})
-
+        logger.debug(LogMsg.GET_FAILED,id)
+        raise Http_error(404, Message.MSG20)
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
         setattr(model_instance, key, value)
-    model_instance.modification_date = Now()
-    model_instance.modifier = username
-    model_instance.version += 1
 
-    logging.debug(LogMsg.MODEL_ALTERED)
+    logger.debug(LogMsg.EDITING_BASIC_DATA,id)
+    edit_basic_data(model_instance,username,data.get('tags'))
 
-    logging.debug(LogMsg.EDIT_SUCCESS +
-                  json.dumps(model_to_dict(model_instance)))
+    logger.debug(LogMsg.MODEL_ALTERED,id)
 
-    logging.info(LogMsg.END)
+    logger.debug(LogMsg.EDIT_SUCCESS ,book_role_to_dict(model_instance))
+
+    logger.info(LogMsg.END)
 
     return model_instance
 
 
 def delete(id, db_session, username):
-    logging.info(LogMsg.START + "user is {}  ".format(username) + "book_id = {}".format(id))
+    logger.info(LogMsg.START,username)
 
-    logging.info(LogMsg.DELETE_REQUEST + "user is {}".format(username))
+    logger.info(LogMsg.DELETE_REQUEST,id)
+
+    logger.debug(LogMsg.MODEL_GETTING,id)
+    model_instance = db_session.query(BookRole).filter(BookRole.id == id).first()
+    if model_instance is None:
+        logger.error(LogMsg.NOT_FOUND,id)
+        raise Http_error(404,Message.MSG20)
 
     try:
-        db_session.query(BookRole).filter(BookRole.id == id).delete()
+        db_session.delete(model_instance)
 
-        logging.debug(LogMsg.ENTITY_DELETED + "book_role.id {}".format(id))
+        logger.debug(LogMsg.ENTITY_DELETED,id)
 
     except:
-        logging.error(LogMsg.DELETE_FAILED)
-        raise Http_error(500, LogMsg.DELETE_FAILED)
+        logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
+        raise Http_error(500, Message.MSG13)
 
-    logging.info(LogMsg.END)
-    return {}
+    logger.info(LogMsg.END)
+    return Http_response(204,True)
 
 
 def get_all(db_session):
-    logging.info(LogMsg.START )
+    logger.info(LogMsg.START )
     try:
         result = db_session.query(BookRole).all()
-        logging.debug(LogMsg.GET_SUCCESS)
+        logger.debug(LogMsg.GET_SUCCESS)
 
     except:
-        logging.error(LogMsg.GET_FAILED)
-        raise Http_error(500, LogMsg.GET_FAILED)
+        logger.exception(LogMsg.GET_FAILED,exc_info=True)
+        raise Http_error(500, Message.MSG14)
 
-    logging.debug(LogMsg.END)
+    logger.debug(LogMsg.END)
     return result
 
 
 def get_book_roles(book_id,db_session):
-    logging.info(LogMsg.START )
+    logger.info(LogMsg.START )
 
     try:
         result = db_session.query(BookRole).filter(BookRole.book_id==book_id).all()
-        logging.debug(LogMsg.GET_SUCCESS)
+        logger.debug(LogMsg.GET_SUCCESS)
 
 
     except:
-        logging.error(LogMsg.GET_FAILED)
+        logger.exception(LogMsg.GET_FAILED,exc_info=True)
         raise Http_error(500, Message.MSG14)
 
-    logging.debug(LogMsg.END)
+    logger.debug(LogMsg.END)
     return result
 
 
 def delete_book_roles(book_id,db_session):
-    logging.info(LogMsg.START)
+    logger.info(LogMsg.START)
+
+    logger.debug(LogMsg.DELETE_BOOK_ROLES,book_id)
 
     try:
         db_session.query(BookRole).filter(BookRole.book_id == book_id).delete()
-        logging.debug(LogMsg.GET_SUCCESS)
+        logger.debug(LogMsg.DELETE_SUCCESS)
 
 
     except:
-        logging.error(LogMsg.GET_FAILED)
+        logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
         raise Http_error(500, Message.MSG13)
 
-    logging.debug(LogMsg.END)
-    return {'status':'successful'}
+    logger.debug(LogMsg.END)
+    return Http_response(204,True)
 
 
 def append_book_roles_dict(book_id,db_session):
@@ -173,6 +198,8 @@ def append_book_roles_dict(book_id,db_session):
     roles = get_book_roles(book_id,db_session)
     for role in roles:
         result.append(book_role_to_dict(role))
+
+    logger.info(LogMsg.END)
 
     return result
 
@@ -201,14 +228,22 @@ def book_role_to_dict(obj):
 
 
 def books_by_person(person_id,db_session):
+    logger.info(LogMsg.START)
+    logger.debug(LogMsg.GET_PERSONS_BOOKS,person_id)
     result = db_session.query(BookRole.book_id).filter(BookRole.person_id == person_id).all()
     final_res = []
     for item in result:
         final_res.append(item.book_id)
+
+    logger.debug(LogMsg.PERSON_BOOK_LIST,final_res)
+    logger.info(LogMsg.END)
+
     return final_res
 
 
 def persons_of_book(book_id,db_session):
+    logger.info(LogMsg.START)
+    logger.debug(LogMsg.GETTING_ROLES_OF_BOOK,book_id)
 
     res = db_session.query(BookRole).filter(BookRole.book_id == book_id).all()
     persons = []
@@ -220,4 +255,7 @@ def persons_of_book(book_id,db_session):
         elif item.role.name == 'Press':
             result['Press'] = item.person_id
     result.update({'persons':persons})
+    logger.debug(LogMsg.BOOKS_ROLES,{'book_id':book_id,'roles':result})
+
+    logger.info(LogMsg.END)
     return result
