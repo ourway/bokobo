@@ -106,7 +106,7 @@ def delete(id, db_session, username):
     logger.info(
         LogMsg.START ,username)
 
-    logger.info(LogMsg.DELETE_REQUEST,id)
+    logger.info(LogMsg.DELETE_REQUEST, id)
 
     model_instance = db_session.query(Person).filter(Person.id == id).first()
     if model_instance is None:
