@@ -114,7 +114,7 @@ def delete(id, db_session, username):
         raise Http_error(404,Message.MSG20)
     if person_has_books(id, db_session):
         logger.error(LogMsg.PERSON_HAS_BOOKS)
-        Http_error(403,Message.PERSON_HAS_BOOKS)
+        raise Http_error(403,Message.PERSON_HAS_BOOKS)
 
 
 
