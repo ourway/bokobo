@@ -1,6 +1,7 @@
 import json
 from uuid import uuid4
 
+from repository.price_repo import delete_book_price
 from repository.rate_repo import book_average_rate
 from repository.comment_repo import delete_book_comments
 from elastic.book_index import index_book, delete_book_index, search_phrase
@@ -347,6 +348,9 @@ def delete_book(id, db_session, username):
 
     logger.debug(LogMsg.DELETING_BOOK_COMMENTS, id)
     delete_book_comments(id, db_session)
+
+    logger.debug(LogMsg.DELETING_BOOK_PRICE, id)
+    delete_book_price(id, db_session)
 
     delete(id, db_session, username)
 

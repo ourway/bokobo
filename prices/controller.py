@@ -1,15 +1,15 @@
-import logging
 
 from .models import Price
 from helper import Http_error, populate_basic_data, Http_response, \
     model_to_dict, check_schema
-from log import LogMsg
+from log import LogMsg, logger
 from messages import Message
 from repository.book_repo import get as get_book
+from configs import ADMINISTRATORS
 
 
 def add(data, db_session, username):
-    logging.info(LogMsg.START)
+    logger.info(LogMsg.START)
 
     check_schema(['price', 'book_id'], data.keys())
 
@@ -48,16 +48,21 @@ def get_by_id(id, db_session, username=None):
 
 
 def delete(id, db_session, username=None):
+    logger.info(LogMsg.START,username)
+
     price = get_by_id(id, db_session)
     if price is None:
         raise Http_error(404, Message.MSG20)
-    if price.creator != username:
+    if price.creator != username or username not in ADMINISTRATORS:
         raise Http_error(403, Message.ACCESS_DENIED)
 
     try:
         db_session.delete(price)
     except:
+        logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
         raise Http_error(404, Message.MSG13)
+
+    logger.info(LogMsg.END)
 
     return Http_response(204, True)
 
@@ -145,3 +150,6 @@ def calc_net_price(unit_price ,count,discount =0.0):
             raise Http_error(404, Message.DISCOUNT_IS_FLOAT)
 
     return net_price
+
+
+

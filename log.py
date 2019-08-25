@@ -204,6 +204,7 @@ class LogMsg:
     ATTACHING_ROLES_TO_BOOKS = 'attaching book roles to book entities'
     DELETING_BOOK_ROLES = 'deleting roles of book by id : %s '
     DELETING_BOOK_COMMENTS = 'deleting comments of book : %s '
+    DELETING_BOOK_PRICE = 'deleting price of book : %s '
     SEARCH_BOOK_BY_TITLE = 'searching books by titles like : %s '
     SEARCH_BOOK_BY_GENRE = 'searching books by genre like : %s '
     SEARCH_BOOK_BY_PHRASE = 'searching for books by phrase : %s '
