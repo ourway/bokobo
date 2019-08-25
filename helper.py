@@ -181,7 +181,7 @@ def inject_db(func):
             db_session.commit()
         except:
 
-            logger.exception(db_session.transaction._rollback_exception.orig.pgerror,exc_info=True)
+            logger.exception(LogMsg.COMMIT_ERROR,exc_info=True)
 
             raise Http_error(500, Message.MSG16)
         return rtn
