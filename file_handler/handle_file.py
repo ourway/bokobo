@@ -33,11 +33,14 @@ def delete_files(files, **kwargs):
     try:
         for filename in files:
             file_path = '{}/{}'.format(save_path,filename)
+            logger.debug('file_path is %s ',file_path)
 
             os.remove(file_path)
     except:
         logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
         raise Http_error(404,Message.MSG20)
+    logger.debug(LogMsg.DELETE_SUCCESS)
+    return True
 
 
 
