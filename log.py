@@ -119,7 +119,7 @@ class LogMsg:
     GET_FAILED = "getting from database failed : %s "
     DELETE_SUCCESS = "deleting item is done successfully  "
     DELETE_FAILED = "deleting the item encountered a problem "
-    DELETE_REQUEST = "request for deleting item..."
+    DELETE_REQUEST = "request for deleting item : %s"
     EDIT_REQUST = "editing the item : %s"
     EDIT_SUCCESS = "editing item is done successfully  "
     EDIT_FAILED = "editing the item encountered a problem  "
