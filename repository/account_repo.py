@@ -13,3 +13,8 @@ def edit_account_value(account_id, value, db_session):
     account.value += value
 
     return account
+
+
+def delete_person_accounts(person_id,db_session):
+    db_session.query(Account).filter(Account.person_id == person_id).delete()
+    return True
