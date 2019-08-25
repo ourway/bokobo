@@ -61,7 +61,7 @@ def return_file(filename, **kwargs):
             logger.debug(LogMsg.FILE_NOT_EXISTS, file_path)
         return response
     except:
-        logger.exception(LogMsg.GET_FAILED,exc_info=True)
+        logger.exception(LogMsg.FILE_NOT_EXISTS,exc_info=True)
         raise Http_error(404,Message.MSG20)
 
 

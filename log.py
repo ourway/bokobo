@@ -275,5 +275,6 @@ class LogMsg:
     UPLOAD_FAILED = 'uploading files failed'
     FILE_EXISTS = 'this file exists by path : %s'
     FILE_NOT_EXISTS = 'file by this path not exists: %s'
+    GET_FILE_FAILED = 'file can not be got'
 
     COMMIT_ERROR = 'commiting to db encountered problem'
