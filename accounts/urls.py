@@ -1,6 +1,6 @@
 from helper import check_auth, inject_db, jsonify, pass_data
 from .controller import add, delete, delete_all, get_by_id, get_all, \
-    get_user_accounts, get_person_accounts, edit
+    get_user_accounts, get_person_accounts, edit, edit_by_person
 
 
 def call_router(app):
@@ -17,3 +17,5 @@ def call_router(app):
     app.route('/accounts', 'POST', add, apply=data_plus_wrappers)
     app.route('/accounts/<id>', 'DELETE', delete, apply=[check_auth, inject_db])
     app.route('/accounts', 'DELETE', delete_all, apply=[check_auth, inject_db])
+    app.route('/accounts', 'PUT', edit_by_person, apply=data_plus_wrappers)
+

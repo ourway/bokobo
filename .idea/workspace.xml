@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/order/controllers/checkout_order.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/controllers/checkout_order.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/accounts/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log.py" beforeDir="false" afterPath="$PROJECT_DIR$/log.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,23 +14,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-4000">
-              <caret line="354" column="25" lean-forward="true" selection-start-line="354" selection-start-column="25" selection-end-line="354" selection-end-column="25" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-                <element signature="e#2322#2771#0" />
-                <element signature="e#13546#14264#0" />
-                <element signature="e#14306#15256#0" />
-                <element signature="e#15301#15859#0" />
-                <element signature="e#15906#16391#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/configs.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -56,33 +41,37 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/repository/book_repo.py">
+        <entry file="file://$PROJECT_DIR$/order/controllers/checkout_order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+            <state relative-caret-position="50">
+              <caret line="30" column="14" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
+              <folding>
+                <element signature="e#0#56#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/constraint_handler/models.py">
+        <entry file="file://$PROJECT_DIR$/accounts/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="5" column="23" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="23" />
+            <state relative-caret-position="189">
+              <caret line="334" column="18" selection-start-line="334" selection-start-column="4" selection-end-line="334" selection-end-column="18" />
               <folding>
-                <element signature="e#0#37#0" expanded="true" />
+                <element signature="e#8867#9201#0" />
+                <element signature="e#9266#9623#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/order/controllers/checkout_order.py">
+        <entry file="file://$PROJECT_DIR$/accounts/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+            <state relative-caret-position="212">
+              <caret line="19" column="38" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="38" />
               <folding>
-                <element signature="e#0#56#0" expanded="true" />
+                <element signature="e#0#60#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -101,19 +90,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/message_description">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="213">
-              <caret line="31" column="23" lean-forward="true" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="23" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/log.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
-              <caret line="256" column="64" selection-start-line="256" selection-start-column="64" selection-end-line="256" selection-end-column="64" />
+              <caret line="187" column="58" selection-start-line="187" selection-start-column="58" selection-end-line="187" selection-end-column="58" />
               <folding>
                 <element signature="e#446#455#0" expanded="true" />
               </folding>
@@ -195,14 +175,12 @@
         <option value="$PROJECT_DIR$/alembic/versions/cce5582bdca1_prices_added_to_database_book_id_in_.py" />
         <option value="$PROJECT_DIR$/book_library/controller.py" />
         <option value="$PROJECT_DIR$/user/urls.py" />
-        <option value="$PROJECT_DIR$/accounts/urls.py" />
         <option value="$PROJECT_DIR$/order/controllers/order.py" />
         <option value="$PROJECT_DIR$/order/urls.py" />
         <option value="$PROJECT_DIR$/repository/library_repo.py" />
         <option value="$PROJECT_DIR$/book_library/models.py" />
         <option value="$PROJECT_DIR$/logs/app.log" />
         <option value="$PROJECT_DIR$/app_token/controller.py" />
-        <option value="$PROJECT_DIR$/accounts/controller.py" />
         <option value="$PROJECT_DIR$/repository/comment_repo.py" />
         <option value="$PROJECT_DIR$/books/urls.py" />
         <option value="$PROJECT_DIR$/files/fd0b79b1-8457-4daa-80d5-7c486907caa8" />
@@ -220,9 +198,11 @@
         <option value="$PROJECT_DIR$/file_handler/urls.py" />
         <option value="$PROJECT_DIR$/constraint_handler/controller.py" />
         <option value="$PROJECT_DIR$/books/controllers/book.py" />
-        <option value="$PROJECT_DIR$/log.py" />
         <option value="$PROJECT_DIR$/prices/controller.py" />
         <option value="$PROJECT_DIR$/order/controllers/checkout_order.py" />
+        <option value="$PROJECT_DIR$/log.py" />
+        <option value="$PROJECT_DIR$/accounts/controller.py" />
+        <option value="$PROJECT_DIR$/accounts/urls.py" />
       </list>
     </option>
   </component>
@@ -246,6 +226,11 @@
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="accounts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
@@ -657,16 +642,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/accounts/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="13" column="29" selection-start-line="13" selection-start-column="29" selection-end-line="13" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/book_library/controller.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="436">
@@ -787,13 +762,6 @@
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#1006#1557#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="49" selection-start-line="49" selection-end-line="51" />
         </state>
       </provider>
     </entry>
@@ -1053,16 +1021,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/log.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="256" column="64" selection-start-line="256" selection-start-column="64" selection-end-line="256" selection-end-column="64" />
-          <folding>
-            <element signature="e#446#455#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/prices/controller.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="482">
@@ -1090,10 +1048,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/order/controllers/checkout_order.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+        <state relative-caret-position="50">
+          <caret line="30" column="14" selection-start-line="30" selection-start-column="14" selection-end-line="30" selection-end-column="14" />
           <folding>
             <element signature="e#0#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="187" column="58" selection-start-line="187" selection-start-column="58" selection-end-line="187" selection-end-column="58" />
+          <folding>
+            <element signature="e#446#455#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="334" column="18" selection-start-line="334" selection-start-column="4" selection-end-line="334" selection-end-column="18" />
+          <folding>
+            <element signature="e#8867#9201#0" />
+            <element signature="e#9266#9623#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="19" column="38" selection-start-line="19" selection-start-column="35" selection-end-line="19" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#60#0" expanded="true" />
           </folding>
         </state>
       </provider>

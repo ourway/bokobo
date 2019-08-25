@@ -293,7 +293,7 @@ def edit(id, data, db_session, username):
     if account is None:
         logger.error(LogMsg.NOT_FOUND,{'account_id':id})
         raise Http_error(404, Message.MSG20)
-    if account.creator != username or username not in ADMINISTRATORS:
+    if account.creator != username and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
         raise Http_error(403, Message.ACCESS_DENIED)
     account.value += value
@@ -330,3 +330,27 @@ def add_initial_account(person_id, db_session, username):
     logger.info(LogMsg.END)
 
     return account_to_dict(model_instance)
+
+
+def edit_by_person(data,db_session,username):
+    logger.info(LogMsg.START, username)
+
+    check_schema(['value','person_id','type'], data.keys())
+    logger.debug(LogMsg.SCHEMA_CHECKED)
+
+    value = data.get('value')
+    type = data.get('type')
+    person_id = data.get('person_id')
+    logger.debug(LogMsg.GETTING_ACCOUNT_PERSON, data)
+    account = db_session.query(Account).filter(and_(Account.person_id == person_id,Account.type == type)).first()
+    if account is None:
+        logger.error(LogMsg.NOT_FOUND, {'account_id': id})
+        raise Http_error(404, Message.MSG20)
+    if account.creator != username and username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED)
+        raise Http_error(403, Message.ACCESS_DENIED)
+    account.value += value
+    logger.debug(LogMsg.EDIT_SUCCESS)
+    logger.info(LogMsg.END)
+
+    return account_to_dict(account)
