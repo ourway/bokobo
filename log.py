@@ -263,4 +263,8 @@ class LogMsg:
     USER_HAS_NO_PERSON = 'user by ths username has no related person : %s '
     NOT_RELATED_USER_FOR_PERSON = 'person has not related user : %s'
 
+
+    # PERSON
+    PERSON_HAS_BOOKS = 'person already has roles for books '
+
     COMMIT_ERROR = 'commiting to db encountered problem'

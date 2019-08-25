@@ -56,3 +56,4 @@ class Message:
     USER_HAS_NO_ACCOUNT = 'user_has_no_account'
     ORDER_INVOICED = 'order_invoiced'
     COMMIT_ERROR = 'commit_error'
+    PERSON_HAS_BOOKS = 'person_has_books'

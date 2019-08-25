@@ -50,3 +50,4 @@ USER_HAS_NO_ACCOUNT = user has no account
 ORDER_INVOICED = order is invoiced and not deletable
 
 COMMIT_ERROR = error while commiting in db
+PERSON_HAS_BOOKS = person already has roles for books

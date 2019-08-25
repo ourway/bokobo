@@ -10,6 +10,7 @@ from helper import model_to_dict, Now, Http_error, model_basic_dict, \
     populate_basic_data, edit_basic_data, Http_response
 from log import LogMsg, logger
 from messages import Message
+from repository.book_role_repo import person_has_books
 from repository.library_repo import library_to_dict
 from wish_list.controller import get_wish_list, internal_wish_list
 from ..models import Person, User
@@ -110,6 +111,10 @@ def delete(id, db_session, username):
     if model_instance is None:
         logger.error(LogMsg.NOT_FOUND,{'person_id':id})
         raise Http_error(404,Message.MSG20)
+    if person_has_books(id, db_session):
+        logger.error(LogMsg.PERSON_HAS_BOOKS)
+        Http_error(403,Message.PERSON_HAS_BOOKS)
+
 
     try:
 
