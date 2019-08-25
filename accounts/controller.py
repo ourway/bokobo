@@ -82,7 +82,7 @@ def get(person_id, type, db_session):
 
     logger.info(LogMsg.END)
 
-    return
+    return result
 
 
 def get_person_accounts(person_id, db_session, username):
