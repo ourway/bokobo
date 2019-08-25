@@ -9,4 +9,4 @@ def call_router(app):
 
     app.route('/upload', 'POST', upload_files, apply=data_plus_wrappers)
     app.route('/serve-files/<filename>', 'GET', return_file)
-    app.route('/delete-files', 'POST', delete_multiple_files, apply=[pass_data,check_auth])
+    app.route('/delete-files', 'POST', delete_multiple_files, apply=[pass_data,check_auth,inject_db])
