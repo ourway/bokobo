@@ -5,6 +5,7 @@ import magic
 from bottle import response, static_file
 
 from helper import value, Http_error
+from log import logger, LogMsg
 from messages import Message
 
 save_path = value('save_path',None)
@@ -35,6 +36,7 @@ def delete_files(files, **kwargs):
 
             os.remove(file_path)
     except:
+        logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
         raise Http_error(404,Message.MSG20)
 
 
