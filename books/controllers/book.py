@@ -403,7 +403,7 @@ def search_by_writer(data, db_session):
 
         book_ids = books_by_person(person_id, db_session)
         book_ids = set(book_ids)
-        if book_id is not None:
+        if book_id is not None and book_id in book_ids:
             book_ids.remove(book_id)
         books = db_session.query(Book).filter(Book.id.in_(book_ids)).order_by(
             Book.creation_date.desc()).slice(offset, offset + limit)

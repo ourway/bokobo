@@ -25,6 +25,7 @@ def upload_files(data, **kwargs):
 
         return model_files
     except:
+        logger.exception(LogMsg.UPLOAD_FAILED,exc_info=True)
         raise Http_error(405,Message.UPLOAD_FAILED)
 
 
@@ -35,7 +36,11 @@ def delete_files(files, **kwargs):
             file_path = '{}/{}'.format(save_path,filename)
             logger.debug('file_path is %s ',file_path)
 
-            os.remove(file_path)
+            if os.path.isfile(file_path):
+                logger.debug(LogMsg.FILE_EXISTS,file_path)
+                os.remove(file_path)
+            else:
+                logger.debug(LogMsg.FILE_NOT_EXISTS,file_path)
     except:
         logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
         raise Http_error(404,Message.MSG20)
@@ -52,6 +57,7 @@ def return_file(filename, **kwargs):
         response.content_type = file_mime_type(file_path)
         return response
     except:
+        logger.exception(LogMsg.GET_FAILED,exc_info=True)
         raise Http_error(404,Message.MSG20)
 
 

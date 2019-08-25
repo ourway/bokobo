@@ -268,4 +268,12 @@ class LogMsg:
     # PERSON
     PERSON_HAS_BOOKS = 'person already has roles for books '
 
+
+
+
+
+    UPLOAD_FAILED = 'uploading files failed'
+    FILE_EXISTS = 'this file exists by path : %s'
+    FILE_NOT_EXISTS = 'file by this path not exists: %s'
+
     COMMIT_ERROR = 'commiting to db encountered problem'
