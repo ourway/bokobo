@@ -131,7 +131,7 @@ def calc_price(data, db_session, username):
             else:
                 raise Http_error(404, Message.DISCOUNT_IS_FLOAT)
 
-        item_info = {'book_id': book_id, 'unit_price': price_object.price,
+        item_info = {'book_id': book_id, 'unit_price': price_object,
                      'count': count,'discount':discount, 'net_price': net_price}
         item_prices.append(item_info)
         total_price +=net_price
