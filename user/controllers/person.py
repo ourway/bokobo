@@ -93,7 +93,7 @@ def edit(id, db_session, data, username):
 
     logger.debug(LogMsg.MODEL_ALTERED)
 
-    logger.debug(LogMsg.EDIT_SUCCESS ,person_to_dict(model_instance))
+    logger.debug(LogMsg.EDIT_SUCCESS ,model_to_dict(model_instance))
 
     logger.info(LogMsg.END)
 
