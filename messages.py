@@ -55,3 +55,4 @@ class Message:
     INSUFFICIANT_BALANCE = 'insufficiant_balance'
     USER_HAS_NO_ACCOUNT = 'user_has_no_account'
     ORDER_INVOICED = 'order_invoiced'
+    COMMIT_ERROR = 'commit_error'

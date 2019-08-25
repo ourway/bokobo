@@ -9,7 +9,7 @@ from uuid import uuid4
 import magic
 from bottle import request, HTTPResponse
 
-from log import LogMsg
+from log import LogMsg, logger
 from app_token.models import APP_Token
 from messages import Message
 from user.models import User
@@ -181,9 +181,9 @@ def inject_db(func):
             db_session.commit()
         except:
 
-            logging.error(db_session.transaction._rollback_exception.orig.pgerror)
+            logger.exception(db_session.transaction._rollback_exception.orig.pgerror,exc_info=True)
 
-            raise Http_error(500, {'msg':Message.MSG16})
+            raise Http_error(500, Message.MSG16)
         return rtn
 
     return wrapper
