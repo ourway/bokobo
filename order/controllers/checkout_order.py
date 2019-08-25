@@ -12,13 +12,21 @@ from configs import ADMINISTRATORS
 
 def checkout(order_id, data, db_session, username):
     preferred_account = data.get('preferred_account', 'Main')
+    person_id = data.get('person_id')
 
     order = get_order(order_id, db_session)
     if order is None:
         raise Http_error(404, Message.MSG20)
 
-    if order.creator != username and username not in ADMINISTRATORS:
-        raise Http_error(403, Message.ACCESS_DENIED)
+    if person_id is not None:
+        if order.person_id != person_id:
+            #log
+            raise Http_error(403,Message.ACCESS_DENIED)
+
+    else:
+
+        if order.creator != username and username not in ADMINISTRATORS:
+            raise Http_error(403, Message.ACCESS_DENIED)
 
     account = get_account(order.person_id, preferred_account, db_session)
     if account is None:
