@@ -15,6 +15,7 @@ from accounts.urls import call_router as account_routes
 from financial_transactions.urls import call_router as transaction_routes
 from prices.urls import call_router as price_routes
 from order.urls import call_router as order_routes
+from book_library.urls import  call_router as library_routes
 
 app = Bottle()
 
@@ -33,6 +34,7 @@ account_routes(app)
 transaction_routes(app)
 price_routes(app)
 order_routes(app)
+library_routes(app)
 
 
 
