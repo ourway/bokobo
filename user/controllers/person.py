@@ -1,5 +1,4 @@
 import json
-import logging
 import os
 from uuid import uuid4
 
@@ -7,8 +6,9 @@ from sqlalchemy import or_
 
 from accounts.controller import add_initial_account
 from follow.controller import get_following_list_internal
-from helper import model_to_dict, Now, Http_error, model_basic_dict
-from log import LogMsg
+from helper import model_to_dict, Now, Http_error, model_basic_dict, \
+    populate_basic_data, edit_basic_data, Http_response
+from log import LogMsg, logger
 from messages import Message
 from repository.library_repo import library_to_dict
 from wish_list.controller import get_wish_list, internal_wish_list
@@ -32,7 +32,7 @@ def add(db_session, data, username):
     # logger.info(LogMsg.START,extra={'data':data,'user':username})
 
     model_instance = Person()
-    model_instance.id = str(uuid4())
+    populate_basic_data(model_instance,username,data.get('tags'))
     model_instance.name = data.get('name')
     model_instance.last_name = data.get('last_name')
     model_instance.address = data.get('address')
@@ -40,10 +40,6 @@ def add(db_session, data, username):
     model_instance.email = data.get('email')
     model_instance.cell_no = data.get('cell_no')
     model_instance.bio = data.get('bio')
-    model_instance.tags = data.get('tags')
-    model_instance.creation_date = Now()
-    model_instance.creator = username
-    model_instance.version = 1
     model_instance.image = data.get('image')
 
     db_session.add(model_instance)
@@ -54,21 +50,19 @@ def add(db_session, data, username):
 
 def get(id, db_session, username):
     # TODO: for string manipulation use format and dont use '+' for string concatation "{} user is {} getting user_id={}".format(LogMsg.START, username, id)
-    logging.info(LogMsg.START
-                 + "user is {}  ".format(username)
-                 + "getting user_id = {}".format(id))
-    logging.debug(LogMsg.MODEL_GETTING)
+    logger.info(LogMsg.START,username)
+
+    logger.debug(LogMsg.MODEL_GETTING)
     model_instance = db_session.query(Person).filter(Person.id == id).first()
     if model_instance:
         person_dict = person_to_dict(model_instance,db_session)
-        logging.debug(LogMsg.GET_SUCCESS +
+        logger.debug(LogMsg.GET_SUCCESS +
                       json.dumps(person_dict))
     else:
-        logging.debug(LogMsg.MODEL_GETTING_FAILED)
+        logger.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, Message.MSG20)
-    # TODO: as mentioned before, "{} id:{}".format(LogMsg.GET_FAILED, id)
-    logging.error(LogMsg.GET_FAILED + json.dumps({"id": id}))
-    logging.info(LogMsg.END)
+    logger.error(LogMsg.GET_FAILED,{"id": id})
+    logger.info(LogMsg.END)
 
     return person_dict
 
@@ -79,75 +73,79 @@ def edit(id, db_session, data, username):
     #      concurrently. check KAVEH codes (edit functions) to better understanding
     #      version field usage
 
-    logging.info(LogMsg.START + " user is {}".format(username))
+    logger.info(LogMsg.START ,username)
 
     if "id" in data.keys():
         del data["id"]
-        logging.debug(LogMsg.EDIT_REQUST)
+    logger.debug(LogMsg.EDIT_REQUST)
 
-    model_instance = get(id, db_session, username)
+    model_instance = db_session.query(Person).filter(Person.id == id).first()
     if model_instance:
-        logging.debug(LogMsg.MODEL_GETTING)
+        logger.debug(LogMsg.MODEL_GETTING)
     else:
-        logging.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, {"id": LogMsg.NOT_FOUND})
+        logger.debug(LogMsg.MODEL_GETTING_FAILED)
+        raise Http_error(404, Message.MSG20)
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
         setattr(model_instance, key, value)
-    model_instance.modification_date = Now()
-    model_instance.modifier = username
-    model_instance.version += 1
+    edit_basic_data(model_instance,username,data.get('tags'))
 
-    logging.debug(LogMsg.MODEL_ALTERED)
+    logger.debug(LogMsg.MODEL_ALTERED)
 
-    logging.debug(LogMsg.EDIT_SUCCESS +
-                  json.dumps(model_to_dict(model_instance)))
+    logger.debug(LogMsg.EDIT_SUCCESS ,person_to_dict(model_instance))
 
-    logging.info(LogMsg.END)
+    logger.info(LogMsg.END)
 
     return model_instance
 
 
 def delete(id, db_session, username):
-    logging.info(
-        LogMsg.START + "user is {}  ".format(username) + "token_id = {}".format(
-            id))
+    logger.info(
+        LogMsg.START ,username)
 
-    logging.info(LogMsg.DELETE_REQUEST + "user is {}".format(username))
+    logger.info(LogMsg.DELETE_REQUEST,id)
+
+    model_instance = db_session.query(Person).filter(Person.id == id).first()
+    if model_instance is None:
+        logger.error(LogMsg.NOT_FOUND,{'person_id':id})
+        raise Http_error(404,Message.MSG20)
 
     try:
-        db_session.query(Person).filter(Person.id == id).delete()
 
-        logging.debug(LogMsg.ENTITY_DELETED + "Person.id {}".format(id))
+        db_session.delete(model_instance)
+
+        logger.debug(LogMsg.ENTITY_DELETED,{"Person.id {}":id})
 
         user = db_session.query(User).filter(User.person_id == id).first()
 
         if user:
-            logging.debug(LogMsg.RELATED_USER_DELETE.format(user.id))
+            logger.debug(LogMsg.RELATED_USER_DELETE.format(user.id))
 
             db_session.query(User).filter(User.person_id == id).delete()
-            logging.debug(
-                LogMsg.ENTITY_DELETED + "USER By id = {}".format(user.id))
+            logger.debug(LogMsg.ENTITY_DELETED )
+        else:
+            logger.debug(LogMsg.NOT_RELATED_USER_FOR_PERSON,{"Person.id {}":id})
 
     except:
-        logging.error(LogMsg.DELETE_FAILED)
+        logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
         raise Http_error(500, LogMsg.DELETE_FAILED)
 
-    logging.info(LogMsg.END)
-    return {}
+    logger.info(LogMsg.END)
+
+    return Http_response(204,True)
 
 
 def get_all(db_session, username):
-    logging.info(LogMsg.START + "user is {}".format(username))
+    logger.info(LogMsg.START + "user is {}".format(username))
     try:
         result = db_session.query(Person).all()
-        logging.debug(LogMsg.GET_SUCCESS)
+        logger.debug(LogMsg.GET_SUCCESS)
     except:
-        logging.error(LogMsg.GET_FAILED)
+        logger.error(LogMsg.GET_FAILED)
         raise Http_error(500, LogMsg.GET_FAILED)
 
-    logging.debug(LogMsg.END)
+    logger.debug(LogMsg.END)
     return result
 
 
@@ -186,11 +184,9 @@ def search_person(data, db_session,username):
 
 
 def get_person_profile(id, db_session, username):
-    # TODO: for string manipulation use format and dont use '+' for string concatation "{} user is {} getting user_id={}".format(LogMsg.START, username, id)
-    logging.info(LogMsg.START
-                 + "user is {}  ".format(username)
-                 + "getting user_id = {}".format(id))
-    logging.debug(LogMsg.MODEL_GETTING)
+    logger.info(LogMsg.START,username)
+
+    logger.debug(LogMsg.MODEL_GETTING)
     model_instance = db_session.query(Person).filter(Person.id == id).first()
     if model_instance:
         result = model_to_dict(model_instance)
@@ -199,14 +195,13 @@ def get_person_profile(id, db_session, username):
         result['following_list'] = get_following_list_internal(id, db_session)
         result['wish_list'] = internal_wish_list(db_session, Person.id)
 
-        logging.debug(LogMsg.GET_SUCCESS +
+        logger.debug(LogMsg.GET_SUCCESS +
                       json.dumps(result))
     else:
-        logging.debug(LogMsg.MODEL_GETTING_FAILED)
+        logger.error(LogMsg.GET_FAILED,{"Person.id {}":id})
         raise Http_error(404, Message.MSG20)
-    # TODO: as mentioned before, "{} id:{}".format(LogMsg.GET_FAILED, id)
-    logging.error(LogMsg.GET_FAILED + json.dumps(result))
-    logging.info(LogMsg.END)
+    logger.debug(LogMsg.GET_SUCCESS , json.dumps(result))
+    logger.info(LogMsg.END)
 
     return result
 

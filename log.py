@@ -261,5 +261,8 @@ class LogMsg:
 
     # USER
     USER_HAS_NO_PERSON = 'user by ths username has no related person : %s '
+    NOT_RELATED_USER_FOR_PERSON = 'person has not related user : %s'
 
 
+
+o
