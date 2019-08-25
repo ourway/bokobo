@@ -4,7 +4,7 @@ from uuid import uuid4
 import magic
 from bottle import response, static_file
 
-from helper import value, Http_error
+from helper import value, Http_error, Http_response
 from log import logger, LogMsg
 from messages import Message
 
@@ -69,3 +69,9 @@ def return_file(filename, **kwargs):
 def file_mime_type(file_path):
     m = magic.from_file(file_path, mime=True)
     return str(m)
+
+
+def delete_multiple_files(data,**kwargs):
+    files  = data.get('files')
+    delete_files(files)
+    return Http_response(204,True)

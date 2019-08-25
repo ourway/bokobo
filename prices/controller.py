@@ -122,7 +122,7 @@ def calc_price(data, db_session, username):
         if price_object is None:
             raise Http_error(404, Message.NO_PRICE_FOUND)
 
-        price = price_object.price * count
+        price = price_object * count
         net_price = price
         if discount:
             if isinstance(discount, float) and discount < 1:
