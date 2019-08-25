@@ -11,5 +11,5 @@ class Collection(Base,PrimaryModel):
     __tablename__ = 'collections'
 
     person_id = Column(UUID,ForeignKey(Person.id),nullable=False)
-    book_id = Column(ARRAY(UUID),ForeignKey(Book.id),nullable=False)
+    book_id = Column(ARRAY(UUID))
     title = Column(String,nullable=False)
