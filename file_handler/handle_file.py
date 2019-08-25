@@ -54,7 +54,11 @@ def return_file(filename, **kwargs):
 
         response.body = static_file(filename, root=save_path)
         file_path = '{}/{}'.format(save_path,filename)
-        response.content_type = file_mime_type(file_path)
+        if os.path.isfile(file_path):
+            logger.debug(LogMsg.FILE_EXISTS, file_path)
+            response.content_type = file_mime_type(file_path)
+        else:
+            logger.debug(LogMsg.FILE_NOT_EXISTS, file_path)
         return response
     except:
         logger.exception(LogMsg.GET_FAILED,exc_info=True)
