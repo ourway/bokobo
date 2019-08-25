@@ -251,6 +251,10 @@ class LogMsg:
 
     # Price
     ADDING_PRICE = 'adding price for book : %s '
+    CHECK_BOOK_PRICE_EXISTANCE = 'checking if book already has price in db : %s'
+    BOOK_PRICE_EXISTS = 'book by this id already has price: %s'
+    EDIT_PRICE = 'editing book price by id : %s'
+    ADD_NEW_BOOK_PRICE = 'adding new price entity for book : %s'
 
     # Elasticsearch
     INDEXING_IN_ELASTIC = 'indexing book data in elastic search : %s '

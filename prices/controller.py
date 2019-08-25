@@ -15,13 +15,24 @@ def add(data, db_session, username):
 
     book_id = data.get('book_id')
     get_book(book_id, db_session)
-    model_instance = Price()
 
-    populate_basic_data(model_instance, username)
-    model_instance.book_id = book_id
-    model_instance.price = data.get('price')
+    logger.debug(LogMsg.CHECK_BOOK_PRICE_EXISTANCE,book_id)
 
-    db_session.add(model_instance)
+    model_instance = get_by_book(book_id,db_session,username)
+    if model_instance:
+        logger.debug(LogMsg.BOOK_PRICE_EXISTS,book_id)
+        logger.debug(LogMsg.EDIT_PRICE,book_id)
+        model_instance.price = data.get('price')
+
+    else:
+        logger.debug(LogMsg.ADD_NEW_BOOK_PRICE,book_id)
+        model_instance = Price()
+
+        populate_basic_data(model_instance, username)
+        model_instance.book_id = book_id
+        model_instance.price = data.get('price')
+
+        db_session.add(model_instance)
 
     return model_instance
 
@@ -53,7 +64,7 @@ def delete(id, db_session, username=None):
     price = get_by_id(id, db_session)
     if price is None:
         raise Http_error(404, Message.MSG20)
-    if price.creator != username or username not in ADMINISTRATORS:
+    if price.creator != username and username not in ADMINISTRATORS:
         raise Http_error(403, Message.ACCESS_DENIED)
 
     try:
@@ -74,7 +85,7 @@ def edit(id, data, db_session, username=None):
 
     if model_instance is None:
         raise Http_error(404, Message.MSG20)
-    if model_instance.creator != username:
+    if model_instance.creator != username and username not in ADMINISTRATORS:
         raise Http_error(403, Message.ACCESS_DENIED)
 
     try:
