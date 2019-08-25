@@ -335,11 +335,11 @@ def add_initial_account(person_id, db_session, username):
 def edit_by_person(data,db_session,username):
     logger.info(LogMsg.START, username)
 
-    check_schema(['value','person_id','type'], data.keys())
+    check_schema(['value','person_id'], data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
 
     value = data.get('value')
-    type = data.get('type')
+    type = data.get('type','Main')
     person_id = data.get('person_id')
     logger.debug(LogMsg.GETTING_ACCOUNT_PERSON, data)
     account = db_session.query(Account).filter(and_(Account.person_id == person_id,Account.type == type)).first()
