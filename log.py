@@ -269,6 +269,12 @@ class LogMsg:
     PERSON_HAS_BOOKS = 'person already has roles for books '
 
 
+    # UNIQUE CONSTRAINT
+    GENERATE_UNIQUE_CONSTRAINT = 'generating unique constraint key for book by data : %s'
+    CHECK_UNIQUE_EXISTANCE = 'checking for existance of unique code : %s'
+    UNIQUE_CONSTRAINT_EXISTS = 'the unique costraint key already exists : %s'
+
+
 
 
 

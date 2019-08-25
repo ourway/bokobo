@@ -24,6 +24,10 @@ from configs import ADMINISTRATORS
 def add(db_session, data, username, **kwargs):
     logger.debug(LogMsg.START, username)
 
+    if username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED)
+        raise Http_error(403,Message.ACCESS_DENIED)
+
     genre = data.get('genre', [])
     if genre and len(genre) > 0:
         check_enums(genre, Genre)
@@ -95,7 +99,7 @@ def edit(id, db_session, data, username):
         logger.debug(LogMsg.NOT_FOUND, {'book_id': id})
         raise Http_error(404, Message.MSG20)
 
-    if model_instance.creator != username or username not in ADMINISTRATORS:
+    if model_instance.creator != username and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
         raise Http_error(403, Message.ACCESS_DENIED)
 
@@ -230,6 +234,11 @@ def book_to_dict(db_session, book):
 
 def add_multiple_type_books(db_session, data, username):
     logger.info(LogMsg.START, username)
+
+    if username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED)
+        raise Http_error(403,Message.ACCESS_DENIED)
+
     types = data.get('types')
     logger.debug(LogMsg.ENUM_CHECK, {'book_types': types})
     check_enums(types, legal_types)
@@ -340,6 +349,10 @@ def edit_book(id, db_session, data, username):
 def delete_book(id, db_session, username):
     logger.info(
         LogMsg.START, username)
+
+    if username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED)
+        raise Http_error(403,Message.ACCESS_DENIED)
 
     logger.info(LogMsg.DELETE_REQUEST, {'book_id': id})
 

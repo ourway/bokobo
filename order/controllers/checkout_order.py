@@ -17,7 +17,7 @@ def checkout(order_id, data, db_session, username):
     if order is None:
         raise Http_error(404, Message.MSG20)
 
-    if order.creator != username or username not in ADMINISTRATORS:
+    if order.creator != username and username not in ADMINISTRATORS:
         raise Http_error(403, Message.ACCESS_DENIED)
 
     account = get_account(order.person_id, preferred_account, db_session)
