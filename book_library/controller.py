@@ -1,5 +1,7 @@
 import logging
 
+from sqlalchemy import and_
+
 from book_library.models import Library
 from books.controllers.book import book_to_dict
 from helper import check_schema, populate_basic_data, Http_error, Http_response, \
@@ -17,10 +19,15 @@ def add(data, db_session):
 
     check_schema(['book_id', 'person_id'], data.keys())
 
-    book = get_book(data.get('book_id'),db_session)
-    if book.type not in [BookTypes.Epub,BookTypes.Audio,BookTypes.Pdf]:
-        logger.error(LogMsg.LIBRARY_BOOK_TYPE_NOT_ADDABLE,book.type.name)
+    if is_book_in_library(data.get('person_id'), data.get('book_id'), db_session):
+        logger.error(LogMsg.ALREADY_IS_IN_LIBRARY, {'book_id': data.get('book_id')})
+        raise Http_error(409, Message.BOOK_IS_ALREADY_PURCHASED)
+
+    book = get_book(data.get('book_id'), db_session)
+    if book.type not in [BookTypes.Epub, BookTypes.Audio, BookTypes.Pdf]:
+        logger.error(LogMsg.LIBRARY_BOOK_TYPE_NOT_ADDABLE, book.type.name)
         return {}
+
 
     model_instance = Library()
 
@@ -69,6 +76,10 @@ def get_user_library(person_id, db_session):
 def add_books_to_library(person_id, book_list, db_session):
     result = []
     for book_id in book_list:
+        if is_book_in_library(person_id, book_id, db_session):
+            logger.error(LogMsg.ALREADY_IS_IN_LIBRARY,{'book_id': book_id})
+            raise Http_error(409,Message.BOOK_IS_ALREADY_PURCHASED)
+
         lib_data = {'person_id': person_id, 'book_id': book_id}
 
         result.append(add(lib_data, db_session))
@@ -99,17 +110,26 @@ def edit_status(id, data, db_session, username):
     return model_instance
 
 
-def lib_to_dictlist(library,db_session):
+def lib_to_dictlist(library, db_session):
     result = []
     for item in library:
         res = model_basic_dict(item)
         item_dict = {
-            'book_id' :item.book_id,
+            'book_id': item.book_id,
             'person_id': item.person_id,
             'status': item.status,
-            'book': book_to_dict(db_session,item.book)
-                }
+            'book': book_to_dict(db_session, item.book)
+        }
         item_dict.update(res)
         result.append(item_dict)
     return result
 
+
+def is_book_in_library(person_id, book_id, db_session):
+    result = db_session.query(Library).filter(
+        and_(Library.person_id == person_id,
+             Library.book_id == book_id)).first()
+
+    if result is None:
+        return False
+    return True

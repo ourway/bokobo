@@ -283,11 +283,20 @@ class LogMsg:
 
     # LIBRARY
     LIBRARY_BOOK_TYPE_NOT_ADDABLE = 'this type of book is not addable to library : %s'
+    ALREADY_IS_IN_LIBRARY = 'book is already purchased and is in library : %s'
 
 
     # COLLECTION
     COLLECTION_ADD_NEW_COLLECTION = 'adding new collection by title : %s'
     COLLECTION_ADD_BOOKS_TO_COLLECTION = 'adding books to collection: %s'
+    COLLECTION_CHECK_BOOK_IS_IN_COLLECTION = 'check if book is in collection : %s'
+    COLLECTION_BOOK_ALREADY_EXISTS = 'book already is in collection : %s'
+    COLLECTION_GET = 'getting books of a collection : %s'
+    COLLECTION_DELETE = 'deleting collection by title : %s'
+    COLLECTION_GET_ALL = 'getting all collections %s'
+    COLLECTION_DELETE_BOOK = 'deleting book from a collection : %s'
+    COLLECTION_ADD_BOOK_TO_MULTIPLE_COLLECTIONS = 'adding book to multiple collections : %s'
+    COLLECTION_BOOK_IS_NOT_IN_LIBRARY = 'this book is not in users library and cant add to collection : %s'
 
 
 
