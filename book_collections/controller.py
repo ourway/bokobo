@@ -1,11 +1,10 @@
-import logger
 from uuid import uuid4
 
 from sqlalchemy import and_
 
 from book_collections.models import Collection
 from helper import Http_error, Now, Http_response
-from log import LogMsg
+from log import LogMsg,logger
 from messages import Message
 from repository.person_repo import validate_person
 from repository.user_repo import check_user
