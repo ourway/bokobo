@@ -49,6 +49,6 @@ def checkout(order_id, data, db_session, username):
     for item in order_items:
         book_list.append(item.book_id)
 
-    library = add_books_to_library(order.person_id, book_list, db_session)
+    add_books_to_library(order.person_id, book_list, db_session)
 
-    return library
+    return data.update({'order_price':order_price})
