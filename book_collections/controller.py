@@ -3,7 +3,7 @@ from uuid import uuid4
 from sqlalchemy import and_
 
 from book_collections.models import Collection
-from helper import Http_error, Now, Http_response
+from helper import Http_error, populate_basic_data, Http_response
 from log import LogMsg,logger
 from messages import Message
 from repository.person_repo import validate_person
@@ -36,12 +36,7 @@ def add(data, db_session, username):
             raise Http_error(409, Message.ALREADY_EXISTS)
 
         model_instance = Collection()
-        model_instance.id = str(uuid4())
-        model_instance.creation_date = Now()
-        model_instance.creator = username
-        model_instance.version = 1
-        model_instance.tags = data.get('tags')
-
+        populate_basic_data(model_instance,username,data.get('tags'))
         model_instance.person_id = user.person_id
         model_instance.book_id = item
         model_instance.title = data.get('title')

@@ -1,4 +1,4 @@
-from sqlalchemy import ForeignKey, Column, String,ARRAY
+from sqlalchemy import ForeignKey, Column, String
 from sqlalchemy.dialects.postgresql import UUID
 
 from books.models import Book
@@ -11,5 +11,5 @@ class Collection(Base,PrimaryModel):
     __tablename__ = 'collections'
 
     person_id = Column(UUID,ForeignKey(Person.id),nullable=False)
-    book_id = Column(ARRAY(UUID))
+    book_id = Column(UUID,ForeignKey(Book.id),nullable=False)
     title = Column(String,nullable=False)
