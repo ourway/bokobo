@@ -285,6 +285,12 @@ class LogMsg:
     LIBRARY_BOOK_TYPE_NOT_ADDABLE = 'this type of book is not addable to library : %s'
 
 
+    # COLLECTION
+    COLLECTION_ADD_NEW_COLLECTION = 'adding new collection by title : %s'
+    COLLECTION_ADD_BOOKS_TO_COLLECTION = 'adding books to collection: %s'
+
+
+
 
 
 

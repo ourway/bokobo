@@ -72,7 +72,7 @@ def add_books_to_library(person_id, book_list, db_session):
         lib_data = {'person_id': person_id, 'book_id': book_id}
 
         result.append(add(lib_data, db_session))
-    return result
+    return lib_to_dictlist(result,db_session)
 
 
 def edit_status(id, data, db_session, username):

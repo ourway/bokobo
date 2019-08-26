@@ -1,4 +1,4 @@
-import logging
+import logger
 from uuid import uuid4
 
 from sqlalchemy import and_
@@ -13,7 +13,7 @@ from books.controllers.book import get as get_book
 
 
 def add(data, db_session, username):
-    logging.info(LogMsg.START)
+    logger.info(LogMsg.START,username)
 
     user = check_user(username, db_session)
     if user is None:
@@ -23,6 +23,8 @@ def add(data, db_session, username):
         raise Http_error(404, Message.Invalid_persons)
 
     validate_person(user.person_id, db_session)
+    
+    logger.debug(LogMsg.COLLECTION_ADD_NEW_COLLECTION,{'title':data.get('title')})
     book_ids = data.get('books')
     for item in book_ids:
         book = get_book(item, db_session)
