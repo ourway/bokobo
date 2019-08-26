@@ -186,6 +186,7 @@ class LogMsg:
     ACCOUNT_BY_ID_IS_NOT_FOR_PERSON = 'the account doesnt exist or not owned by user : %s '
     ADD_INITIAL_ACCOUNT = 'adding initial account of type Main for person_id : %s '
     GETTING_ACCOUNT_PERSON = 'getting account by data : %s'
+    USER_HAS_NO_ACCOUNT = 'user has no account of type: %s'
 
 
     # Token

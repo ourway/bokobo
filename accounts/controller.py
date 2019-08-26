@@ -71,7 +71,11 @@ def get(person_id, type, db_session):
         result = db_session.query(Account).filter(
             and_(Account.person_id == person_id, Account.type == type)).first()
 
-        logger.debug(LogMsg.GET_SUCCESS, account_to_dict(result))
+        if result:
+
+            logger.debug(LogMsg.GET_SUCCESS, account_to_dict(result))
+        else:
+            logger.debug(LogMsg.USER_HAS_NO_ACCOUNT,type)
 
     except:
         logger.error(LogMsg.GET_FAILED,
@@ -304,8 +308,8 @@ def edit(id, data, db_session, username):
 
 
 def account_to_dict(account):
-    # if not isinstance(account, Account):
-    #     raise Http_error(404, Message.INVALID_ENTITY)
+    if not isinstance(account, Account):
+        raise Http_error(404, Message.INVALID_ENTITY)
 
     result = model_basic_dict(account)
     model_properties = {
