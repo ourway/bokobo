@@ -36,32 +36,39 @@ def add_book_roles(book_id, roles_dict_list, db_session, username):
     logger.info(LogMsg.START, username)
 
     result = []
-    role_person = {}
+    role_person = []
+    role_enums = []
+    persons = []
 
     logger.debug(LogMsg.ADDING_ROLES_OF_BOOK,
                  {'book_id': book_id, 'roles': roles_dict_list})
 
     for item in roles_dict_list:
         person = item.get('person')
-        role_person.update({item.get('role'): person.get('id')})
+        p_role =item.get('role')
+        myperson_id = person.get('id')
+        persons.append(myperson_id)
+        role_enums.append(p_role)
+        role_person.append({p_role: myperson_id})
 
-    logger.debug(LogMsg.ENUM_CHECK, {'BOOK_ROLES': role_person.keys()})
+    logger.debug(LogMsg.ENUM_CHECK, {'BOOK_ROLES': role_enums})
 
-    check_enums(role_person.keys(), Roles)
+    check_enums(role_enums, Roles)
 
-    validate_persons(role_person.values(), db_session)
-    logger.debug(LogMsg.PERSON_EXISTS, {'persons': role_person.values()})
+    validate_persons(persons, db_session)
+    logger.debug(LogMsg.PERSON_EXISTS, {'persons': persons})
 
-    elastic_data = {'persons': list(role_person.values())}
+    elastic_data = {'persons': list(persons)}
 
-    for role, person_id in role_person.items():
-        data = {'role': role,
+    for item in role_person:
+        the_role = next(iter(item))
+        data = {'role':the_role ,
                 'book_id': book_id,
-                'person_id': person_id}
-        if role == 'Writer':
-            elastic_data['Writer'] = person_id
-        elif role == 'Press':
-            elastic_data['Press'] = person_id
+                'person_id': item[the_role]}
+        if data['role'] == 'Writer':
+            elastic_data['Writer'] = data['person_id']
+        elif data['role'] == 'Press':
+            elastic_data['Press'] = data['person_id']
 
         book_role = add(db_session, data, username)
         logger.debug(LogMsg.ROLE_ADDED, book_role_to_dict(book_role))

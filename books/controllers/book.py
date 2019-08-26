@@ -315,10 +315,10 @@ def edit_book(id, db_session, data, username):
         logger.debug(LogMsg.DELETING_BOOK_ROLES, id)
         delete_book_roles(model_instance.id, db_session)
         logger.debug(LogMsg.ADDING_ROLES_TO_BOOK, id)
-        roles, elastic_data = add_book_roles(model_instance.id, roles,
+        nroles, elastic_data = add_book_roles(model_instance.id, roles,
                                              db_session, username)
         new_roles = []
-        for role in roles:
+        for role in nroles:
             logger.debug(LogMsg.ATTACHING_ROLES_TO_BOOKS, id)
             new_roles.append(book_role_to_dict(role))
     else:
