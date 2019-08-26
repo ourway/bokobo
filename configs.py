@@ -22,7 +22,7 @@ CELERY_DATABASE_URI = 'db+postgresql+psycopg2://{}:{}@{}:{}/{}'.format(CeleryCon
                                                                                 CeleryConfigs.db_host, CeleryConfigs.db_port,
                                                                                 CeleryConfigs.db_name)
 
-ADMINISTRATORS = ['admin']
+ADMINISTRATORS = ['admin','kk']
 SIGNUP_USER = 'signup_user'
 
 
