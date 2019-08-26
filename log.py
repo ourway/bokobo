@@ -281,6 +281,10 @@ class LogMsg:
     UNIQUE_CONSTRAINT_EXISTS = 'the unique costraint key already exists : %s'
 
 
+    # LIBRARY
+    LIBRARY_BOOK_TYPE_NOT_ADDABLE = 'this type of book is not addable to library : %s'
+
+
 
 
 

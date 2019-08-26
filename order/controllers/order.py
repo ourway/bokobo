@@ -16,7 +16,7 @@ administrator_users = value('administrator_users', ['admin'])
 def add(data, db_session, username):
     logging.info(LogMsg.START)
 
-    check_schema(['items','person_id'], data.keys())
+    check_schema(['items'], data.keys())
 
     user = check_user(username, db_session)
     if user is None:
@@ -28,7 +28,11 @@ def add(data, db_session, username):
     model_instance = Order()
 
     populate_basic_data(model_instance, username)
-    model_instance.person_id = data.get('person_id')
+    if 'person_id' in data:
+        person_id = data.get('person_id')
+    else:
+        person_id=user.person_id
+    model_instance.person_id = person_id
 
     db_session.add(model_instance)
 

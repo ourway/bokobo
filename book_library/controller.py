@@ -1,17 +1,26 @@
 import logging
 
 from book_library.models import Library
-from helper import check_schema, populate_basic_data, Http_error, Http_response
-from log import LogMsg
+from books.controllers.book import book_to_dict
+from helper import check_schema, populate_basic_data, Http_error, Http_response, \
+    model_basic_dict
+from log import LogMsg, logger
 from messages import Message
 from repository.person_repo import validate_person
 from repository.user_repo import check_user
+from repository.book_repo import get as get_book
+from enums import BookTypes
 
 
 def add(data, db_session):
     logging.info(LogMsg.START)
 
     check_schema(['book_id', 'person_id'], data.keys())
+
+    book = get_book(data.get('book_id'),db_session)
+    if book.type not in [BookTypes.Epub,BookTypes.Audio,BookTypes.Pdf]:
+        logger.error(LogMsg.LIBRARY_BOOK_TYPE_NOT_ADDABLE,book.type.name)
+        return {}
 
     model_instance = Library()
 
@@ -34,7 +43,8 @@ def get_personal_library(db_session, username):
 
     result = db_session.query(Library).filter(
         Library.person_id == user.person_id).all()
-    return result
+
+    return lib_to_dictlist(result, db_session)
 
 
 def delete(id, db_session, username):
@@ -51,8 +61,9 @@ def delete(id, db_session, username):
 
 
 def get_user_library(person_id, db_session):
-    return db_session.query(Library).filter(
+    result = db_session.query(Library).filter(
         Library.person_id == person_id).all()
+    return lib_to_dictlist(result, db_session)
 
 
 def add_books_to_library(person_id, book_list, db_session):
@@ -86,3 +97,19 @@ def edit_status(id, data, db_session, username):
         model_instance.status['read_duration'] = data.get('read_duration')
 
     return model_instance
+
+
+def lib_to_dictlist(library,db_session):
+    result = []
+    for item in library:
+        res = model_basic_dict(item)
+        item_dict = {
+            'book_id' :item.book_id,
+            'person_id': item.person_id,
+            'status': item.status,
+            'book': book_to_dict(db_session,item.book)
+                }
+        item_dict.update(res)
+        result.append(item_dict)
+    return result
+
