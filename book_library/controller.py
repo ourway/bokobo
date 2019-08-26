@@ -27,9 +27,6 @@ def add(data, db_session):
 
 def get_personal_library(db_session, username):
     user = check_user(username, db_session)
-    if user is None:
-        raise Http_error(400, Message.INVALID_USER)
-
     if user.person_id is None:
         raise Http_error(400, Message.Invalid_persons)
 

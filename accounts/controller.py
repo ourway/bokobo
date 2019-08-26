@@ -304,8 +304,8 @@ def edit(id, data, db_session, username):
 
 
 def account_to_dict(account):
-    if not isinstance(account, Account):
-        raise Http_error(404, Message.INVALID_ENTITY)
+    # if not isinstance(account, Account):
+    #     raise Http_error(404, Message.INVALID_ENTITY)
 
     result = model_basic_dict(account)
     model_properties = {

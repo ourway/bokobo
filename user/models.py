@@ -1,9 +1,7 @@
 from sqlalchemy import Column, String, ForeignKey, UniqueConstraint
 from sqlalchemy.dialects.postgresql import ARRAY, UUID
 from sqlalchemy.orm import relationship
-
 from db_session import PrimaryModel, Base
-
 
 class Person(PrimaryModel,Base):
 
@@ -18,8 +16,6 @@ class Person(PrimaryModel,Base):
     cell_no = Column(String,unique=True)
     current_book_id = Column(UUID)
     bio = Column(String)
-
-
 
 class User(PrimaryModel,Base):
     __tablename__ = 'users'
