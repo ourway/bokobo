@@ -215,6 +215,9 @@ class LogMsg:
     GETTING_BOOKS_FROM_LIST = 'getting books from list id ids : %s'
     GETTING_NEWEST_BOOKS = 'getting newest book list'
     RESULT_BOOKS = 'result of books is : %s'
+    BOOK_CHECKING_IF_EXISTS = 'checking for uniqueness of book : %s'
+    BOOK_NOT_UNIQUE = 'book is not unique and already exists : %s'
+
 
     # BOOK_ROLE
     ADDING_ROLES_OF_BOOK = 'adding roles of a book to DB by list : %s'
@@ -276,10 +279,13 @@ class LogMsg:
 
 
     # UNIQUE CONSTRAINT
-    GENERATE_UNIQUE_CONSTRAINT = 'generating unique constraint key for book by data : %s'
+    GENERATE_UNIQUE_CONSTRAINT = 'generating unique constraint key for entity by data : %s'
+    DELETE_UNIQUE_CONSTRAINT = 'deleting unique constraint key for entity by data : %s'
     CHECK_UNIQUE_EXISTANCE = 'checking for existance of unique code : %s'
     UNIQUE_CONSTRAINT_EXISTS = 'the unique costraint key already exists : %s'
-
+    UNIQUE_CONSTRAINT_IS = 'the unique constraint generated is :%s '
+    UNIQUE_CONSTRAINT_IS_CHANGING = 'unique constraint is changing by deleting old one and generating new one'
+    UNIQUE_CONNECTOR_ADDED = 'the unique_connector added for this model : %s'
 
     # LIBRARY
     LIBRARY_BOOK_TYPE_NOT_ADDABLE = 'this type of book is not addable to library : %s'

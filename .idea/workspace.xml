@@ -2,32 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/accounts/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app_token/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/app_token/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_collections/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/book_collections/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_rate/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/book_rate/controller.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/constraint_handler/controllers/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/constraint_handler/controllers/unique_entity_connector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/books/controllers/book.py" beforeDir="false" afterPath="$PROJECT_DIR$/books/controllers/book.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/controllers/book_roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/books/controllers/book_roles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comment/controllers/actions.py" beforeDir="false" afterPath="$PROJECT_DIR$/comment/controllers/actions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/comment/controllers/comment.py" beforeDir="false" afterPath="$PROJECT_DIR$/comment/controllers/comment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enums.py" beforeDir="false" afterPath="$PROJECT_DIR$/enums.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/file_handler/handle_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/file_handler/handle_file.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/financial_transactions/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/financial_transactions/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/follow/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/follow/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/message_description" beforeDir="false" afterPath="$PROJECT_DIR$/message_description" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messages.py" beforeDir="false" afterPath="$PROJECT_DIR$/messages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order/controllers/checkout_order.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/controllers/checkout_order.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order/controllers/order.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/controllers/order.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order/controllers/order_items.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/controllers/order_items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prices/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/prices/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/register/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/register/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/account_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/repository/account_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/repository/comment_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/repository/comment_repo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sign_up/fast_signup.py" beforeDir="false" afterPath="$PROJECT_DIR$/sign_up/fast_signup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/controllers/person.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/controllers/person.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/controllers/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/controllers/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wish_list/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/wish_list/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constraint_handler/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/constraint_handler/controllers/book_constraint.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/constraint_handler/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/constraint_handler/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log.py" beforeDir="false" afterPath="$PROJECT_DIR$/log.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,11 +18,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/configs.py">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/book_library/controller.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -60,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/user/controllers/person.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
-              <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
                 <element signature="e#1869#2558#0" />
@@ -77,36 +53,71 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/enums.py">
+        <entry file="file://$PROJECT_DIR$/constraint_handler/controllers/book_constraint.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="713">
-              <caret line="96" column="12" selection-start-line="96" selection-start-column="12" selection-end-line="96" selection-end-column="12" />
+            <state relative-caret-position="118">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#0#55#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/constraint_handler/controllers/unique_entity_connector.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="118">
+              <caret line="32" selection-start-line="32" selection-end-line="32" />
+              <folding>
+                <element signature="e#0#27#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sign_up/fast_signup.py">
+        <entry file="file://$PROJECT_DIR$/log.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="35" column="19" lean-forward="true" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+            <state relative-caret-position="260">
+              <caret line="281" column="77" selection-start-line="281" selection-start-column="77" selection-end-line="281" selection-end-column="77" />
               <folding>
-                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#446#455#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/repository/library_repo.py">
+        <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="15" selection-start-line="15" selection-end-line="15" />
+            <state relative-caret-position="118">
+              <caret line="65" selection-start-line="65" selection-end-line="65" />
               <folding>
-                <element signature="e#0#47#0" expanded="true" />
+                <element signature="e#0#11#0" expanded="true" />
+                <element signature="e#2508#2961#0" />
+                <element signature="e#5403#6211#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/helper.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="130">
+              <caret line="226" selection-start-line="226" selection-end-line="226" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/constraint_handler/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="8" column="51" lean-forward="true" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="51" />
+              <folding>
+                <element signature="e#0#37#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -196,9 +207,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/enums.py" />
-        <option value="$PROJECT_DIR$/order/controller.py" />
-        <option value="$PROJECT_DIR$/prices/urls.py" />
         <option value="$PROJECT_DIR$/prices/models.py" />
         <option value="$PROJECT_DIR$/repository/order_repo.py" />
         <option value="$PROJECT_DIR$/order/models.py" />
@@ -234,10 +242,8 @@
         <option value="$PROJECT_DIR$/order/controllers/checkout_order.py" />
         <option value="$PROJECT_DIR$/alembic/versions/690ec24ff365_collection_table_again_back_to_3_.py" />
         <option value="$PROJECT_DIR$/book_collections/models.py" />
-        <option value="$PROJECT_DIR$/log.py" />
         <option value="$PROJECT_DIR$/book_collections/urls.py" />
         <option value="$PROJECT_DIR$/book_collections/controller.py" />
-        <option value="$PROJECT_DIR$/books/controllers/book.py" />
         <option value="$PROJECT_DIR$/books/controllers/book_roles.py" />
         <option value="$PROJECT_DIR$/repository/library_repo.py" />
         <option value="$PROJECT_DIR$/order/controllers/order_items.py" />
@@ -247,6 +253,11 @@
         <option value="$PROJECT_DIR$/message_description" />
         <option value="$PROJECT_DIR$/messages.py" />
         <option value="$PROJECT_DIR$/user/controllers/person.py" />
+        <option value="$PROJECT_DIR$/constraint_handler/models.py" />
+        <option value="$PROJECT_DIR$/log.py" />
+        <option value="$PROJECT_DIR$/constraint_handler/controllers/unique_entity_connector.py" />
+        <option value="$PROJECT_DIR$/books/controllers/book.py" />
+        <option value="$PROJECT_DIR$/constraint_handler/controllers/book_constraint.py" />
       </list>
     </option>
   </component>
@@ -275,11 +286,6 @@
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="accounts" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="online_library" type="462c0819:PsiDirectoryNode" />
               <item name="book_collections" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -301,38 +307,12 @@
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="financial_transactions" type="462c0819:PsiDirectoryNode" />
+              <item name="constraint_handler" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="order" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="order" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="repository" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="sign_up" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
+              <item name="constraint_handler" type="462c0819:PsiDirectoryNode" />
               <item name="controllers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -347,6 +327,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/constraint_handler/controllers" />
       <recent name="$PROJECT_DIR$/order/controllers" />
       <recent name="$PROJECT_DIR$/comment/controllers" />
     </key>
@@ -412,15 +393,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19297267" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19297267" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32998884" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3645485" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.522854" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3645485" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.522854" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -464,12 +444,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/books/controllers/book.py</url>
-          <line>324</line>
+          <line>359</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/books/controllers/book.py</url>
-          <line>319</line>
+          <line>354</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -593,11 +573,6 @@
           <option name="timeStamp" value="98" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/books/controllers/book.py</url>
-          <line>244</line>
-          <option name="timeStamp" value="100" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/accounts/controller.py</url>
           <line>20</line>
           <option name="timeStamp" value="101" />
@@ -608,14 +583,44 @@
           <option name="timeStamp" value="102" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/books/controllers/book.py</url>
-          <line>261</line>
-          <option name="timeStamp" value="107" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/book_library/controller.py</url>
           <line>50</line>
           <option name="timeStamp" value="110" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/books/controllers/book.py</url>
+          <line>30</line>
+          <option name="timeStamp" value="111" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/constraint_handler/controllers/unique_entity_connector.py</url>
+          <line>10</line>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/books/controllers/book.py</url>
+          <line>271</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/constraint_handler/controllers/book_constraint.py</url>
+          <line>29</line>
+          <option name="timeStamp" value="115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/books/controllers/book.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="116" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/books/controllers/book.py</url>
+          <line>286</line>
+          <option name="timeStamp" value="117" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/constraint_handler/controllers/unique_entity_connector.py</url>
+          <line>32</line>
+          <option name="timeStamp" value="118" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -644,6 +649,26 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
+        <expression-string>the_code</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>roles_string</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>role_codes</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>role_codes.sort()</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>collection_items</expression-string>
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
@@ -668,37 +693,9 @@
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>role_person.values()</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>FORMATTER</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>result.update(model_propos)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>comment_to_dict(db_session, item, username)</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/repository/comment_repo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/books/controllers/book_types.py" />
     <entry file="file://$PROJECT_DIR$/books/views.py" />
     <entry file="file://$PROJECT_DIR$/celery_works/celery.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -816,32 +813,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/constraint_handler/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="5" column="23" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#37#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/file_handler/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
           <caret line="11" column="99" selection-start-line="11" selection-start-column="99" selection-end-line="11" selection-end-column="99" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/constraint_handler/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="25" column="36" selection-start-line="25" selection-start-column="36" selection-end-line="25" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -919,17 +896,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="193" selection-start-line="193" selection-end-line="193" />
-          <folding>
-            <element signature="e#5942#6502#0" />
-            <element signature="e#6520#6594#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/order/controllers/checkout_order.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
@@ -984,35 +950,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/log.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7668">
-          <caret line="285" column="77" selection-start-line="285" selection-start-column="77" selection-end-line="285" selection-end-column="77" />
-          <folding>
-            <element signature="e#446#455#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="457">
           <caret line="124" column="40" lean-forward="true" selection-start-line="124" selection-start-column="40" selection-end-line="124" selection-end-column="40" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="317" column="37" lean-forward="true" selection-start-line="317" selection-start-column="37" selection-end-line="317" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-            <element signature="e#5391#6194#0" />
-            <element signature="e#6237#7454#0" />
-            <element signature="e#7518#8821#0" />
           </folding>
         </state>
       </provider>
@@ -1134,13 +1077,77 @@
     <entry file="file://$PROJECT_DIR$/user/controllers/person.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
-          <caret line="26" column="4" selection-start-line="26" selection-start-column="4" selection-end-line="26" selection-end-column="4" />
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
             <element signature="e#1869#2558#0" />
             <element signature="e#2607#3624#0" />
             <element signature="e#3669#4847#0" />
             <element signature="e#4889#5193#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alembic/versions/337fd52a66a8_unique_entitiy_connector_added.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-391" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="281" column="77" selection-start-line="281" selection-start-column="77" selection-end-line="281" selection-end-column="77" />
+          <folding>
+            <element signature="e#446#455#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="226" selection-start-line="226" selection-end-line="226" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/constraint_handler/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="8" column="51" lean-forward="true" selection-start-line="8" selection-start-column="51" selection-end-line="8" selection-end-column="51" />
+          <folding>
+            <element signature="e#0#37#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/constraint_handler/controllers/book_constraint.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="65" selection-start-line="65" selection-end-line="65" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+            <element signature="e#2508#2961#0" />
+            <element signature="e#5403#6211#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/constraint_handler/controllers/unique_entity_connector.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
           </folding>
         </state>
       </provider>

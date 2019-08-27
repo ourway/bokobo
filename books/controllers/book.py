@@ -19,6 +19,10 @@ from prices.controller import add as add_price, get_book_price_internal
 from prices.controller import internal_edit as edit_price
 from log import LogMsg, logger
 from configs import ADMINISTRATORS
+from constraint_handler.controllers.book_constraint import \
+    add as add_uniquecode, delete as delete_uniquecode, book_is_unique
+from constraint_handler.controllers.unique_entity_connector import \
+    get as get_connector, add as add_connector,delete as delete_connector
 
 
 def add(db_session, data, username, **kwargs):
@@ -26,7 +30,8 @@ def add(db_session, data, username, **kwargs):
 
     if username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
-        raise Http_error(403,Message.ACCESS_DENIED)
+        raise Http_error(403, Message.ACCESS_DENIED)
+
 
     genre = data.get('genre', [])
     if genre and len(genre) > 0:
@@ -57,6 +62,10 @@ def add(db_session, data, username, **kwargs):
 
     db_session.add(model_instance)
     logger.debug(LogMsg.DB_ADD)
+
+    add_connector(model_instance.id, data.get('unique_code'),db_session)
+    logger.debug(LogMsg.UNIQUE_CONNECTOR_ADDED, {'book_id': model_instance.id,
+                                                 'unique_constraint': data.get('unique_code')})
 
     price = data.get('price', None)
     if price:
@@ -126,6 +135,21 @@ def edit(id, db_session, data, username):
 
     logger.debug(LogMsg.MODEL_ALTERED)
 
+    logger.debug(LogMsg.UNIQUE_CONSTRAINT_IS_CHANGING)
+    unique_data = book_to_dict(db_session,model_instance)
+    del unique_data['roles']
+    unique_data['roles'] = data['roles']
+
+    unique_connector = get_connector(id, db_session)
+    if unique_connector:
+        logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
+        delete_uniquecode(unique_connector.UniqueCode,db_session)
+        logger.debug(LogMsg.GENERATE_UNIQUE_CONSTRAINT, unique_data)
+        code = add_uniquecode(unique_data,db_session)
+        delete_connector(id,db_session)
+        add_connector(id,code.UniqueCode,db_session)
+
+
     logger.debug(LogMsg.EDIT_SUCCESS, book_to_dict(db_session, model_instance))
 
     logger.info(LogMsg.END)
@@ -159,6 +183,12 @@ def delete(id, db_session, username):
 
     db_session.query(Book).filter(Book.id == id).delete()
     logger.debug(LogMsg.ENTITY_DELETED, {"Book.id": id})
+
+    unique_connector = get_connector(id, db_session)
+    if unique_connector:
+        logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
+        delete_uniquecode(unique_connector.UniqueCode, db_session)
+        delete_connector(id, db_session)
 
     logger.info(LogMsg.END)
     return Http_response(204, True)
@@ -237,7 +267,9 @@ def add_multiple_type_books(db_session, data, username):
 
     if username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
-        raise Http_error(403,Message.ACCESS_DENIED)
+        raise Http_error(403, Message.ACCESS_DENIED)
+
+    logger.debug(LogMsg.BOOK_CHECKING_IF_EXISTS, data)
 
     types = data.get('types')
     logger.debug(LogMsg.ENUM_CHECK, {'book_types': types})
@@ -251,7 +283,10 @@ def add_multiple_type_books(db_session, data, username):
     logger.debug(LogMsg.ADDING_MULTIPLE_BOOKS, data)
 
     for type in types:
-        book_data.update({'type': type})
+        data['type'] = type
+        unique_code = add_uniquecode(data, db_session)
+
+        book_data.update({'type': type,'unique_code':unique_code.UniqueCode})
 
         logger.debug(LogMsg.ADD_BOOK, book_data)
         book = add(db_session, book_data, username)
@@ -316,7 +351,7 @@ def edit_book(id, db_session, data, username):
         delete_book_roles(model_instance.id, db_session)
         logger.debug(LogMsg.ADDING_ROLES_TO_BOOK, id)
         nroles, elastic_data = add_book_roles(model_instance.id, roles,
-                                             db_session, username)
+                                              db_session, username)
         new_roles = []
         for role in nroles:
             logger.debug(LogMsg.ATTACHING_ROLES_TO_BOOKS, id)
@@ -352,7 +387,7 @@ def delete_book(id, db_session, username):
 
     if username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
-        raise Http_error(403,Message.ACCESS_DENIED)
+        raise Http_error(403, Message.ACCESS_DENIED)
 
     logger.info(LogMsg.DELETE_REQUEST, {'book_id': id})
 
