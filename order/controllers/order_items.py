@@ -36,6 +36,9 @@ def add(data, db_session, username):
     if user.person_id is None:
         raise Http_error(400, Message.Invalid_persons)
 
+    if is_book_in_library(user.person_id, book_id, db_session):
+        logger.error(LogMsg.ALREADY_IS_IN_LIBRARY,{'book_id':book_id})
+        raise Http_error(409,Message.ALREADY_EXISTS)
 
     book = get_book(book_id,db_session)
     if book is None:
