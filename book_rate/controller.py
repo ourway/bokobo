@@ -26,7 +26,7 @@ def add(db_session, data, username):
 
     book = get_book(data.get('book_id'), db_session)
     if book is None:
-        raise Http_error(400, Message.MSG20)
+        raise Http_error(400, Message.NOT_FOUND)
 
     rate = get(data.get('book_id'), user.person_id, db_session)
     if rate:
@@ -70,7 +70,7 @@ def edit(id, data, db_session, username):
         logging.debug(LogMsg.MODEL_GETTING)
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     if model_instance.person_id != user.person_id:
         raise Http_error(403, Message.ACCESS_DENIED)
@@ -91,7 +91,7 @@ def delete(id, db_session, username, **kwargs):
         logging.debug(LogMsg.MODEL_GETTING)
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     user = check_user(username, db_session)
     if user is None:
@@ -105,7 +105,7 @@ def delete(id, db_session, username, **kwargs):
     try:
         db_session.query(Rate).filter(Rate.id == id).delete()
     except:
-        raise Http_error(404, Message.MSG13)
+        raise Http_error(404, Message.DELETE_FAILED)
     return {}
 
 

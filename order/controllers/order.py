@@ -107,7 +107,7 @@ def get_person_orders(data, db_session, username=None):
 def delete(id, db_session, username=None):
     order = internal_get(id, db_session)
     if order is None:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     if order.creator != username:
         raise Http_error(403, Message.ACCESS_DENIED)
     if order.status == OrderStatus.Invoiced:
@@ -117,7 +117,7 @@ def delete(id, db_session, username=None):
         delete_orders_items_internal(order.id, db_session)
         db_session.delete(order)
     except:
-        raise Http_error(404, Message.MSG13)
+        raise Http_error(404, Message.DELETE_FAILED)
 
     return Http_response(204, True)
 
@@ -126,7 +126,7 @@ def edit(id,data, db_session, username=None):
     model_instance = internal_get(id, db_session)
 
     if model_instance is None:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     if model_instance.creator != username:
         raise Http_error(403, Message.ACCESS_DENIED)
     if model_instance.status == OrderStatus.Invoiced:
@@ -151,7 +151,7 @@ def edit(id,data, db_session, username=None):
         edit_basic_data(model_instance, username)
 
     except:
-        raise Http_error(404, Message.MSG13)
+        raise Http_error(404, Message.DELETE_FAILED)
 
     return order_to_dict(model_instance)
 
@@ -160,14 +160,14 @@ def edit_status_internal(id, status, db_session, username=None):
     model_instance = internal_get(id, db_session)
 
     if model_instance is None:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     try:
         model_instance.status = status
         edit_basic_data(model_instance, username)
 
     except:
-        raise Http_error(404, Message.MSG13)
+        raise Http_error(404, Message.DELETE_FAILED)
 
     return model_instance
 

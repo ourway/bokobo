@@ -161,7 +161,7 @@ def delete_collection(title, db_session, username):
             Collection.title == title).delete()
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
-        raise Http_error(502, Message.MSG13)
+        raise Http_error(502, Message.DELETE_FAILED)
 
     return Http_response(204, True)
 
@@ -187,7 +187,7 @@ def delete_books_from_collection(data, db_session, username):
                      Collection.title == data.get('title'))).delete()
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
-        raise Http_error(502, Message.MSG13)
+        raise Http_error(502, Message.DELETE_FAILED)
 
     return Http_response(204, True)
 
@@ -230,7 +230,7 @@ def delete_by_id(id, db_session, username):
         db_session.query(Collection).filter(Collection.id == id).delete()
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
-        raise Http_error(500, Message.MSG13)
+        raise Http_error(500, Message.DELETE_FAILED)
     return Http_response(204, True)
 
 

@@ -46,13 +46,13 @@ def get(id, db_session, username):
         logger.info(LogMsg.MODEL_GETTING)
     else:
         logger.error(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, Message.MSG11)
+        raise Http_error(404, Message.TOKEN_INVALID)
 
     logger.debug(LogMsg.GET_SUCCESS)
 
     if model_instance.expiration_date < Now():
         logger.error(LogMsg.TOKEN_EXPIRED)
-        raise Http_error(401,Message.MSG12)
+        raise Http_error(401,Message.TOKEN_EXPIRED)
 
     logger.info(LogMsg.END)
     return model_instance
@@ -70,7 +70,7 @@ def delete(id, db_session, username):
 
     except:
         logger.error(LogMsg.DELETE_FAILED)
-        raise Http_error(500, Message.MSG13)
+        raise Http_error(500, Message.DELETE_FAILED)
 
     logger.info(LogMsg.END)
     return {}
@@ -84,7 +84,7 @@ def get_all(db_session, username):
 
     except:
         logger.error(LogMsg.GET_FAILED)
-        raise Http_error(500, Message.MSG14)
+        raise Http_error(500, Message.GET_FAILED)
 
     logger.debug(LogMsg.END)
     return result

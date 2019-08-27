@@ -57,7 +57,7 @@ class OrderStatus(enum.Enum):
 def check_enums(data,enum_class):
     for type in data:
         if type not in enum_class.__members__:
-            raise Http_error(404,Message.MSG19)
+            raise Http_error(404,Message.INVALID_ENUM)
     return data
 
 def str_genre(genre_list):
@@ -92,7 +92,7 @@ def str_report(report):
 
 def check_enum(type,enum_class):
     if type not in enum_class.__members__:
-        raise Http_error(404, Message.MSG19)
+        raise Http_error(404, Message.INVALID_ENUM)
 
     return type
 

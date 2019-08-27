@@ -23,7 +23,7 @@ def add(db_session, data, username):
     book = get_book(book_id, db_session)
     if book is None:
         logger.error(LogMsg.NOT_FOUND, {'book_id': book_id})
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     logger.debug(LogMsg.CHECK_USER_EXISTANCE, username)
     user = check_user(username, db_session)
@@ -80,7 +80,7 @@ def get(id, db_session, username, **kwargs):
 
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        Http_error(404, Message.MSG20)
+        Http_error(404, Message.NOT_FOUND)
 
     logger.info(LogMsg.END)
 
@@ -94,7 +94,7 @@ def delete(id, db_session, username, **kwargs):
     model_instance = db_session.query(Comment).filter(Comment.id == id).first()
     if model_instance is None:
         logger.error(LogMsg.NOT_FOUND, id)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     logger.debug(LogMsg.CHECK_USER_EXISTANCE, username)
     user = check_user(username, db_session)
@@ -114,7 +114,7 @@ def delete(id, db_session, username, **kwargs):
         logger.debug(LogMsg.DELETE_SUCCESS, id)
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
-        raise Http_error(404, Message.MSG13)
+        raise Http_error(404, Message.DELETE_FAILED)
     logger.info(LogMsg.END)
 
     return Http_response(204, True)
@@ -151,7 +151,7 @@ def get_book_comments(book_id, data, db_session, username, **kwargs):
             result.append(comment_to_dict(db_session, item, username))
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(400, Message.MSG20)
+        raise Http_error(400, Message.NOT_FOUND)
     logger.info(LogMsg.END)
 
     return result
@@ -170,7 +170,7 @@ def get_all(data, db_session, username, **kwargs):
             result.append(comment_to_dict(db_session, item, username))
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(400, Message.MSG20)
+        raise Http_error(400, Message.NOT_FOUND)
     logger.info(LogMsg.END)
     return result
 
@@ -185,7 +185,7 @@ def edit(id, data, db_session, username):
     model_instance = db_session.query(Comment).filter(Comment.id == id).first()
     if model_instance is None:
         logger.error(LogMsg.GET_FAILED, id)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     user = check_user(username, db_session)
     if user is None:

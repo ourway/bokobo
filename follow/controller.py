@@ -101,7 +101,7 @@ def delete(id, db_session, username, **kwargs):
         logging.debug(LogMsg.MODEL_GETTING)
     else:
         logging.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     if model_instance.follower_id != user.person_id and \
             model_instance.following_id != user.person_id:
@@ -110,7 +110,7 @@ def delete(id, db_session, username, **kwargs):
     try:
         db_session.query(Follow).filter(and_(Follow.following_id == id, Follow.follower_id == user.person_id)).delete()
     except:
-        raise Http_error(404, Message.MSG13)
+        raise Http_error(404, Message.DELETE_FAILED)
     return {}
 
 

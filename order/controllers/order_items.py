@@ -43,7 +43,7 @@ def add(data, db_session, username):
     book = get_book(book_id,db_session)
     if book is None:
         logger.error(LogMsg.NOT_FOUND,{'book_id':book_id})
-        raise Http_error(404,Message.MSG20)
+        raise Http_error(404,Message.NOT_FOUND)
     
     if book.type.name in ONLINE_BOOK_TYPES:
         count = 1
@@ -103,7 +103,7 @@ def get_orders_items(order_id, db_session, username=None):
 def delete(id, db_session, username=None):
     order_item = get(id, db_session)
     if order_item is None:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     if order_item.creator != username:
         raise Http_error(403, Message.ACCESS_DENIED)
     order_id = order_item.order_id
@@ -112,7 +112,7 @@ def delete(id, db_session, username=None):
         db_session.delete(order_item)
         calc_total_price_order(order_id, db_session)
     except:
-        raise Http_error(404, Message.MSG13)
+        raise Http_error(404, Message.DELETE_FAILED)
 
     return Http_response(204, True)
 
@@ -123,7 +123,7 @@ def delete_orders_items_internal(order_id, db_session):
         db_session.query(OrderItem).filter(
             OrderItem.order_id == order_id).delete()
     except:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     return Http_response(204, True)
 
 
@@ -131,7 +131,7 @@ def edit(id, data, db_session, username=None):
     model_instance = get(id, db_session)
 
     if model_instance is None:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     if model_instance.creator != username or username not in administrator_users:
         raise Http_error(403, Message.ACCESS_DENIED)
 
@@ -162,7 +162,7 @@ def edit(id, data, db_session, username=None):
                                                   model_instance.count,
                                                   model_instance.discount)
     except:
-        raise Http_error(404, Message.MSG13)
+        raise Http_error(404, Message.DELETE_FAILED)
 
     calc_total_price_order(model_instance.order_id,db_session)
 

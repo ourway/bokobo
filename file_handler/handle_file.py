@@ -43,7 +43,7 @@ def delete_files(files, **kwargs):
                 logger.debug(LogMsg.FILE_NOT_EXISTS,file_path)
     except:
         logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
-        raise Http_error(404,Message.MSG20)
+        raise Http_error(404,Message.NOT_FOUND)
     logger.debug(LogMsg.DELETE_SUCCESS)
     return True
 
@@ -62,7 +62,7 @@ def return_file(filename, **kwargs):
         return response
     except:
         logger.exception(LogMsg.FILE_NOT_EXISTS,exc_info=True)
-        raise Http_error(404,Message.MSG20)
+        raise Http_error(404,Message.NOT_FOUND)
 
 
 

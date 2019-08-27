@@ -63,7 +63,7 @@ def delete(id, db_session, username=None):
 
     price = get_by_id(id, db_session)
     if price is None:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     if price.creator != username and username not in ADMINISTRATORS:
         raise Http_error(403, Message.ACCESS_DENIED)
 
@@ -71,7 +71,7 @@ def delete(id, db_session, username=None):
         db_session.delete(price)
     except:
         logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
-        raise Http_error(404, Message.MSG13)
+        raise Http_error(404, Message.DELETE_FAILED)
 
     logger.info(LogMsg.END)
 
@@ -84,14 +84,14 @@ def edit(id, data, db_session, username=None):
     model_instance = get_by_id(id, db_session)
 
     if model_instance is None:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     if model_instance.creator != username and username not in ADMINISTRATORS:
         raise Http_error(403, Message.ACCESS_DENIED)
 
     try:
         model_instance.price = data.get('price')
     except:
-        raise Http_error(404, Message.MSG13)
+        raise Http_error(404, Message.DELETE_FAILED)
 
     return model_instance
 
@@ -100,12 +100,12 @@ def internal_edit(book_id, price, db_session):
     model_instance = get_by_book(book_id, db_session)
 
     if model_instance is None:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     try:
         model_instance.price = price
     except:
-        raise Http_error(404, Message.MSG13)
+        raise Http_error(404, Message.DELETE_FAILED)
 
     return model_instance
 

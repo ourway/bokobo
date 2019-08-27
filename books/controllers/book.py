@@ -79,7 +79,7 @@ def get(id, db_session):
 
     else:
         logger.error(LogMsg.NOT_FOUND, {'book_id': id})
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     logger.info(LogMsg.END)
 
@@ -97,7 +97,7 @@ def edit(id, db_session, data, username):
         logger.debug(LogMsg.GET_SUCCESS)
     else:
         logger.debug(LogMsg.NOT_FOUND, {'book_id': id})
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     if model_instance.creator != username and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
@@ -144,7 +144,7 @@ def delete(id, db_session, username):
 
     if book is None:
         logger.error(LogMsg.NOT_FOUND, {'book_id': id})
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     if book.creator != username and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
@@ -185,7 +185,7 @@ def get_all(db_session):
             final_res.append(book_dict)
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(500, Message.MSG14)
+        raise Http_error(500, Message.GET_FAILED)
 
     logger.debug(LogMsg.END)
     return final_res
@@ -287,7 +287,7 @@ def edit_book(id, db_session, data, username):
     model_instance = db_session.query(Book).filter(Book.id == id).first()
     if model_instance is None:
         logger.error(LogMsg.NOT_FOUND, {'book_id': id})
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     if model_instance.creator != username and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
@@ -396,7 +396,7 @@ def search_by_title(data, db_session):
         logger.debug(LogMsg.GET_SUCCESS)
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     logger.info(LogMsg.END)
 
@@ -424,7 +424,7 @@ def search_by_writer(data, db_session):
             result.append(book_to_dict(db_session, book))
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     return result
 
@@ -448,7 +448,7 @@ def search_by_genre(data, db_session):
         logger.debug(LogMsg.GET_SUCCESS)
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     logger.info(LogMsg.END)
     return result
@@ -476,7 +476,7 @@ def search_by_tags(data, db_session):
         logger.debug(LogMsg.GET_SUCCESS)
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     logger.info(LogMsg.END)
     return result
 
@@ -530,7 +530,7 @@ def book_by_ids(id_list, db_session):
 
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(500, Message.MSG14)
+        raise Http_error(500, Message.GET_FAILED)
 
     logger.info(LogMsg.END)
 
@@ -569,7 +569,7 @@ def newest_books(data, db_session):
         logger.debug(LogMsg.GET_SUCCESS)
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     logger.debug(LogMsg.RESULT_BOOKS, res)
     logger.info(LogMsg.END)

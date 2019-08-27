@@ -27,7 +27,7 @@ def add(data, db_session, username):
     for item in book_ids:
         book = get_book(item, db_session)
         if book is None:
-            raise Http_error(400, Message.MSG20)
+            raise Http_error(400, Message.NOT_FOUND)
 
         wish = get(item, user.person_id, db_session)
         if wish is not None:
@@ -80,7 +80,7 @@ def delete_wish_list(db_session, username):
         db_session.query(WishList).filter(
             WishList.person_id == user.person_id).delete()
     except:
-        raise Http_error(502, Message.MSG13)
+        raise Http_error(502, Message.DELETE_FAILED)
 
     return Http_response(204, True)
 
@@ -103,7 +103,7 @@ def delete_books_from_wish_list(data, db_session, username):
                 and_(WishList.person_id == user.person_id,
                      WishList.book_id == id)).delete()
     except:
-        raise Http_error(502, Message.MSG13)
+        raise Http_error(502, Message.DELETE_FAILED)
 
     return Http_response(204, True)
 

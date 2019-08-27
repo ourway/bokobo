@@ -82,7 +82,7 @@ def get(person_id, type, db_session):
                      {'person_id': person_id, 'account_type': type},
                      exc_info=True)
 
-        raise Http_error(404, Message.MSG14)
+        raise Http_error(404, Message.GET_FAILED)
 
     logger.info(LogMsg.END)
 
@@ -107,7 +107,7 @@ def get_person_accounts(person_id, db_session, username):
                      {'person_id': person_id},
                      exc_info=True)
 
-        raise Http_error(404, Message.MSG14)
+        raise Http_error(404, Message.GET_FAILED)
 
     logger.info(LogMsg.END)
 
@@ -129,7 +129,7 @@ def get_all(data, db_session, username):
     except:
         logger.error(LogMsg.GET_FAILED,
                      exc_info=True)
-        raise Http_error(404, Message.MSG14)
+        raise Http_error(404, Message.GET_FAILED)
 
     logger.info(LogMsg.END)
 
@@ -167,7 +167,7 @@ def get_user_accounts(username, db_session):
 
         logger.error(LogMsg.GET_FAILED,
                      exc_info=True)
-        raise Http_error(404, Message.MSG14)
+        raise Http_error(404, Message.GET_FAILED)
 
     logger.info(LogMsg.END)
 
@@ -198,7 +198,7 @@ def delete_all(username, db_session):
             Account.person_id == user.person_id).delete()
     except:
         logger.error(LogMsg.DELETE_FAILED, exc_info=True)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     logger.info(LogMsg.END)
 
     return Http_response(204, True)
@@ -228,7 +228,7 @@ def delete(id, db_session, username):
         ).delete()
     except:
         logger.error(LogMsg.DELETE_FAILED, exc_info=True)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     logger.info(LogMsg.END)
 
     return Http_response(204, True)
@@ -245,7 +245,7 @@ def edit_account_value(account_id, value, db_session):
     account = db_session.query(Account).filter(Account.id == account_id).first()
     if account is None:
         logger.error(LogMsg.NOT_FOUND, {'account_id': account_id})
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     account.value += value
     logger.debug(LogMsg.ACCOUNT_VALUE_EDITED, account_id)
     logger.info(LogMsg.END)
@@ -279,7 +279,7 @@ def get_by_id(id, db_session, username):
                          {'account_id': id, 'person_id': user.person_id})
     except:
         logger.error(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     logger.info(LogMsg.END)
 
     return account_to_dict(result)
@@ -296,7 +296,7 @@ def edit(id, data, db_session, username):
     account = db_session.query(Account).filter(Account.id == id).first()
     if account is None:
         logger.error(LogMsg.NOT_FOUND,{'account_id':id})
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     if account.creator != username and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
         raise Http_error(403, Message.ACCESS_DENIED)
@@ -361,7 +361,7 @@ def edit_by_person(data,db_session,username):
     account = db_session.query(Account).filter(and_(Account.person_id == person_id,Account.type == type)).first()
     if account is None:
         logger.error(LogMsg.NOT_FOUND, {'account_id': id})
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     if account.creator != username and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
         raise Http_error(403, Message.ACCESS_DENIED)

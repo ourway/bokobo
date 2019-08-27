@@ -16,7 +16,7 @@ def checkout(order_id, data, db_session, username):
 
     order = get_order(order_id, db_session)
     if order is None:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     if person_id is not None:
         if order.person_id != person_id:

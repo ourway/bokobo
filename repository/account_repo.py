@@ -9,7 +9,7 @@ def get_account(account_id, db_session):
 def edit_account_value(account_id, value, db_session):
     account = db_session.query(Account).filter(Account.id == account_id).first()
     if account is None:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     account.value += value
 
     return account

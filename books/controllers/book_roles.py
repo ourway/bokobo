@@ -90,7 +90,7 @@ def get(id, db_session):
         logger.debug(LogMsg.GET_SUCCESS, book_role_to_dict(model_instance))
     else:
         logger.error(LogMsg.NOT_FOUND)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     logger.info(LogMsg.END)
     return model_instance
@@ -111,7 +111,7 @@ def edit(db_session, data, username):
         logger.debug(LogMsg.GET_SUCCESS, book_role_to_dict(model_instance))
     else:
         logger.debug(LogMsg.GET_FAILED, id)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
@@ -139,7 +139,7 @@ def delete(id, db_session, username):
         BookRole.id == id).first()
     if model_instance is None:
         logger.error(LogMsg.NOT_FOUND, id)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     try:
         db_session.delete(model_instance)
@@ -148,7 +148,7 @@ def delete(id, db_session, username):
 
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
-        raise Http_error(500, Message.MSG13)
+        raise Http_error(500, Message.DELETE_FAILED)
 
     logger.info(LogMsg.END)
     return Http_response(204, True)
@@ -162,7 +162,7 @@ def get_all(db_session):
 
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(500, Message.MSG14)
+        raise Http_error(500, Message.GET_FAILED)
 
     logger.debug(LogMsg.END)
     return result
@@ -179,7 +179,7 @@ def get_book_roles(book_id, db_session):
 
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(500, Message.MSG14)
+        raise Http_error(500, Message.GET_FAILED)
 
     logger.debug(LogMsg.END)
     return result
@@ -197,7 +197,7 @@ def delete_book_roles(book_id, db_session):
 
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
-        raise Http_error(500, Message.MSG13)
+        raise Http_error(500, Message.DELETE_FAILED)
 
     logger.debug(LogMsg.END)
     return Http_response(204, True)

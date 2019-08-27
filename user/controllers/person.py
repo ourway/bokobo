@@ -17,11 +17,18 @@ from wish_list.controller import get_wish_list, internal_wish_list
 from ..models import Person, User
 from repository.person_repo import person_cell_exists, person_mail_exists
 from books.controllers.book import get_current_book
+from configs import SIGNUP_USER, ADMINISTRATORS
 
 save_path = os.environ.get('save_path')
 
 
 def add(db_session, data, username):
+    logger.info(LogMsg.START, username)
+
+    if username is not SIGNUP_USER and username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED, {'username': username})
+        raise Http_error(403, Message.ACCESS_DENIED)
+
     cell_no = data.get('cell_no')
     if cell_no and person_cell_exists(db_session, cell_no):
         raise Http_error(409, LogMsg.PERSON_EXISTS.format('cell_no'))
@@ -34,7 +41,7 @@ def add(db_session, data, username):
     # logger.info(LogMsg.START,extra={'data':data,'user':username})
 
     model_instance = Person()
-    populate_basic_data(model_instance,username,data.get('tags'))
+    populate_basic_data(model_instance, username, data.get('tags'))
     model_instance.name = data.get('name')
     model_instance.last_name = data.get('last_name')
     model_instance.address = data.get('address')
@@ -51,19 +58,18 @@ def add(db_session, data, username):
 
 
 def get(id, db_session, username):
-    # TODO: for string manipulation use format and dont use '+' for string concatation "{} user is {} getting user_id={}".format(LogMsg.START, username, id)
-    logger.info(LogMsg.START,username)
+    logger.info(LogMsg.START, username)
 
     logger.debug(LogMsg.MODEL_GETTING)
     model_instance = db_session.query(Person).filter(Person.id == id).first()
     if model_instance:
-        person_dict = person_to_dict(model_instance,db_session)
+        person_dict = person_to_dict(model_instance, db_session)
         logger.debug(LogMsg.GET_SUCCESS +
-                      json.dumps(person_dict))
+                     json.dumps(person_dict))
     else:
         logger.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, Message.MSG20)
-    logger.error(LogMsg.GET_FAILED,{"id": id})
+        raise Http_error(404, Message.NOT_FOUND)
+    logger.error(LogMsg.GET_FAILED, {"id": id})
     logger.info(LogMsg.END)
 
     return person_dict
@@ -75,7 +81,7 @@ def edit(id, db_session, data, username):
     #      concurrently. check KAVEH codes (edit functions) to better understanding
     #      version field usage
 
-    logger.info(LogMsg.START ,username)
+    logger.info(LogMsg.START, username)
 
     if "id" in data.keys():
         del data["id"]
@@ -86,16 +92,16 @@ def edit(id, db_session, data, username):
         logger.debug(LogMsg.MODEL_GETTING)
     else:
         logger.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
         setattr(model_instance, key, value)
-    edit_basic_data(model_instance,username,data.get('tags'))
+    edit_basic_data(model_instance, username, data.get('tags'))
 
     logger.debug(LogMsg.MODEL_ALTERED)
 
-    logger.debug(LogMsg.EDIT_SUCCESS ,model_to_dict(model_instance))
+    logger.debug(LogMsg.EDIT_SUCCESS, model_to_dict(model_instance))
 
     logger.info(LogMsg.END)
 
@@ -104,25 +110,23 @@ def edit(id, db_session, data, username):
 
 def delete(id, db_session, username):
     logger.info(
-        LogMsg.START ,username)
+        LogMsg.START, username)
 
     logger.info(LogMsg.DELETE_REQUEST, id)
 
     model_instance = db_session.query(Person).filter(Person.id == id).first()
     if model_instance is None:
-        logger.error(LogMsg.NOT_FOUND,{'person_id':id})
-        raise Http_error(404,Message.MSG20)
+        logger.error(LogMsg.NOT_FOUND, {'person_id': id})
+        raise Http_error(404, Message.NOT_FOUND)
     if person_has_books(id, db_session):
         logger.error(LogMsg.PERSON_HAS_BOOKS)
-        raise Http_error(403,Message.PERSON_HAS_BOOKS)
-
-
+        raise Http_error(403, Message.PERSON_HAS_BOOKS)
 
     try:
         delete_person_accounts(id, db_session)
         db_session.delete(model_instance)
 
-        logger.debug(LogMsg.ENTITY_DELETED,{"Person.id {}":id})
+        logger.debug(LogMsg.ENTITY_DELETED, {"Person.id {}": id})
 
         user = db_session.query(User).filter(User.person_id == id).first()
 
@@ -130,17 +134,18 @@ def delete(id, db_session, username):
             logger.debug(LogMsg.RELATED_USER_DELETE.format(user.id))
 
             db_session.query(User).filter(User.person_id == id).delete()
-            logger.debug(LogMsg.ENTITY_DELETED )
+            logger.debug(LogMsg.ENTITY_DELETED)
         else:
-            logger.debug(LogMsg.NOT_RELATED_USER_FOR_PERSON,{"Person.id {}":id})
+            logger.debug(LogMsg.NOT_RELATED_USER_FOR_PERSON,
+                         {"Person.id {}": id})
 
     except:
-        logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
+        logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
         raise Http_error(500, LogMsg.DELETE_FAILED)
 
     logger.info(LogMsg.END)
 
-    return Http_response(204,True)
+    return Http_response(204, True)
 
 
 def get_all(db_session, username):
@@ -156,7 +161,7 @@ def get_all(db_session, username):
     return result
 
 
-def search_person(data, db_session,username):
+def search_person(data, db_session, username):
     offset = data.get('offset', 0)
     limit = data.get('limit', 20)
     filter = data.get('filter', None)
@@ -172,8 +177,7 @@ def search_person(data, db_session,username):
         else:
             person_name = filter.get('person')
             if person_name is None:
-                raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
-
+                raise Http_error(400, Message.MISSING_REQUIERED_FIELD)
 
             persons = db_session.query(Person).filter(
                 or_(Person.name.like('%{}%'.format(person_name)),
@@ -185,13 +189,13 @@ def search_person(data, db_session,username):
         for person in persons:
             result.append(model_to_dict(person))
     except:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     return result
 
 
 def get_person_profile(id, db_session, username):
-    logger.info(LogMsg.START,username)
+    logger.info(LogMsg.START, username)
 
     logger.debug(LogMsg.MODEL_GETTING)
     model_instance = db_session.query(Person).filter(Person.id == id).first()
@@ -203,28 +207,28 @@ def get_person_profile(id, db_session, username):
         result['wish_list'] = internal_wish_list(db_session, Person.id)
 
         logger.debug(LogMsg.GET_SUCCESS +
-                      json.dumps(result))
+                     json.dumps(result))
     else:
-        logger.error(LogMsg.GET_FAILED,{"Person.id {}":id})
-        raise Http_error(404, Message.MSG20)
-    logger.debug(LogMsg.GET_SUCCESS , json.dumps(result))
+        logger.error(LogMsg.GET_FAILED, {"Person.id {}": id})
+        raise Http_error(404, Message.NOT_FOUND)
+    logger.debug(LogMsg.GET_SUCCESS, json.dumps(result))
     logger.info(LogMsg.END)
 
     return result
 
 
-def person_to_dict(person,db_session):
-    result  = model_basic_dict(person)
+def person_to_dict(person, db_session):
+    result = model_basic_dict(person)
     model_attrs = {
-        'address':person.address,
-        'bio':person.bio,
-        'cell_no':person.cell_no,
-        'current_book_id':person.current_book_id,
-        'email':person.email,
-        'image':person.image,
-        'name':person.name,
-        'last_name':person.last_name,
-        'phone':person.phone
+        'address': person.address,
+        'bio': person.bio,
+        'cell_no': person.cell_no,
+        'current_book_id': person.current_book_id,
+        'email': person.email,
+        'image': person.image,
+        'name': person.name,
+        'last_name': person.last_name,
+        'phone': person.phone
         # 'library':library_to_dict(person.library,db_session)
 
     }

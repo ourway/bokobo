@@ -22,12 +22,12 @@ def signup(data,db_session,*args,**kwargs):
     signup_token = redis.get(cell_no)
     if signup_token is None:
         logging.error(LogMsg.REGISTER_KEY_DOESNT_EXIST)
-        raise Http_error(404, Message.MSG9)
+        raise Http_error(404, Message.SIGNUP_TOKEN_NOT_EXISTS)
 
     signup_token = json.loads(signup_token.decode("utf-8")).get('signup_token',None)
     if (signup_token is None) or (signup_token != data.get('signup_token')):
         logging.error(LogMsg.REGISTER_KEY_INVALID)
-        raise Http_error(409, Message.MSG10)
+        raise Http_error(409, Message.INVALID_SIGNUP_TOKEN)
 
 
     user_data = {k: v for k, v in data.items() if k in ['username','password']}

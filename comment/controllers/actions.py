@@ -23,7 +23,7 @@ def add(db_session, data, username):
     comment = get_comment(comment_id, db_session)
     if comment is None:
         logger.error(LogMsg.NOT_FOUND, {'comment_id': comment_id})
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     user = check_user(username, db_session)
     if user is None:
@@ -56,7 +56,7 @@ def like(db_session, comment_id, username):
     comment = get_comment(comment_id, db_session)
     if comment is None:
         logger.error(LogMsg.NOT_FOUND, comment_id)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     user = check_user(username, db_session)
     if user is None:
@@ -97,7 +97,7 @@ def dislike(db_session, comment_id, username):
     comment = get_comment(comment_id, db_session)
     if comment is None:
         logger.error(LogMsg.NOT_FOUND, {'comment_id': comment_id})
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     user = check_user(username, db_session)
     if user is None:
@@ -133,7 +133,7 @@ def report(db_session, comment_id, data, username):
     comment = get_comment(comment_id, db_session)
     if comment is None:
         logger.error(LogMsg.NOT_FOUND, {'comment_id', comment_id})
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     user = check_user(username, db_session)
     if user is None:
@@ -176,7 +176,7 @@ def dis_report(db_session, comment_id, username):
     comment = get_comment(comment_id, db_session)
     if comment is None:
         logger.error(LogMsg.NOT_FOUND)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     user = check_user(username, db_session)
     if user is None:
@@ -215,7 +215,7 @@ def delete(id, db_session, username):
 
     if action is None:
         logger.debug(LogMsg.NOT_FOUND)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     user = check_user(username, db_session)
     if user.person_id is None:
@@ -232,7 +232,7 @@ def delete(id, db_session, username):
         db_session.delete(action)
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     logger.info(LogMsg.END)
     return Http_response(204, True)
@@ -245,7 +245,7 @@ def get_comment_like_count(comment_id, db_session):
     comment = get_comment(comment_id, db_session)
     if comment is None:
         logger.error(LogMsg.NOT_FOUND)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     try:
         logger.debug(LogMsg.ACTION_GETTING_LIKES, comment_id)
@@ -254,7 +254,7 @@ def get_comment_like_count(comment_id, db_session):
                  CommentAction.like == True)).count()
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(400, Message.MSG20)
+        raise Http_error(400, Message.NOT_FOUND)
     logger.debug(LogMsg.GET_SUCCESS, {'comment_id': comment_id, 'likes': likes})
     logger.info(LogMsg.END)
     return likes
@@ -267,7 +267,7 @@ def get_comment_reports(comment_id, db_session):
     comment = get_comment(comment_id, db_session)
     if comment is None:
         logger.error(LogMsg.NOT_FOUND)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     try:
         logger.debug(LogMsg.ACTION_GETTING_REPORTS, comment_id)
@@ -278,7 +278,7 @@ def get_comment_reports(comment_id, db_session):
             result.append(model_to_dict(item))
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
     logger.debug(LogMsg.GET_SUCCESS, result)
     logger.info(LogMsg.END)
     return result

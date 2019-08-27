@@ -16,7 +16,7 @@ def add(data, db_session, username=None):
     account_id = data.get('account_id')
     account = get_account(account_id, db_session)
     if account is None:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     model_instance = Transaction()
 
@@ -54,7 +54,7 @@ def delete(id, db_session,username=None):
     try:
         db_session.query(Transaction).filter( Transaction.id == id).delete()
     except:
-        raise Http_error(404, Message.MSG20)
+        raise Http_error(404, Message.NOT_FOUND)
 
     return Http_response(204, True)
 

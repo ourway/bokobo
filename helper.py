@@ -89,7 +89,7 @@ def check_Authorization():
     db_session = get_db_session()
     auth = request.get_header('Authorization')
     if auth is None:
-        raise Http_error(401, Message.MSG17)
+        raise Http_error(401, Message.NO_AUTH)
 
     username, password = decode(auth)
     print(username, password)
@@ -102,7 +102,7 @@ def check_Authorization():
                                              User.password == password).first()
 
         if user is None:
-            raise Http_error(401, Message.MSG18)
+            raise Http_error(401, Message.INVALID_USERNAME)
         return model_to_dict(user)
 
 
@@ -130,7 +130,7 @@ def decode(encoded_str):
         try:
             username, password = b64decode(split[0]).decode().split(':', 1)
         except:
-            raise Http_error(400, Message.MSG15)
+            raise Http_error(400, Message.AUTH_DECODING_FAILED)
 
     # If there are only two elements, check the first and ensure it says
     # 'basic' so that we know we're about to decode the right thing. If not,
@@ -141,7 +141,7 @@ def decode(encoded_str):
             try:
                 username, password = b64decode(split[1]).decode().split(':', 1)
             except:
-                raise Http_error(400, Message.MSG15)
+                raise Http_error(400, Message.AUTH_DECODING_FAILED)
 
         elif split[0].strip().lower() == 'bearer':
             logging.debug("auth is bearer")
@@ -151,12 +151,12 @@ def decode(encoded_str):
             logging.debug(
                 "token is {} and pass is {}".format(username, password))
         else:
-            raise Http_error(400, Message.MSG15)
+            raise Http_error(400, Message.AUTH_DECODING_FAILED)
 
     # If there are more than 2 elements, something crazy must be happening.
     # Bail.
     else:
-        raise Http_error(400, Message.MSG15)
+        raise Http_error(400, Message.AUTH_DECODING_FAILED)
 
     if password is None:
         return str(username), password
@@ -183,7 +183,7 @@ def inject_db(func):
 
             logger.exception(LogMsg.COMMIT_ERROR,exc_info=True)
 
-            raise Http_error(500, Message.MSG16)
+            raise Http_error(500, Message.COMMIT_FAILED)
         return rtn
 
     return wrapper
@@ -258,7 +258,7 @@ def value(name, default):
 def validate_token(id, db_session):
     result = db_session.query(APP_Token).filter(APP_Token.id == id).first()
     if result is None or result.expiration_date < Now():
-        raise Http_error(401,Message.MSG11 )
+        raise Http_error(401,Message.TOKEN_INVALID )
     return result
 
 
