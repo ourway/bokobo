@@ -1,13 +1,14 @@
-import logging
-
+from book_library.controller import is_book_in_library
 from prices.controller import get_book_price_internal, calc_net_price
 from repository.user_repo import check_user
 from order.models import OrderItem
 from repository.order_repo import get as get_order
+from repository.book_repo import get as get_book
 from helper import Http_error, populate_basic_data, Http_response, \
     check_schema, edit_basic_data, value, model_to_dict
-from log import LogMsg
+from log import LogMsg, logger
 from messages import Message
+from configs import ONLINE_BOOK_TYPES
 
 administrator_users = value('administrator_users', ['admin'])
 
@@ -23,9 +24,10 @@ def add_orders_items(order_id, items, db_session, username):
 
 
 def add(data, db_session, username):
-    logging.info(LogMsg.START)
+    logger.info(LogMsg.START)
 
     check_schema(['book_id', 'count', 'order_id'], data.keys())
+    book_id = data.get('book_id')
 
     user = check_user(username, db_session)
     if user is None:
@@ -34,12 +36,23 @@ def add(data, db_session, username):
     if user.person_id is None:
         raise Http_error(400, Message.Invalid_persons)
 
+
+    book = get_book(book_id,db_session)
+    if book is None:
+        logger.error(LogMsg.NOT_FOUND,{'book_id':book_id})
+        raise Http_error(404,Message.MSG20)
+    
+    if book.type in ONLINE_BOOK_TYPES:
+        count = 1
+    else:
+        count = data.get('count',0)
+
     model_instance = OrderItem()
 
     populate_basic_data(model_instance, username)
     model_instance.order_id = data.get('order_id')
-    model_instance.book_id = data.get('book_id')
-    model_instance.count = data.get('count')
+    model_instance.book_id = book_id
+    model_instance.count = count
     # TODO discount not imposed yet
     model_instance.discount = data.get('discount',0.0)
     model_instance.description = data.get('description')
