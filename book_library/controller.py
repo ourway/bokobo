@@ -11,8 +11,7 @@ from messages import Message
 from repository.person_repo import validate_person
 from repository.user_repo import check_user
 from repository.book_repo import get as get_book
-from enums import BookTypes
-
+from configs import ONLINE_BOOK_TYPES
 
 def add(data, db_session):
     logging.info(LogMsg.START)
@@ -24,7 +23,7 @@ def add(data, db_session):
         raise Http_error(409, Message.BOOK_IS_ALREADY_PURCHASED)
 
     book = get_book(data.get('book_id'), db_session)
-    if book.type not in [BookTypes.Epub, BookTypes.Audio, BookTypes.Pdf]:
+    if book.type not in ONLINE_BOOK_TYPES :
         logger.error(LogMsg.LIBRARY_BOOK_TYPE_NOT_ADDABLE, book.type.name)
         return {}
 
