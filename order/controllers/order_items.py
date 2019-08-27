@@ -45,7 +45,7 @@ def add(data, db_session, username):
         logger.error(LogMsg.NOT_FOUND,{'book_id':book_id})
         raise Http_error(404,Message.MSG20)
     
-    if book.type in ONLINE_BOOK_TYPES:
+    if book.type.name in ONLINE_BOOK_TYPES:
         count = 1
     else:
         count = data.get('count',0)

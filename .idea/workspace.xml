@@ -165,8 +165,8 @@
       <find>update_total_price_order</find>
       <find>administerator_users</find>
       <find>model_to_dict</find>
-      <find>logging</find>
       <find>books</find>
+      <find>logging</find>
     </findStrings>
     <replaceStrings>
       <replace>like</replace>
@@ -178,8 +178,8 @@
       <replace>OrderItem</replace>
       <replace>Item</replace>
       <replace>administrator_users</replace>
-      <replace>logger</replace>
       <replace>book_ids</replace>
+      <replace>logger</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/files</dir>

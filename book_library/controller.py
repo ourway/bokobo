@@ -17,13 +17,14 @@ def add(data, db_session):
     logging.info(LogMsg.START)
 
     check_schema(['book_id', 'person_id'], data.keys())
+    book_id = data.get('book_id')
 
-    if is_book_in_library(data.get('person_id'), data.get('book_id'), db_session):
-        logger.error(LogMsg.ALREADY_IS_IN_LIBRARY, {'book_id': data.get('book_id')})
+    if is_book_in_library(data.get('person_id'), book_id, db_session):
+        logger.error(LogMsg.ALREADY_IS_IN_LIBRARY, {'book_id': book_id})
         raise Http_error(409, Message.BOOK_IS_ALREADY_PURCHASED)
 
-    book = get_book(data.get('book_id'), db_session)
-    if book.type not in ONLINE_BOOK_TYPES :
+    book = get_book(book_id, db_session)
+    if book.type.name not in ONLINE_BOOK_TYPES :
         logger.error(LogMsg.LIBRARY_BOOK_TYPE_NOT_ADDABLE, book.type.name)
         return {}
 
@@ -32,7 +33,7 @@ def add(data, db_session):
 
     populate_basic_data(model_instance)
     model_instance.person_id = data.get('person_id')
-    model_instance.book_id = data.get('book_id')
+    model_instance.book_id = book_id
     model_instance.status = {'status': 'buyed', 'reading_started': False,
                              'read_pages': 0, 'read_duration': 0.00}
 

@@ -1,4 +1,3 @@
-from enums import BookTypes
 
 
 class Database:
@@ -25,6 +24,6 @@ CELERY_DATABASE_URI = 'db+postgresql+psycopg2://{}:{}@{}:{}/{}'.format(CeleryCon
 
 ADMINISTRATORS = ['admin','kk']
 SIGNUP_USER = 'signup_user'
-ONLINE_BOOK_TYPES = [BookTypes.Epub, BookTypes.Audio, BookTypes.Pdf]
+ONLINE_BOOK_TYPES = ['Epub', 'Audio', 'Pdf']
 
 
