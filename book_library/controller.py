@@ -11,15 +11,17 @@ from messages import Message
 from repository.person_repo import validate_person
 from repository.user_repo import check_user
 from repository.book_repo import get as get_book
-from configs import ONLINE_BOOK_TYPES
+from configs import ONLINE_BOOK_TYPES, ADMINISTRATORS
+
 
 def add(data, db_session):
     logging.info(LogMsg.START)
-
     check_schema(['book_id', 'person_id'], data.keys())
+    logger.debug(LogMsg.SCHEMA_CHECKED)
     book_id = data.get('book_id')
-
-    if is_book_in_library(data.get('person_id'), book_id, db_session):
+    person_id = data.get('person_id')
+    logger.debug(LogMsg.LIBRARY_CHECK_BOOK_EXISTANCE,{'book_id': book_id,'person_id':person_id})
+    if is_book_in_library(person_id, book_id, db_session):
         logger.error(LogMsg.ALREADY_IS_IN_LIBRARY, {'book_id': book_id})
         raise Http_error(409, Message.BOOK_IS_ALREADY_PURCHASED)
 
@@ -32,34 +34,46 @@ def add(data, db_session):
     model_instance = Library()
 
     populate_basic_data(model_instance)
-    model_instance.person_id = data.get('person_id')
+    logger.debug(LogMsg.POPULATING_BASIC_DATA)
+    model_instance.person_id = person_id
     model_instance.book_id = book_id
     model_instance.status = {'status': 'buyed', 'reading_started': False,
                              'read_pages': 0, 'read_duration': 0.00}
 
     db_session.add(model_instance)
+    logger.info(LogMsg.END)
     return model_instance
 
 
 def get_personal_library(db_session, username):
+    logger.info(LogMsg.START,username)
     user = check_user(username, db_session)
     if user.person_id is None:
+        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
         raise Http_error(400, Message.Invalid_persons)
 
     validate_person(user.person_id, db_session)
+    logger.debug(LogMsg.PERSON_EXISTS)
+
+    logger.debug(LogMsg.LIBRARY_GET_PERSON_LIBRARY,username)
 
     result = db_session.query(Library).filter(
         Library.person_id == user.person_id).all()
+
+    logger.info(LogMsg.END)
 
     return lib_to_dictlist(result, db_session)
 
 
 def delete(id, db_session, username):
+    logger.info(LogMsg.START,username)
     model_instance = db_session.query(Library).filter(Library.id == id).first()
 
     if model_instance is None:
-        raise Http_error(404, Message.Msg20)
-    if model_instance.creator != username:
+        logger.error(LogMsg.NOT_FOUND,{'library_id':id})
+        raise Http_error(404, Message.NOT_FOUND)
+    if username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED,username)
         raise Http_error(403, Message.ACCESS_DENIED)
 
     db_session.delete(model_instance)
@@ -68,13 +82,17 @@ def delete(id, db_session, username):
 
 
 def get_user_library(person_id, db_session):
+    logger.info(LogMsg.START)
     result = db_session.query(Library).filter(
         Library.person_id == person_id).all()
+    logger.info(LogMsg.END)
     return lib_to_dictlist(result, db_session)
 
 
 def add_books_to_library(person_id, book_list, db_session):
+    logger.info(LogMsg.START)
     result = []
+    logger.debug(LogMsg.LIBRARY_ADD_BOOKS,{'person_id':person_id,'books':book_list})
     for book_id in book_list:
         if is_book_in_library(person_id, book_id, db_session):
             logger.error(LogMsg.ALREADY_IS_IN_LIBRARY,{'book_id': book_id})
@@ -83,21 +101,26 @@ def add_books_to_library(person_id, book_list, db_session):
         lib_data = {'person_id': person_id, 'book_id': book_id}
 
         result.append(add(lib_data, db_session))
+    logger.info(LogMsg.END)
     return result
 
 
 def edit_status(id, data, db_session, username):
+    logger.info(LogMsg.START,username)
     user = check_user(username, db_session)
     if user is None:
         raise Http_error(400, Message.INVALID_USER)
 
     if user.person_id is None:
+        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
         raise Http_error(400, Message.Invalid_persons)
 
     validate_person(user.person_id, db_session)
+    logger.debug(LogMsg.PERSON_EXISTS)
 
     model_instance = db_session.query(Library).filter(Library.id == id).first()
-    if model_instance.person_id != user.person_id:
+    if model_instance.person_id != user.person_id and username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED,username)
         raise Http_error(403, Message.ACCESS_DENIED)
 
     if data.get('reading_started'):
@@ -106,6 +129,9 @@ def edit_status(id, data, db_session, username):
         model_instance.status['read_pages'] = data.get('read_pages')
     if data.get('read_duration'):
         model_instance.status['read_duration'] = data.get('read_duration')
+    logger.debug(LogMsg.MODEL_ALTERED,data)
+
+    logger.info(LogMsg.END)
 
     return model_instance
 
@@ -126,10 +152,12 @@ def lib_to_dictlist(library, db_session):
 
 
 def is_book_in_library(person_id, book_id, db_session):
+    logger.info(LogMsg.START)
     result = db_session.query(Library).filter(
         and_(Library.person_id == person_id,
              Library.book_id == book_id)).first()
 
     if result is None:
         return False
+    logger.info(LogMsg.END)
     return True

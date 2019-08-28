@@ -18,6 +18,7 @@ def add(data, db_session, username):
     logger.info(LogMsg.START, username)
 
     check_schema(['title'], data.keys())
+    logger.debug(LogMsg.SCHEMA_CHECKED)
 
     if username in ADMINISTRATORS and 'person_id' in data:
         person_id = data.get('person_id')
@@ -27,24 +28,28 @@ def add(data, db_session, username):
             raise Http_error(404, Message.INVALID_USER)
 
         if user.person_id is None:
+            logger.error(LogMsg.USER_HAS_NO_PERSON,username)
             raise Http_error(404, Message.Invalid_persons)
         person_id = user.person_id
 
     validate_person(person_id, db_session)
+    logger.debug(LogMsg.PERSON_EXISTS)
 
     logger.debug(LogMsg.COLLECTION_ADD_NEW_COLLECTION,
                  {'title': data.get('title')})
     book_ids = data.get('book_ids',None)
 
     if book_ids is None:
+        logger.debug(LogMsg.COLLECTION_ADD_EMPTY_COLLECTION,{'title':data.get('title')})
         model_instance = Collection()
         logger.debug(LogMsg.POPULATING_BASIC_DATA)
         populate_basic_data(model_instance, username, data.get('tags'))
         model_instance.person_id = person_id
         model_instance.title = data.get('title')
 
-        logger.debug(LogMsg.DB_ADD)
         db_session.add(model_instance)
+        logger.debug(LogMsg.DB_ADD)
+
         return data
 
     for item in book_ids:
@@ -102,14 +107,17 @@ def get_all_collections(db_session, username):
         raise Http_error(400, Message.INVALID_USER)
 
     if user.person_id is None:
+        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
         raise Http_error(400, Message.Invalid_persons)
 
     validate_person(user.person_id, db_session)
+    logger.debug(LogMsg.PERSON_EXISTS)
 
     collection_items = db_session.query(Collection).filter(and_(
         Collection.person_id == user.person_id,
         Collection.book_id != None)).all()
     collections, titles = arrange_collections(collection_items)
+    logger.debug(LogMsg.COLLECTION_ARRANGE_BY_TITLE)
 
     result = []
 
@@ -119,19 +127,21 @@ def get_all_collections(db_session, username):
             book = get_book(item, db_session)
             books.append(book)
         result.append({'title': title, 'books': books})
-
     return result
 
 
 def get_collection(title, db_session, username):
+    logger.info(LogMsg.START,username)
     user = check_user(username, db_session)
     if user is None:
         raise Http_error(400, Message.INVALID_USER)
 
     if user.person_id is None:
+        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
         raise Http_error(400, Message.Invalid_persons)
 
     validate_person(user.person_id, db_session)
+    logger.debug(LogMsg.PERSON_EXISTS)
 
     collection_items = db_session.query(Collection).filter(and_(
         Collection.person_id == user.person_id, Collection.title == title,
@@ -143,44 +153,58 @@ def get_collection(title, db_session, username):
         book = get_book(item.book_id, db_session)
         result.append(book)
 
+    logger.info(LogMsg.END)
+
     return result
 
 
 def delete_collection(title, db_session, username):
+    logger.info(LogMsg.START,username)
+
     user = check_user(username, db_session)
     if user is None:
         raise Http_error(400, Message.INVALID_USER)
 
     if user.person_id is None:
+        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
         raise Http_error(400, Message.Invalid_persons)
 
     validate_person(user.person_id, db_session)
+    logger.debug(LogMsg.PERSON_EXISTS)
 
     try:
+        logger.debug(LogMsg.COLLECTION_DELETE,title)
         db_session.query(Collection).filter(
             Collection.person_id == user.person_id,
             Collection.title == title).delete()
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
         raise Http_error(502, Message.DELETE_FAILED)
-
+    logger.info(LogMsg.END)
     return Http_response(204, True)
 
 
 def delete_books_from_collection(data, db_session, username):
+    logger.info(LogMsg.START,username)
+
     check_schema(['title', 'book_ids'], data.keys())
+    logger.debug(LogMsg.SCHEMA_CHECKED)
     user = check_user(username, db_session)
     if user is None:
         raise Http_error(400, Message.INVALID_USER)
 
     if user.person_id is None:
+        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
+
         raise Http_error(400, Message.Invalid_persons)
 
     validate_person(user.person_id, db_session)
+    logger.debug(LogMsg.PERSON_EXISTS)
 
     book_ids = data.get('book_ids')
 
     try:
+        logger.debug(LogMsg.COLLECTION_DELETE_BOOK,{'title':data.get('title'),'books':book_ids})
         for id in book_ids:
             db_session.query(Collection).filter(
                 and_(Collection.person_id == user.person_id,
@@ -189,7 +213,7 @@ def delete_books_from_collection(data, db_session, username):
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
         raise Http_error(502, Message.DELETE_FAILED)
-
+    logger.info(LogMsg.END)
     return Http_response(204, True)
 
 
@@ -215,6 +239,7 @@ def arrange_collections(collection_items):
 
 
 def get_all(data, db_session, username):
+    logger.info(LogMsg.START,username)
     limit = data.get('limit', 10)
     offset = data.get('offset', 0)
     final_res = []
@@ -223,15 +248,21 @@ def get_all(data, db_session, username):
         Collection.book_id != None).slice(offset, offset + limit)
     for item in result:
         final_res.append(collection_to_dict(item))
+    logger.info(LogMsg.END)
+
     return final_res
 
 
 def delete_by_id(id, db_session, username):
+    logger.info(LogMsg.START,username)
     try:
+        logger.debug(LogMsg.DELETE_REQUEST,{'collection_id':id})
         db_session.query(Collection).filter(Collection.id == id).delete()
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
         raise Http_error(500, Message.DELETE_FAILED)
+    logger.info(LogMsg.END)
+
     return Http_response(204, True)
 
 

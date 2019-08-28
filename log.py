@@ -289,8 +289,11 @@ class LogMsg:
     UNIQUE_CONNECTOR_ADDED = 'the unique_connector added for this model : %s'
 
     # LIBRARY
+    LIBRARY_CHECK_BOOK_EXISTANCE = 'checking if book already is in library : %s'
     LIBRARY_BOOK_TYPE_NOT_ADDABLE = 'this type of book is not addable to library : %s'
     ALREADY_IS_IN_LIBRARY = 'book is already purchased and is in library : %s'
+    LIBRARY_GET_PERSON_LIBRARY = 'getting library contents for person by username : %s'
+    LIBRARY_ADD_BOOKS = 'adding books to persons library : %s'
 
 
     # COLLECTION
@@ -301,14 +304,40 @@ class LogMsg:
     COLLECTION_GET = 'getting books of a collection : %s'
     COLLECTION_DELETE = 'deleting collection by title : %s'
     COLLECTION_GET_ALL = 'getting all collections %s'
-    COLLECTION_DELETE_BOOK = 'deleting book from a collection : %s'
+    COLLECTION_DELETE_BOOK = 'deleting books from a collection : %s'
     COLLECTION_ADD_BOOK_TO_MULTIPLE_COLLECTIONS = 'adding book to multiple collections : %s'
     COLLECTION_BOOK_IS_NOT_IN_LIBRARY = 'this book is not in users library and cant add to collection : %s'
+    COLLECTION_ADD_EMPTY_COLLECTION = 'adding an empty collection for user : %s '
+    COLLECTION_ARRANGE_BY_TITLE = 'arranged collection contents by title'
 
 
+    # RATE
+    RATE_CHECK = 'checking if person rated to book by now : %s'
+    RATE_EXISTS = 'user already rated to book : %s'
+    RATE_IS_NEW = 'user is not rated to the book and going to do that : %s'
+    RATE_CHANGED = 'user is changing the rate of book : %s'
+    RATE_ADDED = 'new rate to book added : %s'
+    RATE_DELETED = 'user deleted the rate for book : %s'
+    RATE_GET = 'getting book rate : %s'
+    RATE_NOT_EXISTS = 'user not rated to the book : %s'
 
 
+    # TRANSACTION
+    TRANSACTION_ADDED = 'transaction added by this data : %s'
+    TRANSACTION_GET = 'getting transaction by data : %s'
+    TRANSACTION_EXISTS = 'transaction exists : %s'
+    TRANSACTION_DELETED = 'transaction by this id deleted : %s'
 
+
+    # FOLLOW
+    FOLLOW_REQUEST = 'following request by data : %s'
+    FOLLOW_ADD = 'follow added by data :%s'
+    FOLLOW_DELETE = 'user unfollowed the person : %s'
+    FOLLOW_CHECK = 'checking if user is following person : %s'
+    FOLLOW_EXISTS = 'user already follows the person : %s'
+    FOLLOW_SELF_DENIED = 'user cannot follow him/her self'
+    FOLLOWING_LIST = 'get users following list : %s'
+    FOLLOWER_LIST = 'get follower list : %s'
 
     UPLOAD_FAILED = 'uploading files failed'
     FILE_EXISTS = 'this file exists by path : %s'

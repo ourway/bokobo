@@ -143,6 +143,23 @@ def get_all(db_session, username):
     return final_res
 
 
+def serach_user(data,db_session, username):
+    limit = data.get('limit',10)
+    offset = data.get('offset',0)
+    filter = data.get('filter',None)
+    result = db_session.query(User).filter(User.username !=None).slice(offset, offset + limit)
+
+    final_res = []
+    for item in result:
+        final_res.append(user_to_dict(item))
+
+    logger.debug(LogMsg.GET_SUCCESS)
+
+    logger.info(LogMsg.END)
+
+    return final_res
+
+
 def edit(id, db_session, data, username):
     logger.info(LogMsg.START + " user is {}".format(username))
     if "id" in data.keys():

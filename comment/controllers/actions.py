@@ -285,6 +285,7 @@ def get_comment_reports(comment_id, db_session):
 
 
 def get_action_report(comment_id, person_id, db_session):
+    logger.info(LogMsg.START)
     return db_session.query(CommentAction).filter(
         and_(CommentAction.comment_id == comment_id,
              CommentAction.person_id == person_id,
@@ -292,6 +293,8 @@ def get_action_report(comment_id, person_id, db_session):
 
 
 def get_action_like(comment_id, person_id, db_session):
+    logger.info(LogMsg.START)
+
     return db_session.query(CommentAction).filter(
         and_(CommentAction.comment_id == comment_id,
              CommentAction.person_id == person_id,
@@ -299,6 +302,8 @@ def get_action_like(comment_id, person_id, db_session):
 
 
 def liked_by_user(db_session, comment_id, username):
+    logger.info(LogMsg.START)
+
     user = check_user(username, db_session)
 
     if user.person_id is None:
@@ -310,12 +315,16 @@ def liked_by_user(db_session, comment_id, username):
 
 
 def reported_by_user(db_session, comment_id, username):
+    logger.info(LogMsg.START)
+
     user = check_user(username, db_session)
     if user is None:
         if user is None:
+            logger.error(LogMsg.INVALID_USER,username)
             raise Http_error(400, Message.INVALID_USER)
 
     if user.person_id is None:
+        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
         raise Http_error(400, Message.Invalid_persons)
     report = get_action_report(comment_id, user.person_id, db_session)
     return True if report is not None else False
