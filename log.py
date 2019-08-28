@@ -339,6 +339,27 @@ class LogMsg:
     FOLLOWING_LIST = 'get users following list : %s'
     FOLLOWER_LIST = 'get follower list : %s'
 
+
+    # ORDER
+    ORDER_CHECKOUT_REQUEST = 'request for checking out order by id : %s'
+    ORDER_CHECK = 'check for order existance by id : %s'
+    ORDER_EXISTS = 'order by id exists : %s'
+    ORDER_ADD = 'order added by data : %s'
+    ORDER_CALC_PRICE = 'calculating order price : %s'
+    ORDER_CHECK_ACCOUNT_VALUE = 'checking users account balance to be greater than order price : %s'
+    ORDER_LOW_BALANCE = 'users account balance is lower than order price : %s'
+    ORDER_INVOICED = 'order invoiced successfully : %s'
+    ORDER_GETTING_ITEMS = 'getting order_items to add to users library '
+    ORDER_ITEMS_ADDED_TO_LIB = 'books added to library successfully'
+    ORDER_CHECK_ITEM_TYPE = 'check if book type is addable to library : %s'
+    ORDER_ADD_ITEMS = 'adding order items to db: %s'
+    ORDER_USER_ORDERS = 'user orders are : %s'
+    ORDER_NOT_EDITABLE = 'order is invoiced and can not be edited or deleted : %s'
+    ORDER_ITEMS_DELETE = 'deleting order items : %s'
+    ORDER_DELETE = 'deleting order: %s'
+    ORDER_EDIT = 'editing order : %s'
+
+
     UPLOAD_FAILED = 'uploading files failed'
     FILE_EXISTS = 'this file exists by path : %s'
     FILE_NOT_EXISTS = 'file by this path not exists: %s'

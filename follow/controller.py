@@ -89,9 +89,11 @@ def get_follower_list(username, db_session):
         raise Http_error(400, Message.INVALID_USER)
 
     if user.person_id is None:
+        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
         raise Http_error(400, Message.Invalid_persons)
 
     validate_person(user.person_id, db_session)
+    logger.debug(LogMsg.PERSON_EXISTS)
 
     res = db_session.query(Follow).filter(Follow.following_id == user.person_id).all()
     for item in res:
@@ -109,23 +111,27 @@ def delete(id, db_session, username, **kwargs):
     if user is None:
         raise Http_error(400, Message.INVALID_USER)
     if user.person_id is None:
+        logger.debug(LogMsg.USER_HAS_NO_PERSON,username)
         raise Http_error(400, Message.Invalid_persons)
-
+    logger.debug(LogMsg.FOLLOW_CHECK,{'id':id})
     model_instance = db_session.query(Follow).filter(
         and_(Follow.following_id == id, Follow.follower_id == user.person_id)).first()
     if model_instance:
-        logger.debug(LogMsg.MODEL_GETTING)
+        logger.debug(LogMsg.FOLLOW_EXISTS,follow_to_dict(model_instance))
     else:
-        logger.debug(LogMsg.MODEL_GETTING_FAILED)
+        logger.debug(LogMsg.NOT_FOUND,{'follow_id':id})
         raise Http_error(404, Message.NOT_FOUND)
 
     if model_instance.follower_id != user.person_id and \
             model_instance.following_id != user.person_id:
+        logger.error(LogMsg.NOT_ACCESSED,'user is not follower or following person')
         raise Http_error(403, Message.ACCESS_DENIED)
 
     try:
-        db_session.query(Follow).filter(and_(Follow.following_id == id, Follow.follower_id == user.person_id)).delete()
+        logger.debug(LogMsg.FOLLOW_DELETE,follow_to_dict(model_instance))
+        db_session.delete(model_instance)
     except:
+        logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
         raise Http_error(404, Message.DELETE_FAILED)
     logger.info(LogMsg.END)
 

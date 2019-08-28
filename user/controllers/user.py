@@ -147,8 +147,12 @@ def serach_user(data,db_session, username):
     limit = data.get('limit',10)
     offset = data.get('offset',0)
     filter = data.get('filter',None)
-    result = db_session.query(User).filter(User.username !=None).slice(offset, offset + limit)
-
+    if filter is None:
+        result = db_session.query(User).filter(User.username !=None).slice(offset, offset + limit)
+    else:
+        search_username = filter.get('username')
+        result = db_session.query(User).filter(User.username == search_username).slice(
+            offset, offset + limit)
     final_res = []
     for item in result:
         final_res.append(user_to_dict(item))

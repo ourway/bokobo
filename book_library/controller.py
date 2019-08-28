@@ -27,7 +27,7 @@ def add(data, db_session):
 
     book = get_book(book_id, db_session)
     if book.type.name not in ONLINE_BOOK_TYPES :
-        logger.error(LogMsg.LIBRARY_BOOK_TYPE_NOT_ADDABLE, book.type.name)
+        logger.debug(LogMsg.LIBRARY_BOOK_TYPE_NOT_ADDABLE, book.type.name)
         return {}
 
 
