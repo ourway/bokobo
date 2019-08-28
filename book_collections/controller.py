@@ -114,8 +114,7 @@ def get_all_collections(db_session, username):
     logger.debug(LogMsg.PERSON_EXISTS)
 
     collection_items = db_session.query(Collection).filter(and_(
-        Collection.person_id == user.person_id,
-        Collection.book_id != None)).all()
+        Collection.person_id == user.person_id)).all()
     collections, titles = arrange_collections(collection_items)
     logger.debug(LogMsg.COLLECTION_ARRANGE_BY_TITLE)
 
@@ -124,8 +123,11 @@ def get_all_collections(db_session, username):
     for title, colls in collections.items():
         books = []
         for item in colls:
-            book = get_book(item, db_session)
-            books.append(book)
+            if item is None:
+                pass
+            else:
+                book = get_book(item, db_session)
+                books.append(book)
         result.append({'title': title, 'books': books})
     return result
 
@@ -144,14 +146,16 @@ def get_collection(title, db_session, username):
     logger.debug(LogMsg.PERSON_EXISTS)
 
     collection_items = db_session.query(Collection).filter(and_(
-        Collection.person_id == user.person_id, Collection.title == title,
-        Collection.book_id != None)).all()
+        Collection.person_id == user.person_id, Collection.title == title)).all()
 
     result = []
 
     for item in collection_items:
-        book = get_book(item.book_id, db_session)
-        result.append(book)
+        if item.book_id is None:
+            book = {}
+        else:
+            book = get_book(item.book_id, db_session)
+        result.append(book_to_dict(book))
 
     logger.info(LogMsg.END)
 
@@ -244,8 +248,7 @@ def get_all(data, db_session, username):
     offset = data.get('offset', 0)
     final_res = []
 
-    result = db_session.query(Collection).filter(
-        Collection.book_id != None).slice(offset, offset + limit)
+    result = db_session.query(Collection).slice(offset, offset + limit)
     for item in result:
         final_res.append(collection_to_dict(item))
     logger.info(LogMsg.END)
@@ -274,6 +277,10 @@ def collection_to_dict(collection):
         'book_id': collection.book_id,
         'person_id': collection.person_id,
         'title': collection.title,
-        'book': book_to_dict(collection.book)
+        'book': None
     }
+    if collection.book_id is not None:
+        book = book_to_dict(collection.book)
+        model_props['book'] = book
+
     return basic_res.update(model_props)

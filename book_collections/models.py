@@ -12,7 +12,7 @@ class Collection(Base,PrimaryModel):
     __tablename__ = 'collections'
 
     person_id = Column(UUID,ForeignKey(Person.id),nullable=False)
-    book_id = Column(UUID,ForeignKey(Book.id))
+    book_id = Column(UUID,ForeignKey(Book.id),nullable=True)
     title = Column(String,nullable=False)
 
     book = relationship(Book, primaryjoin=book_id == Book.id)
