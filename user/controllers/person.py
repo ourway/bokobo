@@ -12,12 +12,17 @@ from log import LogMsg, logger
 from messages import Message
 from repository.account_repo import delete_person_accounts
 from repository.book_role_repo import person_has_books
-from repository.library_repo import library_to_dict
-from wish_list.controller import get_wish_list, internal_wish_list
+from wish_list.controller import internal_wish_list
 from ..models import Person, User
 from repository.person_repo import person_cell_exists, person_mail_exists
 from books.controllers.book import get_current_book
 from configs import SIGNUP_USER, ADMINISTRATORS
+from constraint_handler.controllers.person_constraint import \
+    add as add_uniquecode
+from constraint_handler.controllers.unique_entity_connector import \
+    get as get_connector, add as add_connector, delete as delete_connector
+from constraint_handler.controllers.common_methods import \
+    delete as delete_uniquecode
 
 save_path = os.environ.get('save_path')
 
@@ -38,7 +43,8 @@ def add(db_session, data, username):
     if email and person_mail_exists(db_session, email):
         raise Http_error(409, LogMsg.PERSON_EXISTS.format('email'))
 
-    # logger.info(LogMsg.START,extra={'data':data,'user':username})
+    logger.debug(LogMsg.CHECK_UNIQUE_EXISTANCE, data)
+    unique_code = add_uniquecode(data, db_session)
 
     model_instance = Person()
     populate_basic_data(model_instance, username, data.get('tags'))
@@ -53,6 +59,9 @@ def add(db_session, data, username):
 
     db_session.add(model_instance)
     add_initial_account(model_instance.id, db_session, username)
+    add_connector(model_instance.id, unique_code.UniqueCode, db_session)
+    logger.debug(LogMsg.UNIQUE_CONNECTOR_ADDED, {'person_id': model_instance.id,
+                                                 'unique_constraint': unique_code.UniqueCode})
 
     return model_instance
 
@@ -101,6 +110,16 @@ def edit(id, db_session, data, username):
 
     logger.debug(LogMsg.MODEL_ALTERED)
 
+    logger.debug(LogMsg.UNIQUE_CONSTRAINT_IS_CHANGING)
+    unique_connector = get_connector(id, db_session)
+    if unique_connector:
+        logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
+        delete_uniquecode(unique_connector.UniqueCode, db_session)
+        logger.debug(LogMsg.GENERATE_UNIQUE_CONSTRAINT, data)
+        code = add_uniquecode(data, db_session)
+        delete_connector(id, db_session)
+        add_connector(id, code.UniqueCode, db_session)
+
     logger.debug(LogMsg.EDIT_SUCCESS, model_to_dict(model_instance))
 
     logger.info(LogMsg.END)
@@ -138,6 +157,12 @@ def delete(id, db_session, username):
         else:
             logger.debug(LogMsg.NOT_RELATED_USER_FOR_PERSON,
                          {"Person.id {}": id})
+
+        unique_connector = get_connector(id, db_session)
+        if unique_connector:
+            logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
+            delete_uniquecode(unique_connector.UniqueCode, db_session)
+            delete_connector(id, db_session)
 
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)

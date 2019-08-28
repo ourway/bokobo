@@ -1,16 +1,22 @@
-import json
-
-from enums import Roles, check_enums, str_role
-from helper import Now, Http_error, model_to_dict, populate_basic_data, \
+from enums import Roles, check_enums
+from helper import Http_error, model_to_dict, populate_basic_data, \
     edit_basic_data, Http_response
 from log import LogMsg, logger
 from messages import Message
 from repository.person_repo import validate_persons
 from ..models import BookRole
+from constraint_handler.controllers.unique_entity_connector import \
+    get as get_connector, add as add_connector, delete as delete_connector
+from constraint_handler.controllers.book_role_constraint import add as add_uniquecode
+from constraint_handler.controllers.common_methods import \
+    delete as delete_uniquecode
 
 
 def add(db_session, data, username):
     logger.info(LogMsg.START, username)
+
+    logger.debug(LogMsg.CHECK_UNIQUE_EXISTANCE,data)
+    unique_code = add_uniquecode(data, db_session)
 
     model_instance = BookRole()
 
@@ -26,6 +32,10 @@ def add(db_session, data, username):
 
     db_session.add(model_instance)
     logger.debug(LogMsg.DB_ADD)
+
+    add_connector(model_instance.id, unique_code.UniqueCode, db_session)
+    logger.debug(LogMsg.UNIQUE_CONNECTOR_ADDED, {'book_role_id': model_instance.id,
+                                                 'unique_constraint': unique_code.UniqueCode})
 
     logger.info(LogMsg.END)
 
@@ -45,7 +55,7 @@ def add_book_roles(book_id, roles_dict_list, db_session, username):
 
     for item in roles_dict_list:
         person = item.get('person')
-        p_role =item.get('role')
+        p_role = item.get('role')
         myperson_id = person.get('id')
         persons.append(myperson_id)
         role_enums.append(p_role)
@@ -62,7 +72,7 @@ def add_book_roles(book_id, roles_dict_list, db_session, username):
 
     for item in role_person:
         the_role = next(iter(item))
-        data = {'role':the_role ,
+        data = {'role': the_role,
                 'book_id': book_id,
                 'person_id': item[the_role]}
         if data['role'] == 'Writer':
@@ -96,7 +106,7 @@ def get(id, db_session):
     return model_instance
 
 
-def edit(db_session, data, username):
+def edit(id,db_session, data, username):
     logger.info(LogMsg.START, username)
 
     if "id" in data.keys():
@@ -122,6 +132,17 @@ def edit(db_session, data, username):
 
     logger.debug(LogMsg.MODEL_ALTERED, id)
 
+    logger.debug(LogMsg.UNIQUE_CONSTRAINT_IS_CHANGING)
+
+    unique_connector = get_connector(id, db_session)
+    if unique_connector:
+        logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
+        delete_uniquecode(unique_connector.UniqueCode, db_session)
+        logger.debug(LogMsg.GENERATE_UNIQUE_CONSTRAINT, data)
+        code = add_uniquecode(data, db_session)
+        delete_connector(id, db_session)
+        add_connector(id, code.UniqueCode, db_session)
+
     logger.debug(LogMsg.EDIT_SUCCESS, book_role_to_dict(model_instance))
 
     logger.info(LogMsg.END)
@@ -143,6 +164,11 @@ def delete(id, db_session, username):
 
     try:
         db_session.delete(model_instance)
+        unique_connector = get_connector(id, db_session)
+        if unique_connector:
+            logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
+            delete_uniquecode(unique_connector.UniqueCode, db_session)
+            delete_connector(id, db_session)
 
         logger.debug(LogMsg.ENTITY_DELETED, id)
 

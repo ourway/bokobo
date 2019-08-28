@@ -52,6 +52,12 @@ def add(data, db_session, username):
         logger.debug(LogMsg.COLLECTION_ADD_BOOKS_TO_COLLECTION,
                      data.get('title'))
 
+        collection_item = get(item, person_id, data.get('title'),
+                              db_session)
+        if collection_item is not None:
+            logger.error(LogMsg.COLLECTION_BOOK_ALREADY_EXISTS, log_data)
+            raise Http_error(409, Message.ALREADY_EXISTS)
+
         if not is_book_in_library(person_id, item, db_session):
             logger.error(LogMsg.COLLECTION_BOOK_IS_NOT_IN_LIBRARY,
                          {'book_id': item})
@@ -59,11 +65,6 @@ def add(data, db_session, username):
 
         logger.debug(LogMsg.COLLECTION_CHECK_BOOK_IS_IN_COLLECTION, log_data)
 
-        collection_item = get(item, person_id, data.get('title'),
-                              db_session)
-        if collection_item is not None:
-            logger.error(LogMsg.COLLECTION_BOOK_ALREADY_EXISTS, log_data)
-            raise Http_error(409, Message.ALREADY_EXISTS)
 
         model_instance = Collection()
         logger.debug(LogMsg.POPULATING_BASIC_DATA)

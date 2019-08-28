@@ -48,3 +48,4 @@ class Message:
     PERSON_HAS_BOOKS = 'person_has_books'
     BOOK_NOT_IN_LIB = 'book_not_in_lib'
     BOOK_IS_ALREADY_PURCHASED = 'book_already_purchased'
+    ONLINE_BOOK_COUNT_LIMITATION = 'online_book_count_limitation'

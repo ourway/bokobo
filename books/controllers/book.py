@@ -1,6 +1,3 @@
-import json
-from uuid import uuid4
-
 from repository.price_repo import delete_book_price
 from repository.rate_repo import book_average_rate
 from repository.comment_repo import delete_book_comments
@@ -19,8 +16,8 @@ from prices.controller import add as add_price, get_book_price_internal
 from prices.controller import internal_edit as edit_price
 from log import LogMsg, logger
 from configs import ADMINISTRATORS
-from constraint_handler.controllers.book_constraint import \
-    add as add_uniquecode, delete as delete_uniquecode, book_is_unique
+from constraint_handler.controllers.book_constraint import add as add_uniquecode
+from constraint_handler.controllers.common_methods import  delete as delete_uniquecode
 from constraint_handler.controllers.unique_entity_connector import \
     get as get_connector, add as add_connector,delete as delete_connector
 

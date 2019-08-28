@@ -45,17 +45,16 @@ def add(data, db_session, username):
         logger.error(LogMsg.NOT_FOUND,{'book_id':book_id})
         raise Http_error(404,Message.NOT_FOUND)
     
-    if book.type.name in ONLINE_BOOK_TYPES:
-        count = 1
-    else:
-        count = data.get('count',0)
+    if book.type.name in ONLINE_BOOK_TYPES and data.get('count')>1:
+        logger.error(LogMsg.BOOK_ONLINE_TYPE_COUNT_LIMITATION)
+        raise Http_error(400,Message.ONLINE_BOOK_COUNT_LIMITATION)
 
     model_instance = OrderItem()
 
     populate_basic_data(model_instance, username)
     model_instance.order_id = data.get('order_id')
     model_instance.book_id = book_id
-    model_instance.count = count
+    model_instance.count = data.get('count')
     # TODO discount not imposed yet
     model_instance.discount = data.get('discount',0.0)
     model_instance.description = data.get('description')

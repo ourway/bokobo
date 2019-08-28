@@ -13,7 +13,7 @@ from log import logger
 
 
 def add(data, db_session, username):
-    logger.debug(LogMsg.START,username)
+    logger.debug(LogMsg.START, username)
     check_enum(data.get('type'), AccountTypes)
     logger.debug(LogMsg.ENUM_CHECK,
                  {'enum': data.get('type'), 'reference_enum': 'AccountTypes'})
@@ -75,7 +75,7 @@ def get(person_id, type, db_session):
 
             logger.debug(LogMsg.GET_SUCCESS, account_to_dict(result))
         else:
-            logger.debug(LogMsg.USER_HAS_NO_ACCOUNT,type)
+            logger.debug(LogMsg.USER_HAS_NO_ACCOUNT, type)
 
     except:
         logger.error(LogMsg.GET_FAILED,
@@ -286,16 +286,16 @@ def get_by_id(id, db_session, username):
 
 
 def edit(id, data, db_session, username):
-    logger.info(LogMsg.START,username)
+    logger.info(LogMsg.START, username)
 
-    check_schema(['value'],data.keys())
+    check_schema(['value'], data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
 
     value = data.get('value')
-    logger.debug(LogMsg.GETTING_ACCOUNT_BY_ID,id)
+    logger.debug(LogMsg.GETTING_ACCOUNT_BY_ID, id)
     account = db_session.query(Account).filter(Account.id == id).first()
     if account is None:
-        logger.error(LogMsg.NOT_FOUND,{'account_id':id})
+        logger.error(LogMsg.NOT_FOUND, {'account_id': id})
         raise Http_error(404, Message.NOT_FOUND)
     if account.creator != username and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED)
@@ -322,9 +322,9 @@ def account_to_dict(account):
 
 
 def add_initial_account(person_id, db_session, username):
-    logger.info(LogMsg.START,username)
+    logger.info(LogMsg.START, username)
 
-    logger.debug(LogMsg.ADD_INITIAL_ACCOUNT,person_id)
+    logger.debug(LogMsg.ADD_INITIAL_ACCOUNT, person_id)
 
     model_instance = Account()
     populate_basic_data(model_instance, username, [])
@@ -336,14 +336,14 @@ def add_initial_account(person_id, db_session, username):
     return account_to_dict(model_instance)
 
 
-def edit_by_person(data,db_session,username):
+def edit_by_person(data, db_session, username):
     logger.info(LogMsg.START, username)
 
     check_schema(['value'], data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
 
     value = data.get('value')
-    type = data.get('type','Main')
+    type = data.get('type', 'Main')
     person_id = data.get('person_id')
     if person_id is None:
         user = check_user(username, db_session)
@@ -358,7 +358,8 @@ def edit_by_person(data,db_session,username):
             raise Http_error(404, Message.Invalid_persons)
         person_id = user.person_id
     logger.debug(LogMsg.GETTING_ACCOUNT_PERSON, data)
-    account = db_session.query(Account).filter(and_(Account.person_id == person_id,Account.type == type)).first()
+    account = db_session.query(Account).filter(
+        and_(Account.person_id == person_id, Account.type == type)).first()
     if account is None:
         logger.error(LogMsg.NOT_FOUND, {'account_id': id})
         raise Http_error(404, Message.NOT_FOUND)

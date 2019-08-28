@@ -217,6 +217,7 @@ class LogMsg:
     RESULT_BOOKS = 'result of books is : %s'
     BOOK_CHECKING_IF_EXISTS = 'checking for uniqueness of book : %s'
     BOOK_NOT_UNIQUE = 'book is not unique and already exists : %s'
+    BOOK_ONLINE_TYPE_COUNT_LIMITATION = 'online book types can not have count greater than one'
 
 
     # BOOK_ROLE

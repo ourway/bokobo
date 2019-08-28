@@ -10,7 +10,7 @@ class Price(Base,PrimaryModel):
 
     __tablename__ = 'prices'
 
-    book_id = Column(UUID, ForeignKey(Book.id),nullable=False)
+    book_id = Column(UUID, ForeignKey(Book.id),nullable=False,unique=True)
     price = Column(Float, default=0.00,nullable=False)
     # person_id = Column(UUID, ForeignKey(Person.id),nullable=False)
     #

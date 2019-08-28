@@ -5,7 +5,7 @@ from helper import Http_error, populate_basic_data, Http_response, \
 from log import LogMsg, logger
 from messages import Message
 from repository.book_repo import get as get_book
-from configs import ADMINISTRATORS
+from configs import ADMINISTRATORS, ONLINE_BOOK_TYPES
 
 
 def add(data, db_session, username):
@@ -132,6 +132,11 @@ def calc_price(data, db_session, username):
 
         if price_object is None:
             raise Http_error(404, Message.NO_PRICE_FOUND)
+
+        book = get_book(book_id,db_session)
+        if book.type.name in ONLINE_BOOK_TYPES and data.get('count') > 1:
+            logger.error(LogMsg.BOOK_ONLINE_TYPE_COUNT_LIMITATION)
+            raise Http_error(400, Message.ONLINE_BOOK_COUNT_LIMITATION)
 
         price = price_object * count
         net_price = price
