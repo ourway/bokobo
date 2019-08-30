@@ -122,6 +122,8 @@ def get_book_price_internal(book_id, db_session):
 def calc_price(data, db_session, username):
     item_prices = []
     total_price = 0.000
+    check_schema(['items'],data.keys())
+    logger.debug(LogMsg.SCHEMA_CHECKED)
 
     items = data.get('items')
     for item in items:
@@ -134,7 +136,7 @@ def calc_price(data, db_session, username):
             raise Http_error(404, Message.NO_PRICE_FOUND)
 
         book = get_book(book_id,db_session)
-        if book.type.name in ONLINE_BOOK_TYPES and data.get('count') > 1:
+        if (book.type.name in ONLINE_BOOK_TYPES) and (count > 1):
             logger.error(LogMsg.BOOK_ONLINE_TYPE_COUNT_LIMITATION)
             raise Http_error(400, Message.ONLINE_BOOK_COUNT_LIMITATION)
 
@@ -145,7 +147,7 @@ def calc_price(data, db_session, username):
                 effect = 1.000 - discount
                 net_price = price * effect
             else:
-                raise Http_error(404, Message.DISCOUNT_IS_FLOAT)
+                raise Http_error(400, Message.DISCOUNT_IS_FLOAT)
 
         item_info = {'book_id': book_id, 'unit_price': price_object,
                      'count': count,'discount':discount, 'net_price': net_price}
