@@ -393,11 +393,12 @@ def rename_collection(title, data, db_session, username):
             logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
             delete_uniquecode(unique_connector.UniqueCode, db_session)
             delete_connector(item.id, db_session)
+            db_session.flush()
         model_dict = collection_to_dict(db_session,item)
         print(model_dict)
 
         logger.debug(LogMsg.CHECK_UNIQUE_EXISTANCE, model_dict)
-        unique_code= unique_code_exists(data, db_session)
+        unique_code= unique_code_exists(model_dict, db_session)
         if unique_code is None:
             unique_code = add_uniquecode(model_dict, db_session)
         add_connector(item.id, unique_code.UniqueCode, db_session)
