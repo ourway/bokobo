@@ -332,10 +332,10 @@ def collection_to_dict(db_session,collection):
     if collection.book_id is not None:
         book = book_to_dict(db_session,collection.book)
         model_props['book'] = book
-        basic_res.update(model_props)
+        model_props.update(basic_res)
 
-        logger.debug('*****coll is : %s',basic_res)
-    return basic_res
+        logger.debug('*****coll is  model_props: %s',model_props)
+    return model_props
 
 
 def collection_exists(title, person_id, db_session):
