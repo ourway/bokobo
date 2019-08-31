@@ -208,8 +208,9 @@ def delete_collection(title, db_session, username):
         logger.debug(LogMsg.COLLECTION_DELETE, title)
         result = delete_collection_constraints(title, user.person_id,
                                                db_session)
+        stmt = Collection.__table__.delete().where(Collection.id.in_(result))
 
-        db_session.delete(result)
+        db_session.execute(stmt)
 
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
@@ -236,6 +237,7 @@ def delete_books_from_collection(data, db_session, username):
     logger.debug(LogMsg.PERSON_EXISTS)
 
     book_ids = data.get('book_ids')
+    ids = []
 
     try:
         logger.debug(LogMsg.COLLECTION_DELETE_BOOK,
@@ -245,6 +247,7 @@ def delete_books_from_collection(data, db_session, username):
             and_(Collection.person_id == user.person_id,
                  Collection.title == data.get('title'),Collection.book_id.in_(book_ids))).all()
         for item in result:
+            ids.append(item.id)
             unique_connector = get_connector(item.id, db_session)
             if unique_connector:
                 logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
@@ -254,7 +257,9 @@ def delete_books_from_collection(data, db_session, username):
                 if new_connector is None:
                     delete_uniquecode(unique_connector.UniqueCode, db_session)
 
-        db_session.delete(result)
+        stmt = Collection.__table__.delete().where(Collection.id.in_(ids))
+
+        db_session.execute(stmt)
 
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
@@ -347,6 +352,7 @@ def collection_exists(title, person_id, db_session):
 def delete_collection_constraints(title, person_id, db_session):
     result = db_session.query(Collection).filter(Collection.title == title,
                                                  Collection.person_id == person_id).all()
+    ids = []
     for item in result:
         unique_connector = get_connector(item.id, db_session)
         if unique_connector:
@@ -356,8 +362,9 @@ def delete_collection_constraints(title, person_id, db_session):
                                                     db_session)
             if new_connector is None:
                 delete_uniquecode(unique_connector.UniqueCode, db_session)
+            ids.append(item.id)
 
-    return result
+    return ids
 
 
 def rename_collection(title, data, db_session, username):
