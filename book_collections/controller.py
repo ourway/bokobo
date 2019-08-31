@@ -387,7 +387,6 @@ def rename_collection(title, data, db_session, username):
     final_res=[]
     for item in result:
         item.title = new_title
-
         unique_connector = get_connector(item.id, db_session)
         if unique_connector:
             logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
@@ -395,6 +394,7 @@ def rename_collection(title, data, db_session, username):
             delete_connector(item.id, db_session)
             db_session.flush()
         model_dict = collection_to_dict(db_session,item)
+        logger.debug(LogMsg.MODEL_ALTERED,model_dict)
         print(model_dict)
 
         logger.debug(LogMsg.CHECK_UNIQUE_EXISTANCE, model_dict)

@@ -13,7 +13,6 @@ def add(data, db_session):
 
     title = data.get('title')
     person_id = data.get('person_id')
-    book_id = data.get('book_id')
 
     try:
         unique_code = ConstraintHandler()
@@ -35,20 +34,19 @@ def add(data, db_session):
 
 def unique_code_exists(data, db_session):
     logger.info(LogMsg.START)
-    unique_code = generate_unique_code(data, db_session)
+    unique_code = generate_unique_code(data)
 
     unique = get(unique_code,db_session)
 
     return unique
 
 
-def generate_unique_code(data, db_session):
+def generate_unique_code(data):
     logger.info(LogMsg.START)
 
     logger.debug(LogMsg.GENERATE_UNIQUE_CONSTRAINT, data)
 
     title = data.get('title')
     person_id = data.get('person_id')
-
     the_code = 'COLLECTION-{}-{}'.format(title, person_id)
     return the_code
