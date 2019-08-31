@@ -46,7 +46,7 @@ def add(data, db_session, username):
     # unique_code = unique_code_exists(data, db_session)
     # if unique_code is None:
     unique_code = add_uniquecode(data, db_session)
-
+    db_session.flush()
     logger.debug(LogMsg.COLLECTION_ADD_NEW_COLLECTION,
                  {'title': title})
     book_ids = data.get('book_ids', None)
@@ -310,6 +310,7 @@ def delete_by_id(id, db_session, username):
             new_connector = get_connector_by_unique(unique_connector.UniqueCode, db_session)
             if new_connector is None:
                 delete_uniquecode(unique_connector.UniqueCode, db_session)
+                db_session.flush()
 
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
@@ -403,6 +404,7 @@ def rename_collection(title, data, db_session, username):
         unique_code= unique_code_exists(model_dict, db_session)
         if unique_code is None:
             unique_code = add_uniquecode(model_dict, db_session)
+            db_session.flush()
         add_connector(item.id, unique_code.UniqueCode, db_session)
         logger.debug(LogMsg.UNIQUE_CONNECTOR_ADDED,
                      {'collection_id': item.id,
