@@ -177,13 +177,8 @@ def get_collection(title, db_session, username):
             book = {}
         else:
             book = get_book(item.book_id, db_session)
-        result.append(book_to_dict(book))
+        result.append(book)
 
-    unique_connector = get_connector(id, db_session)
-    if unique_connector:
-        logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
-        delete_uniquecode(unique_connector.UniqueCode, db_session)
-        delete_connector(id, db_session)
 
     logger.info(LogMsg.END)
 

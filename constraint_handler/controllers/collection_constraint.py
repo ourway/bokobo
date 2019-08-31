@@ -37,7 +37,9 @@ def unique_code_exists(data, db_session):
     logger.info(LogMsg.START)
     unique_code = generate_unique_code(data, db_session)
 
-    return get(unique_code,db_session)
+    unique = get(unique_code,db_session)
+
+    return unique
 
 
 def generate_unique_code(data, db_session):
