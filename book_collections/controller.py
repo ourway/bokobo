@@ -397,7 +397,7 @@ def rename_collection(title, data, db_session, username):
         if unique_connector:
             logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
             delete_uniquecode(unique_connector.UniqueCode, db_session)
-            delete_connector(id, db_session)
+            delete_connector(item.id, db_session)
         model_dict = collection_to_dict(db_session,item)
         print(model_dict)
 

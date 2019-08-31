@@ -24,9 +24,21 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="691">
-              <caret line="210" column="8" selection-start-line="210" selection-start-column="8" selection-end-line="210" selection-end-column="8" />
+            <state relative-caret-position="338">
+              <caret line="399" column="30" selection-start-line="399" selection-start-column="30" selection-end-line="399" selection-end-column="30" />
               <folding>
+                <element signature="e#938#4062#0" />
+                <element signature="e#4126#4551#0" />
+                <element signature="e#4605#5564#0" />
+                <element signature="e#5620#6667#0" />
+                <element signature="e#6726#7532#0" />
+                <element signature="e#7678#9287#0" />
+                <element signature="e#9222#9406#0" />
+                <element signature="e#9456#9738#0" />
+                <element signature="e#9786#10118#0" />
+                <element signature="e#10169#10942#0" />
+                <element signature="e#10996#11490#0" />
+                <element signature="e#11550#11764#0" />
                 <element signature="e#11906#12609#0" />
               </folding>
             </state>
@@ -400,7 +412,7 @@
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1957613" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1957613" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -600,17 +612,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/book_collections/controller.py</url>
-          <line>396</line>
+          <line>400</line>
           <option name="timeStamp" value="122" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/book_collections/controller.py</url>
-          <line>388</line>
+          <line>392</line>
           <option name="timeStamp" value="123" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/book_collections/controller.py</url>
-          <line>323</line>
+          <line>327</line>
           <option name="timeStamp" value="124" />
         </line-breakpoint>
       </breakpoints>
@@ -1145,9 +1157,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="691">
-          <caret line="210" column="8" selection-start-line="210" selection-start-column="8" selection-end-line="210" selection-end-column="8" />
+        <state relative-caret-position="338">
+          <caret line="399" column="30" selection-start-line="399" selection-start-column="30" selection-end-line="399" selection-end-column="30" />
           <folding>
+            <element signature="e#938#4062#0" />
+            <element signature="e#4126#4551#0" />
+            <element signature="e#4605#5564#0" />
+            <element signature="e#5620#6667#0" />
+            <element signature="e#6726#7532#0" />
+            <element signature="e#7678#9287#0" />
+            <element signature="e#9222#9406#0" />
+            <element signature="e#9456#9738#0" />
+            <element signature="e#9786#10118#0" />
+            <element signature="e#10169#10942#0" />
+            <element signature="e#10996#11490#0" />
+            <element signature="e#11550#11764#0" />
             <element signature="e#11906#12609#0" />
           </folding>
         </state>
