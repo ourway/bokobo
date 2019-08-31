@@ -190,9 +190,9 @@ def edit(id, db_session, data, username):
         raise Http_error(403, Message.ACCESS_DENIED)
 
     if username not in ADMINISTRATORS:
-        if "person_id" in data.keys():
+        if "person_id" in data:
             del data["person_id"]
-    if "person_id" in data.keys()
+    if "person_id" in data:
         user_by_person = db_session.query(User).filter(
             User.person_id == data.get('person_id')).first()
         if user_by_person.id != model_instance.id:
