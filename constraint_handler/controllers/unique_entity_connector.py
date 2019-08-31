@@ -42,3 +42,9 @@ def delete(entity_id, db_session):
     db_session.query(UniqueEntityConnector).filter(
         UniqueEntityConnector.entity_id == entity_id).delete()
     return Http_response(204,True)
+
+def get_by_entity(id,db_session):
+    logger.info(LogMsg.START)
+    result = db_session.query(UniqueEntityConnector).filter(
+        UniqueEntityConnector.entity_id == id).first()
+    return result

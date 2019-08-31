@@ -20,7 +20,7 @@ from configs import SIGNUP_USER, ADMINISTRATORS
 from constraint_handler.controllers.person_constraint import \
     add as add_uniquecode
 from constraint_handler.controllers.unique_entity_connector import \
-    get as get_connector, add as add_connector, delete as delete_connector
+    get_by_entity as get_connector, add as add_connector, delete as delete_connector
 from constraint_handler.controllers.common_methods import \
     delete as delete_uniquecode
 

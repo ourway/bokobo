@@ -1,6 +1,6 @@
 from helper import check_auth, inject_db, jsonify, pass_data
 from .controller import add, get_all_collections, get_collection, \
-    delete_collection, delete_books_from_collection, add_book_to_collections,delete_by_id,get_all
+    delete_collection, delete_books_from_collection, add_book_to_collections,rename_collection,get_all
 
 
 def call_router(app):
@@ -21,5 +21,6 @@ def call_router(app):
 
     app.route('/collections', 'GET', get_all_collections, apply=wrappers)
     app.route('/collections/<title>', 'GET', get_collection, apply=wrappers)
+    app.route('/collections/<title>', 'PUT', rename_collection, apply=data_plus_wrappers)
     app.route('/collections/_search', 'POST', get_all, apply=data_plus_wrappers)
 
