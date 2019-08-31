@@ -10,7 +10,7 @@ def add(entity_id, unique_code, db_session):
     logger.info(LogMsg.START)
 
     try:
-        model_instance = get(unique_code, db_session)
+        model_instance = get_by_entity(entity_id, db_session)
         if model_instance:
             logger.error(LogMsg.UNIQUE_CONSTRAINT_EXISTS,
                          {'entity_id': model_instance.entity_id,

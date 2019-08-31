@@ -403,6 +403,7 @@ def rename_collection(title, data, db_session, username):
         logger.debug(LogMsg.CHECK_UNIQUE_EXISTANCE, model_dict)
         unique_code= unique_code_exists(model_dict, db_session)
         if unique_code is None:
+            logger.debug(LogMsg.UNIQUE_NOT_EXISTS)
             unique_code = add_uniquecode(model_dict, db_session)
             db_session.flush()
         add_connector(item.id, unique_code.UniqueCode, db_session)

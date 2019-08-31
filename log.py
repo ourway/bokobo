@@ -287,6 +287,7 @@ class LogMsg:
     UNIQUE_CONSTRAINT_IS = 'the unique constraint generated is :%s '
     UNIQUE_CONSTRAINT_IS_CHANGING = 'unique constraint is changing by deleting old one and generating new one'
     UNIQUE_CONNECTOR_ADDED = 'the unique_connector added for this model : %s'
+    UNIQUE_NOT_EXISTS = 'unique constraint not exists'
 
     # LIBRARY
     LIBRARY_CHECK_BOOK_EXISTANCE = 'checking if book already is in library : %s'
