@@ -195,7 +195,7 @@ def edit(id, db_session, data, username):
     if "person_id" in data:
         user_by_person = db_session.query(User).filter(
             User.person_id == data.get('person_id')).first()
-        if user_by_person.id != model_instance.id:
+        if user_by_person is not None and user_by_person.id != model_instance.id:
             raise Http_error(409,Message.USER_ALREADY_EXISTS)
     for key, value in data.items():
         # TODO  if key is valid attribute of class
