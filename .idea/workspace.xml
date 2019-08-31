@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/book_collections/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/book_collections/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book_collections/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/book_collections/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constraint_handler/controllers/collection_constraint.py" beforeDir="false" afterPath="$PROJECT_DIR$/constraint_handler/controllers/collection_constraint.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constraint_handler/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/constraint_handler/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/controllers/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/controllers/user.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,11 +21,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="397" column="8" selection-start-line="397" selection-start-column="8" selection-end-line="397" selection-end-column="8" />
+            <state relative-caret-position="125">
+              <caret line="264" lean-forward="true" selection-start-line="264" selection-end-line="264" />
               <folding>
                 <element signature="e#1#28#0" expanded="true" />
                 <element signature="e#3958#4383#0" />
@@ -39,6 +36,21 @@
                 <element signature="e#9299#9631#0" />
                 <element signature="e#10373#10867#0" />
                 <element signature="e#11856#12272#0" />
+                <element signature="e#11729#13372#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="428">
+              <caret line="223" column="16" selection-start-line="223" selection-start-column="4" selection-end-line="223" selection-end-column="16" />
+              <folding>
+                <element signature="e#1#12#0" expanded="true" />
+                <element signature="e#2549#3200#0" />
+                <element signature="e#3245#3760#0" />
               </folding>
             </state>
           </provider>
@@ -67,9 +79,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>administrator_users</find>
-      <find>update_total_price_order</find>
-      <find>administerator_users</find>
       <find>model_to_dict</find>
       <find>books</find>
       <find>MSG1</find>
@@ -97,6 +106,9 @@
       <find>logging</find>
       <find>collection_to_dict(collection)</find>
       <find>collection_to_dict(</find>
+      <find>e58715438c77</find>
+      <find>709e75ace9e</find>
+      <find>709e75ace9e7</find>
     </findStrings>
     <replaceStrings>
       <replace>Transaction</replace>
@@ -175,7 +187,6 @@
         <option value="$PROJECT_DIR$/comment/controllers/actions.py" />
         <option value="$PROJECT_DIR$/financial_transactions/controller.py" />
         <option value="$PROJECT_DIR$/user/urls.py" />
-        <option value="$PROJECT_DIR$/user/controllers/user.py" />
         <option value="$PROJECT_DIR$/follow/controller.py" />
         <option value="$PROJECT_DIR$/order/controllers/checkout_order.py" />
         <option value="$PROJECT_DIR$/book_library/controller.py" />
@@ -191,6 +202,7 @@
         <option value="$PROJECT_DIR$/constraint_handler/controllers/collection_constraint.py" />
         <option value="$PROJECT_DIR$/book_collections/models.py" />
         <option value="$PROJECT_DIR$/book_collections/controller.py" />
+        <option value="$PROJECT_DIR$/user/controllers/user.py" />
       </list>
     </option>
   </component>
@@ -215,11 +227,6 @@
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="book_collections" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
@@ -646,16 +653,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/accounts/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
-          <caret line="19" column="46" lean-forward="true" selection-start-line="19" selection-start-column="46" selection-end-line="19" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/alembic/versions/690ec24ff365_collection_table_again_back_to_3_.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-31">
@@ -896,18 +893,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-339">
-          <caret line="18" column="32" lean-forward="true" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
-          <folding>
-            <element signature="e#1#12#0" expanded="true" />
-            <element signature="e#2549#3200#0" />
-            <element signature="e#3245#3760#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/follow/controller.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-287">
@@ -1098,10 +1083,15 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/alembic/versions/e58715438c77_unique_connector_changed.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-405" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="397" column="8" selection-start-line="397" selection-start-column="8" selection-end-line="397" selection-end-column="8" />
+        <state relative-caret-position="125">
+          <caret line="264" lean-forward="true" selection-start-line="264" selection-end-line="264" />
           <folding>
             <element signature="e#1#28#0" expanded="true" />
             <element signature="e#3958#4383#0" />
@@ -1112,6 +1102,19 @@
             <element signature="e#9299#9631#0" />
             <element signature="e#10373#10867#0" />
             <element signature="e#11856#12272#0" />
+            <element signature="e#11729#13372#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="223" column="16" selection-start-line="223" selection-start-column="4" selection-end-line="223" selection-end-column="16" />
+          <folding>
+            <element signature="e#1#12#0" expanded="true" />
+            <element signature="e#2549#3200#0" />
+            <element signature="e#3245#3760#0" />
           </folding>
         </state>
       </provider>

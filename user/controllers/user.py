@@ -2,9 +2,10 @@
 import json
 from uuid import uuid4
 from app_redis import app_redis as redis
+from configs import ADMINISTRATORS
 
 from log import LogMsg,logger
-from helper import Now, model_to_dict, Http_error
+from helper import Now, model_to_dict, Http_error,edit_basic_data,populate_basic_data
 from messages import Message
 from repository.person_repo import validate_person
 from repository.user_repo import check_by_username, check_by_cell_no, check_by_id
@@ -129,7 +130,7 @@ def delete(id, db_session, username):
 def get_all(db_session, username):
     logger.info(LogMsg.START + "user is {}".format(username))
     logger.debug(LogMsg.GET_ALL_REQUEST + "Users...")
-    result = db_session.query(User).all()
+    result = db_session.query(User).order_by(User.creator.desc()).all()
 
     final_res = []
     for item in result:
@@ -151,7 +152,7 @@ def serach_user(data,db_session, username):
         result = db_session.query(User).filter(User.username !=None).slice(offset, offset + limit)
     else:
         search_username = filter.get('username')
-        result = db_session.query(User).filter(User.username == search_username).slice(
+        result = db_session.query(User).filter(User.username == search_username).order_by(User.creator.desc()).slice(
             offset, offset + limit)
     final_res = []
     for item in result:
@@ -168,10 +169,10 @@ def edit(id, db_session, data, username):
     logger.info(LogMsg.START + " user is {}".format(username))
     if "id" in data.keys():
         del data["id"]
-    if "person_id" in data.keys():
-        del data["person_id"]
     if 'username' in data.keys():
         raise Http_error(400,{'username':LogMsg.NOT_EDITABLE})
+
+
 
     logger.debug(LogMsg.EDIT_REQUST)
 
@@ -182,18 +183,20 @@ def edit(id, db_session, data, username):
         logger.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, {"id": LogMsg.NOT_FOUND})
 
+    if model_instance.creator != username and username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED,username)
+        raise Http_error(403,Message.ACCESS_DENIED)
 
+    if username not in ADMINISTRATORS:
+        if "person_id" in data.keys():
+            del data["person_id"]
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
         setattr(model_instance, key, value)
-    model_instance.modification_date = Now()
-    model_instance.modifier = username
+    edit_basic_data(model_instance,username,data.get('tags'))
 
-    logger.debug(LogMsg.MODEL_ALTERED)
-
-    logger.debug(LogMsg.EDIT_SUCCESS +
-                  json.dumps(user_to_dict(model_instance)))
+    logger.debug(LogMsg.EDIT_SUCCESS,user_to_dict(model_instance))
 
     logger.info(LogMsg.END)
 
