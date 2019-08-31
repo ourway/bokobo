@@ -20,11 +20,11 @@ def add(db_session, data, username):
     cell_no = data.get('cell_no')
     name = data.get('name')
     new_username = data.get('username')
-
-    user_by_cell = check_by_cell_no(cell_no, db_session)
-    if user_by_cell != None:
-        logger.error(LogMsg.USER_XISTS.format(cell_no))
-        raise Http_error(409, Message.USER_ALREADY_EXISTS)
+    if cell_no is not None:
+        user_by_cell = check_by_cell_no(cell_no, db_session)
+        if user_by_cell != None:
+            logger.error(LogMsg.USER_XISTS.format(cell_no))
+            raise Http_error(409, Message.USER_ALREADY_EXISTS)
 
     user = check_by_username(new_username, db_session)
     if user:
@@ -42,7 +42,6 @@ def add(db_session, data, username):
     model_instance.creator = username
     model_instance.tags = data.get('tags')
 
-    person_is_valid = None
     person_id = data.get('person_id')
     if person_id:
         person_is_valid = validate_person(person_id, db_session)
@@ -50,7 +49,7 @@ def add(db_session, data, username):
             model_instance.person_id = person_id
 
         else:
-            raise Http_error(404, Message.GET_FAILED)
+            raise Http_error(404, Message.INVALID_USER)
 
     logger.debug(LogMsg.DATA_ADDITION)
 
