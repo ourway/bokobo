@@ -333,6 +333,7 @@ def collection_to_dict(db_session,collection):
         book = book_to_dict(db_session,collection.book)
         model_props['book'] = book
         basic_res.update(model_props)
+        logger.debug('cpll is : ',basic_res)
     return basic_res
 
 
