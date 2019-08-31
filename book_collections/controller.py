@@ -135,7 +135,7 @@ def get_all_collections(db_session, username):
     logger.debug(LogMsg.PERSON_EXISTS)
 
     collection_items = db_session.query(Collection).filter(and_(
-        Collection.person_id == user.person_id)).all()
+        Collection.person_id == user.person_id)).order_by(Collection.creation_date.desc()).all()
     collections, titles = arrange_collections(collection_items)
     logger.debug(LogMsg.COLLECTION_ARRANGE_BY_TITLE)
 
@@ -168,7 +168,7 @@ def get_collection(title, db_session, username):
 
     collection_items = db_session.query(Collection).filter(and_(
         Collection.person_id == user.person_id,
-        Collection.title == title)).all()
+        Collection.title == title)).order_by(Collection.creation_date.desc()).all()
 
     result = []
 
@@ -295,7 +295,7 @@ def get_all(data, db_session, username):
     offset = data.get('offset', 0)
     final_res = []
 
-    result = db_session.query(Collection).slice(offset, offset + limit)
+    result = db_session.query(Collection).order_by(Collection.creation_date.desc()).slice(offset, offset + limit)
     for item in result:
         final_res.append(collection_to_dict(db_session,item))
     logger.info(LogMsg.END)
