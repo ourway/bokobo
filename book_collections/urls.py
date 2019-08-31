@@ -13,8 +13,6 @@ def call_router(app):
               apply=[check_auth, inject_db, pass_data])
     app.route('/collections/title/<title>', 'DELETE', delete_collection,
               apply=[check_auth, inject_db])
-    app.route('/collections/<id>', 'DELETE', delete_collection,
-              apply=[check_auth, inject_db])
     app.route('/collections', 'POST', add, apply=data_plus_wrappers)
     app.route('/collections/book', 'POST', add_book_to_collections,
               apply=data_plus_wrappers)

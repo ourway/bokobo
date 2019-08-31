@@ -130,7 +130,7 @@ def delete(id, db_session, username):
 def get_all(db_session, username):
     logger.info(LogMsg.START + "user is {}".format(username))
     logger.debug(LogMsg.GET_ALL_REQUEST + "Users...")
-    result = db_session.query(User).order_by(User.creator.desc()).all()
+    result = db_session.query(User).order_by(User.creation_date.desc()).all()
 
     final_res = []
     for item in result:
@@ -152,7 +152,7 @@ def serach_user(data,db_session, username):
         result = db_session.query(User).filter(User.username !=None).slice(offset, offset + limit)
     else:
         search_username = filter.get('username')
-        result = db_session.query(User).filter(User.username == search_username).order_by(User.creator.desc()).slice(
+        result = db_session.query(User).filter(User.username.like('%{}%'.format(search_username))).order_by(User.creation_date.desc()).slice(
             offset, offset + limit)
     final_res = []
     for item in result:
