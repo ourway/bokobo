@@ -11,5 +11,5 @@ class ConstraintHandler(Base,PrimaryModel):
 class UniqueEntityConnector(Base, PrimaryModel):
     __tablename__ = 'unique_entity_connector'
     UniqueCode = Column(String, nullable=False)
-    entity_id = Column(UUID,unique=True,nullable=False)
+    entity_id = Column(UUID,nullable=False)
     UniqueConstraint(UniqueCode,entity_id)
