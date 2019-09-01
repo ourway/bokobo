@@ -162,15 +162,22 @@ def get_all(data, db_session, username, **kwargs):
 
     limit = data.get('limit') or 10
     offset = data.get('offset') or 0
+    filter = data.get('filter') or None
+
     try:
         res = db_session.query(Comment).order_by(
             Comment.creation_date.desc()).slice(offset, offset + limit)
         result = []
         for item in res:
-            result.append(comment_to_dict(db_session, item, username))
+            if filter is not None:
+                comment = comment_to_dict(db_session, item, username)
+                if 'book' in filter.keys():
+                    book = get_book(item.book_id,db_session)
+                    comment['book'] = book
+            result.append(comment)
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(400, Message.NOT_FOUND)
+        raise Http_error(404, Message.NOT_FOUND)
     logger.info(LogMsg.END)
     return result
 
