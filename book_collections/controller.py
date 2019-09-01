@@ -43,9 +43,9 @@ def add(data, db_session, username):
     logger.debug(LogMsg.PERSON_EXISTS)
 
     logger.debug(LogMsg.CHECK_UNIQUE_EXISTANCE, data)
-    # unique_code = unique_code_exists(data, db_session)
-    # if unique_code is None:
-    unique_code = add_uniquecode(data, db_session)
+    unique_code = unique_code_exists(data, db_session)
+    if unique_code is None:
+        unique_code = add_uniquecode(data, db_session)
     db_session.flush()
     logger.debug(LogMsg.COLLECTION_ADD_NEW_COLLECTION,
                  {'title': title})
@@ -118,9 +118,9 @@ def add_book_to_collections(data, db_session, username):
         logger.error(LogMsg.USER_HAS_NO_PERSON, username)
         raise Http_error(404, Message.INVALID_USER)
     logger.debug(LogMsg.COLLECTION_ADD_BOOK_TO_MULTIPLE_COLLECTIONS, data)
-    book_id = data.get('book_id')
+    books_id = data.get('book_ids')
     for collection_title in data.get('collections'):
-        addition_data = {'book_ids': [book_id], 'title': collection_title,
+        addition_data = {'book_ids': books_id, 'title': collection_title,
                          'person_id': user.person_id}
         add(addition_data, db_session, username)
     logger.info(LogMsg.END)
