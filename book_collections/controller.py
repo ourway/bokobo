@@ -15,7 +15,7 @@ from constraint_handler.controllers.collection_constraint import \
     add as add_uniquecode, unique_code_exists
 from constraint_handler.controllers.unique_entity_connector import \
     get_by_entity as get_connector, add as add_connector, \
-    delete as delete_connector,get as get_connector_by_unique
+    delete as delete_connector, get as get_connector_by_unique
 from constraint_handler.controllers.common_methods import \
     delete as delete_uniquecode
 
@@ -27,7 +27,7 @@ def add(data, db_session, username):
     logger.debug(LogMsg.SCHEMA_CHECKED)
     title = data.get('title')
 
-    if username in ADMINISTRATORS and 'person_id' in data:
+    if 'person_id' in data:
         person_id = data.get('person_id')
     else:
         user = check_user(username, db_session)
@@ -111,10 +111,17 @@ def add_book_to_collections(data, db_session, username):
     logger.info(LogMsg.START, username)
 
     check_schema(['book_id', 'collections'], data.keys())
+    user = check_user(username, db_session)
+    if user is None:
+        raise Http_error(404, Message.INVALID_USER)
+    if user.person_id is None:
+        logger.error(LogMsg.USER_HAS_NO_PERSON, username)
+        raise Http_error(404, Message.INVALID_USER)
     logger.debug(LogMsg.COLLECTION_ADD_BOOK_TO_MULTIPLE_COLLECTIONS, data)
     book_id = data.get('book_id')
     for collection_title in data.get('collections'):
-        addition_data = {'book_ids': [book_id], 'title': collection_title}
+        addition_data = {'book_ids': [book_id], 'title': collection_title,
+                         'person_id': user.person_id}
         add(addition_data, db_session, username)
     logger.info(LogMsg.END)
 
@@ -135,7 +142,8 @@ def get_all_collections(db_session, username):
     logger.debug(LogMsg.PERSON_EXISTS)
 
     collection_items = db_session.query(Collection).filter(and_(
-        Collection.person_id == user.person_id)).order_by(Collection.creation_date.desc()).all()
+        Collection.person_id == user.person_id)).order_by(
+        Collection.creation_date.desc()).all()
     collections, titles = arrange_collections(collection_items)
     logger.debug(LogMsg.COLLECTION_ARRANGE_BY_TITLE)
 
@@ -168,7 +176,8 @@ def get_collection(title, db_session, username):
 
     collection_items = db_session.query(Collection).filter(and_(
         Collection.person_id == user.person_id,
-        Collection.title == title)).order_by(Collection.creation_date.desc()).all()
+        Collection.title == title)).order_by(
+        Collection.creation_date.desc()).all()
 
     result = []
 
@@ -178,7 +187,6 @@ def get_collection(title, db_session, username):
         else:
             book = get_book(item.book_id, db_session)
         result.append(book)
-
 
     logger.info(LogMsg.END)
 
@@ -240,7 +248,8 @@ def delete_books_from_collection(data, db_session, username):
 
         result = db_session.query(Collection).filter(
             and_(Collection.person_id == user.person_id,
-                 Collection.title == data.get('title'),Collection.book_id.in_(book_ids))).all()
+                 Collection.title == data.get('title'),
+                 Collection.book_id.in_(book_ids))).all()
         for item in result:
             ids.append(item.id)
             unique_connector = get_connector(item.id, db_session)
@@ -290,9 +299,10 @@ def get_all(data, db_session, username):
     offset = data.get('offset', 0)
     final_res = []
 
-    result = db_session.query(Collection).order_by(Collection.creation_date.desc()).slice(offset, offset + limit)
+    result = db_session.query(Collection).order_by(
+        Collection.creation_date.desc()).slice(offset, offset + limit)
     for item in result:
-        final_res.append(collection_to_dict(db_session,item))
+        final_res.append(collection_to_dict(db_session, item))
     logger.info(LogMsg.END)
 
     return final_res
@@ -307,7 +317,8 @@ def delete_by_id(id, db_session, username):
         if unique_connector:
             logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
             delete_connector(id, db_session)
-            new_connector = get_connector_by_unique(unique_connector.UniqueCode, db_session)
+            new_connector = get_connector_by_unique(unique_connector.UniqueCode,
+                                                    db_session)
             if new_connector is None:
                 delete_uniquecode(unique_connector.UniqueCode, db_session)
                 db_session.flush()
@@ -320,7 +331,7 @@ def delete_by_id(id, db_session, username):
     return Http_response(204, True)
 
 
-def collection_to_dict(db_session,collection):
+def collection_to_dict(db_session, collection):
     if not isinstance(collection, Collection):
         raise Http_error(400, Message.INVALID_ENTITY)
     basic_res = model_basic_dict(collection)
@@ -331,11 +342,11 @@ def collection_to_dict(db_session,collection):
         'book': None
     }
     if collection.book_id is not None:
-        book = book_to_dict(db_session,collection.book)
+        book = book_to_dict(db_session, collection.book)
         model_props['book'] = book
         model_props.update(basic_res)
 
-        logger.debug('*****coll is  model_props: %s',model_props)
+        logger.debug('*****coll is  model_props: %s', model_props)
     return model_props
 
 
@@ -368,7 +379,7 @@ def delete_collection_constraints(title, person_id, db_session):
 def rename_collection(title, data, db_session, username):
     logger.info(LogMsg.START, username)
 
-    check_schema(['title'],data.keys())
+    check_schema(['title'], data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
     person_id = data.get('person_id')
     if person_id is None:
@@ -386,8 +397,8 @@ def rename_collection(title, data, db_session, username):
     #                                     Collection.person_id == person_id).values(
     #     title=new_title)
     result = db_session.query(Collection).filter(Collection.title == title,
-                                               Collection.person_id == person_id).all()
-    final_res=[]
+                                                 Collection.person_id == person_id).all()
+    final_res = []
     for item in result:
         item.title = new_title
         unique_connector = get_connector(item.id, db_session)
@@ -396,12 +407,12 @@ def rename_collection(title, data, db_session, username):
             delete_uniquecode(unique_connector.UniqueCode, db_session)
             delete_connector(item.id, db_session)
             db_session.flush()
-        model_dict = collection_to_dict(db_session,item)
-        logger.debug(LogMsg.MODEL_ALTERED,model_dict)
+        model_dict = collection_to_dict(db_session, item)
+        logger.debug(LogMsg.MODEL_ALTERED, model_dict)
         print(model_dict)
 
         logger.debug(LogMsg.CHECK_UNIQUE_EXISTANCE, model_dict)
-        unique_code= unique_code_exists(model_dict, db_session)
+        unique_code = unique_code_exists(model_dict, db_session)
         if unique_code is None:
             logger.debug(LogMsg.UNIQUE_NOT_EXISTS)
             unique_code = add_uniquecode(model_dict, db_session)

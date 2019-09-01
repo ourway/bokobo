@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/comment/controllers/comment.py" beforeDir="false" afterPath="$PROJECT_DIR$/comment/controllers/comment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log.py" beforeDir="false" afterPath="$PROJECT_DIR$/log.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messages.py" beforeDir="false" afterPath="$PROJECT_DIR$/messages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/order/controllers/order_items.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/controllers/order_items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/prices/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/prices/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/register/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/register/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/send_message/send_message.py" beforeDir="false" afterPath="$PROJECT_DIR$/send_message/send_message.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sign_up/fast_signup.py" beforeDir="false" afterPath="$PROJECT_DIR$/sign_up/fast_signup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/controllers/person.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/controllers/person.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user/controllers/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/controllers/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_collections/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/book_collections/controller.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,8 +16,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/log.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="284" column="67" selection-start-line="284" selection-start-column="67" selection-end-line="284" selection-end-column="67" />
+            <state relative-caret-position="644">
+              <caret line="399" column="54" selection-start-line="399" selection-start-column="54" selection-end-line="399" selection-end-column="54" />
               <folding>
                 <element signature="e#446#455#0" expanded="true" />
               </folding>
@@ -34,24 +26,20 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
+        <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="959">
-              <caret line="294" column="40" lean-forward="true" selection-start-line="294" selection-start-column="40" selection-end-line="294" selection-end-column="40" />
+            <state relative-caret-position="-324">
+              <caret line="31" column="9" lean-forward="true" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
               <folding>
-                <element signature="e#2600#3256#0" />
-                <element signature="e#3411#3923#0" />
-                <element signature="e#6579#7093#0" />
+                <element signature="e#9271#9455#0" />
+                <element signature="e#9505#9787#0" />
+                <element signature="e#9835#10209#0" />
+                <element signature="e#10260#11068#0" />
+                <element signature="e#11122#11685#0" />
+                <element signature="e#11745#11959#0" />
+                <element signature="e#12031#12734#0" />
+                <element signature="e#12799#14785#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/messages.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="743">
-              <caret line="53" column="28" selection-start-line="53" selection-start-column="28" selection-end-line="53" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -140,7 +128,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/files/fd0b79b1-8457-4daa-80d5-7c486907caa8" />
         <option value="$PROJECT_DIR$/helper.py" />
         <option value="$PROJECT_DIR$/repository/account_repo.py" />
         <option value="$PROJECT_DIR$/repository/book_role_repo.py" />
@@ -178,7 +165,6 @@
         <option value="$PROJECT_DIR$/book_collections/urls.py" />
         <option value="$PROJECT_DIR$/repository/user_repo.py" />
         <option value="$PROJECT_DIR$/constraint_handler/controllers/collection_constraint.py" />
-        <option value="$PROJECT_DIR$/book_collections/controller.py" />
         <option value="$PROJECT_DIR$/constraint_handler/controllers/unique_entity_connector.py" />
         <option value="$PROJECT_DIR$/constraint_handler/models.py" />
         <option value="$PROJECT_DIR$/comment/controllers/comment.py" />
@@ -189,8 +175,10 @@
         <option value="$PROJECT_DIR$/sign_up/fast_signup.py" />
         <option value="$PROJECT_DIR$/user/controllers/person.py" />
         <option value="$PROJECT_DIR$/messages.py" />
-        <option value="$PROJECT_DIR$/log.py" />
         <option value="$PROJECT_DIR$/user/controllers/user.py" />
+        <option value="$PROJECT_DIR$/log.py" />
+        <option value="$PROJECT_DIR$/wish_list/controller.py" />
+        <option value="$PROJECT_DIR$/book_collections/controller.py" />
       </list>
     </option>
   </component>
@@ -241,17 +229,6 @@
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
               <item name="book_rate" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
@@ -336,9 +313,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.2253207" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2253207" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -349,7 +325,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32998884" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49972114" weight="0.5250836" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49972114" visible="true" weight="0.5250836" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5002789" side_tool="true" weight="0.7380156" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32998884" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -433,12 +409,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/wish_list/controller.py</url>
-          <line>107</line>
+          <line>133</line>
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/wish_list/controller.py</url>
-          <line>84</line>
+          <line>104</line>
           <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -553,17 +529,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/book_collections/controller.py</url>
-          <line>398</line>
+          <line>409</line>
           <option name="timeStamp" value="122" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/book_collections/controller.py</url>
-          <line>390</line>
+          <line>401</line>
           <option name="timeStamp" value="123" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/book_collections/controller.py</url>
-          <line>323</line>
+          <line>334</line>
           <option name="timeStamp" value="124" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -573,7 +549,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/book_collections/controller.py</url>
-          <line>156</line>
+          <line>164</line>
           <option name="timeStamp" value="128" />
         </line-breakpoint>
       </breakpoints>
@@ -703,16 +679,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="81">
           <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wish_list/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -979,19 +945,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="329" column="11" selection-start-line="329" selection-start-column="11" selection-end-line="329" selection-end-column="11" />
-          <folding>
-            <element signature="e#4126#4551#0" />
-            <element signature="e#11619#11833#0" />
-            <element signature="e#11905#12608#0" />
-            <element signature="e#12673#14487#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="449">
@@ -1114,24 +1067,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-13">
+          <caret line="271" column="4" selection-start-line="271" selection-start-column="4" selection-end-line="271" selection-end-column="4" />
+          <folding>
+            <element signature="e#2600#3256#0" />
+            <element signature="e#3411#3923#0" />
+            <element signature="e#6579#7093#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wish_list/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="152" column="17" selection-start-line="152" selection-start-column="17" selection-end-line="152" selection-end-column="17" />
+          <folding>
+            <element signature="e#1#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/log.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="284" column="67" selection-start-line="284" selection-start-column="67" selection-end-line="284" selection-end-column="67" />
+        <state relative-caret-position="644">
+          <caret line="399" column="54" selection-start-line="399" selection-start-column="54" selection-end-line="399" selection-end-column="54" />
           <folding>
             <element signature="e#446#455#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
+    <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="959">
-          <caret line="294" column="40" lean-forward="true" selection-start-line="294" selection-start-column="40" selection-end-line="294" selection-end-column="40" />
+        <state relative-caret-position="-324">
+          <caret line="31" column="9" lean-forward="true" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
           <folding>
-            <element signature="e#2600#3256#0" />
-            <element signature="e#3411#3923#0" />
-            <element signature="e#6579#7093#0" />
+            <element signature="e#9271#9455#0" />
+            <element signature="e#9505#9787#0" />
+            <element signature="e#9835#10209#0" />
+            <element signature="e#10260#11068#0" />
+            <element signature="e#11122#11685#0" />
+            <element signature="e#11745#11959#0" />
+            <element signature="e#12031#12734#0" />
+            <element signature="e#12799#14785#0" />
           </folding>
         </state>
       </provider>
