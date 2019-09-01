@@ -11,6 +11,7 @@ from messages import Message
 from repository.comment_repo import delete_book_comments, get_comment
 from repository.person_repo import validate_person
 from repository.user_repo import check_user
+from repository.action_repo import delete_comment_actions_internal
 from configs import ADMINISTRATORS
 
 
@@ -110,8 +111,11 @@ def delete(id, db_session, username, **kwargs):
         raise Http_error(403, Message.ACCESS_DENIED)
 
     try:
+        logger.debug(LogMsg.COMMENT_DELETE_ACTIONS,id)
+        delete_comment_actions_internal(db_session, id)
+        logger.debug(LogMsg.COMMENT_DELETE,id)
         db_session.delete(model_instance)
-        logger.debug(LogMsg.DELETE_SUCCESS, id)
+        logger.debug(LogMsg.DELETE_SUCCESS, {'comment_id':id})
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
         raise Http_error(404, Message.DELETE_FAILED)

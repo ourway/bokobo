@@ -328,3 +328,5 @@ def reported_by_user(db_session, comment_id, username):
         raise Http_error(400, Message.Invalid_persons)
     report = get_action_report(comment_id, user.person_id, db_session)
     return True if report is not None else False
+
+

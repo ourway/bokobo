@@ -238,6 +238,8 @@ class LogMsg:
     COMMENT_PARENT_NOT_MATCH = 'this parent comment is not matching for this book id : %s'
     COMMENT_DELETING_BOOK_COMMENTS = 'deleting all comments of book by id : %s '
     COMMENT_GETTING_BOOK_COMMENTS = 'getting all comments of book by id :%s '
+    COMMENT_DELETE_ACTIONS = 'deleting comment actions for comment : %s'
+    COMMENT_DELETE = 'deleting comment by id : %s'
 
     # COMMENT_ACTION
 
