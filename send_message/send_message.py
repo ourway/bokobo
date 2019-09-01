@@ -1,4 +1,3 @@
-import logging
 from kavenegar import *
 
 
@@ -7,6 +6,7 @@ from helper import value
 sms_api_key = value('sms_api_key',None)
 
 def send_message(data):
+
     receptor = data.get('receptor')
     if receptor.startswith('0999'):
         receptor = '09357364928'

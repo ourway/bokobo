@@ -136,20 +136,21 @@ class LogMsg:
     ALTERING_AUTHORITY_FAILED = 'user has no admission to alter the item'
     DELETE_PROCESSING = 'going to delete the item from db'
     GATHERING_RELATIVES = 'gathering item reletives to delete them from db'
-    DELETE_RELATIVE = 'the reletive {} is going to be delete'
+    DELETE_RELATIVE = 'the reletive %s is going to be delete'
     UPLOAD_NOT_ALLOWED = 'no more uploads supports in edit'
     POST_ALREADY_LIKED = 'user liked the post before'
     USER_XISTS = 'user by this username : %s already exists'
     PARENT_INVALID = 'parent entity doesnt exist'
     CHECK_REDIS_FOR_EXISTANCE = 'checking redis if cell number already ' \
                                 'exists...'
+    INVALID_ENTITY_TYPE = 'the entity type is invalid : %s'
     REGISTER_XISTS = 'user has already valid registery code'
     CHECK_USER_EXISTANCE = 'checking user if already exists'
     GENERATING_REGISTERY_CODE = 'generating key for registering process for ' \
-                                'cell no : {}'
+                                'cell no : %s'
     SEND_CODE_BY_SMS = 'registery activation_code is going to send for user by SMS'
-    SMS_SENT = 'message sent to user by cell no : {}'
-    DATA_MISSING = 'required data doesnt exists in data : {}'
+    SMS_SENT = 'message sent to user by cell no : %s'
+    DATA_MISSING = 'required data doesnt exists in data : %s'
     REGISTER_KEY_INVALID = 'your register activation_code is wrong '
     REGISTER_KEY_DOESNT_EXIST = 'the activation_code expired or doesnt exist '
     USR_ADDING = 'user is going to create...'
@@ -161,11 +162,11 @@ class LogMsg:
     USERNAME_NOT_UNIQUE = 'this username already exists'
     TOKEN_KEY_DOESNT_EXIST = 'the token is expired or doesnt exists'
     PERSON_EXISTS = 'person by this username : %s exists'
-    NOT_RIGTH_ENTITY_PASSED = 'your entity type is not {}'
+    NOT_RIGTH_ENTITY_PASSED = 'your entity type is not %s'
     PERSON_NOT_EXISTS = 'person for this username not exists : %s '
     NOT_EDITABLE = 'field is not editable'
     ENTITY_DELETED = 'the entity deleted successfully : %s'
-    RELATED_USER_DELETE = 'related user_id of person is {} is going to delete'
+    RELATED_USER_DELETE = 'related user_id of person is %s is going to delete'
     USER_HAS_SIGNUP_TOKEN = 'user has sign up token and new code cant send'
     USER_HAS_ACTIVATION_CODE = 'user already has valid activation code and cant resend code now'
     ENUM_CHECK = 'checking enums to be right type  -  %s'
@@ -261,6 +262,11 @@ class LogMsg:
     BOOK_PRICE_EXISTS = 'book by this id already has price: %s'
     EDIT_PRICE = 'editing book price by id : %s'
     ADD_NEW_BOOK_PRICE = 'adding new price entity for book : %s'
+    PRICE_NOT_FOUND = 'no price found for this book : %s'
+    PRICE_ITEM_CALC = 'price calculated for item is : %s'
+    PRICE_ALL_CALCED = 'total price calced successfully : %s'
+    PRICE_CALC_FAILED = 'calculating price failed. '
+    PRICE_NET_CALCED = 'net price calced for data : %s '
 
     # Elasticsearch
     INDEXING_IN_ELASTIC = 'indexing book data in elastic search : %s '
@@ -273,11 +279,19 @@ class LogMsg:
     # USER
     USER_HAS_NO_PERSON = 'user by ths username has no related person : %s '
     NOT_RELATED_USER_FOR_PERSON = 'person has not related user : %s'
+    USER_GENERATING = 'generating user in signup by data : %s'
+    USER_PROFILE_IS = 'users profile is : %s'
+    USER_GET_BY_FILTER = 'searching user by filter like : %s'
+    USER_PASSWORD_RESET = 'users password changed successfully : %s'
 
 
     # PERSON
     PERSON_HAS_BOOKS = 'person already has roles for books '
-
+    PERSON_GENERATING = 'generating person in signup by data : %s'
+    PERSON_ADD_ACCOUNT = 'added initial account of type main for person : %s'
+    PERSON_ACCOUNTS_DELETED = 'person accounts deleted : %s'
+    PERSON_DELETED = 'person by id : %s deleted successfully'
+    PERSON_USERS_GOT = 'users of person : %s got successfully'
 
     # UNIQUE CONSTRAINT
     GENERATE_UNIQUE_CONSTRAINT = 'generating unique constraint key for entity by data : %s'
@@ -359,6 +373,31 @@ class LogMsg:
     ORDER_ITEMS_DELETE = 'deleting order items : %s'
     ORDER_DELETE = 'deleting order: %s'
     ORDER_EDIT = 'editing order : %s'
+    ORDER_ITEM_ADDDED_TO_ORDER = 'order_item added to order : %s'
+    ORDER_TOTAL_PRICE = 'order total price is : %s'
+    ORDER_ITEM_UNIT_PRICE = 'order items unit price got : %s'
+    ORDER_ITEM_NET_PRICE = 'order items net price calculated : %s '
+    ORDER_ITEM_DELETED = 'order item by id: %s deleted'
+
+
+    #REGISTER
+    MESSAGE_NOT_SENT = 'message not sent by data : %s'
+    REDIS_SET = 'setting reset pass key in redis : %s'
+
+    # SIGNUP
+    SIGNUP_GETTING_TOKEN_FROM_REDIS = 'getting signup token from redis by cell_no: %s'
+    SIGNUP_TOKEN_NOT_IN_REDIS = 'there is no signup token in redis for this cell_no :%s'
+    SIGNUP_TOKEN_INVALID = 'signup token not send correctly and is not compatible by redis data : %s'
+    SIGNUP_SUCCESS = 'signup process finished successfully : %s'
+
+    #WISH LIST
+    WISH_CHECK_IF_IN_LIST = 'checking if book is in wish list of user already : %s'
+    WISH_ALREADY_EXISTS = 'book is already in wish list of user :%s'
+    WISH_ADD = 'book added to users wish list : %s'
+    WISH_GET = 'getting wish list of user :%s'
+    WISH_IS = 'users wish list is : %s'
+    WISH_DELETE = 'book deleted from users widh list : %s'
+    WISH_DELETE_ALL = 'deleting wish list of user : %s'
 
 
     UPLOAD_FAILED = 'uploading files failed'

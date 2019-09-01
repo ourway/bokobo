@@ -5,7 +5,7 @@ from configs import ADMINISTRATORS
 
 from log import LogMsg, logger
 from helper import Now, model_to_dict, Http_error, edit_basic_data, \
-    populate_basic_data
+    populate_basic_data, Http_response
 from messages import Message
 from repository.person_repo import validate_person
 from repository.user_repo import check_by_username, check_by_cell_no, \
@@ -28,7 +28,7 @@ def add(db_session, data, username):
 
     user = check_by_username(new_username, db_session)
     if user:
-        logger.error(LogMsg.USER_XISTS.format(new_username))
+        logger.error(LogMsg.USER_XISTS, new_username)
         raise Http_error(409, Message.USERNAME_EXISTS)
 
     logger.debug(LogMsg.USR_ADDING)
@@ -37,21 +37,18 @@ def add(db_session, data, username):
     model_instance.username = new_username
     model_instance.password = data.get('password')
     model_instance.name = name
-    model_instance.id = str(uuid4())
-    model_instance.creation_date = Now()
-    model_instance.creator = username
-    model_instance.tags = data.get('tags')
-
+    populate_basic_data(model_instance, username, data.get('tags'))
+    logger.debug(LogMsg.POPULATING_BASIC_DATA)
     person_id = data.get('person_id')
     if person_id:
         person_is_valid = validate_person(person_id, db_session)
+        logger.debug(LogMsg.PERSON_EXISTS, {'person_id': person_id})
         if person_is_valid:
             model_instance.person_id = person_id
 
         else:
+            logger.error(LogMsg.INVALID_USER, {'person_id': person_id})
             raise Http_error(404, Message.INVALID_USER)
-
-    logger.debug(LogMsg.DATA_ADDITION)
 
     db_session.add(model_instance)
 
@@ -62,89 +59,88 @@ def add(db_session, data, username):
 
 
 def get(id, db_session, username):
-    logger.info(LogMsg.START
-                + "user is {}  ".format(username)
-                + "getting user_id = {}".format(id))
-    logger.debug(LogMsg.MODEL_GETTING)
+    logger.info(LogMsg.START, username)
+
+    logger.debug(LogMsg.MODEL_GETTING, {'user_id': id})
     model_instance = db_session.query(User).filter(User.id == id).first()
     if model_instance:
         result = user_to_dict(model_instance)
-        logger.debug(LogMsg.GET_SUCCESS +
-                     json.dumps(result))
+        logger.debug(LogMsg.GET_SUCCESS, result)
     else:
-        logger.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, {"id": LogMsg.NOT_FOUND})
+        logger.debug(LogMsg.NOT_FOUND, {'user_id': id})
+        raise Http_error(404, Message.NOT_FOUND)
 
-    logger.error(LogMsg.GET_FAILED + json.dumps({"id": id}))
-
+    logger.error(LogMsg.GET_FAILED, {'user_id': id})
     logger.info(LogMsg.END)
 
     return result
 
 
 def get_profile(username, db_session):
-    logger.info(LogMsg.START
-                + "user is {}  ".format(username))
-    logger.debug(LogMsg.MODEL_GETTING)
+    logger.info(LogMsg.START,username)
+
+    logger.debug(LogMsg.MODEL_GETTING,{'user.username':username})
     model_instance = db_session.query(User).filter(
         User.username == username).first()
 
     if model_instance:
         profile = get_person_profile(model_instance.person_id, db_session,
                                      username)
-        logger.debug(LogMsg.GET_SUCCESS +
-                     json.dumps(profile))
+        logger.debug(LogMsg.GET_SUCCESS ,profile)
 
     else:
-        logger.debug(LogMsg.MODEL_GETTING_FAILED)
+        logger.debug(LogMsg.NOT_FOUND,{'user.username':username})
         raise Http_error(404, Message.NOT_FOUND)
 
-    logger.info(LogMsg.END)
     result = model_to_dict(model_instance)
     result['person'] = profile
     del result['password']
+    logger.debug(LogMsg.USER_PROFILE_IS,result)
+    logger.info(LogMsg.END)
+
     return result
 
 
 def delete(id, db_session, username):
-    logger.info(LogMsg.START + "user is {}  ".format(username)
-                + "user_id= {}".format(id))
-    try:
-        logger.debug(LogMsg.DELETE_REQUEST +
-                     "user_id= {}".format(id))
+    logger.info(LogMsg.START,username)
 
+    try:
+        logger.debug(LogMsg.DELETE_REQUEST, {'user_id': id})
         db_session.query(User).filter(User.id == id).delete()
 
-        logger.debug(LogMsg.DELETE_SUCCESS)
+        logger.debug(LogMsg.DELETE_SUCCESS, {'user_id': id})
 
     except:
 
-        logger.error(LogMsg.DELETE_FAILED +
-                     "user_id= {}".format(id))
+        logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
         raise Http_error(500, LogMsg.DELETE_FAILED)
-
     logger.info(LogMsg.END)
 
     return {}
 
 
 def get_all(db_session, username):
-    logger.info(LogMsg.START + "user is {}".format(username))
-    logger.debug(LogMsg.GET_ALL_REQUEST + "Users...")
+    logger.info(LogMsg.START,username)
+    logger.debug(LogMsg.GET_ALL_REQUEST , "Users...")
     result = db_session.query(User).order_by(User.creation_date.desc()).all()
 
     final_res = []
     for item in result:
         final_res.append(user_to_dict(item))
 
-    logger.debug(LogMsg.GET_SUCCESS)
-
+    logger.debug(LogMsg.GET_SUCCESS,final_res)
     logger.info(LogMsg.END)
 
     return final_res
 
 
 def serach_user(data, db_session, username):
+    logger.info(LogMsg.START,username)
+
+    if username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED,username)
+        raise Http_error(403,Message.ACCESS_DENIED)
+
     limit = data.get('limit', 10)
     offset = data.get('offset', 0)
     filter = data.get('filter', None)
@@ -153,6 +149,8 @@ def serach_user(data, db_session, username):
             User.creation_date.desc()).slice(offset, offset + limit)
     else:
         search_username = filter.get('username')
+        logger.debug(LogMsg.USER_GET_BY_FILTER,{'username':search_username})
+
         result = db_session.query(User).filter(
             User.username.like('%{}%'.format(search_username))).order_by(
             User.creation_date.desc()).slice(
@@ -161,28 +159,28 @@ def serach_user(data, db_session, username):
     for item in result:
         final_res.append(user_to_dict(item))
 
-    logger.debug(LogMsg.GET_SUCCESS)
-
+    logger.debug(LogMsg.GET_SUCCESS,final_res)
     logger.info(LogMsg.END)
 
     return final_res
 
 
 def edit(id, db_session, data, username):
-    logger.info(LogMsg.START + " user is {}".format(username))
+    logger.info(LogMsg.START,username)
     if "id" in data.keys():
         del data["id"]
     if 'username' in data.keys():
-        raise Http_error(400, {'username': LogMsg.NOT_EDITABLE})
+        logger.error(LogMsg.NOT_EDITABLE,'username')
+        raise Http_error(400, Message.NOT_EDITABLE)
 
-    logger.debug(LogMsg.EDIT_REQUST)
+    logger.debug(LogMsg.EDIT_REQUST,{'user_id':id,'data':data})
 
     model_instance = check_by_id(id, db_session)
     if model_instance:
-        logger.debug(LogMsg.MODEL_GETTING)
+        logger.debug(LogMsg.MODEL_GETTING,{'user_id':id})
     else:
-        logger.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, {"id": LogMsg.NOT_FOUND})
+        logger.debug(LogMsg.NOT_FOUND,{'user_id':id})
+        raise Http_error(404, Message.NOT_FOUND)
 
     if model_instance.creator != username and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED, username)
@@ -200,12 +198,12 @@ def edit(id, db_session, data, username):
         # TODO  if key is valid attribute of class
         setattr(model_instance, key, value)
     edit_basic_data(model_instance, username, data.get('tags'))
+    user_dict = user_to_dict(model_instance)
 
-    logger.debug(LogMsg.EDIT_SUCCESS, user_to_dict(model_instance))
-
+    logger.debug(LogMsg.EDIT_SUCCESS,user_dict )
     logger.info(LogMsg.END)
 
-    return user_to_dict(model_instance)
+    return user_dict
 
 
 def user_to_dict(user):
@@ -229,25 +227,28 @@ def user_to_dict(user):
 
 
 def edit_profile(id, db_session, data, username):
-    logger.info(LogMsg.START + " user is {}".format(username))
+    logger.info(LogMsg.START ,username)
     if "id" in data.keys():
         del data["id"]
     if "person_id" in data.keys():
         del data["person_id"]
     if ('username' or 'password') in data.keys():
-        raise Http_error(400, {'username and password': LogMsg.NOT_EDITABLE})
+        logger.error(LogMsg.NOT_EDITABLE,'username , password')
+        raise Http_error(400, Message.NOT_EDITABLE)
 
-    logger.debug(LogMsg.EDIT_REQUST)
+    logger.debug(LogMsg.EDIT_REQUST,data)
 
     user = get(id, db_session, username)
     if user:
-        logger.debug(LogMsg.MODEL_GETTING)
+        logger.debug(LogMsg.MODEL_GETTING,{'user_id':id})
         if user.person_id:
             person = get_person(user.person_id, db_session, username)
+            logger.debug(LogMsg.PERSON_EXISTS,username)
             if person:
                 edit_person(person.id, db_session, data, username)
 
             else:
+                logger.error(LogMsg.USER_HAS_NO_PERSON,username)
                 raise Http_error(404, LogMsg.PERSON_NOT_EXISTS)
 
         else:
@@ -255,17 +256,20 @@ def edit_profile(id, db_session, data, username):
             user.person_id = person.id
 
     else:
-        logger.debug(LogMsg.MODEL_GETTING_FAILED)
-        raise Http_error(404, {"user_id": LogMsg.NOT_FOUND})
+        logger.debug(LogMsg.NOT_FOUND,{'user_id':id})
+        raise Http_error(404,Message.NOT_FOUND)
 
-    logger.debug(LogMsg.MODEL_ALTERED)
+    user_dict = user_to_dict(user)
+    logger.debug(LogMsg.MODEL_ALTERED,user_dict)
 
     logger.info(LogMsg.END)
 
-    return user_to_dict(user)
+    return user_dict
 
 
 def reset_pass(data, db_session):
+    logger.info(LogMsg.START,data)
+
     cell_no = data.get('cell_no')
     redis_key = 'PASS_{}'.format(cell_no)
     code = redis.get(redis_key)
@@ -282,5 +286,11 @@ def reset_pass(data, db_session):
 
     if user:
         user.password = data.get('password')
-        return {'msg': 'successful'}
+
+        logger.debug(LogMsg.USER_PASSWORD_RESET,user_to_dict(user))
+        logger.info(LogMsg.END)
+
+        return Http_response(200,Message.SUCCESSFUL)
+
+    logger.error(LogMsg.NOT_FOUND,data)
     raise Http_error(404, Message.INVALID_USER)

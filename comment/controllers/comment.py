@@ -1,10 +1,10 @@
 
-from book_rate.controller import get as get_rate, get_users_rate
+from book_rate.controller import get_users_rate
 from books.controllers.book import get as get_book
 from comment.controllers.actions import get_comment_like_count, \
     get_comment_reports, liked_by_user, reported_by_user
 from comment.models import Comment
-from helper import Now, Http_error, model_to_dict, Http_response, value, \
+from helper import Http_error, model_to_dict, Http_response, value, \
     populate_basic_data, edit_basic_data
 from log import LogMsg, logger
 from messages import Message

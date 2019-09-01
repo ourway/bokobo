@@ -49,3 +49,6 @@ class Message:
     BOOK_NOT_IN_LIB = 'book_not_in_lib'
     BOOK_IS_ALREADY_PURCHASED = 'book_already_purchased'
     ONLINE_BOOK_COUNT_LIMITATION = 'online_book_count_limitation'
+    EDIT_FAILED = 'edit_failed'
+    NOT_EDITABLE = 'not_editable'
+    SUCCESSFUL = 'successful'

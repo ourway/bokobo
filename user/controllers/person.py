@@ -1,12 +1,9 @@
 import json
 import os
-from uuid import uuid4
-
 from sqlalchemy import or_
-
 from accounts.controller import add_initial_account
 from follow.controller import get_following_list_internal
-from helper import model_to_dict, Now, Http_error, model_basic_dict, \
+from helper import model_to_dict, Http_error, model_basic_dict, \
     populate_basic_data, edit_basic_data, Http_response
 from log import LogMsg, logger
 from messages import Message
@@ -20,7 +17,8 @@ from configs import SIGNUP_USER, ADMINISTRATORS
 from constraint_handler.controllers.person_constraint import \
     add as add_uniquecode
 from constraint_handler.controllers.unique_entity_connector import \
-    get_by_entity as get_connector, add as add_connector, delete as delete_connector
+    get_by_entity as get_connector, add as add_connector, \
+    delete as delete_connector
 from constraint_handler.controllers.common_methods import \
     delete as delete_uniquecode
 
@@ -36,18 +34,21 @@ def add(db_session, data, username):
 
     cell_no = data.get('cell_no')
     if cell_no and person_cell_exists(db_session, cell_no):
-        raise Http_error(409, LogMsg.PERSON_EXISTS.format('cell_no'))
+        logger.error(LogMsg.PERSON_EXISTS, {'cell_no': cell_no})
+        raise Http_error(409, Message.ALREADY_EXISTS)
 
     email = data.get('email')
 
     if email and person_mail_exists(db_session, email):
-        raise Http_error(409, LogMsg.PERSON_EXISTS.format('email'))
+        logger.error(LogMsg.PERSON_EXISTS, {'email': email})
+        raise Http_error(409, Message.ALREADY_EXISTS)
 
     logger.debug(LogMsg.CHECK_UNIQUE_EXISTANCE, data)
     unique_code = add_uniquecode(data, db_session)
 
     model_instance = Person()
     populate_basic_data(model_instance, username, data.get('tags'))
+    logger.debug(LogMsg.POPULATING_BASIC_DATA)
     model_instance.name = data.get('name')
     model_instance.last_name = data.get('last_name')
     model_instance.address = data.get('address')
@@ -58,11 +59,14 @@ def add(db_session, data, username):
     model_instance.image = data.get('image')
 
     db_session.add(model_instance)
+    logger.debug(LogMsg.DB_ADD)
     add_initial_account(model_instance.id, db_session, username)
+    logger.debug(LogMsg.PERSON_ADD_ACCOUNT, {'person_id': model_instance.id})
+
     add_connector(model_instance.id, unique_code.UniqueCode, db_session)
     logger.debug(LogMsg.UNIQUE_CONNECTOR_ADDED, {'person_id': model_instance.id,
                                                  'unique_constraint': unique_code.UniqueCode})
-
+    logger.info(LogMsg.END)
     return model_instance
 
 
@@ -85,30 +89,36 @@ def get(id, db_session, username):
 
 
 def edit(id, db_session, data, username):
+    logger.info(LogMsg.START, username)
+
     # TODO: you never checked version of passed data, we have version field in our
     #      records, to prevent conflict when we received two different edit request
     #      concurrently. check KAVEH codes (edit functions) to better understanding
     #      version field usage
 
-    logger.info(LogMsg.START, username)
+    logger.debug(LogMsg.EDIT_REQUST, {'person_id': id, 'data': data})
 
     if "id" in data.keys():
         del data["id"]
-    logger.debug(LogMsg.EDIT_REQUST)
 
     model_instance = db_session.query(Person).filter(Person.id == id).first()
     if model_instance:
         logger.debug(LogMsg.MODEL_GETTING)
     else:
-        logger.debug(LogMsg.MODEL_GETTING_FAILED)
+        logger.debug(LogMsg.MODEL_GETTING_FAILED, {'person_id': id})
         raise Http_error(404, Message.NOT_FOUND)
+
+    if model_instance.creator != username and username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED, username)
+        raise Http_error(403, Message.ACCESS_DENIED)
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class
         setattr(model_instance, key, value)
     edit_basic_data(model_instance, username, data.get('tags'))
 
-    logger.debug(LogMsg.MODEL_ALTERED)
+    logger.debug(LogMsg.MODEL_ALTERED,
+                 person_to_dict(model_instance, db_session))
 
     logger.debug(LogMsg.UNIQUE_CONSTRAINT_IS_CHANGING)
     unique_connector = get_connector(id, db_session)
@@ -120,40 +130,38 @@ def edit(id, db_session, data, username):
         delete_connector(id, db_session)
         add_connector(id, code.UniqueCode, db_session)
 
-    logger.debug(LogMsg.EDIT_SUCCESS, model_to_dict(model_instance))
-
     logger.info(LogMsg.END)
-
     return model_instance
 
 
 def delete(id, db_session, username):
-    logger.info(
-        LogMsg.START, username)
+    logger.info(LogMsg.START, username)
 
-    logger.info(LogMsg.DELETE_REQUEST, id)
+    logger.info(LogMsg.DELETE_REQUEST, {'person_id': id})
 
     model_instance = db_session.query(Person).filter(Person.id == id).first()
     if model_instance is None:
         logger.error(LogMsg.NOT_FOUND, {'person_id': id})
         raise Http_error(404, Message.NOT_FOUND)
     if person_has_books(id, db_session):
-        logger.error(LogMsg.PERSON_HAS_BOOKS)
+        logger.error(LogMsg.PERSON_HAS_BOOKS, {'person_id': id})
         raise Http_error(403, Message.PERSON_HAS_BOOKS)
 
     try:
         delete_person_accounts(id, db_session)
+        logger.debug(LogMsg.PERSON_ACCOUNTS_DELETED, {'person_id': id})
         db_session.delete(model_instance)
+        logger.debug(LogMsg.PERSON_DELETED, {'person_id': id})
 
-        logger.debug(LogMsg.ENTITY_DELETED, {"Person.id {}": id})
+        users = db_session.query(User).filter(User.person_id == id).all()
+        logger.debug(LogMsg.PERSON_USERS_GOT, id)
+        if users is not None:
+            for user in users:
+                logger.debug(LogMsg.RELATED_USER_DELETE,
+                             {'person_id': id, 'user_id': user.id})
 
-        user = db_session.query(User).filter(User.person_id == id).first()
-
-        if user:
-            logger.debug(LogMsg.RELATED_USER_DELETE.format(user.id))
-
-            db_session.query(User).filter(User.person_id == id).delete()
-            logger.debug(LogMsg.ENTITY_DELETED)
+                db_session.delete(user)
+                logger.debug(LogMsg.ENTITY_DELETED)
         else:
             logger.debug(LogMsg.NOT_RELATED_USER_FOR_PERSON,
                          {"Person.id {}": id})
@@ -174,7 +182,7 @@ def delete(id, db_session, username):
 
 
 def get_all(db_session, username):
-    logger.info(LogMsg.START + "user is {}".format(username))
+    logger.info(LogMsg.START, username)
     try:
         result = db_session.query(Person).all()
         logger.debug(LogMsg.GET_SUCCESS)
@@ -213,9 +221,11 @@ def search_person(data, db_session, username):
 
         for person in persons:
             result.append(model_to_dict(person))
+        logger.debug(LogMsg.GET_SUCCESS, result)
     except:
+        logger.exception(LogMsg.GET_FAILED, exc_info=True)
         raise Http_error(404, Message.NOT_FOUND)
-
+    logger.info(LogMsg.END)
     return result
 
 
@@ -231,12 +241,10 @@ def get_person_profile(id, db_session, username):
         result['following_list'] = get_following_list_internal(id, db_session)
         result['wish_list'] = internal_wish_list(db_session, Person.id)
 
-        logger.debug(LogMsg.GET_SUCCESS +
-                     json.dumps(result))
+        logger.debug(LogMsg.GET_SUCCESS, result)
     else:
-        logger.error(LogMsg.GET_FAILED, {"Person.id {}": id})
+        logger.error(LogMsg.NOT_FOUND, {"Person_id": id})
         raise Http_error(404, Message.NOT_FOUND)
-    logger.debug(LogMsg.GET_SUCCESS, json.dumps(result))
     logger.info(LogMsg.END)
 
     return result
