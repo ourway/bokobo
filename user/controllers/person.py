@@ -2,6 +2,7 @@ import json
 import os
 from sqlalchemy import or_
 from accounts.controller import add_initial_account
+from book_library.controller import is_book_in_library
 from follow.controller import get_following_list_internal
 from helper import model_to_dict, Http_error, model_basic_dict, \
     populate_basic_data, edit_basic_data, Http_response
@@ -111,6 +112,13 @@ def edit(id, db_session, data, username):
     if model_instance.creator != username and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED, username)
         raise Http_error(403, Message.ACCESS_DENIED)
+
+    if 'current_book' in data.keys():
+        if not is_book_in_library(model_instance.id, data.get('current_book'),
+                                  db_session):
+            logger.error(LogMsg.COLLECTION_BOOK_IS_NOT_IN_LIBRARY,
+                         {'current_book_id': data.get('current_book')})
+            raise Http_error(404, Message.BOOK_NOT_IN_LIB)
 
     for key, value in data.items():
         # TODO  if key is valid attribute of class

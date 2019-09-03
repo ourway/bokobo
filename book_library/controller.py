@@ -20,16 +20,16 @@ def add(data, db_session):
     logger.debug(LogMsg.SCHEMA_CHECKED)
     book_id = data.get('book_id')
     person_id = data.get('person_id')
-    logger.debug(LogMsg.LIBRARY_CHECK_BOOK_EXISTANCE,{'book_id': book_id,'person_id':person_id})
+    logger.debug(LogMsg.LIBRARY_CHECK_BOOK_EXISTANCE,
+                 {'book_id': book_id, 'person_id': person_id})
     if is_book_in_library(person_id, book_id, db_session):
         logger.error(LogMsg.ALREADY_IS_IN_LIBRARY, {'book_id': book_id})
         raise Http_error(409, Message.BOOK_IS_ALREADY_PURCHASED)
 
     book = get_book(book_id, db_session)
-    if book.type.name not in ONLINE_BOOK_TYPES :
+    if book.type.name not in ONLINE_BOOK_TYPES:
         logger.debug(LogMsg.LIBRARY_BOOK_TYPE_NOT_ADDABLE, book.type.name)
         return {}
-
 
     model_instance = Library()
 
@@ -46,16 +46,16 @@ def add(data, db_session):
 
 
 def get_personal_library(db_session, username):
-    logger.info(LogMsg.START,username)
+    logger.info(LogMsg.START, username)
     user = check_user(username, db_session)
     if user.person_id is None:
-        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
+        logger.error(LogMsg.USER_HAS_NO_PERSON, username)
         raise Http_error(400, Message.Invalid_persons)
 
     validate_person(user.person_id, db_session)
     logger.debug(LogMsg.PERSON_EXISTS)
 
-    logger.debug(LogMsg.LIBRARY_GET_PERSON_LIBRARY,username)
+    logger.debug(LogMsg.LIBRARY_GET_PERSON_LIBRARY, username)
 
     result = db_session.query(Library).filter(
         Library.person_id == user.person_id).all()
@@ -66,14 +66,14 @@ def get_personal_library(db_session, username):
 
 
 def delete(id, db_session, username):
-    logger.info(LogMsg.START,username)
+    logger.info(LogMsg.START, username)
     model_instance = db_session.query(Library).filter(Library.id == id).first()
 
     if model_instance is None:
-        logger.error(LogMsg.NOT_FOUND,{'library_id':id})
+        logger.error(LogMsg.NOT_FOUND, {'library_id': id})
         raise Http_error(404, Message.NOT_FOUND)
     if username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED,username)
+        logger.error(LogMsg.NOT_ACCESSED, username)
         raise Http_error(403, Message.ACCESS_DENIED)
 
     db_session.delete(model_instance)
@@ -92,11 +92,12 @@ def get_user_library(person_id, db_session):
 def add_books_to_library(person_id, book_list, db_session):
     logger.info(LogMsg.START)
     result = []
-    logger.debug(LogMsg.LIBRARY_ADD_BOOKS,{'person_id':person_id,'books':book_list})
+    logger.debug(LogMsg.LIBRARY_ADD_BOOKS,
+                 {'person_id': person_id, 'books': book_list})
     for book_id in book_list:
         if is_book_in_library(person_id, book_id, db_session):
-            logger.error(LogMsg.ALREADY_IS_IN_LIBRARY,{'book_id': book_id})
-            raise Http_error(409,Message.BOOK_IS_ALREADY_PURCHASED)
+            logger.error(LogMsg.ALREADY_IS_IN_LIBRARY, {'book_id': book_id})
+            raise Http_error(409, Message.BOOK_IS_ALREADY_PURCHASED)
 
         lib_data = {'person_id': person_id, 'book_id': book_id}
 
@@ -106,13 +107,13 @@ def add_books_to_library(person_id, book_list, db_session):
 
 
 def edit_status(id, data, db_session, username):
-    logger.info(LogMsg.START,username)
+    logger.info(LogMsg.START, username)
     user = check_user(username, db_session)
     if user is None:
         raise Http_error(400, Message.INVALID_USER)
 
     if user.person_id is None:
-        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
+        logger.error(LogMsg.USER_HAS_NO_PERSON, username)
         raise Http_error(400, Message.Invalid_persons)
 
     validate_person(user.person_id, db_session)
@@ -120,7 +121,7 @@ def edit_status(id, data, db_session, username):
 
     model_instance = db_session.query(Library).filter(Library.id == id).first()
     if model_instance.person_id != user.person_id and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED,username)
+        logger.error(LogMsg.NOT_ACCESSED, username)
         raise Http_error(403, Message.ACCESS_DENIED)
 
     if data.get('reading_started'):
@@ -129,7 +130,7 @@ def edit_status(id, data, db_session, username):
         model_instance.status['read_pages'] = data.get('read_pages')
     if data.get('read_duration'):
         model_instance.status['read_duration'] = data.get('read_duration')
-    logger.debug(LogMsg.MODEL_ALTERED,data)
+    logger.debug(LogMsg.MODEL_ALTERED, data)
 
     logger.info(LogMsg.END)
 
@@ -158,6 +159,18 @@ def is_book_in_library(person_id, book_id, db_session):
              Library.book_id == book_id)).first()
 
     if result is None:
+        logger.debug(LogMsg.COLLECTION_BOOK_IS_NOT_IN_LIBRARY,
+                     {'book_id': id, 'person_id': person_id})
         return False
     logger.info(LogMsg.END)
+    return True
+
+
+def books_are_in_lib(person_id, books, db_session):
+    logger.debug(LogMsg.LIBRARY_CHECK_BOOK_EXISTANCE)
+    for id in books:
+        logger.debug(LogMsg.LIBRARY_CHECK_BOOK_EXISTANCE,
+                     {'book_id': id, 'person_id': person_id})
+        if not is_book_in_library(person_id, id, db_session):
+            return False
     return True

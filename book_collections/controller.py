@@ -1,7 +1,7 @@
 from sqlalchemy import and_, update
 
 from book_collections.models import Collection
-from book_library.controller import is_book_in_library
+from book_library.controller import is_book_in_library, books_are_in_lib
 from helper import Http_error, populate_basic_data, Http_response, check_schema, \
     model_basic_dict
 from log import LogMsg, logger
@@ -121,22 +121,31 @@ def add(data, db_session, username):
 def add_book_to_collections(data, db_session, username):
     logger.info(LogMsg.START, username)
 
-    check_schema(['book_id', 'collections'], data.keys())
-    user = check_user(username, db_session)
-    if user is None:
-        raise Http_error(404, Message.INVALID_USER)
-    if user.person_id is None:
-        logger.error(LogMsg.USER_HAS_NO_PERSON, username)
-        raise Http_error(404, Message.INVALID_USER)
+    check_schema(['book_ids', 'collections'], data.keys())
+    if 'person_id' in data:
+        person_id = data.get('person_id')
+    else:
+        user = check_user(username, db_session)
+        if user is None:
+            raise Http_error(404, Message.INVALID_USER)
+        if user.person_id is None:
+            logger.error(LogMsg.USER_HAS_NO_PERSON, username)
+            raise Http_error(404, Message.INVALID_USER)
+        person_id = user.person_id
+
+    books_ids = data.get('book_ids')
+    logger.debug(LogMsg.LIBRARY_CHECK_BOOK_EXISTANCE,books_ids)
+    if not books_are_in_lib(person_id, books_ids, db_session):
+        raise Http_error(404, Message.BOOK_NOT_IN_LIB)
+
     logger.debug(LogMsg.COLLECTION_ADD_BOOK_TO_MULTIPLE_COLLECTIONS, data)
-    books_id = data.get('book_ids')
     for collection_title in data.get('collections'):
-        if not collection_exists(collection_title, user.person_id, db_session):
+        if not collection_exists(collection_title, person_id, db_session):
             logger.error(LogMsg.NOT_FOUND,
                          {'collection_tilte': collection_title,
-                          'person_id': user.person_id})
-        addition_data = {'book_ids': books_id, 'title': collection_title,
-                         'person_id': user.person_id}
+                          'person_id': person_id})
+        addition_data = {'book_ids': books_ids, 'title': collection_title,
+                         'person_id': person_id}
         add(addition_data, db_session, 'internal')
     logger.info(LogMsg.END)
 

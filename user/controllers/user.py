@@ -252,6 +252,7 @@ def edit_profile(id, db_session, data, username):
                 raise Http_error(404, LogMsg.PERSON_NOT_EXISTS)
 
         else:
+            del data['current_book']
             person = add_person(db_session, data, username)
             user.person_id = person.id
 
