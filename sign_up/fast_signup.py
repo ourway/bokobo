@@ -1,7 +1,7 @@
 import json
 
 from configs import SIGNUP_USER
-from helper import Http_error, model_to_dict
+from helper import Http_error, model_to_dict, check_schema
 from log import logger, LogMsg
 from app_redis import app_redis as redis
 from messages import Message
@@ -14,6 +14,8 @@ from user.controllers.person import add as add_person
 
 def signup(data, db_session, *args, **kwargs):
     logger.info(LogMsg.START, data)
+    check_schema(['cell_no','signup_token','username','password'])
+    logger.debug(LogMsg.SCHEMA_CHECKED)
 
     cell_no = data.get('cell_no')
     logger.debug(LogMsg.SIGNUP_GETTING_TOKEN_FROM_REDIS, cell_no)
@@ -28,7 +30,7 @@ def signup(data, db_session, *args, **kwargs):
         logger.error(LogMsg.SIGNUP_TOKEN_INVALID,
                      {'redis_signup_token': signup_token,
                       'data_token': data.get('signup_token')})
-        raise Http_error(409, Message.INVALID_SIGNUP_TOKEN)
+        raise Http_error(404, Message.INVALID_SIGNUP_TOKEN)
 
     user_data = {k: v for k, v in data.items() if k in ['username', 'password']}
     person_data = {k: v for k, v in data.items() if k not in user_data.keys()}
