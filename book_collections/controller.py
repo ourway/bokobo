@@ -173,9 +173,9 @@ def get_all_collections(db_session, username):
 
     result = []
 
-    for title, colls in collections.items():
+    for title, book_ids in collections.items():
         books = []
-        for item in colls:
+        for item in book_ids:
             if item is None:
                 pass
             else:

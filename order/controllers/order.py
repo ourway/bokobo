@@ -57,7 +57,7 @@ def get_all(data, db_session, username=None):
     offset = data.get('offset', 0)
     limit = data.get('limit', 20)
 
-    if username not in administrator_users:
+    if username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED,username)
         raise Http_error(403, Message.ACCESS_DENIED)
 
