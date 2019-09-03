@@ -1,5 +1,4 @@
 from book_library.controller import is_book_in_library
-from order.controllers.order import order_to_dict
 from prices.controller import get_book_price_internal, calc_net_price
 from repository.user_repo import check_user
 from order.models import OrderItem
@@ -10,6 +9,7 @@ from helper import Http_error, populate_basic_data, Http_response, \
 from log import LogMsg, logger
 from messages import Message
 from configs import ONLINE_BOOK_TYPES,ADMINISTRATORS
+from repository.order_repo import order_to_dict
 
 administrator_users = ADMINISTRATORS
 
