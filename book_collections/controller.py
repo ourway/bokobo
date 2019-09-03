@@ -40,7 +40,7 @@ def add(data, db_session, username):
         person_id = user.person_id
 
     validate_person(person_id, db_session)
-    logger.debug(LogMsg.PERSON_EXISTS)
+    logger.debug(LogMsg.PERSON_EXISTS,person_id)
 
     logger.debug(LogMsg.CHECK_UNIQUE_EXISTANCE, data)
     unique_code = unique_code_exists(data, db_session)
