@@ -291,7 +291,7 @@ def reset_pass(data, db_session):
         logger.debug(LogMsg.USER_PASSWORD_RESET,user_to_dict(user))
         logger.info(LogMsg.END)
 
-        return Http_response(200,Message.SUCCESSFUL)
+        return data
 
     logger.error(LogMsg.NOT_FOUND,data)
     raise Http_error(404, Message.INVALID_USER)
