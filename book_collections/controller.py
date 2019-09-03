@@ -193,8 +193,18 @@ def get_collection(title, db_session, username):
     return result
 
 
+def collection_exists(title, person_id, db_session):
+    result = db_session.query(Collection).filter(
+        and_(Collection.person_id == person_id,
+             Collection.title == title)).first()
+    if result is None:
+        return False
+    return True
+
+
 def delete_collection(title, db_session, username):
     logger.info(LogMsg.START, username)
+
 
     user = check_user(username, db_session)
     if user is None:
@@ -208,6 +218,9 @@ def delete_collection(title, db_session, username):
     logger.debug(LogMsg.PERSON_EXISTS)
 
     try:
+        if not collection_exists(title,user.person_id,db_session):
+            logger.error(LogMsg.NOT_FOUND,{'collection_title':title,'person_id':user.person_id})
+            raise Http_error(404,Message.NOT_FOUND)
         logger.debug(LogMsg.COLLECTION_DELETE, title)
         result = delete_collection_constraints(title, user.person_id,
                                                db_session)
