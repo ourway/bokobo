@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/book_collections/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/book_collections/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book_collections/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/book_collections/urls.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,14 +25,37 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
-              <caret line="207" column="5" selection-start-line="207" selection-start-column="5" selection-end-line="207" selection-end-column="5" />
+            <state relative-caret-position="324">
+              <caret line="115" column="21" lean-forward="true" selection-start-line="115" selection-start-column="21" selection-end-line="115" selection-end-column="21" />
               <folding>
-                <element signature="e#4118#4856#0" />
+                <element signature="e#939#4054#0" />
                 <element signature="e#4910#5920#0" />
+                <element signature="e#5976#6819#0" />
+                <element signature="e#6878#7761#0" />
+                <element signature="e#7830#9534#0" />
+                <element signature="e#9589#9773#0" />
+                <element signature="e#9823#10105#0" />
+                <element signature="e#10153#10537#0" />
+                <element signature="e#10588#11448#0" />
+                <element signature="e#11503#12068#0" />
+                <element signature="e#12128#12342#0" />
+                <element signature="e#12414#13117#0" />
+                <element signature="e#13182#15176#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/book_collections/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="486">
+              <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#60#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -224,7 +248,6 @@
         <option value="$PROJECT_DIR$/books/controllers/book.py" />
         <option value="$PROJECT_DIR$/books/controllers/book_roles.py" />
         <option value="$PROJECT_DIR$/book_collections/models.py" />
-        <option value="$PROJECT_DIR$/book_collections/urls.py" />
         <option value="$PROJECT_DIR$/repository/user_repo.py" />
         <option value="$PROJECT_DIR$/constraint_handler/controllers/collection_constraint.py" />
         <option value="$PROJECT_DIR$/constraint_handler/controllers/unique_entity_connector.py" />
@@ -244,6 +267,7 @@
         <option value="$PROJECT_DIR$/repository/comment_repo.py" />
         <option value="$PROJECT_DIR$/register/controller.py" />
         <option value="$PROJECT_DIR$/book_collections/controller.py" />
+        <option value="$PROJECT_DIR$/book_collections/urls.py" />
       </list>
     </option>
   </component>
@@ -268,6 +292,11 @@
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="book_collections" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
@@ -357,8 +386,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22866704" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22866704" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -573,17 +603,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/book_collections/controller.py</url>
-          <line>423</line>
+          <line>413</line>
           <option name="timeStamp" value="122" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/book_collections/controller.py</url>
-          <line>415</line>
+          <line>405</line>
           <option name="timeStamp" value="123" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/book_collections/controller.py</url>
-          <line>348</line>
+          <line>338</line>
           <option name="timeStamp" value="124" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -860,16 +890,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/book_collections/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="20" column="59" selection-start-line="20" selection-start-column="45" selection-end-line="20" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/constraint_handler/controllers/common_methods.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1130,11 +1150,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="207" column="5" selection-start-line="207" selection-start-column="5" selection-end-line="207" selection-end-column="5" />
+        <state relative-caret-position="324">
+          <caret line="115" column="21" lean-forward="true" selection-start-line="115" selection-start-column="21" selection-end-line="115" selection-end-column="21" />
           <folding>
-            <element signature="e#4118#4856#0" />
+            <element signature="e#939#4054#0" />
             <element signature="e#4910#5920#0" />
+            <element signature="e#5976#6819#0" />
+            <element signature="e#6878#7761#0" />
+            <element signature="e#7830#9534#0" />
+            <element signature="e#9589#9773#0" />
+            <element signature="e#9823#10105#0" />
+            <element signature="e#10153#10537#0" />
+            <element signature="e#10588#11448#0" />
+            <element signature="e#11503#12068#0" />
+            <element signature="e#12128#12342#0" />
+            <element signature="e#12414#13117#0" />
+            <element signature="e#13182#15176#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book_collections/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#60#0" expanded="true" />
           </folding>
         </state>
       </provider>
