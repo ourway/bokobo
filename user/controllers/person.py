@@ -71,7 +71,7 @@ def add(db_session, data, username):
     return model_instance
 
 
-def get(id, db_session, username):
+def get(id, db_session, username=None):
     logger.info(LogMsg.START, username)
 
     logger.debug(LogMsg.MODEL_GETTING)

@@ -1,4 +1,5 @@
 from book_library.controller import is_book_in_library
+from order.controllers.order import order_to_dict
 from prices.controller import get_book_price_internal, calc_net_price
 from repository.user_repo import check_user
 from order.models import OrderItem
@@ -136,7 +137,7 @@ def delete(id, db_session, username=None):
         db_session.delete(order_item)
         logger.debug(LogMsg.ORDER_ITEM_DELETED,id)
         order = calc_total_price_order(order_id, db_session)
-        logger.debug(LogMsg.ORDER_CALC_PRICE,model_to_dict(order))
+        logger.debug(LogMsg.ORDER_CALC_PRICE,order_to_dict(order,db_session,username))
     except:
         logger.exception(LogMsg.DELETE_FAILED,exc_info=True)
         raise Http_error(404, Message.DELETE_FAILED)
@@ -207,7 +208,7 @@ def edit(id, data, db_session, username=None):
         raise Http_error(404, Message.DELETE_FAILED)
 
     order = calc_total_price_order(model_instance.order_id,db_session)
-    logger.debug(LogMsg.ORDER_CALC_PRICE, model_to_dict(order))
+    logger.debug(LogMsg.ORDER_CALC_PRICE, order_to_dict(order,db_session,username))
 
     logger.info(LogMsg.END)
 

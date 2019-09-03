@@ -8,6 +8,7 @@ from helper import Http_error, populate_basic_data, Http_response, \
     model_to_dict, check_schema, edit_basic_data, value, model_basic_dict
 from log import LogMsg,logger
 from messages import Message
+from user.controllers.person import get as get_person
 
 administrator_users = value('administrator_users', ['admin'])
 
@@ -37,15 +38,16 @@ def add(data, db_session, username):
     db_session.add(model_instance)
     logger.debug(LogMsg.ORDER_ADD_ITEMS,data.get('items'))
     model_instance.total_price = add_orders_items(model_instance.id, data.get('items'), db_session, username)
-    logger.debug(LogMsg.ORDER_ADD,order_to_dict(model_instance))
+    order_dict = order_to_dict(model_instance, db_session, username)
+    logger.debug(LogMsg.ORDER_ADD,order_dict)
     logger.info(LogMsg.END)
-    return order_to_dict(model_instance)
+    return order_dict
 
 
 def get(id, db_session, username=None):
     logger.info(LogMsg.START,username)
     result = db_session.query(Order).filter(Order.id == id).first()
-    return order_to_dict(result)
+    return order_to_dict(result, db_session, username)
 
 
 def internal_get(id, db_session):
@@ -65,7 +67,7 @@ def get_all(data, db_session, username=None):
         Order.creation_date.desc()).slice(offset, offset + limit)
     res = []
     for item in result:
-        res.append(order_to_dict(item))
+        res.append(order_to_dict(item, db_session, username))
     logger.info(LogMsg.END)
 
     return res
@@ -90,7 +92,7 @@ def get_user_orders(data, db_session, username=None):
         Order.creation_date.desc()).slice(offset, offset + limit)
     res = []
     for item in result:
-        res.append(order_to_dict(item))
+        res.append(order_to_dict(item, db_session, username))
     logger.debug(LogMsg.ORDER_USER_ORDERS,res)
     logger.info(LogMsg.END)
 
@@ -113,7 +115,7 @@ def get_person_orders(data, db_session, username=None):
         Order.creation_date.desc()).slice(offset, offset + limit)
     res = []
     for item in result:
-        res.append(order_to_dict(item))
+        res.append(order_to_dict(item,db_session,username))
     logger.debug(LogMsg.ORDER_USER_ORDERS,res)
     logger.info(LogMsg.END)
     return res
@@ -130,7 +132,7 @@ def delete(id, db_session, username=None):
         logger.error(LogMsg.NOT_ACCESSED,username)
         raise Http_error(403, Message.ACCESS_DENIED)
     if order.status == OrderStatus.Invoiced:
-        logger.error(LogMsg.ORDER_NOT_EDITABLE,order_to_dict(order))
+        logger.error(LogMsg.ORDER_NOT_EDITABLE,order_to_dict(order, db_session, username))
         raise Http_error(403,Message.ORDER_INVOICED)
 
     try:
@@ -178,13 +180,14 @@ def edit(id,data, db_session, username=None):
                                                           data.get('items'),
                                                           db_session, username)
         edit_basic_data(model_instance, username)
-        logger.debug(LogMsg.MODEL_ALTERED,order_to_dict(model_instance))
+        order_dict = order_to_dict(model_instance, db_session, username)
+        logger.debug(LogMsg.MODEL_ALTERED,order_dict)
 
     except:
         logger.exception(LogMsg.EDIT_FAILED,exc_info=True)
         raise Http_error(404, Message.DELETE_FAILED)
     logger.info(LogMsg.END)
-    return order_to_dict(model_instance)
+    return order_dict
 
 
 def edit_status_internal(id, status, db_session, username=None):
@@ -207,7 +210,7 @@ def edit_status_internal(id, status, db_session, username=None):
     return model_instance
 
 
-def order_to_dict(order):
+def order_to_dict(order, db_session, username=None):
     if not isinstance(order,Order):
         raise Http_error(404,Message.INVALID_ENTITY)
 
@@ -218,7 +221,8 @@ def order_to_dict(order):
         'price_detail': order.price_detail,
         'description': order.description,
         'total_price': order.total_price,
-        'status': order.status.name
+        'status': order.status.name,
+        'person': get_person(order.person_id, db_session, username)
     }
     result.update(model_props)
     return result
