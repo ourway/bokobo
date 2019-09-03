@@ -44,8 +44,19 @@ def add(data, db_session, username):
 
     logger.debug(LogMsg.CHECK_UNIQUE_EXISTANCE, data)
     unique_code = unique_code_exists(data, db_session)
-    if unique_code is None:
-        unique_code = add_uniquecode(data, db_session)
+
+    if unique_code is None :
+        if username=='internal':
+            logger.error(LogMsg.NOT_FOUND,'user can not add to collection which not exists')
+            raise Http_error(404,Message.NOT_FOUND)
+        else:
+            unique_code = add_uniquecode(data, db_session)
+    if unique_code is not None and username!='internal':
+        logger.error(LogMsg.COLLECTION_EXISTS,{'collection_tilte': data.get('title'),
+                          'person_id': person_id})
+        raise Http_error(409,Message.ALREADY_EXISTS)
+
+
     db_session.flush()
     logger.debug(LogMsg.COLLECTION_ADD_NEW_COLLECTION,
                  {'title': title})
@@ -126,7 +137,7 @@ def add_book_to_collections(data, db_session, username):
                           'person_id': user.person_id})
         addition_data = {'book_ids': books_id, 'title': collection_title,
                          'person_id': user.person_id}
-        add(addition_data, db_session, username)
+        add(addition_data, db_session, 'internal')
     logger.info(LogMsg.END)
 
     return data

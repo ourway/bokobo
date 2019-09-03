@@ -326,6 +326,7 @@ class LogMsg:
     COLLECTION_BOOK_IS_NOT_IN_LIBRARY = 'this book is not in users library and cant add to collection : %s'
     COLLECTION_ADD_EMPTY_COLLECTION = 'adding an empty collection for user : %s '
     COLLECTION_ARRANGE_BY_TITLE = 'arranged collection contents by title'
+    COLLECTION_EXISTS = 'collection by this title already exists : %s'
 
 
     # RATE
