@@ -5,6 +5,7 @@ from uuid import uuid4
 from helper import Http_error, value, Http_response
 from log import LogMsg,logger
 from app_redis import app_redis as redis
+from repository.person_repo import validate_person
 from send_message.send_message import send_message
 from repository.user_repo import check_by_cell_no, check_by_username
 from messages import Message
@@ -125,7 +126,7 @@ def forget_pass(data, db_session):
         raise Http_error(400, Message.USERNAME_CELLNO_REQUIRED)
 
     if user:
-        person = get_person(user.person_id, db_session, user.username)
+        person = validate_person(user.person_id,db_session)
         logger.debug(LogMsg.PERSON_EXISTS,username)
         password = str(random.randint(1000, 9999))
         message = ' نام کاربر : {} \n کد ورود :  {}'.format(user.username,password)
