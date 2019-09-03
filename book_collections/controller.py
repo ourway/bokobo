@@ -161,7 +161,7 @@ def get_all_collections(db_session, username):
 
     collection_items = db_session.query(Collection).filter(and_(
         Collection.person_id == user.person_id)).order_by(
-        Collection.creation_date.desc()).all()
+        Collection.title.desc()).all()
     collections, titles = arrange_collections(collection_items)
     logger.debug(LogMsg.COLLECTION_ARRANGE_BY_TITLE)
 
