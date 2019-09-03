@@ -139,6 +139,6 @@ def forget_pass(data, db_session):
         logger.debug(LogMsg.REDIS_SET,redis_key)
         logger.info(LogMsg.END)
 
-        return {}
+        return data
     logger.error(LogMsg.INVALID_USER,data)
     raise Http_error(404, Message.INVALID_USER)
