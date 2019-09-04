@@ -381,6 +381,7 @@ class LogMsg:
     ORDER_ITEM_UNIT_PRICE = 'order items unit price got : %s'
     ORDER_ITEM_NET_PRICE = 'order items net price calculated : %s '
     ORDER_ITEM_DELETED = 'order item by id: %s deleted'
+    ORDERS_ITEMS = 'orders items collected successfully : %s '
 
 
     #REGISTER

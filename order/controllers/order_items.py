@@ -4,8 +4,9 @@ from repository.user_repo import check_user
 from order.models import OrderItem
 from repository.order_repo import get as get_order
 from repository.book_repo import get as get_book
+from books.controllers.book import get as get_book_dict
 from helper import Http_error, populate_basic_data, Http_response, \
-    check_schema, edit_basic_data, value, model_to_dict
+    check_schema, edit_basic_data, value, model_to_dict, model_basic_dict
 from log import LogMsg, logger
 from messages import Message
 from configs import ONLINE_BOOK_TYPES,ADMINISTRATORS
@@ -22,7 +23,7 @@ def add_orders_items(order_id, items, db_session, username):
         item_instance = add(item, db_session, username)
         total_price +=item_instance.net_price
 
-        logger.debug(LogMsg.ORDER_ITEM_ADDDED_TO_ORDER,model_to_dict(item))
+        logger.debug(LogMsg.ORDER_ITEM_ADDDED_TO_ORDER,item_to_dict(item,db_session))
 
     logger.debug(LogMsg.ORDER_TOTAL_PRICE,total_price)
     logger.info(LogMsg.END)
@@ -87,8 +88,9 @@ def add(data, db_session, username):
 
 def get(id, db_session, username=None):
     logger.info(LogMsg.START)
-    return db_session.query(OrderItem).filter(
+    item = db_session.query(OrderItem).filter(
         OrderItem.id == id).first()
+    return item_to_dict(item,db_session)
 
 
 def get_all(data, db_session, username=None):
@@ -104,7 +106,7 @@ def get_all(data, db_session, username=None):
         OrderItem.creation_date.desc()).slice(offset, offset + limit)
     res = []
     for item in result:
-        res.append(model_to_dict(item))
+        res.append(item_to_dict(item,db_session))
     logger.debug(LogMsg.GET_SUCCESS,res)
 
     logger.info(LogMsg.END)
@@ -116,9 +118,13 @@ def get_orders_items(order_id, db_session, username=None):
 
     result = db_session.query(OrderItem).filter(
         OrderItem.order_id == order_id).all()
+    final_res = []
+    for item in result:
+        final_res.append(item_to_dict(item,db_session))
+    logger.debug(LogMsg.ORDERS_ITEMS,final_res)
     logger.info(LogMsg.END)
 
-    return result
+    return final_res
 
 
 def delete(id, db_session, username=None):
@@ -244,3 +250,26 @@ def recalc_order_price(order_id, db_session):
     logger.info(LogMsg.END)
 
     return order_price
+
+
+def item_to_dict(item,db_session):
+    if not isinstance(item,OrderItem):
+        raise Http_error(404,Message.INVALID_ENTITY)
+
+    result = model_basic_dict(item)
+
+    model_props = {
+        'book_id':item.book_id,
+        'order_id': item.order_id,
+        'description': item.description,
+        'unit_price': item.unit_price,
+        'discount': item.discount,
+        'net_price': item.net_price,
+        'count': item.count,
+        'price_detail':item.price_detail,
+        'book': get_book_dict(item.book_id, db_session),
+        'order':order_to_dict(item.order_id,db_session)
+
+    }
+    result.update(model_props)
+    return result
