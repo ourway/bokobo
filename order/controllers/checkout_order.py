@@ -3,7 +3,8 @@ from enums import OrderStatus
 from helper import Http_error
 from log import logger, LogMsg
 from messages import Message
-from order.controllers.order_items import recalc_order_price, get_orders_items
+from order.controllers.order_items import recalc_order_price
+from repository.item_repo import get_orders_items_internal
 from repository.order_repo import get as get_order
 from accounts.controller import get as get_account
 from financial_transactions.controller import add as add_transaction
@@ -60,7 +61,7 @@ def checkout(order_id, data, db_session, username):
     logger.debug(LogMsg.ORDER_INVOICED,order_id)
 
 
-    order_items = get_orders_items(order_id, db_session)
+    order_items = get_orders_items_internal(order_id, db_session)
     logger.debug(LogMsg.ORDER_GETTING_ITEMS,{'order_id':order_id})
     book_list = []
     for item in order_items:
