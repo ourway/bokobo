@@ -1,10 +1,10 @@
-from helper import check_auth, inject_db, jsonify, pass_data, decode_url
+from helper import check_auth, inject_db, jsonify, pass_data
 from .controller import add, get_all_collections, get_collection, \
     delete_collection, delete_books_from_collection, add_book_to_collections,rename_collection,get_all
 
 
 def call_router(app):
-    wrappers = [decode_url,check_auth, inject_db, jsonify]
+    wrappers = [check_auth, inject_db, jsonify]
     data_plus_wrappers = (wrappers[:])
     data_plus_wrappers.append(pass_data)
 

@@ -1,13 +1,11 @@
 
 import datetime
 import logging
-import urllib
 from os import environ
 import time
 from base64 import b64encode, b64decode
 from uuid import uuid4
 
-import magic
 from bottle import request, HTTPResponse
 
 from log import LogMsg, logger
@@ -234,17 +232,18 @@ def pass_data(func):
 
 
 
-def decode_url(func):
-    def wrapper(*args, **kwargs):
-        urllib.parse.urlencode(request.url, quote_via=urllib.parse.quote)
-        # if request.url is not None:
-        #
-        #     url = request.url
-        #     request.url = unquote(url)
-        rtn = func(*args, **kwargs)
-        return rtn
 
-    return wrapper
+# def decode_url(func):
+#     def wrapper(*args, **kwargs):
+#         urllib.parse.urlencode(request.url, quote_via=urllib.parse.quote)
+#         # if request.url is not None:
+#         #
+#         #     url = request.url
+#         #     request.url = unquote(url)
+#         rtn = func(*args, **kwargs)
+#         return rtn
+#
+#     return wrapper
 
 
 
