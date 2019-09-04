@@ -1,5 +1,6 @@
 from book_library.controller import is_book_in_library
 from prices.controller import get_book_price_internal, calc_net_price
+from repository.item_repo import get_orders_items_internal
 from repository.user_repo import check_user
 from order.models import OrderItem
 from repository.order_repo import get as get_order
@@ -224,7 +225,7 @@ def edit(id, data, db_session, username=None):
 def calc_total_price_order(order_id, db_session):
     logger.info(LogMsg.START)
 
-    items = get_orders_items(order_id,db_session)
+    items = get_orders_items_internal(order_id,db_session)
     order_price = 0.0
     for item in items:
         order_price +=item.net_price
@@ -238,7 +239,7 @@ def calc_total_price_order(order_id, db_session):
 def recalc_order_price(order_id, db_session):
     logger.info(LogMsg.START)
 
-    items = get_orders_items(order_id,db_session)
+    items = get_orders_items_internal(order_id,db_session)
     order_price = 0.0
     for item in items:
         book_price = get_book_price_internal(item.book_id,db_session)

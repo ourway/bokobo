@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="" />
+    <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/repository/item_repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/controllers/order_items.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/controllers/order_items.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/order_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/repository/order_repo.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -10,54 +15,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3587">
-              <caret line="40" column="37" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/order/controllers/order_items.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="273" selection-start-line="273" selection-end-line="273" />
-              <folding>
-                <element signature="e#0#54#0" expanded="true" />
-                <element signature="e#1226#3291#0" />
-                <element signature="e#5825#7660#0" />
-                <element signature="e#7717#8001#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/repository/order_repo.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
-              <folding>
-                <element signature="e#0#47#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/constraint_handler/controllers/common_methods.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="12" selection-start-line="12" selection-end-line="12" />
-              <folding>
-                <element signature="e#0#55#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/order/controllers/order.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -71,32 +28,55 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/sqlalchemy/orm/attributes.py">
+        <entry file="file://$PROJECT_DIR$/helper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="265">
-              <caret line="273" selection-start-line="273" selection-end-line="273" />
+            <state relative-caret-position="216">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
+              <folding>
+                <marker date="1567595111870" expanded="true" signature="6579:6923" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
+        <entry file="file://$PROJECT_DIR$/book_collections/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="77" selection-start-line="77" selection-end-line="77" />
+            <state>
+              <caret column="60" selection-start-column="60" selection-end-column="60" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/order/controllers/order_items.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="116" column="20" selection-start-line="116" selection-start-column="4" selection-end-line="116" selection-end-column="20" />
               <folding>
-                <element signature="e#0#51#0" expanded="true" />
-                <element signature="e#3546#5593#0" />
-                <element signature="e#5638#6748#0" />
-                <element signature="e#6780#7588#0" />
-                <element signature="e#8912#10393#0" />
-                <element signature="e#10447#12544#0" />
-                <element signature="e#12594#13325#0" />
-                <element signature="e#14977#15661#0" />
-                <element signature="e#15706#16428#0" />
-                <element signature="e#16470#17420#0" />
-                <element signature="e#19267#19693#0" />
+                <element signature="e#0#54#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/repository/order_repo.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="662">
+              <caret line="35" selection-start-line="35" selection-end-line="35" />
+              <folding>
+                <element signature="e#0#47#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/repository/item_repo.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="81">
+              <caret line="3" column="29" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -112,7 +92,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>MSG9</find>
       <find>INVALID_SIGNUP_TOKEN</find>
       <find>MSG10</find>
       <find>MSG11</find>
@@ -142,6 +121,7 @@
       <find>order_to_dict</find>
       <find>model_to_dict(</find>
       <find>get_order</find>
+      <find>get_orders_items</find>
     </findStrings>
     <replaceStrings>
       <replace>Order</replace>
@@ -185,7 +165,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/file_handler/handle_file.py" />
         <option value="$PROJECT_DIR$/file_handler/urls.py" />
         <option value="$PROJECT_DIR$/constraint_handler/controller.py" />
         <option value="$PROJECT_DIR$/accounts/urls.py" />
@@ -230,11 +209,12 @@
         <option value="$PROJECT_DIR$/order/controllers/order.py" />
         <option value="$PROJECT_DIR$/user/controllers/person.py" />
         <option value="$PROJECT_DIR$/log.py" />
-        <option value="$PROJECT_DIR$/repository/order_repo.py" />
         <option value="$PROJECT_DIR$/book_collections/controller.py" />
-        <option value="$PROJECT_DIR$/book_collections/urls.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/helper.py" />
+        <option value="$PROJECT_DIR$/book_collections/urls.py" />
+        <option value="$PROJECT_DIR$/repository/order_repo.py" />
+        <option value="$PROJECT_DIR$/repository/item_repo.py" />
         <option value="$PROJECT_DIR$/order/controllers/order_items.py" />
       </list>
     </option>
@@ -391,19 +371,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22866704" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32998884" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.72240806" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.72240806" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.522854" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32998884" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49916342" visible="true" weight="0.522854" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49916342" weight="0.522854" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5008366" side_tool="true" weight="0.522854" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32998884" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -537,12 +518,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/order/controllers/order_items.py</url>
-          <line>158</line>
+          <line>159</line>
           <option name="timeStamp" value="84" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/order/controllers/order_items.py</url>
-          <line>100</line>
+          <line>101</line>
           <option name="timeStamp" value="87" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -627,12 +608,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/order/controllers/order_items.py</url>
-          <line>255</line>
+          <line>256</line>
           <option name="timeStamp" value="129" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/order/controllers/order_items.py</url>
-          <line>118</line>
+          <line>119</line>
           <option name="timeStamp" value="130" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -646,23 +627,18 @@
           <option name="timeStamp" value="138" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/helper.py</url>
-          <line>237</line>
-          <option name="timeStamp" value="150" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/order/controllers/order.py</url>
           <line>39</line>
           <option name="timeStamp" value="154" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/order/controllers/order_items.py</url>
-          <line>25</line>
+          <line>26</line>
           <option name="timeStamp" value="155" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/order/controllers/order_items.py</url>
-          <line>22</line>
+          <line>23</line>
           <option name="timeStamp" value="156" />
         </line-breakpoint>
       </breakpoints>
@@ -744,13 +720,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/accounts/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="363" column="33" selection-start-line="363" selection-start-column="33" selection-end-line="363" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/book_rate/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1112,46 +1081,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/constraint_handler/controllers/common_methods.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#0#55#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/book_collections/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="6" column="27" selection-start-line="6" selection-start-column="27" selection-end-line="6" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/sqlalchemy/orm/attributes.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
           <caret line="273" selection-start-line="273" selection-end-line="273" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="118">
-          <caret line="227" selection-start-line="227" selection-end-line="227" />
-          <folding>
-            <element signature="e#1#16#0" expanded="true" />
-            <element signature="e#1259#1571#0" />
-            <element signature="e#1596#2149#0" />
-            <element signature="e#2184#2774#0" />
-            <element signature="e#2813#3140#0" />
-            <element signature="e#3172#4823#0" />
-            <element signature="e#4852#5003#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1161,23 +1094,6 @@
           <caret line="20" selection-start-line="20" selection-end-line="20" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3587">
-          <caret line="40" column="37" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/controllers/order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="39" selection-start-line="39" selection-end-line="39" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1202,25 +1118,73 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3587">
+          <caret line="40" column="37" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/constraint_handler/controllers/common_methods.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="e#0#55#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/order/controllers/order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="39" selection-start-line="39" selection-end-line="39" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <marker date="1567595111870" expanded="true" signature="6579:6923" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book_collections/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="60" selection-start-column="60" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/repository/order_repo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="284">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        <state relative-caret-position="662">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
           <folding>
             <element signature="e#0#47#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/repository/item_repo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="3" column="29" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/order/controllers/order_items.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="273" selection-start-line="273" selection-end-line="273" />
+        <state relative-caret-position="44">
+          <caret line="116" column="20" selection-start-line="116" selection-start-column="4" selection-end-line="116" selection-end-column="20" />
           <folding>
             <element signature="e#0#54#0" expanded="true" />
-            <element signature="e#1226#3291#0" />
-            <element signature="e#5825#7660#0" />
-            <element signature="e#7717#8001#0" />
           </folding>
         </state>
       </provider>
