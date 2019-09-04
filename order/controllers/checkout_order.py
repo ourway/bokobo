@@ -24,7 +24,7 @@ def checkout(order_id, data, db_session, username):
     logger.debug(LogMsg.ORDER_EXISTS, order_id)
 
     if order.status==OrderStatus.Invoiced:
-        logger.debug(LogMsg.ORDER_NOT_EDITABLE,'order invoiced')
+        logger.debug(LogMsg.ORDER_NOT_EDITABLE,order_id)
         raise Http_error(409,Message.ORDER_INVOICED)
 
     if person_id is not None:

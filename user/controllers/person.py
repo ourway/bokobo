@@ -10,6 +10,7 @@ from log import LogMsg, logger
 from messages import Message
 from repository.account_repo import delete_person_accounts
 from repository.book_role_repo import person_has_books
+from repository.user_repo import check_user
 from wish_list.controller import internal_wish_list
 from ..models import Person, User
 from repository.person_repo import person_cell_exists, person_mail_exists
@@ -101,6 +102,10 @@ def edit(id, db_session, data, username):
 
     if "id" in data.keys():
         del data["id"]
+    user = check_user(username,db_session)
+    if user.person_id is None:
+        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
+        raise Http_error(404,Message.INVALID_USER)
 
     model_instance = db_session.query(Person).filter(Person.id == id).first()
     if model_instance:
@@ -109,7 +114,7 @@ def edit(id, db_session, data, username):
         logger.debug(LogMsg.MODEL_GETTING_FAILED, {'person_id': id})
         raise Http_error(404, Message.NOT_FOUND)
 
-    if model_instance.creator != username and username not in ADMINISTRATORS:
+    if model_instance.id != user.person_id and username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED, username)
         raise Http_error(403, Message.ACCESS_DENIED)
 
