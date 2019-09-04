@@ -23,7 +23,7 @@ def add_orders_items(order_id, items, db_session, username):
         item_instance = add(item, db_session, username)
         total_price +=item_instance.net_price
 
-        logger.debug(LogMsg.ORDER_ITEM_ADDDED_TO_ORDER,item_to_dict(item,db_session))
+        logger.debug(LogMsg.ORDER_ITEM_ADDDED_TO_ORDER,item_to_dict(item_instance,db_session))
 
     logger.debug(LogMsg.ORDER_TOTAL_PRICE,total_price)
     logger.info(LogMsg.END)

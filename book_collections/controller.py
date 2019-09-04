@@ -38,6 +38,7 @@ def add(data, db_session, username):
             logger.error(LogMsg.USER_HAS_NO_PERSON, username)
             raise Http_error(404, Message.Invalid_persons)
         person_id = user.person_id
+        data['person_id'] = person_id
 
     validate_person(person_id, db_session)
     logger.debug(LogMsg.PERSON_EXISTS,person_id)

@@ -1,4 +1,4 @@
-from bottle import Bottle, run
+from bottle import Bottle, run, request
 
 from register.urls import call_router as register_routes
 from user.urls import call_router as user_routes
@@ -43,4 +43,5 @@ if __name__ == '__main__':
 
 
     run(host='0.0.0.0', port=7000, debug=True, app=app)
+
 
