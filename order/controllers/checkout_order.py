@@ -18,10 +18,14 @@ def checkout(order_id, data, db_session, username):
     person_id = data.get('person_id')
     logger.debug(LogMsg.ORDER_CHECKOUT_REQUEST, order_id)
     order = get_order(order_id, db_session)
-    logger.debug(LogMsg.ORDER_EXISTS, order_id)
     if order is None:
         logger.error(LogMsg.NOT_FOUND, {'order_id': order_id})
         raise Http_error(404, Message.NOT_FOUND)
+    logger.debug(LogMsg.ORDER_EXISTS, order_id)
+
+    if order.status==OrderStatus.Invoiced:
+        logger.debug(LogMsg.ORDER_NOT_EDITABLE,'order invoiced')
+        raise Http_error(409,Message.ORDER_INVOICED)
 
     if person_id is not None:
         if order.person_id != person_id and username not in ADMINISTRATORS:
