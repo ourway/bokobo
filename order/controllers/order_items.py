@@ -10,7 +10,7 @@ from helper import Http_error, populate_basic_data, Http_response, \
 from log import LogMsg, logger
 from messages import Message
 from configs import ONLINE_BOOK_TYPES,ADMINISTRATORS
-from repository.order_repo import order_to_dict
+from repository.order_repo import order_to_dict,get_order_dict
 
 administrator_users = ADMINISTRATORS
 
@@ -268,7 +268,7 @@ def item_to_dict(item,db_session):
         'count': item.count,
         'price_detail':item.price_detail,
         'book': get_book_dict(item.book_id, db_session),
-        'order':order_to_dict(item.order_id,db_session)
+        'order':get_order_dict(item.order_id, db_session)
 
     }
     result.update(model_props)

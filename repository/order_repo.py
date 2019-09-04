@@ -7,6 +7,12 @@ from user.controllers.person import get as get_person
 def get(id, db_session, username=None):
     return db_session.query(Order).filter(Order.id == id).first()
 
+def get_order_dict(id, db_session, username=None):
+    order = db_session.query(Order).filter(Order.id == id).first()
+    if order is None:
+        return None
+    return order_to_dict(order,db_session)
+
 
 
 
