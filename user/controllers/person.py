@@ -61,6 +61,7 @@ def add(db_session, data, username):
     model_instance.image = data.get('image')
 
     db_session.add(model_instance)
+    db_session.flush()
     logger.debug(LogMsg.DB_ADD)
     add_initial_account(model_instance.id, db_session, username)
     logger.debug(LogMsg.PERSON_ADD_ACCOUNT, {'person_id': model_instance.id})
