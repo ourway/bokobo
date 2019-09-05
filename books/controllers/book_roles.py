@@ -217,7 +217,15 @@ def delete_book_roles(book_id, db_session):
     logger.debug(LogMsg.DELETE_BOOK_ROLES, book_id)
 
     try:
-        db_session.query(BookRole).filter(BookRole.book_id == book_id).delete()
+        roles = db_session.query(BookRole).filter(BookRole.book_id == book_id).all()
+        for role in roles:
+            unique_connector = get_connector(role.id, db_session)
+            if unique_connector:
+                logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
+                delete_uniquecode(unique_connector.UniqueCode, db_session)
+                delete_connector(role.id, db_session)
+                db_session.delete(role)
+
         logger.debug(LogMsg.DELETE_SUCCESS)
 
 
