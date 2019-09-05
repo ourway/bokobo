@@ -351,7 +351,7 @@ def edit_book(id, db_session, data, username):
                                               db_session, username)
         new_roles = []
         for role in nroles:
-            logger.debug(LogMsg.ATTACHING_ROLES_TO_BOOKS, id)
+            logger.debug(LogMsg.ATTACHING_ROLES_TO_BOOKS)
             new_roles.append(book_role_to_dict(role))
     else:
         elastic_data = persons_of_book(model_instance.id, db_session)
