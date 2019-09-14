@@ -37,22 +37,13 @@ def add_orders_items(order_id, data, db_session, username):
 def add(data, db_session, username):
     logger.info(LogMsg.START,username)
 
-    check_schema(['book_id', 'count', 'order_id'], data.keys())
+    check_schema(['book_id', 'count', 'order_id','person_id'], data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
     book_id = data.get('book_id')
 
-    user = check_user(username, db_session)
-    if user is None:
-        raise Http_error(400, Message.INVALID_USER)
-
-    if user.person_id is None:
-        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
-        raise Http_error(400, Message.Invalid_persons)
-
-    if 'person_id' in data and data.get('person_id') is not None:
-        person_id = data.get('person_id')
-    else:
-        person_id = user.person_id
+    person_id = data.get('person_id')
+    if person_id is None:
+        logger.error(LogMsg.DATA_MISSING,'person_id')
 
     if is_book_in_library(person_id, book_id, db_session):
         logger.error(LogMsg.ALREADY_IS_IN_LIBRARY,{'book_id':book_id})
