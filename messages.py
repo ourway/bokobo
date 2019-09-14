@@ -52,3 +52,4 @@ class Message:
     EDIT_FAILED = 'edit_failed'
     NOT_EDITABLE = 'not_editable'
     SUCCESSFUL = 'successful'
+    CELL_EXISTS = 'cell_no_exists'

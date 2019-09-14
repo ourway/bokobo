@@ -294,6 +294,7 @@ class LogMsg:
     PERSON_ACCOUNTS_DELETED = 'person accounts deleted : %s'
     PERSON_DELETED = 'person by id : %s deleted successfully'
     PERSON_USERS_GOT = 'users of person : %s got successfully'
+    ANOTHER_PERSON_BY_CELL = 'another person exists by this cell_no'
 
     # UNIQUE CONSTRAINT
     GENERATE_UNIQUE_CONSTRAINT = 'generating unique constraint key for entity by data : %s'

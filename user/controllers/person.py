@@ -125,26 +125,36 @@ def edit(id, db_session, data, username):
             logger.error(LogMsg.COLLECTION_BOOK_IS_NOT_IN_LIBRARY,
                          {'current_book_id': data.get('current_book')})
             raise Http_error(404, Message.BOOK_NOT_IN_LIB)
+    if 'cell_no' in data.keys():
+        cell_person  = person_cell_exists(db_session,data.get('cell_no'))
+        if cell_person is not None:
+            if cell_person.id !=model_instance.id:
+                logger.error(LogMsg.ANOTHER_PERSON_BY_CELL)
+                raise Http_error(403,Message.CELL_EXISTS)
 
-    for key, value in data.items():
-        # TODO  if key is valid attribute of class
-        setattr(model_instance, key, value)
-    edit_basic_data(model_instance, username, data.get('tags'))
-    db_session.flush()
-
-    logger.debug(LogMsg.MODEL_ALTERED,
-                 person_to_dict(model_instance, db_session))
-
-    logger.debug(LogMsg.UNIQUE_CONSTRAINT_IS_CHANGING)
-    unique_connector = get_connector(id, db_session)
-    if unique_connector:
-        logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
-        delete_uniquecode(unique_connector.UniqueCode, db_session)
-        logger.debug(LogMsg.GENERATE_UNIQUE_CONSTRAINT, data)
+    try:
+        for key, value in data.items():
+            # TODO  if key is valid attribute of class
+            setattr(model_instance, key, value)
+        edit_basic_data(model_instance, username, data.get('tags'))
         db_session.flush()
-        code = add_uniquecode(data, db_session)
-        delete_connector(id, db_session)
-        add_connector(id, code.UniqueCode, db_session)
+
+        logger.debug(LogMsg.MODEL_ALTERED,
+                     person_to_dict(model_instance, db_session))
+
+        logger.debug(LogMsg.UNIQUE_CONSTRAINT_IS_CHANGING)
+        unique_connector = get_connector(id, db_session)
+        if unique_connector:
+            logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
+            delete_uniquecode(unique_connector.UniqueCode, db_session)
+            logger.debug(LogMsg.GENERATE_UNIQUE_CONSTRAINT, data)
+            db_session.flush()
+            code = add_uniquecode(data, db_session)
+            delete_connector(id, db_session)
+            add_connector(id, code.UniqueCode, db_session)
+    except:
+        logger.exception(LogMsg.EDIT_FAILED,exc_info=True)
+        raise Http_error(403,Message.DELETE_FAILED)
 
     logger.info(LogMsg.END)
     return model_instance
