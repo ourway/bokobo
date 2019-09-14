@@ -29,7 +29,10 @@ def add(data, db_session, username):
     model_instance = Order()
 
     populate_basic_data(model_instance, username)
-    if 'person_id' in data:
+    if 'person_id' in data :
+        if username not in ADMINISTRATORS and user.person_id!=data.get('person_id'):
+            logger.error(LogMsg.NOT_ACCESSED,'user can not add order for others')
+            raise Http_error(403,Message.ACCESS_DENIED)
         person_id = data.get('person_id')
     else:
         person_id = user.person_id
@@ -37,8 +40,7 @@ def add(data, db_session, username):
 
     db_session.add(model_instance)
     item_data = data.get('items')
-    if 'person_id' in data:
-        item_data['person_id'] = data.get('person_id')
+    item_data['person_id'] = person_id
     logger.debug(LogMsg.ORDER_ADD_ITEMS, data.get('items'))
     model_instance.total_price = add_orders_items(model_instance.id,
                                                   item_data, db_session,
@@ -168,10 +170,13 @@ def edit(id, data, db_session, username=None):
         logger.error(LogMsg.ORDER_NOT_EDITABLE, {'order_id': id})
         raise Http_error(403, Message.ORDER_INVOICED)
 
+    user = check_user(username,db_session)
+    if user.person_id is None:
+        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
+        raise Http_error(404,Message.INVALID_USER)
+
     if 'id' in data:
         del data['id']
-    if 'person_id' in data:
-        del data['person_id']
     if 'status' in data:
         del data['status']
 
@@ -182,6 +187,8 @@ def edit(id, data, db_session, username=None):
         item_data = data.get('items')
         if 'person_id' in data:
             item_data['person_id'] = data.get('person_id')
+        else:
+            item_data['person_id'] = user.person_id
         logger.debug(LogMsg.ORDER_ITEMS_DELETE, {'order_id': id})
         delete_orders_items_internal(model_instance.id, db_session)
         logger.debug(LogMsg.ORDER_ADD_ITEMS, {'order_id': id})
