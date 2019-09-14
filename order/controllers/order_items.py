@@ -47,7 +47,12 @@ def add(data, db_session, username):
         logger.error(LogMsg.USER_HAS_NO_PERSON,username)
         raise Http_error(400, Message.Invalid_persons)
 
-    if is_book_in_library(user.person_id, book_id, db_session):
+    if 'person_id' in data and username in ADMINISTRATORS:
+        person_id = data.get('person_id')
+    else:
+        person_id = user.person_id
+
+    if is_book_in_library(person_id, book_id, db_session):
         logger.error(LogMsg.ALREADY_IS_IN_LIBRARY,{'book_id':book_id})
         raise Http_error(409,Message.ALREADY_EXISTS)
 
