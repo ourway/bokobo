@@ -39,7 +39,8 @@ def add(data, db_session, username):
     model_instance.person_id = person_id
 
     db_session.add(model_instance)
-    item_data = data.get('items')
+    item_data = {}
+    item_data['items']= data.get('items')
     item_data['person_id'] = person_id
     logger.debug(LogMsg.ORDER_ADD_ITEMS, data.get('items'))
     model_instance.total_price = add_orders_items(model_instance.id,
@@ -184,7 +185,8 @@ def edit(id, data, db_session, username=None):
         # TODO  if key is valid attribute of class
         setattr(model_instance, key, value)
     if 'items' in data:
-        item_data = data.get('items')
+        item_data = {}
+        item_data['items'] = data.get('items')
         if 'person_id' in data:
             item_data['person_id'] = data.get('person_id')
         else:

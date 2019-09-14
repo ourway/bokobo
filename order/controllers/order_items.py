@@ -16,11 +16,13 @@ from repository.order_repo import order_to_dict,get_order_dict
 administrator_users = ADMINISTRATORS
 
 
-def add_orders_items(order_id, items, db_session, username):
+def add_orders_items(order_id, data, db_session, username):
     logger.info(LogMsg.START,username)
     total_price = 0.00
+    items = data.get('items')
     for item in items:
         item['order_id'] = order_id
+        item['person_id'] = data.get('person_id')
         item_instance = add(item, db_session, username)
         total_price +=item_instance.net_price
 
@@ -47,7 +49,7 @@ def add(data, db_session, username):
         logger.error(LogMsg.USER_HAS_NO_PERSON,username)
         raise Http_error(400, Message.Invalid_persons)
 
-    if 'person_id' in data and username in ADMINISTRATORS:
+    if 'person_id' in data and data.get('person_id') is not None:
         person_id = data.get('person_id')
     else:
         person_id = user.person_id
