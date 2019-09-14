@@ -180,7 +180,9 @@ def get_all_collections(db_session, username):
     return result
 
 
-def get_collection(title, db_session, username):
+def get_collection(data, db_session, username):
+    title = data.get('title')
+
     logger.info(LogMsg.START, username)
     user = check_user(username, db_session)
     if user is None:
@@ -193,8 +195,13 @@ def get_collection(title, db_session, username):
     validate_person(user.person_id, db_session)
     logger.debug(LogMsg.PERSON_EXISTS)
 
+    if 'person_id' in data.keys() and username in ADMINISTRATORS:
+        person_id = data.get('person_id')
+    else:
+        person_id = user.person_id
+
     collection_items = db_session.query(Collection).filter(and_(
-        Collection.person_id == user.person_id,
+        Collection.person_id == person_id,
         Collection.title == title)).order_by(
         Collection.creation_date.desc()).all()
 
@@ -212,7 +219,8 @@ def get_collection(title, db_session, username):
     return result
 
 
-def delete_collection(title, db_session, username):
+def delete_collection(data, db_session, username):
+    title = data.get('title')
     logger.info(LogMsg.START, username)
 
     user = check_user(username, db_session)
@@ -381,7 +389,8 @@ def collection_exists(title, person_id, db_session):
     return True
 
 
-def delete_collection_constraints(title, person_id, db_session):
+def delete_collection_constraints(data, person_id, db_session):
+    title = data.get('title')
     result = db_session.query(Collection).filter(Collection.title == title,
                                                  Collection.person_id == person_id).all()
     ids = []
@@ -399,10 +408,10 @@ def delete_collection_constraints(title, person_id, db_session):
     return ids
 
 
-def rename_collection(title, data, db_session, username):
+def rename_collection(data, db_session, username):
     logger.info(LogMsg.START, username)
 
-    check_schema(['title'], data.keys())
+    check_schema(['title','new_title'], data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
     person_id = data.get('person_id')
     if person_id is None:
@@ -415,11 +424,11 @@ def rename_collection(title, data, db_session, username):
     validate_person(person_id, db_session)
     logger.debug(LogMsg.PERSON_EXISTS)
 
-    new_title = data.get('title')
+    new_title = data.get('new_title')
     # db_session.update(Collection).Where(Collection.title == title,
     #                                     Collection.person_id == person_id).values(
     #     title=new_title)
-    result = db_session.query(Collection).filter(Collection.title == title,
+    result = db_session.query(Collection).filter(Collection.title == data.get('title'),
                                                  Collection.person_id == person_id).all()
     final_res = []
     for item in result:
