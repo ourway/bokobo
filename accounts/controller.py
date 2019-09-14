@@ -147,7 +147,6 @@ def get_user_accounts(username, db_session):
 
     if user.person_id is None:
         logger.error(LogMsg.PERSON_NOT_EXISTS, username)
-
         raise Http_error(404, Message.Invalid_persons)
 
     validate_person(user.person_id, db_session)

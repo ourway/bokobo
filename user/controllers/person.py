@@ -130,6 +130,7 @@ def edit(id, db_session, data, username):
         # TODO  if key is valid attribute of class
         setattr(model_instance, key, value)
     edit_basic_data(model_instance, username, data.get('tags'))
+    db_session.flush()
 
     logger.debug(LogMsg.MODEL_ALTERED,
                  person_to_dict(model_instance, db_session))
@@ -140,6 +141,7 @@ def edit(id, db_session, data, username):
         logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
         delete_uniquecode(unique_connector.UniqueCode, db_session)
         logger.debug(LogMsg.GENERATE_UNIQUE_CONSTRAINT, data)
+        db_session.flush()
         code = add_uniquecode(data, db_session)
         delete_connector(id, db_session)
         add_connector(id, code.UniqueCode, db_session)
