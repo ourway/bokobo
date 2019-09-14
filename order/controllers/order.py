@@ -196,7 +196,7 @@ def edit(id, data, db_session, username=None):
         logger.debug(LogMsg.ORDER_ADD_ITEMS, {'order_id': id})
         model_instance.total_price = add_orders_items(model_instance.id
                                                       , item_data,
-                                                      db_session, db_session)
+                                                      db_session, username)
     edit_basic_data(model_instance, username)
     order_dict = order_to_dict(model_instance, db_session, username)
     logger.debug(LogMsg.MODEL_ALTERED, order_dict)
