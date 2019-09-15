@@ -12,7 +12,7 @@ from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, \
     delete_book_roles, append_book_roles_dict, \
     books_by_person, persons_of_book
 
-from prices.controller import add as add_price, get_book_price_internal
+from prices.controller import add_internal as add_price_internal, get_book_price_internal
 from prices.controller import internal_edit as edit_price
 from log import LogMsg, logger
 from configs import ADMINISTRATORS
@@ -66,8 +66,7 @@ def add(db_session, data, username, **kwargs):
 
     price = data.get('price', None)
     if price:
-        add_price({'book_id': model_instance.id, 'price': price}, db_session,
-                  username)
+        add_price_internal(price, model_instance.id, db_session, username)
 
     logger.info(LogMsg.END)
     return model_instance

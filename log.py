@@ -404,6 +404,13 @@ class LogMsg:
     WISH_DELETE = 'book deleted from users widh list : %s'
     WISH_DELETE_ALL = 'deleting wish list of user : %s'
 
+    # GROUP
+    GROUP_EXISTS = 'group by this data already exists : %s'
+    GROUP_INVALID = 'group by this data not exists : %s'
+
+    # GROUP USER
+    GROUP_USER_IS_IN_GROUP = 'user already is in group : %s'
+
 
     UPLOAD_FAILED = 'uploading files failed'
     FILE_EXISTS = 'this file exists by path : %s'

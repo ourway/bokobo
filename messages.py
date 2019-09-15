@@ -53,3 +53,4 @@ class Message:
     NOT_EDITABLE = 'not_editable'
     SUCCESSFUL = 'successful'
     CELL_EXISTS = 'cell_no_exists'
+    INVALID_GROUP = 'invalid_group'

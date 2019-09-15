@@ -220,3 +220,28 @@ def calc_net_price(unit_price, count, discount=0.0):
                   'discount': discount, 'net_price': net_price})
     logger.info(LogMsg.END)
     return net_price
+
+
+
+def add_internal(price,book_id, db_session,username):
+
+    logger.debug(LogMsg.CHECK_BOOK_PRICE_EXISTANCE, book_id)
+
+    model_instance = get_by_book(book_id, db_session, username)
+    if model_instance:
+        logger.debug(LogMsg.BOOK_PRICE_EXISTS, book_id)
+        logger.debug(LogMsg.EDIT_PRICE, book_id)
+        model_instance.price = price
+
+    else:
+        logger.debug(LogMsg.ADD_NEW_BOOK_PRICE, book_id)
+        model_instance = Price()
+
+        populate_basic_data(model_instance, username)
+        model_instance.book_id = book_id
+        model_instance.price = price
+
+        db_session.add(model_instance)
+    logger.info(LogMsg.END)
+
+    return model_instance
