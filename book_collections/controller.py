@@ -389,8 +389,7 @@ def collection_exists(title, person_id, db_session):
     return True
 
 
-def delete_collection_constraints(data, person_id, db_session):
-    title = data.get('title')
+def delete_collection_constraints(title, person_id, db_session):
     result = db_session.query(Collection).filter(Collection.title == title,
                                                  Collection.person_id == person_id).all()
     ids = []
