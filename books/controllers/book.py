@@ -126,7 +126,7 @@ def edit(id, db_session, data, username):
     edit_basic_data(model_instance, username, data.get('tags'))
 
     price = data.get('price', None)
-    if price:
+    if price is not None:
         edit_price(model_instance.id, price, db_session)
 
     logger.debug(LogMsg.MODEL_ALTERED)
