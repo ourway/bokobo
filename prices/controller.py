@@ -124,6 +124,7 @@ def edit(id, data, db_session, username=None):
 
 def internal_edit(book_id, price, db_session):
     logger.info(LogMsg.START, '')
+    logger.debug('price is {}'.format(price))
 
     model_instance = get_by_book(book_id, db_session)
 
@@ -131,12 +132,9 @@ def internal_edit(book_id, price, db_session):
         logger.error(LogMsg.NOT_FOUND, {'book_price_id': id})
         raise Http_error(404, Message.NOT_FOUND)
 
-    try:
-        model_instance.price = price
-        logger.debug(LogMsg.MODEL_ALTERED, model_to_dict(model_instance))
-    except:
-        logger.exception(LogMsg.EDIT_FAILED, exc_info=True)
-        raise Http_error(404, Message.DELETE_FAILED)
+    model_instance.price = price
+    logger.debug(LogMsg.MODEL_ALTERED, model_to_dict(model_instance))
+
     logger.info(LogMsg.END)
 
     return model_instance
