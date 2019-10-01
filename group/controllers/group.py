@@ -132,7 +132,7 @@ def get_all(db_session, username):
     return result
 
 
-def search_group(data, db_session):
+def search_group(data, db_session,username=None):
     offset = data.get('offset', 0)
     limit = data.get('limit', 20)
     filter = data.get('filter', None)

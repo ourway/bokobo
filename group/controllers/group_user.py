@@ -120,7 +120,7 @@ def add_users_to_groups(data, db_session, username):
                 logger.error(LogMsg.GROUP_USER_IS_IN_GROUP,
                              {'user_id': user_id, 'group_id': group_id})
                 raise Http_error(409, Message.ALREADY_EXISTS)
-            result.append(add(user_id, group_id, db_session, username))
+            result.append(model_to_dict(add(user_id, group_id, db_session, username)))
         final_res.update({group_id:result})
 
     logger.info(LogMsg.END)
@@ -134,7 +134,7 @@ def delete_users_from_groups(data, db_session, username):
         logger.error(LogMsg.NOT_ACCESSED, {'username': username})
         raise Http_error(403, Message.ACCESS_DENIED)
 
-    users = set(data.get('user_id'))
+    users = set(data.get('users'))
     groups = set(data.get('groups'))
 
     validate_users(users, db_session)
@@ -148,7 +148,7 @@ def delete_users_from_groups(data, db_session, username):
             delete_user_group(user_id, group_id, db_session)
 
     logger.info(LogMsg.END)
-    return Http_response(204,True)
+    return {'result':'successful'}
 
 
 def add_group_users(data, db_session, username):
@@ -197,7 +197,7 @@ def add_group_by_users(data, db_session, username):
         raise Http_error(403, Message.ACCESS_DENIED)
 
     users = set(data.get('users'))
-    group_title = set(data.get('title'))
+    group_title = data.get('title')
 
     validate_users(users, db_session)
     if check_group_title_exists(group_title,db_session):
