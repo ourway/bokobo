@@ -114,7 +114,6 @@ def delete(id, db_session, username):
         logger.debug(LogMsg.DELETE_SUCCESS, {'user_id': id})
 
     except:
-
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
         raise Http_error(500, LogMsg.DELETE_FAILED)
     logger.info(LogMsg.END)

@@ -408,12 +408,17 @@ class LogMsg:
     GROUP_EXISTS = 'group by this data already exists : %s'
     GROUP_INVALID = 'group by this data not exists : %s'
     GROUP_DELETE = 'group by id = %s is going to be deleted ...'
+    GROUP_DELETE_PERMISSIONS = 'deleting all permissions of group : %s'
 
     # GROUP USER
     GROUP_USER_IS_IN_GROUP = 'user already is in group : %s'
     GROUP_USER_NOT_IN_GROUP = 'user not in group and cant be deleted : %s'
     DELETE_GROUP_USERS = 'deleting group_users first : %s'
     GROUP_DELETE_USER_GROUPS = 'deleting user by id = %s from groups ...'
+
+    # PERMISSION
+    PERMISSION_NOT_HAS_GROUP = 'group has no permission by data : %s'
+    PERMISSION_GROUP_ALREADY_HAS = 'group already has this permission : %s'
 
 
     UPLOAD_FAILED = 'uploading files failed'

@@ -17,6 +17,7 @@ from prices.urls import call_router as price_routes
 from order.urls import call_router as order_routes
 from book_library.urls import  call_router as library_routes
 from group.urls import call_router as group_routes
+from permission.urls import call_router as permission_routes
 
 app = Bottle()
 
@@ -37,6 +38,7 @@ price_routes(app)
 order_routes(app)
 library_routes(app)
 group_routes(app)
+permission_routes(app)
 
 
 

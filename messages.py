@@ -55,3 +55,4 @@ class Message:
     CELL_EXISTS = 'cell_no_exists'
     INVALID_GROUP = 'invalid_group'
     NOT_IN_GROUP = 'not_in_group'
+    PERMISSION_NOT_FOUND = 'permission_not_found'
