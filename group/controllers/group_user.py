@@ -5,9 +5,10 @@ from helper import model_to_dict, Http_error, model_basic_dict, \
     populate_basic_data, edit_basic_data, Http_response
 from log import LogMsg, logger
 from messages import Message
-from repository.group_repo import validate_groups
+from repository.group_repo import validate_groups, validate_group, \
+    check_group_title_exists
 from repository.user_repo import check_by_id, validate_users
-
+from .group import add as add_group
 from ..models import GroupUser
 
 save_path = os.environ.get('save_path')
@@ -92,6 +93,13 @@ def user_is_in_group(user_id, group_id, db_session):
     return True
 
 
+def delete_user_group(user_id, group_id, db_session):
+    db_session.query(GroupUser).filter(GroupUser.user_id == user_id,
+                                                GroupUser.group_id == group_id).delete()
+
+    return True
+
+
 def add_users_to_groups(data, db_session, username):
     logger.info(LogMsg.START, username)
 
@@ -99,7 +107,7 @@ def add_users_to_groups(data, db_session, username):
         logger.error(LogMsg.NOT_ACCESSED, {'username': username})
         raise Http_error(403, Message.ACCESS_DENIED)
 
-    users = set(data.get('user_id'))
+    users = set(data.get('users'))
     groups = set(data.get('groups'))
 
     validate_users(users, db_session)
@@ -117,6 +125,30 @@ def add_users_to_groups(data, db_session, username):
 
     logger.info(LogMsg.END)
     return final_res
+
+
+def delete_users_from_groups(data, db_session, username):
+    logger.info(LogMsg.START, username)
+
+    if username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED, {'username': username})
+        raise Http_error(403, Message.ACCESS_DENIED)
+
+    users = set(data.get('user_id'))
+    groups = set(data.get('groups'))
+
+    validate_users(users, db_session)
+    validate_groups(groups, db_session)
+    for group_id in groups:
+        for user_id in users:
+            if not user_is_in_group(user_id, group_id, db_session):
+                logger.error(LogMsg.GROUP_USER_NOT_IN_GROUP,
+                             {'user_id': user_id, 'group_id': group_id})
+                raise Http_error(404, Message.NOT_IN_GROUP)
+            delete_user_group(user_id, group_id, db_session)
+
+    logger.info(LogMsg.END)
+    return Http_response(204,True)
 
 
 def add_group_users(data, db_session, username):
@@ -143,12 +175,38 @@ def add_group_users(data, db_session, username):
     logger.info(LogMsg.END)
     return result
 
-def validate_group(group_id,db_session):
-    group = get(group_id, db_session)
-    if group is None:
-        logger.error(LogMsg.GROUP_INVALID, {'group_id': group_id})
-        raise Http_error(404, Message.INVALID_GROUP)
-    return group
+
+def get_by_group(group_id, db_session, username):
+    logger.info(LogMsg.START, username)
+
+    if username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED, {'username': username})
+        raise Http_error(403, Message.ACCESS_DENIED)
+
+    validate_group(group_id, db_session)
+    result = db_session.query(GroupUser).filter(GroupUser.group_id==group_id).all()
+    logger.info(LogMsg.END)
+    return result
 
 
+def add_group_by_users(data, db_session, username):
+    logger.info(LogMsg.START, username)
 
+    if username not in ADMINISTRATORS:
+        logger.error(LogMsg.NOT_ACCESSED, {'username': username})
+        raise Http_error(403, Message.ACCESS_DENIED)
+
+    users = set(data.get('users'))
+    group_title = set(data.get('title'))
+
+    validate_users(users, db_session)
+    if check_group_title_exists(group_title,db_session):
+        logger.error(LogMsg.GROUP_EXISTS,{'group_title':group_title})
+        raise Http_error(409,Message.ALREADY_EXISTS)
+
+    group = add_group({'title':group_title}, db_session, username)
+    del data['title']
+    data['group_id']=group.id
+    result = add_group_users(data, db_session, username)
+
+    return result

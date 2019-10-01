@@ -407,9 +407,12 @@ class LogMsg:
     # GROUP
     GROUP_EXISTS = 'group by this data already exists : %s'
     GROUP_INVALID = 'group by this data not exists : %s'
+    GROUP_DELETE = 'group by id = %s is going to be deleted ...'
 
     # GROUP USER
     GROUP_USER_IS_IN_GROUP = 'user already is in group : %s'
+    GROUP_USER_NOT_IN_GROUP = 'user not in group and cant be deleted : %s'
+    DELETE_GROUP_USERS = 'deleting group_users first : %s'
 
 
     UPLOAD_FAILED = 'uploading files failed'

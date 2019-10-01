@@ -54,3 +54,4 @@ class Message:
     SUCCESSFUL = 'successful'
     CELL_EXISTS = 'cell_no_exists'
     INVALID_GROUP = 'invalid_group'
+    NOT_IN_GROUP = 'not_in_group'

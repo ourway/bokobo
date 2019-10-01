@@ -1,22 +1,14 @@
-import json
 import os
-from sqlalchemy import or_
 
 from configs import ADMINISTRATORS
-from follow.controller import get_following_list_internal
 from helper import model_to_dict, Http_error, model_basic_dict, \
     populate_basic_data, edit_basic_data, Http_response
 from log import LogMsg, logger
 from messages import Message
+from repository.group_user_repo import delete_group_users
 
 from ..models import Group
-from constraint_handler.controllers.person_constraint import \
-    add as add_uniquecode
-from constraint_handler.controllers.unique_entity_connector import \
-    get_by_entity as get_connector, add as add_connector, \
-    delete as delete_connector
-from constraint_handler.controllers.common_methods import \
-    delete as delete_uniquecode
+
 
 save_path = os.environ.get('save_path')
 
@@ -112,7 +104,12 @@ def delete(id, db_session, username):
         raise Http_error(404, Message.NOT_FOUND)
 
     try:
+        logger.debug(LogMsg.DELETE_GROUP_USERS,{'group_id': id})
+        delete_group_users(model_instance.id, db_session)
+        logger.debug(LogMsg.GROUP_DELETE,id)
+
         db_session.delete(model_instance)
+
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
         raise Http_error(500, LogMsg.DELETE_FAILED)
