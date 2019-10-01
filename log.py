@@ -413,6 +413,7 @@ class LogMsg:
     GROUP_USER_IS_IN_GROUP = 'user already is in group : %s'
     GROUP_USER_NOT_IN_GROUP = 'user not in group and cant be deleted : %s'
     DELETE_GROUP_USERS = 'deleting group_users first : %s'
+    GROUP_DELETE_USER_GROUPS = 'deleting user by id = %s from groups ...'
 
 
     UPLOAD_FAILED = 'uploading files failed'

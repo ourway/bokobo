@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/group/controllers/group.py" beforeDir="false" afterPath="$PROJECT_DIR$/group/controllers/group.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group/controllers/group_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/group/controllers/group_user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log.py" beforeDir="false" afterPath="$PROJECT_DIR$/log.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/repository/group_user_repo.py" beforeDir="false" afterPath="$PROJECT_DIR$/repository/group_user_repo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user/controllers/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/user/controllers/user.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,7 +18,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/group/controllers/group.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="58">
+            <state relative-caret-position="3379">
               <caret line="134" column="47" selection-start-line="134" selection-start-column="47" selection-end-line="134" selection-end-column="47" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -28,8 +30,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/repository/group_repo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="645">
-              <caret line="24" column="28" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="28" />
+            <state relative-caret-position="118">
+              <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -41,7 +43,7 @@
         <entry file="file://$PROJECT_DIR$/group/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="112">
-              <caret line="21" column="67" lean-forward="true" selection-start-line="21" selection-start-column="67" selection-end-line="21" selection-end-column="67" />
+              <caret line="21" column="67" selection-start-line="21" selection-start-column="67" selection-end-line="21" selection-end-column="67" />
               <folding>
                 <element signature="e#0#60#0" expanded="true" />
               </folding>
@@ -50,22 +52,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="38" column="16" selection-start-line="38" selection-start-column="16" selection-end-line="38" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#39#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/group/controllers/group_user.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="196" column="52" lean-forward="true" selection-start-line="196" selection-start-column="52" selection-end-line="196" selection-end-column="52" />
+            <state relative-caret-position="338">
+              <caret line="199" column="35" selection-start-line="199" selection-start-column="35" selection-end-line="199" selection-end-column="35" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
                 <element signature="e#848#1344#0" />
@@ -83,50 +73,63 @@
                 <element signature="e#4244#4422#0" />
                 <element signature="e#3798#3908#0" />
                 <element signature="e#4132#4302#0" />
-                <element signature="e#6088#6198#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="644">
+              <caret line="116" lean-forward="true" selection-start-line="116" selection-end-line="116" />
+              <folding>
+                <element signature="e#596#2027#0" />
+                <element signature="e#728#753#0" />
+                <element signature="e#1056#1156#0" />
+                <element signature="e#1527#1872#0" />
+                <element signature="e#1757#1872#0" />
+                <element signature="e#2069#2569#0" />
+                <element signature="e#2267#2353#0" />
+                <element signature="e#2372#2468#0" />
+                <element signature="e#2615#3330#0" />
+                <element signature="e#2844#3007#0" />
+                <element signature="e#3027#3133#0" />
+                <element signature="e#3816#4169#0" />
+                <element signature="e#4221#5205#0" />
+                <element signature="e#4304#4398#0" />
+                <element signature="e#4538#4678#0" />
+                <element signature="e#4697#5019#0" />
+                <element signature="e#5254#6716#0" />
+                <element signature="e#5382#5478#0" />
+                <element signature="e#5693#5787#0" />
+                <element signature="e#5875#5971#0" />
+                <element signature="e#6020#6077#0" />
+                <element signature="e#6082#6107#0" />
+                <element signature="e#6421#6507#0" />
+                <element signature="e#6747#7261#0" />
+                <element signature="e#6869#7242#0" />
+                <element signature="e#7318#8582#0" />
+                <element signature="e#7528#7635#0" />
+                <element signature="e#7742#8333#0" />
+                <element signature="e#7831#8182#0" />
+                <element signature="e#8070#8182#0" />
+                <element signature="e#8210#8333#0" />
+                <element signature="e#8353#8446#0" />
+                <element signature="e#8623#9398#0" />
+                <element signature="e#8792#8890#0" />
+                <element signature="e#8985#9078#0" />
+                <element signature="e#9151#9309#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
+        <entry file="file://$PROJECT_DIR$/repository/group_user_repo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="118">
-              <caret line="255" selection-start-line="255" selection-end-line="255" />
-              <folding>
-                <element signature="e#957#4373#0" />
-                <element signature="e#4437#5731#0" />
-                <element signature="e#5785#6792#0" />
-                <element signature="e#11935#12795#0" />
-                <element signature="e#12850#13415#0" />
-                <element signature="e#13475#13689#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/helper.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="206" selection-start-line="206" selection-end-line="206" />
-              <folding>
-                <element signature="e#1#16#0" expanded="true" />
-                <marker date="1567595111870" expanded="true" signature="6579:6923" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/group/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="16" column="26" selection-start-line="16" selection-start-column="26" selection-end-line="16" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#47#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="189">
+              <caret line="7" column="47" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -134,8 +137,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/log.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="563">
-              <caret line="409" column="16" selection-start-line="409" selection-start-column="4" selection-end-line="409" selection-end-column="16" />
+            <state relative-caret-position="725">
+              <caret line="415" column="56" selection-start-line="415" selection-start-column="56" selection-end-line="415" selection-end-column="56" />
               <folding>
                 <element signature="e#446#455#0" expanded="true" />
               </folding>
@@ -263,7 +266,6 @@
         <option value="$PROJECT_DIR$/sign_up/fast_signup.py" />
         <option value="$PROJECT_DIR$/constraint_handler/controllers/person_constraint.py" />
         <option value="$PROJECT_DIR$/register/controller.py" />
-        <option value="$PROJECT_DIR$/user/controllers/user.py" />
         <option value="$PROJECT_DIR$/helper.py" />
         <option value="$PROJECT_DIR$/repository/order_repo.py" />
         <option value="$PROJECT_DIR$/repository/item_repo.py" />
@@ -280,13 +282,14 @@
         <option value="$PROJECT_DIR$/prices/controller.py" />
         <option value="$PROJECT_DIR$/books/controllers/book.py" />
         <option value="$PROJECT_DIR$/messages.py" />
-        <option value="$PROJECT_DIR$/repository/group_user_repo.py" />
-        <option value="$PROJECT_DIR$/log.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/repository/group_repo.py" />
         <option value="$PROJECT_DIR$/group/urls.py" />
         <option value="$PROJECT_DIR$/group/controllers/group.py" />
         <option value="$PROJECT_DIR$/group/controllers/group_user.py" />
+        <option value="$PROJECT_DIR$/repository/group_user_repo.py" />
+        <option value="$PROJECT_DIR$/log.py" />
+        <option value="$PROJECT_DIR$/user/controllers/user.py" />
       </list>
     </option>
   </component>
@@ -342,6 +345,17 @@
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
               <item name="repository" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="user" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -424,12 +438,12 @@
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24707195" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24707195" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32998884" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.72240806" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.72240806" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.522854" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -721,6 +735,26 @@
           <url>file://$PROJECT_DIR$/group/controllers/group_user.py</url>
           <line>192</line>
           <option name="timeStamp" value="166" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/repository/group_repo.py</url>
+          <line>26</line>
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/group/controllers/group_user.py</url>
+          <line>206</line>
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/group/controllers/group.py</url>
+          <line>18</line>
+          <option name="timeStamp" value="169" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/group/controllers/group_user.py</url>
+          <line>202</line>
+          <option name="timeStamp" value="170" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -1103,20 +1137,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="66" column="12" lean-forward="true" selection-start-line="66" selection-start-column="12" selection-end-line="66" selection-end-column="12" />
-          <folding>
-            <element signature="e#3816#4169#0" />
-            <element signature="e#4221#5205#0" />
-            <element signature="e#5254#6716#0" />
-            <element signature="e#6747#7261#0" />
-            <element signature="e#8623#9398#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/repository/person_repo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -1144,30 +1164,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/messages.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="716">
-          <caret line="56" column="32" selection-start-line="56" selection-start-column="32" selection-end-line="56" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repository/group_user_repo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="3" column="4" lean-forward="true" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/log.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="409" column="16" selection-start-line="409" selection-start-column="4" selection-end-line="409" selection-end-column="16" />
-          <folding>
-            <element signature="e#446#455#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/order/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1188,16 +1184,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/repository/group_repo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="24" column="28" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/repository/user_repo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="537">
@@ -1208,16 +1194,6 @@
     <entry file="file://$PROJECT_DIR$/alembic/versions/5150799ada89_group_and_group_user_added.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-796" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/group/controllers/group.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="134" column="47" selection-start-line="134" selection-start-column="47" selection-end-line="134" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/group/models.py">
@@ -1240,12 +1216,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/group/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="21" column="67" selection-start-line="21" selection-start-column="67" selection-end-line="21" selection-end-column="67" />
+          <folding>
+            <element signature="e#0#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/helper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="206" selection-start-line="206" selection-end-line="206" />
+        <state relative-caret-position="70">
+          <caret line="190" column="18" selection-start-line="190" selection-start-column="18" selection-end-line="190" selection-end-column="18" />
           <folding>
             <element signature="e#1#16#0" expanded="true" />
+            <element signature="e#5422#5982#0" />
             <marker date="1567595111870" expanded="true" signature="6579:6923" ph="..." />
           </folding>
         </state>
@@ -1266,20 +1253,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/group/urls.py">
+    <entry file="file://$PROJECT_DIR$/repository/group_repo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="21" column="67" lean-forward="true" selection-start-line="21" selection-start-column="67" selection-end-line="21" selection-end-column="67" />
+        <state relative-caret-position="118">
+          <caret line="24" column="31" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
           <folding>
-            <element signature="e#0#60#0" expanded="true" />
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/group/controllers/group.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3379">
+          <caret line="134" column="47" selection-start-line="134" selection-start-column="47" selection-end-line="134" selection-end-column="47" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/group/controllers/group_user.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="196" column="52" lean-forward="true" selection-start-line="196" selection-start-column="52" selection-end-line="196" selection-end-column="52" />
+        <state relative-caret-position="338">
+          <caret line="199" column="35" selection-start-line="199" selection-start-column="35" selection-end-line="199" selection-end-column="35" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <element signature="e#848#1344#0" />
@@ -1297,7 +1294,75 @@
             <element signature="e#4244#4422#0" />
             <element signature="e#3798#3908#0" />
             <element signature="e#4132#4302#0" />
-            <element signature="e#6088#6198#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/repository/group_user_repo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="7" column="47" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/messages.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="716">
+          <caret line="56" column="32" selection-start-line="56" selection-start-column="32" selection-end-line="56" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="725">
+          <caret line="415" column="56" selection-start-line="415" selection-start-column="56" selection-end-line="415" selection-end-column="56" />
+          <folding>
+            <element signature="e#446#455#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="644">
+          <caret line="116" lean-forward="true" selection-start-line="116" selection-end-line="116" />
+          <folding>
+            <element signature="e#596#2027#0" />
+            <element signature="e#728#753#0" />
+            <element signature="e#1056#1156#0" />
+            <element signature="e#1527#1872#0" />
+            <element signature="e#1757#1872#0" />
+            <element signature="e#2069#2569#0" />
+            <element signature="e#2267#2353#0" />
+            <element signature="e#2372#2468#0" />
+            <element signature="e#2615#3330#0" />
+            <element signature="e#2844#3007#0" />
+            <element signature="e#3027#3133#0" />
+            <element signature="e#3816#4169#0" />
+            <element signature="e#4221#5205#0" />
+            <element signature="e#4304#4398#0" />
+            <element signature="e#4538#4678#0" />
+            <element signature="e#4697#5019#0" />
+            <element signature="e#5254#6716#0" />
+            <element signature="e#5382#5478#0" />
+            <element signature="e#5693#5787#0" />
+            <element signature="e#5875#5971#0" />
+            <element signature="e#6020#6077#0" />
+            <element signature="e#6082#6107#0" />
+            <element signature="e#6421#6507#0" />
+            <element signature="e#6747#7261#0" />
+            <element signature="e#6869#7242#0" />
+            <element signature="e#7318#8582#0" />
+            <element signature="e#7528#7635#0" />
+            <element signature="e#7742#8333#0" />
+            <element signature="e#7831#8182#0" />
+            <element signature="e#8070#8182#0" />
+            <element signature="e#8210#8333#0" />
+            <element signature="e#8353#8446#0" />
+            <element signature="e#8623#9398#0" />
+            <element signature="e#8792#8890#0" />
+            <element signature="e#8985#9078#0" />
+            <element signature="e#9151#9309#0" />
           </folding>
         </state>
       </provider>
