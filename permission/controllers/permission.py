@@ -160,3 +160,12 @@ def check_permission_exists(permission, db_session):
     if result is None:
         return False
     return True
+
+
+def get_permissions_values(permission_list,db_session):
+    result = db_session.query(Permission).filter(
+        Permission.id.in_(set(permission_list))).all()
+    permission_values = []
+    for item in result:
+        permission_values.append(item.permission)
+    return permission_values

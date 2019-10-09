@@ -1,3 +1,5 @@
+from check_permission import get_user_permissions, has_permission, \
+    has_permission_or_not
 from repository.price_repo import delete_book_price
 from repository.rate_repo import book_average_rate
 from repository.comment_repo import delete_book_comments
@@ -6,29 +8,28 @@ from file_handler.handle_file import delete_files
 from helper import Now, Http_error, populate_basic_data, edit_basic_data, \
     Http_response
 from books.models import Book
-from enums import BookTypes as legal_types, check_enums, Genre, str_genre
+from enums import BookTypes as legal_types, check_enums, Genre, str_genre, \
+    Permissions
 from messages import Message
 from .book_roles import add_book_roles, get_book_roles, book_role_to_dict, \
     delete_book_roles, append_book_roles_dict, \
     books_by_person, persons_of_book
 
-from prices.controller import add_internal as add_price_internal, get_book_price_internal
+from prices.controller import add_internal as add_price_internal, \
+    get_book_price_internal
 from prices.controller import internal_edit as edit_price
 from log import LogMsg, logger
 from configs import ADMINISTRATORS
 from constraint_handler.controllers.book_constraint import add as add_uniquecode
-from constraint_handler.controllers.common_methods import  delete as delete_uniquecode
+from constraint_handler.controllers.common_methods import \
+    delete as delete_uniquecode
 from constraint_handler.controllers.unique_entity_connector import \
-    get_by_entity as get_connector, add as add_connector,delete as delete_connector
+    get_by_entity as get_connector, add as add_connector, \
+    delete as delete_connector
 
 
 def add(db_session, data, username, **kwargs):
     logger.debug(LogMsg.START, username)
-
-    if username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED)
-        raise Http_error(403, Message.ACCESS_DENIED)
-
 
     genre = data.get('genre', [])
     if genre and len(genre) > 0:
@@ -56,13 +57,15 @@ def add(db_session, data, username, **kwargs):
     model_instance.isben = data.get('isben')
     model_instance.description = data.get('description')
     model_instance.from_editor = data.get('from_editor')
+    model_instance.press = data.get('press')
 
     db_session.add(model_instance)
     logger.debug(LogMsg.DB_ADD)
 
-    add_connector(model_instance.id, data.get('unique_code'),db_session)
+    add_connector(model_instance.id, data.get('unique_code'), db_session)
     logger.debug(LogMsg.UNIQUE_CONNECTOR_ADDED, {'book_id': model_instance.id,
-                                                 'unique_constraint': data.get('unique_code')})
+                                                 'unique_constraint': data.get(
+                                                     'unique_code')})
 
     price = data.get('price', None)
     if price:
@@ -104,9 +107,14 @@ def edit(id, db_session, data, username):
         logger.debug(LogMsg.NOT_FOUND, {'book_id': id})
         raise Http_error(404, Message.NOT_FOUND)
 
-    if model_instance.creator != username and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED)
-        raise Http_error(403, Message.ACCESS_DENIED)
+    # permission_data = {}
+    # if model_instance.creator == username:
+    #     permission_data = {Permissions.IS_OWNER.value: True}
+    # permissions, presses = get_user_permissions(username, db_session)
+    # has_permit = has_permission_or_not([Permissions.BOOK_EDIT_PREMIUM],
+    #                                    permissions, None, permission_data)
+    # if not has_permit and  model_instance.press in presses:
+    #     has_permission([Permissions.BOOK_EDIT_PRESS], permissions)
 
     logger.debug(LogMsg.EDITING_BOOK, id)
 
@@ -132,19 +140,18 @@ def edit(id, db_session, data, username):
     logger.debug(LogMsg.MODEL_ALTERED)
 
     logger.debug(LogMsg.UNIQUE_CONSTRAINT_IS_CHANGING)
-    unique_data = book_to_dict(db_session,model_instance)
+    unique_data = book_to_dict(db_session, model_instance)
     del unique_data['roles']
     unique_data['roles'] = data['roles']
 
     unique_connector = get_connector(id, db_session)
     if unique_connector:
         logger.debug(LogMsg.DELETE_UNIQUE_CONSTRAINT)
-        delete_uniquecode(unique_connector.UniqueCode,db_session)
+        delete_uniquecode(unique_connector.UniqueCode, db_session)
         logger.debug(LogMsg.GENERATE_UNIQUE_CONSTRAINT, unique_data)
-        code = add_uniquecode(unique_data,db_session)
-        delete_connector(id,db_session)
-        add_connector(id,code.UniqueCode,db_session)
-
+        code = add_uniquecode(unique_data, db_session)
+        delete_connector(id, db_session)
+        add_connector(id, code.UniqueCode, db_session)
 
     logger.debug(LogMsg.EDIT_SUCCESS, book_to_dict(db_session, model_instance))
 
@@ -165,10 +172,6 @@ def delete(id, db_session, username):
     if book is None:
         logger.error(LogMsg.NOT_FOUND, {'book_id': id})
         raise Http_error(404, Message.NOT_FOUND)
-
-    if book.creator != username and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED)
-        raise Http_error(403, Message.ACCESS_DENIED)
 
     if book.images:
         logger.debug(LogMsg.DELETE_BOOK_IMAGES)
@@ -261,12 +264,7 @@ def book_to_dict(db_session, book):
 def add_multiple_type_books(db_session, data, username):
     logger.info(LogMsg.START, username)
 
-    if username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED)
-        raise Http_error(403, Message.ACCESS_DENIED)
-
     logger.debug(LogMsg.BOOK_CHECKING_IF_EXISTS, data)
-
     types = data.get('types')
     logger.debug(LogMsg.ENUM_CHECK, {'book_types': types})
     check_enums(types, legal_types)
@@ -274,15 +272,32 @@ def add_multiple_type_books(db_session, data, username):
     roles_data = data.get('roles')
 
     book_data = {k: v for k, v in data.items() if k not in ['roles', 'types']}
+    logger.debug(LogMsg.PERMISSION_CHECK,username)
+    permissions, presses = get_user_permissions(username, db_session)
+    has_permit = has_permission_or_not([Permissions.BOOK_ADD_PREMIUM],
+                                       permissions)
+    press = roles_data.get('Press',None)
+    if press is None:
+        logger.error(LogMsg.DATA_MISSING,{'press':None})
+        raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
+
+    if not has_permit:
+        if press in presses:
+            has_permission([Permissions.BOOK_ADD_PRESS], permissions)
+        else:
+            logger.error(LogMsg.PERMISSION_DENIED)
+            raise Http_error(403, Message.ACCESS_DENIED)
+    logger.debug(LogMsg.PERMISSION_VERIFIED,username)
 
     result = []
     logger.debug(LogMsg.ADDING_MULTIPLE_BOOKS, data)
 
     for type in types:
         data['type'] = type
+        data['press'] = roles_data.get('Press', None)
         unique_code = add_uniquecode(data, db_session)
 
-        book_data.update({'type': type,'unique_code':unique_code.UniqueCode})
+        book_data.update({'type': type, 'unique_code': unique_code.UniqueCode})
 
         logger.debug(LogMsg.ADD_BOOK, book_data)
         book = add(db_session, book_data, username)
@@ -320,9 +335,22 @@ def edit_book(id, db_session, data, username):
         logger.error(LogMsg.NOT_FOUND, {'book_id': id})
         raise Http_error(404, Message.NOT_FOUND)
 
-    if model_instance.creator != username and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED)
-        raise Http_error(403, Message.ACCESS_DENIED)
+    logger.debug(LogMsg.PERMISSION_CHECK,username)
+    permission_data = {}
+    if model_instance.creator == username:
+        permission_data = {Permissions.IS_OWNER.value: True}
+    permissions, presses = get_user_permissions(username, db_session)
+    has_permit = has_permission_or_not([Permissions.BOOK_EDIT_PREMIUM],
+                                       permissions, None, permission_data)
+    if not has_permit:
+        if model_instance.press in presses:
+            has_permission([Permissions.BOOK_EDIT_PRESS], permissions)
+        else:
+            logger.error(LogMsg.PERMISSION_DENIED)
+            raise Http_error(403, Message.ACCESS_DENIED)
+
+    logger.debug(LogMsg.PERMISSION_VERIFIED,username)
+
 
     logger.debug(LogMsg.GET_SUCCESS, id)
 
@@ -384,11 +412,26 @@ def delete_book(id, db_session, username):
     logger.info(
         LogMsg.START, username)
 
-    if username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED)
-        raise Http_error(403, Message.ACCESS_DENIED)
-
     logger.info(LogMsg.DELETE_REQUEST, {'book_id': id})
+
+    model_instance = db_session.query(Book).filter(Book.id==id).first()
+
+    logger.debug(LogMsg.PERMISSION_CHECK, username)
+    permission_data = {}
+    if model_instance.creator == username:
+        permission_data = {Permissions.IS_OWNER.value: True}
+    permissions, presses = get_user_permissions(username, db_session)
+    has_permit = has_permission_or_not([Permissions.BOOK_DELETE_PREMIUM],
+                                       permissions, None, permission_data)
+    if not has_permit:
+        if model_instance.press in presses:
+            has_permission([Permissions.BOOK_DELETE_PRESS], permissions)
+        else:
+            logger.error(LogMsg.PERMISSION_DENIED)
+            raise Http_error(403, Message.ACCESS_DENIED)
+    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
+
+
 
     logger.debug(LogMsg.DELETING_BOOK_ROLES, id)
     delete_book_roles(id, db_session)

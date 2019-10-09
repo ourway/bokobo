@@ -23,6 +23,7 @@ class Book(Base,PrimaryModel):
     size = Column(String)
     isben = Column(String)
     from_editor = Column(String)
+    press = Column(UUID,ForeignKey(Person.id))
 
 
 class BookRole(Base,PrimaryModel):

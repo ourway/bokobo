@@ -188,6 +188,13 @@ def get_by_group(group_id, db_session, username):
     logger.info(LogMsg.END)
     return result
 
+def get_user_groups(user_id, db_session, username):
+    logger.info(LogMsg.START, username)
+
+    result = db_session.query(GroupUser).filter(GroupUser.user_id==user_id).all()
+    logger.info(LogMsg.END)
+    return result
+
 
 def add_group_by_users(data, db_session, username):
     logger.info(LogMsg.START, username)

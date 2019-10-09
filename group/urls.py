@@ -19,4 +19,6 @@ def call_router(app):
     app.route('/group-users/<id>', 'DELETE', group_user.delete, apply=[check_auth, inject_db])
     app.route('/group-users/<id>', 'GET', group_user.get, apply=wrappers)
     app.route('/group-users/group/<group_id>', 'GET', group_user.get_by_group, apply=wrappers)
+    app.route('/group-users/user/<user_id>', 'GET', group_user.get_user_groups, apply=wrappers)
+
     app.route('/group-users/group', 'POST', group_user.add_group_by_users, apply=data_plus_wrappers)

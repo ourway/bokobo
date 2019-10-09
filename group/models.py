@@ -9,6 +9,7 @@ class Group(Base,PrimaryModel):
     __tablename__ = 'groups'
 
     title = Column(String,unique=True,nullable=False)
+    person_id = Column(UUID,ForeignKey('persons.id'))
 
 class GroupUser(Base,PrimaryModel):
     __tablename__='group_users'

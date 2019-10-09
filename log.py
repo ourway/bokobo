@@ -419,6 +419,9 @@ class LogMsg:
     # PERMISSION
     PERMISSION_NOT_HAS_GROUP = 'group has no permission by data : %s'
     PERMISSION_GROUP_ALREADY_HAS = 'group already has this permission : %s'
+    PERMISSION_CHECK = 'checking permission of user : %s'
+    PERMISSION_DENIED = 'user has no permission for action : %s'
+    PERMISSION_VERIFIED = 'user has permission for vthe action : %s'
 
 
     UPLOAD_FAILED = 'uploading files failed'
