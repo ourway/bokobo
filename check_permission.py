@@ -55,7 +55,7 @@ def get_user_permissions(username, db_session):
 
     group_list = get_user_group_list(user.id, db_session)
     if group_list is None:
-        return None
+        return [],[]
     permissions = get_permission_list_of_groups(group_list.keys(), db_session)
     permission_values = get_permissions_values(permissions, db_session)
 
