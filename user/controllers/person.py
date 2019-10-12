@@ -330,10 +330,15 @@ def person_to_dict(person, db_session):
         'image': person.image,
         'name': person.name,
         'last_name': person.last_name,
-        'phone': person.phone,
-        'is_legal':str(person.is_legal)
+        'phone': person.phone
+
+
         # 'library':library_to_dict(person.library,db_session)
 
     }
+    if not person.is_legal:
+       result['is_legal']= False
+    else:
+        result['is_legal'] =True
     result.update(model_attrs)
     return result
