@@ -278,8 +278,8 @@ def add_multiple_type_books(db_session, data, username):
                                        permissions)
     press = None
     for item in roles_data:
-        if 'Press' in item.keys():
-            press = item.get('Press',None)
+        if 'Press' in item.values():
+            press = item.get('person_id',None)
     if press is None:
         logger.error(LogMsg.DATA_MISSING,{'press':None})
         raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
