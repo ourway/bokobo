@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String, ForeignKey, UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 
 from db_session import Base, PrimaryModel
 
@@ -16,6 +17,8 @@ class GroupPermission(Base, PrimaryModel):
     group_id = Column(UUID,ForeignKey('groups.id'),nullable=False)
 
     UniqueConstraint(group_id,permission_id)
+    permission = relationship(Permission, primaryjoin=permission_id == Permission.id)
+
 
 
 

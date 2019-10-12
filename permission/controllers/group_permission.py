@@ -1,5 +1,6 @@
 from configs import ADMINISTRATORS
-from helper import model_to_dict, Http_error, populate_basic_data, Http_response
+from helper import model_to_dict, Http_error, populate_basic_data, \
+    Http_response, model_basic_dict
 from log import LogMsg, logger
 from messages import Message
 from permission.controllers.permission import validate_permissions
@@ -37,7 +38,7 @@ def get(id, db_session, username=None):
     logger.error(LogMsg.GET_FAILED, {"id": id})
     logger.info(LogMsg.END)
 
-    return model_instance
+    return group_permission_to_dict(model_instance)
 
 
 def delete(id, db_session, username):
@@ -70,12 +71,15 @@ def get_all(db_session, username):
     try:
         result = db_session.query(GroupPermission).all()
         logger.debug(LogMsg.GET_SUCCESS)
+        final_res = []
+        for item in result:
+            final_res.append(group_permission_to_dict(item))
     except:
         logger.error(LogMsg.GET_FAILED)
         raise Http_error(500, LogMsg.GET_FAILED)
 
-    logger.debug(LogMsg.END)
-    return result
+    logger.info(LogMsg.END)
+    return final_res
 
 
 def group_has_permission(permission_id, group_id, db_session):
@@ -115,7 +119,7 @@ def add_permissions_to_groups(data, db_session, username):
                              {'permission_id': permission_id,
                               'group_id': group_id})
                 raise Http_error(409, Message.ALREADY_EXISTS)
-            result.append(model_to_dict(
+            result.append(group_permission_to_dict(
                 add(permission_id, group_id, db_session, username)))
         final_res.update({group_id: result})
 
@@ -166,7 +170,7 @@ def add_group_permissions(data, db_session, username):
                          {'permission_id': permission_id, 'group_id': group_id})
             raise Http_error(409, Message.ALREADY_EXISTS)
         result.append(
-            model_to_dict(add(permission_id, group_id, db_session, username)))
+            group_permission_to_dict(add(permission_id, group_id, db_session, username)))
 
     logger.info(LogMsg.END)
     return result
@@ -193,6 +197,7 @@ def delete_group_permissions(data, db_session, username):
 
     logger.info(LogMsg.END)
     return result
+
 
 def get_by_data(data, db_session, username):
     logger.info(LogMsg.START, username)
@@ -225,7 +230,7 @@ def get_by_data(data, db_session, username):
                 GroupPermission.creation_date.desc()).slice(offset,
                                                             offset + limit)
     for permission in permissions:
-        result.append(model_to_dict(permission))
+        result.append(group_permission_to_dict(permission))
     logger.debug(LogMsg.GET_SUCCESS, result)
 
     logger.info(LogMsg.END)
@@ -241,8 +246,11 @@ def get_by_permission(permission_id, db_session, username):
 
     result = db_session.query(GroupPermission).filter(
         GroupPermission.permission_id == permission_id).all()
+    final_res = []
+    for item in result:
+        final_res.append(group_permission_to_dict(item))
     logger.info(LogMsg.END)
-    return result
+    return final_res
 
 
 def delete_all_permissions_of_group(group_id,db_session):
@@ -267,6 +275,17 @@ def group_permission_list(data,db_session,username):
 
     permissions = []
     for item in result:
-        permissions.append(item.permission_id)
+        permissions.append(group_permission_to_dict(item))
     logger.info(LogMsg.END)
     return permissions
+
+
+def group_permission_to_dict(model_instance):
+    result = {
+        'group_id':model_instance.group_id,
+        'permission_id': model_instance.permission_id,
+        'permission':model_to_dict(model_instance.permission)
+    }
+    primary_data = model_basic_dict(model_instance)
+    result.update(primary_data)
+    return result
