@@ -1,4 +1,5 @@
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 
 from db_session import Base, PrimaryModel
 from sqlalchemy import Column, String, ForeignKey
@@ -16,4 +17,6 @@ class GroupUser(Base,PrimaryModel):
 
     group_id = Column(UUID,ForeignKey('groups.id'),nullable=False)
     user_id = Column(UUID,ForeignKey('users.id'),nullable=False)
+    group = relationship(Group, primaryjoin=group_id == Group.id)
+
 

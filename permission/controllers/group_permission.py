@@ -258,3 +258,15 @@ def get_permission_list_of_groups(group_list,db_session):
     for item in result:
         permissions.append(item.permission_id)
     return set(permissions)
+
+def group_permission_list(data,db_session,username):
+    logger.info(LogMsg.START,username)
+    groups = data.get('groups',None)
+    result = db_session.query(GroupPermission).filter(
+        GroupPermission.group_id.in_(groups)).all()
+
+    permissions = []
+    for item in result:
+        permissions.append(item.permission_id)
+    logger.info(LogMsg.END)
+    return permissions

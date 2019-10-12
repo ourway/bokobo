@@ -1,9 +1,11 @@
-
 from book_rate.controller import get_users_rate
 from books.controllers.book import get as get_book
+from check_permission import get_user_permissions, has_permission, \
+    has_permission_or_not
 from comment.controllers.actions import get_comment_like_count, \
     get_comment_reports, liked_by_user, reported_by_user
 from comment.models import Comment
+from enums import Permissions
 from helper import Http_error, model_to_dict, Http_response, value, \
     populate_basic_data, edit_basic_data
 from log import LogMsg, logger
@@ -17,6 +19,14 @@ from configs import ADMINISTRATORS
 
 def add(db_session, data, username):
     logger.info(LogMsg.START)
+
+    permissions, presses = get_user_permissions(username, db_session)
+
+    has_permission(
+        [Permissions.COMMENT_ADD_PREMIUM, Permissions.COMMENT_ADD],
+        permissions)
+
+    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
     book_id = data.get('book_id')
 
@@ -75,6 +85,14 @@ def add(db_session, data, username):
 def get(id, db_session, username, **kwargs):
     logger.info(LogMsg.START, username)
 
+    permissions, presses = get_user_permissions(username, db_session)
+
+    has_permission(
+        [Permissions.COMMENT_GET_PREMIUM, Permissions.COMMENT_GET],
+        permissions)
+
+    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
+
     try:
         logger.debug(LogMsg.MODEL_GETTING, id)
         result = db_session.query(Comment).filter(Comment.id == id).first()
@@ -97,7 +115,6 @@ def delete(id, db_session, username, **kwargs):
         logger.error(LogMsg.NOT_FOUND, id)
         raise Http_error(404, Message.NOT_FOUND)
 
-    logger.debug(LogMsg.CHECK_USER_EXISTANCE, username)
     user = check_user(username, db_session)
     if user is None:
         logger.error(LogMsg.NOT_FOUND)
@@ -106,16 +123,26 @@ def delete(id, db_session, username, **kwargs):
         logger.error(LogMsg.USER_HAS_NO_PERSON, username)
         raise Http_error(400, Message.Invalid_persons)
 
-    if model_instance.person_id != user.person_id and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+    permission_data = {}
+    if model_instance.person_id == user.person_id:
+        permission_data.update({Permissions.IS_OWNER.value: True
+                                })
+
+    permissions, presses = get_user_permissions(username, db_session)
+
+    has_permission(
+        [Permissions.COMMENT_DELETE_PREMIUM, Permissions.COMMENT_DELETE,
+         Permissions.COMMENT_DELETE_PRESS],
+        permissions, None, permission_data)
+
+    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
     try:
-        logger.debug(LogMsg.COMMENT_DELETE_ACTIONS,id)
+        logger.debug(LogMsg.COMMENT_DELETE_ACTIONS, id)
         delete_comment_actions_internal(db_session, id)
-        logger.debug(LogMsg.COMMENT_DELETE,id)
+        logger.debug(LogMsg.COMMENT_DELETE, id)
         db_session.delete(model_instance)
-        logger.debug(LogMsg.DELETE_SUCCESS, {'comment_id':id})
+        logger.debug(LogMsg.DELETE_SUCCESS, {'comment_id': id})
     except:
         logger.exception(LogMsg.DELETE_FAILED, exc_info=True)
         raise Http_error(404, Message.DELETE_FAILED)
@@ -129,12 +156,27 @@ def delete_comments(book_id, db_session, username, **kwargs):
 
     logger.debug(LogMsg.COMMENT_DELETING_BOOK_COMMENTS, book_id)
 
-    if username == value('admin_username',
-                         'admin') or username in ADMINISTRATORS:
-        delete_book_comments(book_id, db_session)
-    else:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+    book = get_book(book_id,db_session)
+    press = book.get('press',None)
+
+    permissions, presses = get_user_permissions(username, db_session)
+
+    has_permit = has_permission_or_not(
+        [Permissions.COMMENT_DELETE_PREMIUM],
+        permissions)
+    if not has_permit:
+        if press in presses:
+            has_permission(
+                [Permissions.COMMENT_DELETE_PRESS],
+                permissions)
+        else:
+            logger.error(LogMsg.PERMISSION_DENIED,username)
+            raise Http_error(403,Message.ACCESS_DENIED)
+
+    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
+
+    delete_book_comments(book_id, db_session)
+
     logger.info(LogMsg.END)
 
     return Http_response(204, True)
@@ -145,6 +187,15 @@ def get_book_comments(book_id, data, db_session, username, **kwargs):
 
     limit = data.get('limit') or 10
     offset = data.get('offset') or 0
+
+    permissions, presses = get_user_permissions(username, db_session)
+
+    has_permission(
+        [Permissions.COMMENT_GET_PREMIUM,Permissions.COMMENT_GET],
+        permissions)
+
+    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
+
     try:
         logger.debug(LogMsg.COMMENT_GETTING_BOOK_COMMENTS, book_id)
         res = db_session.query(Comment).filter(
@@ -168,6 +219,14 @@ def get_all(data, db_session, username, **kwargs):
     offset = data.get('offset') or 0
     filter = data.get('filter') or None
 
+    permissions, presses = get_user_permissions(username, db_session)
+
+    has_permission_or_not(
+        [Permissions.COMMENT_GET_PREMIUM,Permissions.COMMENT_GET],
+        permissions)
+
+    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
+
     try:
         res = db_session.query(Comment).order_by(
             Comment.creation_date.desc()).slice(offset, offset + limit)
@@ -176,7 +235,7 @@ def get_all(data, db_session, username, **kwargs):
             if filter is not None:
                 comment = comment_to_dict(db_session, item, username)
                 if 'book' in filter.keys():
-                    book = get_book(item.book_id,db_session)
+                    book = get_book(item.book_id, db_session)
                     comment['book'] = book
             result.append(comment)
     except:
@@ -206,9 +265,18 @@ def edit(id, data, db_session, username):
         logger.error(LogMsg.USER_HAS_NO_PERSON, username)
         raise Http_error(400, Message.Invalid_persons)
 
-    if model_instance.person_id != user.person_id and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+    permissions, presses = get_user_permissions(username, db_session)
+
+    per_data = {}
+    if model_instance.person_id == user.person_id:
+        per_data.update({Permissions.IS_OWNER.value:True})
+
+    has_permission(
+        [Permissions.COMMENT_EDIT_PREMIUM,Permissions.COMMENT_EDIT],
+        permissions,None,per_data)
+
+
+    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
     if 'person_id' in data:
         del data['person_id']

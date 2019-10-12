@@ -1,8 +1,10 @@
 from sqlalchemy import and_
 
+from check_permission import get_user_permissions, has_permission_or_not, \
+    has_permission
 from repository.comment_repo import get_comment
 from comment.models import CommentAction
-from enums import ReportComment, check_enum
+from enums import ReportComment, check_enum, Permissions
 from helper import Http_error, model_to_dict, populate_basic_data, Http_response
 from log import LogMsg, logger
 from messages import Message
@@ -224,6 +226,19 @@ def delete(id, db_session, username):
     validate_person(user.person_id, db_session)
     logger.debug(LogMsg.PERSON_EXISTS)
 
+    logger.debug(LogMsg.PERMISSION_CHECK, username)
+    permission_data = {}
+    if action.person_id == user.person_id:
+        permission_data = {Permissions.IS_OWNER.value: True}
+    permissions, presses = get_user_permissions(username, db_session)
+
+    has_permission(
+        [Permissions.COMMENT_ACTION_DELETE_PREMIUM,
+         Permissions.COMMENT_ACTION_DELETE_PRESS],
+        permissions, None, permission_data)
+
+    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
+
     if action.person_id != user.person_id:
         logger.error(LogMsg.NOT_ACCESSED, username)
         raise Http_error(403, Message.ACCESS_DENIED)
@@ -320,13 +335,11 @@ def reported_by_user(db_session, comment_id, username):
     user = check_user(username, db_session)
     if user is None:
         if user is None:
-            logger.error(LogMsg.INVALID_USER,username)
+            logger.error(LogMsg.INVALID_USER, username)
             raise Http_error(400, Message.INVALID_USER)
 
     if user.person_id is None:
-        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
+        logger.error(LogMsg.USER_HAS_NO_PERSON, username)
         raise Http_error(400, Message.Invalid_persons)
     report = get_action_report(comment_id, user.person_id, db_session)
     return True if report is not None else False
-
-

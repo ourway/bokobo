@@ -44,7 +44,7 @@ def get(id, db_session, username=None):
     logger.error(LogMsg.GET_FAILED, {"id": id})
     logger.info(LogMsg.END)
 
-    return model_instance
+    return group_user_to_dict(model_instance)
 
 
 def delete(id, db_session, username):
@@ -77,12 +77,15 @@ def get_all(db_session, username):
     try:
         result = db_session.query(GroupUser).all()
         logger.debug(LogMsg.GET_SUCCESS)
+        final_res = []
+        for item in result:
+            final_res.append(group_user_to_dict(item))
     except:
         logger.error(LogMsg.GET_FAILED)
         raise Http_error(500, LogMsg.GET_FAILED)
 
     logger.debug(LogMsg.END)
-    return result
+    return final_res
 
 
 def user_is_in_group(user_id, group_id, db_session):
@@ -171,9 +174,12 @@ def add_group_users(data, db_session, username):
                          {'user_id': user_id, 'group_id': group_id})
             raise Http_error(409, Message.ALREADY_EXISTS)
         result.append(add(user_id, group_id, db_session, username))
+    final_res = []
+    for item in result:
+        final_res.append(group_user_to_dict(item))
 
     logger.info(LogMsg.END)
-    return result
+    return final_res
 
 
 def get_by_group(group_id, db_session, username):
@@ -185,15 +191,21 @@ def get_by_group(group_id, db_session, username):
 
     validate_group(group_id, db_session)
     result = db_session.query(GroupUser).filter(GroupUser.group_id==group_id).all()
+    final_res = []
+    for item in result:
+        final_res.append(group_user_to_dict(item))
     logger.info(LogMsg.END)
-    return result
+    return final_res
 
 def get_user_groups(user_id, db_session, username):
     logger.info(LogMsg.START, username)
 
     result = db_session.query(GroupUser).filter(GroupUser.user_id==user_id).all()
+    final_res = []
+    for item in result:
+        final_res.append(group_user_to_dict(item))
     logger.info(LogMsg.END)
-    return result
+    return final_res
 
 
 def add_group_by_users(data, db_session, username):
@@ -216,4 +228,15 @@ def add_group_by_users(data, db_session, username):
     data['group_id']=group.id
     result = add_group_users(data, db_session, username)
 
+    return result
+
+
+def group_user_to_dict(model_instance):
+    result = {
+        'group_id':model_instance.group_id,
+        'user_id': model_instance.user_id,
+        'group':model_to_dict(model_instance.group)
+    }
+    primary_data = model_basic_dict(model_instance)
+    result.update(primary_data)
     return result
