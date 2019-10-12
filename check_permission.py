@@ -59,7 +59,7 @@ def get_user_permissions(username, db_session):
     permissions = get_permission_list_of_groups(group_list.keys(), db_session)
     permission_values = get_permissions_values(permissions, db_session)
 
-    app_redis.set(redis_key, json.dumps({'permission_values':permission_values,'presses':group_list.values()}),
+    app_redis.set(redis_key, json.dumps({'permission_values':permission_values,'presses':list(group_list.values())}),
                   ex=permission_list_expiration_time)
 
 
