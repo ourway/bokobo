@@ -54,7 +54,7 @@ def get_user_permissions(username, db_session):
         return json.loads(permission_list.decode("utf-8"))
 
     group_list = get_user_group_list(user.id, db_session)
-    if group_list.items() is None:
+    if not bool(group_list):
         return [],[]
     permissions = get_permission_list_of_groups(group_list.keys(), db_session)
     permission_values = get_permissions_values(permissions, db_session)
