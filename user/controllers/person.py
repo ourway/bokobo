@@ -336,9 +336,9 @@ def person_to_dict(person, db_session):
         # 'library':library_to_dict(person.library,db_session)
 
     }
-    if not person.is_legal:
+    if person.is_legal is None:
        result['is_legal']= False
     else:
-        result['is_legal'] =True
+        result['is_legal'] =person.is_legal
     result.update(model_attrs)
     return result
