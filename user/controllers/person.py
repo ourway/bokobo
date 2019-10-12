@@ -67,6 +67,7 @@ def add(db_session, data, username):
     model_instance.cell_no = data.get('cell_no')
     model_instance.bio = data.get('bio')
     model_instance.image = data.get('image')
+    model_instance.is_legal = data.get('is_legal',False)
 
     db_session.add(model_instance)
     db_session.flush()
@@ -330,6 +331,7 @@ def person_to_dict(person, db_session):
         'name': person.name,
         'last_name': person.last_name,
         'phone': person.phone
+        'is_legal':str(person.is_legal)
         # 'library':library_to_dict(person.library,db_session)
 
     }
