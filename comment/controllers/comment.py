@@ -20,12 +20,6 @@ from configs import ADMINISTRATORS
 def add(db_session, data, username):
     logger.info(LogMsg.START)
 
-    permissions, presses = get_user_permissions(username, db_session)
-
-    has_permission(
-        [Permissions.COMMENT_ADD_PREMIUM, Permissions.COMMENT_ADD],
-        permissions)
-
     logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
     book_id = data.get('book_id')
@@ -85,14 +79,6 @@ def add(db_session, data, username):
 def get(id, db_session, username, **kwargs):
     logger.info(LogMsg.START, username)
 
-    permissions, presses = get_user_permissions(username, db_session)
-
-    has_permission(
-        [Permissions.COMMENT_GET_PREMIUM, Permissions.COMMENT_GET],
-        permissions)
-
-    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
-
     try:
         logger.debug(LogMsg.MODEL_GETTING, id)
         result = db_session.query(Comment).filter(Comment.id == id).first()
@@ -131,8 +117,7 @@ def delete(id, db_session, username, **kwargs):
     permissions, presses = get_user_permissions(username, db_session)
 
     has_permission(
-        [Permissions.COMMENT_DELETE_PREMIUM, Permissions.COMMENT_DELETE,
-         Permissions.COMMENT_DELETE_PRESS],
+        [Permissions.COMMENT_DELETE_PREMIUM],
         permissions, None, permission_data)
 
     logger.debug(LogMsg.PERMISSION_VERIFIED, username)
@@ -188,13 +173,13 @@ def get_book_comments(book_id, data, db_session, username, **kwargs):
     limit = data.get('limit') or 10
     offset = data.get('offset') or 0
 
-    permissions, presses = get_user_permissions(username, db_session)
-
-    has_permission(
-        [Permissions.COMMENT_GET_PREMIUM,Permissions.COMMENT_GET],
-        permissions)
-
-    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
+    # permissions, presses = get_user_permissions(username, db_session)
+    #
+    # has_permission(
+    #     [Permissions.COMMENT_GET_PREMIUM,Permissions.COMMENT_GET],
+    #     permissions)
+    #
+    # logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
     try:
         logger.debug(LogMsg.COMMENT_GETTING_BOOK_COMMENTS, book_id)
@@ -222,7 +207,7 @@ def get_all(data, db_session, username, **kwargs):
     permissions, presses = get_user_permissions(username, db_session)
 
     has_permission_or_not(
-        [Permissions.COMMENT_GET_PREMIUM,Permissions.COMMENT_GET],
+        [Permissions.COMMENT_GET_PREMIUM],
         permissions)
 
     logger.debug(LogMsg.PERMISSION_VERIFIED, username)
@@ -272,7 +257,7 @@ def edit(id, data, db_session, username):
         per_data.update({Permissions.IS_OWNER.value:True})
 
     has_permission(
-        [Permissions.COMMENT_EDIT_PREMIUM,Permissions.COMMENT_EDIT],
+        [Permissions.COMMENT_EDIT_PREMIUM],
         permissions,None,per_data)
 
 
