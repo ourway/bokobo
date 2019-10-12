@@ -1,5 +1,6 @@
+from check_permission import get_user_permissions, has_permission
 from configs import ADMINISTRATORS
-from enums import OrderStatus
+from enums import OrderStatus, Permissions
 from order.controllers.order_items import add_orders_items, \
     delete_orders_items_internal
 from repository.user_repo import check_user
@@ -30,9 +31,10 @@ def add(data, db_session, username):
 
     populate_basic_data(model_instance, username)
     if 'person_id' in data :
-        if username not in ADMINISTRATORS and user.person_id!=data.get('person_id'):
-            logger.error(LogMsg.NOT_ACCESSED,'user can not add order for others')
-            raise Http_error(403,Message.ACCESS_DENIED)
+        permissions, presses = get_user_permissions(username, db_session)
+        has_permission(
+            [Permissions.ORDER_ADD_PREMIUM,Permissions.ORDER_ADD_PRESS], permissions)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
         person_id = data.get('person_id')
     else:
         person_id = user.person_id
@@ -55,6 +57,15 @@ def add(data, db_session, username):
 def get(id, db_session, username=None):
     logger.info(LogMsg.START, username)
     result = db_session.query(Order).filter(Order.id == id).first()
+
+    permissions, presses = get_user_permissions(username, db_session)
+    per_data = {}
+    if username is not None and result.creator == username:
+        per_data.update({Permissions.IS_OWNER.value: True})
+    has_permission(
+        [Permissions.ORDER_GET_PREMIUM], permissions, None, per_data)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
+
     return order_to_dict(result, db_session, username)
 
 
@@ -68,9 +79,10 @@ def get_all(data, db_session, username=None):
     offset = data.get('offset', 0)
     limit = data.get('limit', 20)
 
-    if username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+    permissions, presses = get_user_permissions(username, db_session)
+    has_permission(
+        [Permissions.ORDER_GET_PREMIUM], permissions)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     result = db_session.query(Order).order_by(
         Order.creation_date.desc()).slice(offset, offset + limit)
@@ -111,6 +123,11 @@ def get_user_orders(data, db_session, username=None):
 def get_person_orders(data, db_session, username=None):
     logger.info(LogMsg.START, username)
 
+    permissions, presses = get_user_permissions(username, db_session)
+    has_permission(
+        [Permissions.ORDER_GET_PREMIUM], permissions)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
+
     offset = data.get('offset', 0)
     limit = data.get('limit', 20)
     filter = data.get('filter', None)
@@ -137,9 +154,15 @@ def delete(id, db_session, username=None):
     if order is None:
         logger.error(LogMsg.NOT_FOUND, {'order_id': id})
         raise Http_error(404, Message.NOT_FOUND)
-    if order.creator != username and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+
+    permissions, presses = get_user_permissions(username, db_session)
+    per_data = {}
+    if order.creator == username:
+        per_data.update({Permissions.IS_OWNER.value:True})
+    has_permission(
+        [Permissions.ORDER_DELETE_PREMIUM], permissions,None,per_data)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
+
     if order.status == OrderStatus.Invoiced:
         logger.error(LogMsg.ORDER_NOT_EDITABLE,
                      order_to_dict(order, db_session, username))
@@ -164,9 +187,15 @@ def edit(id, data, db_session, username=None):
     if model_instance is None:
         logger.error(LogMsg.NOT_FOUND, {'order_id': id})
         raise Http_error(404, Message.NOT_FOUND)
-    if model_instance.creator != username and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+
+    permissions, presses = get_user_permissions(username, db_session)
+    per_data = {}
+    if model_instance.creator == username:
+        per_data.update({Permissions.IS_OWNER.value: True})
+    has_permission(
+        [Permissions.ORDER_EDIT_PREMIUM], permissions, None, per_data)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
+
     if model_instance.status == OrderStatus.Invoiced:
         logger.error(LogMsg.ORDER_NOT_EDITABLE, {'order_id': id})
         raise Http_error(403, Message.ORDER_INVOICED)
@@ -213,6 +242,11 @@ def edit_status_internal(id, status, db_session, username=None):
     if model_instance is None:
         logger.error(LogMsg.NOT_FOUND, {'order_id': id})
         raise Http_error(404, Message.NOT_FOUND)
+
+    if username is not None:
+        permissions, presses = get_user_permissions(username, db_session)
+        has_permission([Permissions.ORDER_EDIT_PREMIUM], permissions)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     try:
         model_instance.status = status

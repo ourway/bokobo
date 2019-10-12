@@ -1,7 +1,6 @@
 from book_library.controller import is_book_in_library
 from prices.controller import get_book_price_internal, calc_net_price
 from repository.item_repo import get_orders_items_internal
-from repository.user_repo import check_user
 from order.models import OrderItem
 from repository.order_repo import get as get_order
 from repository.book_repo import get as get_book

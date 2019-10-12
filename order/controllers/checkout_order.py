@@ -1,5 +1,6 @@
 from book_library.controller import add_books_to_library
-from enums import OrderStatus
+from check_permission import get_user_permissions, has_permission
+from enums import OrderStatus, Permissions
 from helper import Http_error
 from log import logger, LogMsg
 from messages import Message
@@ -27,19 +28,18 @@ def checkout(order_id, data, db_session, username):
         logger.debug(LogMsg.ORDER_NOT_EDITABLE,order_id)
         raise Http_error(409,Message.ORDER_INVOICED)
 
+    # CHECK PERMISSION
+    permissions, presses = get_user_permissions(username, db_session)
+    per_data = {}
     if person_id is not None:
-        if order.person_id != person_id and username not in ADMINISTRATORS:
-            logger.error(LogMsg.NOT_ACCESSED,
-                         {'order_id': order_id, 'username': username})
-            raise Http_error(403, Message.ACCESS_DENIED)
-
+        if order.person_id == person_id:
+            per_data.update({Permissions.IS_OWNER.value: True})
     else:
-
-        if order.creator != username and username not in ADMINISTRATORS:
-            logger.error(LogMsg.NOT_ACCESSED,
-                         {'order_id': order_id, 'username': username,
-                          'order_creator': order.creator})
-            raise Http_error(403, Message.ACCESS_DENIED)
+        if order.creator == username:
+            per_data.update({Permissions.IS_OWNER.value: True})
+    has_permission(
+        [Permissions.ORDER_CHECKOUT_PREMIUM], permissions, None, per_data)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     logger.debug(LogMsg.GETTING_ACCOUNT_PERSON, {'person_id': order.person_id})
     account = get_account(order.person_id, preferred_account, db_session)
