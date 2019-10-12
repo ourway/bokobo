@@ -1,7 +1,10 @@
 import json
 from uuid import uuid4
 from app_redis import app_redis as redis
+from check_permission import get_user_permissions, has_permission, \
+    has_permission_or_not
 from configs import ADMINISTRATORS
+from enums import Permissions
 
 from log import LogMsg, logger
 from helper import Now, model_to_dict, Http_error, edit_basic_data, \
@@ -21,11 +24,6 @@ def add(db_session, data, username):
     cell_no = data.get('cell_no')
     name = data.get('name')
     new_username = data.get('username')
-    # if cell_no is not None:
-    #     user_by_cell = check_by_cell_no(cell_no, db_session)
-    #     if user_by_cell != None:
-    #         logger.error(LogMsg.USER_XISTS.format(cell_no))
-    #         raise Http_error(409, Message.USER_ALREADY_EXISTS)
 
     user = check_by_username(new_username, db_session)
     if user:
@@ -104,12 +102,23 @@ def get_profile(username, db_session):
 
 def delete(id, db_session, username):
     logger.info(LogMsg.START, username)
+    user = db_session.query(User).filter(User.id == id).first()
+    if user is None:
+        logger.error(LogMsg.NOT_FOUND,{'user_id':id})
+        raise Http_error(404,Message.NOT_FOUND)
+    per_data = {}
+    permissions, presses = get_user_permissions(username, db_session)
+    if user.username == username:
+        per_data.update({Permissions.IS_OWNER.value: True})
+    has_permission([Permissions.USER_DELETE_PREMIUM],
+                   permissions, None, per_data)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     try:
         logger.debug(LogMsg.DELETE_REQUEST, {'user_id': id})
         logger.debug(LogMsg.GROUP_DELETE_USER_GROUPS, id)
         delete_user_from_groups(id, db_session)
-        db_session.query(User).filter(User.id == id).delete()
+        db_session.delete(user)
 
         logger.debug(LogMsg.DELETE_SUCCESS, {'user_id': id})
 
@@ -125,6 +134,12 @@ def get_all(db_session, username):
     logger.info(LogMsg.START, username)
     logger.debug(LogMsg.GET_ALL_REQUEST, "Users...")
     result = db_session.query(User).order_by(User.creation_date.desc()).all()
+
+    permissions, presses = get_user_permissions(username, db_session)
+
+    has_permission([Permissions.USER_GET_PREMIUM],
+                   permissions)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     final_res = []
     for item in result:
@@ -184,11 +199,16 @@ def edit(id, db_session, data, username):
         logger.debug(LogMsg.NOT_FOUND, {'user_id': id})
         raise Http_error(404, Message.NOT_FOUND)
 
-    if model_instance.creator != username and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+    per_data = {}
+    permissions, presses = get_user_permissions(username, db_session)
+    if model_instance.username == username:
+        per_data.update({Permissions.IS_OWNER.value: True})
+    has_permission([Permissions.USER_EDIT_PREMIUM],
+                   permissions, None, per_data)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
 
-    if username not in ADMINISTRATORS:
+    if not has_permission_or_not([Permissions.USER_EDIT_PREMIUM],
+                   permissions):
         if "person_id" in data:
             del data["person_id"]
     # if "person_id" in data:
@@ -246,6 +266,14 @@ def edit_profile(id, db_session, data, username):
         if user.person_id:
             person = get_person(user.person_id, db_session, username)
             logger.debug(LogMsg.PERSON_EXISTS, username)
+            per_data = {}
+            permissions, presses = get_user_permissions(username, db_session)
+            if user['username'] == username:
+                per_data.update({Permissions.IS_OWNER.value: True})
+            has_permission([Permissions.USER_EDIT_PREMIUM],
+                           permissions, None, per_data)
+            logger.debug(LogMsg.PERMISSION_VERIFIED)
+
             if person:
                 edit_person(person.id, db_session, data, username)
 

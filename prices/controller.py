@@ -1,3 +1,6 @@
+from check_permission import get_user_permissions, has_permission, \
+    has_permission_or_not
+from enums import Permissions
 from .models import Price
 from helper import Http_error, populate_basic_data, Http_response, \
     model_to_dict, check_schema
@@ -13,11 +16,22 @@ def add(data, db_session, username):
     logger.debug(LogMsg.SCHEMA_CHECKED)
 
     book_id = data.get('book_id')
-    get_book(book_id, db_session)
+    book = get_book(book_id, db_session)
 
-    if username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+    if username is not None:
+        per_data = {}
+        permissions, presses = get_user_permissions(username, db_session)
+
+        if book.creator == username:
+            per_data.update({Permissions.IS_OWNER.value:True})
+        has_permit = has_permission_or_not([Permissions.PRICE_ADD_PREMIUM], permissions,None,per_data)
+        if not has_permit:
+            if book.press in presses:
+                has_permission([Permissions.PRICE_ADD_PRESS], permissions)
+            else:
+                logger.error(LogMsg.PERMISSION_DENIED,username)
+                raise Http_error(403,Message.ACCESS_DENIED)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     logger.debug(LogMsg.CHECK_BOOK_PRICE_EXISTANCE, book_id)
 
@@ -53,6 +67,11 @@ def get_all(data, db_session, username=None):
     offset = data.get('offset', 0)
     limit = data.get('limit', 20)
 
+    if username is not None:
+        permissions, presses = get_user_permissions(username, db_session)
+        has_permission([Permissions.PRICE_GET_PREMIUM], permissions)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
+
     result = db_session.query(Price).order_by(
         Price.creation_date.desc()).slice(offset, offset + limit)
     res = []
@@ -72,17 +91,29 @@ def get_by_id(id, db_session, username=None):
 
 def delete(id, db_session, username=None):
     logger.info(LogMsg.START, username)
-    if username is not None and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
 
     price = get_by_id(id, db_session)
     if price is None:
         logger.error(LogMsg.NOT_FOUND, {'book_price_id': id})
         raise Http_error(404, Message.NOT_FOUND)
-    if price.creator != username and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+
+    book = get_book(price.book_id, db_session)
+
+    if username is not None:
+        per_data = {}
+        permissions, presses = get_user_permissions(username, db_session)
+        if book.creator == username:
+            per_data.update({Permissions.IS_OWNER.value: True})
+        has_permit = has_permission_or_not([Permissions.PRICE_DELETE_PREMIUM],
+                                           permissions, None, per_data)
+        if not has_permit:
+            if book.press in presses:
+                has_permission([Permissions.PRICE_DELETE_PRESS], permissions)
+            else:
+                logger.error(LogMsg.PERMISSION_DENIED, username)
+                raise Http_error(403, Message.ACCESS_DENIED)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
+
 
     try:
         db_session.delete(price)
@@ -107,9 +138,23 @@ def edit(id, data, db_session, username=None):
     if model_instance is None:
         logger.error(LogMsg.NOT_FOUND, {'book_price_id': id})
         raise Http_error(404, Message.NOT_FOUND)
-    if model_instance.creator != username and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+
+    book = get_book(model_instance.book_id, db_session)
+
+    if username is not None:
+        per_data = {}
+        permissions, presses = get_user_permissions(username, db_session)
+        if book.creator == username:
+            per_data.update({Permissions.IS_OWNER.value: True})
+        has_permit = has_permission_or_not([Permissions.PRICE_EDIT_PREMIUM],
+                                           permissions, None, per_data)
+        if not has_permit:
+            if book.press in presses:
+                has_permission([Permissions.PRICE_EDIT_PRESS], permissions)
+            else:
+                logger.error(LogMsg.PERMISSION_DENIED, username)
+                raise Http_error(403, Message.ACCESS_DENIED)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     try:
         model_instance.price = data.get('price')

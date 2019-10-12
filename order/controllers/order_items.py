@@ -1,4 +1,6 @@
 from book_library.controller import is_book_in_library
+from check_permission import get_user_permissions, has_permission
+from enums import Permissions
 from prices.controller import get_book_price_internal, calc_net_price
 from repository.item_repo import get_orders_items_internal
 from order.models import OrderItem
@@ -86,8 +88,18 @@ def add(data, db_session, username):
 
 def get(id, db_session, username=None):
     logger.info(LogMsg.START)
+
+
     item = db_session.query(OrderItem).filter(
         OrderItem.id == id).first()
+
+    if username is not None:
+        per_data = {}
+        permissions, presses = get_user_permissions(username, db_session)
+        if item.creator == username:
+            per_data.update({Permissions.IS_OWNER.value:True})
+        has_permission([Permissions.ORDER_ITEM_GET_PREMIUM], permissions,None,per_data)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
     return item_to_dict(item,db_session)
 
 
@@ -96,9 +108,10 @@ def get_all(data, db_session, username=None):
     offset = data.get('offset', 0)
     limit = data.get('limit', 20)
 
-    if username not in administrator_users:
-        logger.error(LogMsg.NOT_ACCESSED,username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+    if username is not None:
+        permissions, presses = get_user_permissions(username, db_session)
+        has_permission([Permissions.ORDER_ITEM_GET_PREMIUM], permissions)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     result = db_session.query(OrderItem).order_by(
         OrderItem.creation_date.desc()).slice(offset, offset + limit)
@@ -116,6 +129,15 @@ def get_orders_items(order_id, db_session, username=None):
 
     result = db_session.query(OrderItem).filter(
         OrderItem.order_id == order_id).all()
+
+    if username is not None:
+        per_data = {}
+        permissions, presses = get_user_permissions(username, db_session)
+        if result is not None and result[0].creator == username:
+            per_data.update({Permissions.IS_OWNER.value:True})
+        has_permission([Permissions.ORDER_ITEM_GET_PREMIUM], permissions,None,per_data)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
+
     final_res = []
     for item in result:
         final_res.append(item_to_dict(item,db_session))
@@ -132,9 +154,13 @@ def delete(id, db_session, username=None):
     if order_item is None:
         logger.error(LogMsg.NOT_FOUND,{'order_item_id':id})
         raise Http_error(404, Message.NOT_FOUND)
-    if order_item.creator != username and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED,username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+    if username is not None:
+        per_data = {}
+        permissions, presses = get_user_permissions(username, db_session)
+        if order_item.creator == username:
+            per_data.update({Permissions.IS_OWNER.value:True})
+        has_permission([Permissions.ORDER_ITEM_DELETE_PREMIUM], permissions,None,per_data)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
     order_id = order_item.order_id
 
     try:
@@ -173,10 +199,13 @@ def edit(id, data, db_session, username=None):
     if model_instance is None:
         logger.error(LogMsg.NOT_FOUND,{'order_item_id':id})
         raise Http_error(404, Message.NOT_FOUND)
-    if model_instance.creator != username or username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED,username)
-        raise Http_error(403, Message.ACCESS_DENIED)
-
+    if username is not None:
+        per_data = {}
+        permissions, presses = get_user_permissions(username, db_session)
+        if model_instance.creator == username:
+            per_data.update({Permissions.IS_OWNER.value:True})
+        has_permission([Permissions.ORDER_ITEM_EDIT_PREMIUM], permissions,None,per_data)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
     if 'id' in data:
         del data['id']
 

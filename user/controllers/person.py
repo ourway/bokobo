@@ -3,6 +3,9 @@ import os
 from sqlalchemy import or_
 from accounts.controller import add_initial_account
 from book_library.controller import is_book_in_library
+from check_permission import get_user_permissions, has_permission_or_not, \
+    has_permission
+from enums import Permissions
 from follow.controller import get_following_list_internal
 from helper import model_to_dict, Http_error, model_basic_dict, \
     populate_basic_data, edit_basic_data, Http_response
@@ -30,9 +33,14 @@ save_path = os.environ.get('save_path')
 def add(db_session, data, username):
     logger.info(LogMsg.START, username)
 
-    if username is not SIGNUP_USER and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, {'username': username})
-        raise Http_error(403, Message.ACCESS_DENIED)
+    if username is not None:
+        per_data = {}
+        permissions, presses = get_user_permissions(username, db_session)
+        if username == SIGNUP_USER:
+            per_data.update({Permissions.IS_OWNER.value: True})
+        has_permission([Permissions.PERSON_ADD_PREMIUM],
+                                           permissions, None, per_data)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     cell_no = data.get('cell_no')
     if cell_no and person_cell_exists(db_session, cell_no):
@@ -85,6 +93,16 @@ def get(id, db_session, username=None):
     else:
         logger.debug(LogMsg.MODEL_GETTING_FAILED)
         raise Http_error(404, Message.NOT_FOUND)
+
+    if username is not None:
+        user = check_user(username,db_session)
+        per_data = {}
+        permissions, presses = get_user_permissions(username, db_session)
+        if user.person_id == id:
+            per_data.update({Permissions.IS_OWNER.value: True})
+        has_permission([Permissions.PERSON_GET_PREMIUM],
+                                           permissions, None, per_data)
+        logger.debug(LogMsg.PERMISSION_VERIFIED)
     logger.error(LogMsg.GET_FAILED, {"id": id})
     logger.info(LogMsg.END)
 
@@ -115,9 +133,13 @@ def edit(id, db_session, data, username):
         logger.debug(LogMsg.MODEL_GETTING_FAILED, {'person_id': id})
         raise Http_error(404, Message.NOT_FOUND)
 
-    if model_instance.id != user.person_id and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+    per_data = {}
+    permissions, presses = get_user_permissions(username, db_session)
+    if user.person_id == id:
+        per_data.update({Permissions.IS_OWNER.value: True})
+    has_permission([Permissions.PERSON_EDIT_PREMIUM],
+                   permissions, None, per_data)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     if 'current_book' in data.keys():
         if not is_book_in_library(model_instance.id, data.get('current_book'),
@@ -169,6 +191,14 @@ def delete(id, db_session, username):
     if model_instance is None:
         logger.error(LogMsg.NOT_FOUND, {'person_id': id})
         raise Http_error(404, Message.NOT_FOUND)
+    user = check_user(username,db_session)
+    per_data = {}
+    permissions, presses = get_user_permissions(username, db_session)
+    if user.person_id == id:
+        per_data.update({Permissions.IS_OWNER.value: True})
+    has_permission([Permissions.PERSON_DELETE_PREMIUM],
+                   permissions, None, per_data)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
     if person_has_books(id, db_session):
         logger.error(LogMsg.PERSON_HAS_BOOKS, {'person_id': id})
         raise Http_error(403, Message.PERSON_HAS_BOOKS)
@@ -209,6 +239,11 @@ def delete(id, db_session, username):
 
 def get_all(db_session, username):
     logger.info(LogMsg.START, username)
+
+    user = check_user(username,db_session)
+    permissions, presses = get_user_permissions(username, db_session)
+    has_permission([Permissions.PERSON_GET_PREMIUM],permissions)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
     try:
         result = db_session.query(Person).all()
         logger.debug(LogMsg.GET_SUCCESS)
@@ -257,7 +292,14 @@ def search_person(data, db_session, username):
 
 def get_person_profile(id, db_session, username):
     logger.info(LogMsg.START, username)
-
+    user = check_user(username,db_session)
+    per_data = {}
+    permissions, presses = get_user_permissions(username, db_session)
+    if user.person_id == id:
+        per_data.update({Permissions.IS_OWNER.value: True})
+    has_permission([Permissions.PERSON_GET_PREMIUM],
+                   permissions, None, per_data)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
     logger.debug(LogMsg.MODEL_GETTING)
     model_instance = db_session.query(Person).filter(Person.id == id).first()
     if model_instance:

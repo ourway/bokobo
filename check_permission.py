@@ -31,7 +31,6 @@ def has_permission_or_not(func_permissions, user_permission_list, model_instance
                    data=None):
     if any(permission.value in user_permission_list for permission in
            func_permissions):
-
         return True
     elif data is not None and data.get(Permissions.IS_OWNER.value,
                                        False) is True:
