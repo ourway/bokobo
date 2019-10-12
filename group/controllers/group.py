@@ -7,6 +7,7 @@ from log import LogMsg, logger
 from messages import Message
 from permission.controllers.group_permission import \
     delete_all_permissions_of_group
+from repository.group_repo import check_group_title_exists
 from repository.group_user_repo import delete_group_users
 
 from ..models import Group
@@ -21,6 +22,10 @@ def add(data, db_session, username):
     if username not in ADMINISTRATORS:
         logger.error(LogMsg.NOT_ACCESSED, {'username': username})
         raise Http_error(403, Message.ACCESS_DENIED)
+
+    if check_group_title_exists(data.get('title',None),db_session):
+        logger.error(LogMsg.GROUP_EXISTS)
+        raise Http_error(409,Message.ALREADY_EXISTS)
 
     model_instance = Group()
     populate_basic_data(model_instance, username, data.get('tags'))

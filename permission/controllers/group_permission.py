@@ -11,6 +11,10 @@ from ..models import GroupPermission
 def add(permission_id, group_id, db_session, username):
     logger.info(LogMsg.START, username)
 
+    if group_has_permission(permission_id, group_id, db_session):
+        logger.error(LogMsg.PERMISSION_GROUP_ALREADY_HAS)
+        raise Http_error(409,Message.ALREADY_EXISTS)
+
     model_instance = GroupPermission()
     populate_basic_data(model_instance, username)
     logger.debug(LogMsg.POPULATING_BASIC_DATA)

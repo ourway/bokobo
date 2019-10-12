@@ -17,6 +17,10 @@ save_path = os.environ.get('save_path')
 def add(user_id, group_id, db_session, username):
     logger.info(LogMsg.START, username)
 
+    if user_is_in_group(user_id, group_id, db_session):
+        logger.error(LogMsg.GROUP_USER_IS_IN_GROUP)
+        raise Http_error(409,Message.ALREADY_EXISTS)
+
     model_instance = GroupUser()
     populate_basic_data(model_instance, username)
     logger.debug(LogMsg.POPULATING_BASIC_DATA)

@@ -25,8 +25,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/group/controllers/group_user.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="230" column="17" selection-start-line="230" selection-start-column="17" selection-end-line="230" selection-end-column="17" />
+            <state relative-caret-position="473">
+              <caret line="234" selection-start-line="234" selection-end-line="241" selection-end-column="17" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -61,51 +61,56 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/permission/controllers/group_permission.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="179">
-              <caret line="271" column="22" selection-start-line="271" selection-start-column="22" selection-end-line="271" selection-end-column="22" />
+            <state relative-caret-position="58">
+              <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
               <folding>
                 <element signature="e#408#759#0" />
-                <element signature="e#806#1314#0" />
                 <element signature="e#1018#1102#0" />
                 <element signature="e#1121#1211#0" />
                 <element signature="e#1359#2119#0" />
                 <element signature="e#1511#1621#0" />
                 <element signature="e#1767#1875#0" />
                 <element signature="e#1948#2053#0" />
-                <element signature="e#2161#2452#0" />
-                <element signature="e#2214#2303#0" />
                 <element signature="e#2324#2404#0" />
                 <element signature="e#2522#2742#0" />
-                <element signature="e#2819#2987#0" />
-                <element signature="e#3053#4054#0" />
                 <element signature="e#3137#3247#0" />
-                <element signature="e#3479#4004#0" />
-                <element signature="e#3545#3959#0" />
                 <element signature="e#3623#3849#0" />
                 <element signature="e#3702#3786#0" />
-                <element signature="e#4123#5028#0" />
                 <element signature="e#4207#4317#0" />
                 <element signature="e#4530#4963#0" />
                 <element signature="e#4576#4963#0" />
                 <element signature="e#4658#4886#0" />
                 <element signature="e#4733#4817#0" />
-                <element signature="e#5090#5873#0" />
                 <element signature="e#5174#5284#0" />
-                <element signature="e#5468#5826#0" />
                 <element signature="e#5542#5724#0" />
-                <element signature="e#5938#6714#0" />
                 <element signature="e#6022#6132#0" />
-                <element signature="e#6316#6667#0" />
-                <element signature="e#6394#6584#0" />
-                <element signature="e#6765#8211#0" />
                 <element signature="e#6849#6959#0" />
                 <element signature="e#7116#7309#0" />
                 <element signature="e#7329#8035#0" />
                 <element signature="e#7420#7690#0" />
                 <element signature="e#7775#8035#0" />
-                <element signature="e#8278#8636#0" />
-                <element signature="e#8362#8472#0" />
-                <element signature="e#8701#8802#0" />
+                <element signature="e#8867#9110#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/permission/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="20" selection-start-line="20" selection-end-line="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/group/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="513">
+              <caret line="19" column="16" selection-start-line="19" selection-end-line="20" />
+              <folding>
+                <element signature="e#0#47#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -222,7 +227,6 @@
         <option value="$PROJECT_DIR$/repository/group_repo.py" />
         <option value="$PROJECT_DIR$/user/controllers/user.py" />
         <option value="$PROJECT_DIR$/permission/controller.py" />
-        <option value="$PROJECT_DIR$/permission/models.py" />
         <option value="$PROJECT_DIR$/messages.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/group/controllers/group.py" />
@@ -245,6 +249,7 @@
         <option value="$PROJECT_DIR$/group/models.py" />
         <option value="$PROJECT_DIR$/group/controllers/group_user.py" />
         <option value="$PROJECT_DIR$/permission/urls.py" />
+        <option value="$PROJECT_DIR$/permission/models.py" />
         <option value="$PROJECT_DIR$/permission/controllers/group_permission.py" />
       </list>
     </option>
@@ -975,13 +980,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/permission/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="11" column="26" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/repository/user_repo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
@@ -1383,26 +1381,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/group/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
-          <folding>
-            <element signature="e#0#47#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/group/controllers/group_user.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="230" column="17" selection-start-line="230" selection-start-column="17" selection-end-line="230" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/permission/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="617">
@@ -1413,53 +1391,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/group/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="19" column="16" selection-start-line="19" selection-end-line="20" />
+          <folding>
+            <element signature="e#0#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/permission/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/group/controllers/group_user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="234" selection-start-line="234" selection-end-line="241" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/permission/controllers/group_permission.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="179">
-          <caret line="271" column="22" selection-start-line="271" selection-start-column="22" selection-end-line="271" selection-end-column="22" />
+        <state relative-caret-position="58">
+          <caret line="40" column="51" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
           <folding>
             <element signature="e#408#759#0" />
-            <element signature="e#806#1314#0" />
             <element signature="e#1018#1102#0" />
             <element signature="e#1121#1211#0" />
             <element signature="e#1359#2119#0" />
             <element signature="e#1511#1621#0" />
             <element signature="e#1767#1875#0" />
             <element signature="e#1948#2053#0" />
-            <element signature="e#2161#2452#0" />
-            <element signature="e#2214#2303#0" />
             <element signature="e#2324#2404#0" />
             <element signature="e#2522#2742#0" />
-            <element signature="e#2819#2987#0" />
-            <element signature="e#3053#4054#0" />
             <element signature="e#3137#3247#0" />
-            <element signature="e#3479#4004#0" />
-            <element signature="e#3545#3959#0" />
             <element signature="e#3623#3849#0" />
             <element signature="e#3702#3786#0" />
-            <element signature="e#4123#5028#0" />
             <element signature="e#4207#4317#0" />
             <element signature="e#4530#4963#0" />
             <element signature="e#4576#4963#0" />
             <element signature="e#4658#4886#0" />
             <element signature="e#4733#4817#0" />
-            <element signature="e#5090#5873#0" />
             <element signature="e#5174#5284#0" />
-            <element signature="e#5468#5826#0" />
             <element signature="e#5542#5724#0" />
-            <element signature="e#5938#6714#0" />
             <element signature="e#6022#6132#0" />
-            <element signature="e#6316#6667#0" />
-            <element signature="e#6394#6584#0" />
-            <element signature="e#6765#8211#0" />
             <element signature="e#6849#6959#0" />
             <element signature="e#7116#7309#0" />
             <element signature="e#7329#8035#0" />
             <element signature="e#7420#7690#0" />
             <element signature="e#7775#8035#0" />
-            <element signature="e#8278#8636#0" />
-            <element signature="e#8362#8472#0" />
-            <element signature="e#8701#8802#0" />
+            <element signature="e#8867#9110#0" />
           </folding>
         </state>
       </provider>
