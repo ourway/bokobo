@@ -20,5 +20,5 @@ def get_user_group_list(user_id,db_session):
     group_persons_list = validate_groups(groups,db_session)
     group_persons = {}
     for item in group_persons_list:
-        group_persons.update({item.group_id:item.person_id})
+        group_persons.update({item.id:item.person_id})
     return group_persons
