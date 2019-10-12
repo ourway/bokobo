@@ -54,10 +54,10 @@ def get_user_permissions(username, db_session):
         return json.loads(permission_list.decode("utf-8"))
 
     group_list = get_user_group_list(user.id, db_session)
-    permissions = get_permission_list_of_groups(group_list, db_session)
-    permission_values = get_permissions_values(permissions.keys(), db_session)
+    permissions = get_permission_list_of_groups(group_list.keys(), db_session)
+    permission_values = get_permissions_values(permissions, db_session)
 
     app_redis.set(redis_key, json.dumps(permission_values),
                   ex=permission_list_expiration_time)
 
-    return permission_values,permissions.values()
+    return permission_values,group_list.values()
