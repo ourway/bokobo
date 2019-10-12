@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="" />
+    <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/books/controllers/book.py" beforeDir="false" afterPath="$PROJECT_DIR$/books/controllers/book.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/check_permission.py" beforeDir="false" afterPath="$PROJECT_DIR$/check_permission.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/check_permission.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="56" column="26" selection-start-line="56" selection-start-column="26" selection-end-line="56" selection-end-column="26" />
+            <state relative-caret-position="247">
+              <caret line="54" column="73" selection-start-line="54" selection-start-column="73" selection-end-line="54" selection-end-column="73" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -49,12 +52,37 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="58">
+              <caret line="275" column="36" selection-start-line="275" selection-start-column="36" selection-end-line="275" selection-end-column="36" />
+              <folding>
+                <element signature="e#4067#4089#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/repository/group_user_repo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="621">
-              <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+            <state relative-caret-position="58">
+              <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
               <folding>
                 <element signature="e#0#34#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/repository/group_repo.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="162">
+              <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+                <element signature="e#460#694#0" />
               </folding>
             </state>
           </provider>
@@ -221,12 +249,10 @@
         <option value="$PROJECT_DIR$/app_configs.sh" />
         <option value="$PROJECT_DIR$/alembic/versions/602265aff076_book_press_fileld_added.py" />
         <option value="$PROJECT_DIR$/books/models.py" />
-        <option value="$PROJECT_DIR$/repository/group_user_repo.py" />
         <option value="$PROJECT_DIR$/accounts/controller.py" />
         <option value="$PROJECT_DIR$/book_library/controller.py" />
         <option value="$PROJECT_DIR$/book_rate/controller.py" />
         <option value="$PROJECT_DIR$/log.py" />
-        <option value="$PROJECT_DIR$/books/controllers/book.py" />
         <option value="$PROJECT_DIR$/group/urls.py" />
         <option value="$PROJECT_DIR$/comment/controllers/actions.py" />
         <option value="$PROJECT_DIR$/group/models.py" />
@@ -242,6 +268,8 @@
         <option value="$PROJECT_DIR$/enums.py" />
         <option value="$PROJECT_DIR$/order/controllers/order.py" />
         <option value="$PROJECT_DIR$/order/controllers/order_items.py" />
+        <option value="$PROJECT_DIR$/repository/group_user_repo.py" />
+        <option value="$PROJECT_DIR$/books/controllers/book.py" />
         <option value="$PROJECT_DIR$/check_permission.py" />
       </list>
     </option>
@@ -425,19 +453,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24707195" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.24707195" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32998884" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.72240806" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.522854" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.522854" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32998884" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49916342" visible="true" weight="0.51839465" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49916342" weight="0.51839465" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5008366" side_tool="true" weight="0.522854" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32998884" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -457,7 +486,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32998884" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49916342" visible="true" weight="0.51839465" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49916342" weight="0.51839465" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5008366" side_tool="true" weight="0.522854" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32998884" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -476,12 +505,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/books/controllers/book.py</url>
-          <line>386</line>
+          <line>389</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/books/controllers/book.py</url>
-          <line>381</line>
+          <line>384</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -611,7 +640,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/books/controllers/book.py</url>
-          <line>297</line>
+          <line>300</line>
           <option name="timeStamp" value="117" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -738,6 +767,11 @@
           <url>file://$PROJECT_DIR$/check_permission.py</url>
           <line>18</line>
           <option name="timeStamp" value="173" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/check_permission.py</url>
+          <line>56</line>
+          <option name="timeStamp" value="179" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -1137,77 +1171,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="93" column="15" selection-start-line="93" selection-start-column="15" selection-end-line="93" selection-end-column="15" />
-          <folding>
-            <element signature="e#1379#2977#0" />
-            <element signature="e#2670#2795#0" />
-            <element signature="e#3190#3295#0" />
-            <element signature="e#3315#3411#0" />
-            <element signature="e#3511#5693#0" />
-            <element signature="e#3847#3943#0" />
-            <element signature="e#4067#4089#0" />
-            <element signature="e#4381#4466#0" />
-            <element signature="e#4491#4574#0" />
-            <element signature="e#4620#4706#0" />
-            <element signature="e#5202#5529#0" />
-            <element signature="e#5738#6972#0" />
-            <element signature="e#5964#6060#0" />
-            <element signature="e#6378#6451#0" />
-            <element signature="e#6479#6550#0" />
-            <element signature="e#6754#6907#0" />
-            <element signature="e#7004#7812#0" />
-            <element signature="e#7089#7640#0" />
-            <element signature="e#7281#7640#0" />
-            <element signature="e#7661#7761#0" />
-            <element signature="e#7855#9072#0" />
-            <element signature="e#7977#8792#0" />
-            <element signature="e#9136#10674#0" />
-            <element signature="e#10220#10288#0" />
-            <element signature="e#10517#10745#0" />
-            <element signature="e#10650#10745#0" />
-            <element signature="e#9764#10626#0" />
-            <element signature="e#10920#11016#0" />
-            <element signature="e#12375#12603#0" />
-            <element signature="e#12508#12603#0" />
-            <element signature="e#11537#11588#0" />
-            <element signature="e#11634#11720#0" />
-            <element signature="e#11936#12394#0" />
-            <element signature="e#12295#12394#0" />
-            <element signature="e#13110#13706#0" />
-            <element signature="e#15070#15298#0" />
-            <element signature="e#15203#15298#0" />
-            <element signature="e#13752#14509#0" />
-            <element signature="e#13974#14341#0" />
-            <element signature="e#14362#14461#0" />
-            <element signature="e#14556#15312#0" />
-            <element signature="e#14765#15173#0" />
-            <element signature="e#15194#15293#0" />
-            <element signature="e#15358#16042#0" />
-            <element signature="e#15588#15875#0" />
-            <element signature="e#15896#15995#0" />
-            <element signature="e#16087#16809#0" />
-            <element signature="e#16357#16643#0" />
-            <element signature="e#16664#16763#0" />
-            <element signature="e#16851#17801#0" />
-            <element signature="e#17224#17309#0" />
-            <element signature="e#17529#17666#0" />
-            <element signature="e#17846#18409#0" />
-            <element signature="e#17908#18236#0" />
-            <element signature="e#18258#18358#0" />
-            <element signature="e#18456#18941#0" />
-            <element signature="e#18500#18628#0" />
-            <element signature="e#18984#19603#0" />
-            <element signature="e#19097#19395#0" />
-            <element signature="e#19416#19515#0" />
-            <element signature="e#19648#20074#0" />
-            <element signature="e#19864#19969#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/order/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
@@ -1293,17 +1256,6 @@
             <element signature="e#6675#6789#0" />
             <element signature="e#7032#7289#0" />
             <element signature="e#7041#7068#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/repository/group_repo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="24" column="46" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-            <element signature="e#460#694#0" />
           </folding>
         </state>
       </provider>
@@ -1479,20 +1431,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/repository/group_repo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+            <element signature="e#460#694#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/repository/group_user_repo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+        <state relative-caret-position="58">
+          <caret line="22" column="35" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/books/controllers/book.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="275" column="36" selection-start-line="275" selection-start-column="36" selection-end-line="275" selection-end-column="36" />
+          <folding>
+            <element signature="e#4067#4089#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/check_permission.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="56" column="26" selection-start-line="56" selection-start-column="26" selection-end-line="56" selection-end-column="26" />
+        <state relative-caret-position="247">
+          <caret line="54" column="73" selection-start-line="54" selection-start-column="73" selection-end-line="54" selection-end-column="73" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

@@ -51,7 +51,8 @@ def get_user_permissions(username, db_session):
     redis_key = 'PERMISSIONS_{}'.format(user.id)
     permission_list = app_redis.get(redis_key)
     if permission_list is not None:
-        return json.loads(permission_list.decode("utf-8"))
+        data =  json.loads(permission_list.decode("utf-8"))
+        return data.get('permission_values',None),data.get('presses',None)
 
     group_list = get_user_group_list(user.id, db_session)
     if not bool(group_list):
@@ -59,7 +60,7 @@ def get_user_permissions(username, db_session):
     permissions = get_permission_list_of_groups(group_list.keys(), db_session)
     permission_values = get_permissions_values(permissions, db_session)
 
-    app_redis.set(redis_key, json.dumps(permission_values),
+    app_redis.set(redis_key, json.dumps({'permission_values':permission_values,'presses':group_list.values()}),
                   ex=permission_list_expiration_time)
 
 

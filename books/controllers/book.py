@@ -276,7 +276,10 @@ def add_multiple_type_books(db_session, data, username):
     permissions, presses = get_user_permissions(username, db_session)
     has_permit = has_permission_or_not([Permissions.BOOK_ADD_PREMIUM],
                                        permissions)
-    press = roles_data.get('Press',None)
+    press = None
+    for item in roles_data:
+        if 'Press' in item.keys():
+            press = item.get('Press',None)
     if press is None:
         logger.error(LogMsg.DATA_MISSING,{'press':None})
         raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
@@ -294,7 +297,7 @@ def add_multiple_type_books(db_session, data, username):
 
     for type in types:
         data['type'] = type
-        data['press'] = roles_data.get('Press', None)
+        data['press'] = press
         unique_code = add_uniquecode(data, db_session)
 
         book_data.update({'type': type, 'unique_code': unique_code.UniqueCode})
