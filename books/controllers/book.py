@@ -587,6 +587,7 @@ def search_book(data, db_session):
     elif search_key == 'writer':
         book_id = filter.get('book_id', None)
         search_data['book_id'] = book_id
+        search_data['person_id'] = search_phrase
         result = search_by_writer(search_data, db_session)
     elif search_key == 'tag':
         result = search_by_tags(search_data, db_session)
