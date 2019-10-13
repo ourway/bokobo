@@ -17,4 +17,4 @@ export reset_password_interval=120
 export admin_username='admin'
 export sms_api_key='322F3172722B694D7537634A6D373742334D454B595746423741585079377341'
 export sms_sender='کتابخوان جام جم'
-export permission_list_expiration_time=3000
+export permission_list_expiration_time=60

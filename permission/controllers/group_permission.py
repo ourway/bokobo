@@ -3,7 +3,8 @@ from helper import model_to_dict, Http_error, populate_basic_data, \
     Http_response, model_basic_dict
 from log import LogMsg, logger
 from messages import Message
-from permission.controllers.permission import validate_permissions
+from permission.controllers.permission import validate_permissions, \
+    permission_list
 from repository.group_repo import validate_groups, validate_group
 from ..models import GroupPermission
 
@@ -282,6 +283,25 @@ def group_permission_list(data,db_session,username):
         permissions.append(group_permission_to_dict(item))
     logger.info(LogMsg.END)
     return permissions
+
+
+def premium_permission_group(group_id, db_session,username):
+    permissions = permission_list(db_session, 'PREMIUM')
+    result = []
+    for permission_id in permissions:
+        if group_has_permission(permission_id, group_id, db_session):
+            logger.debug(LogMsg.PERMISSION_GROUP_ALREADY_HAS)
+            pass
+        else:
+            model_instance = GroupPermission()
+            populate_basic_data(model_instance, username)
+            logger.debug(LogMsg.POPULATING_BASIC_DATA)
+            model_instance.group_id = group_id
+            model_instance.permission_id = permission_id
+            db_session.add(model_instance)
+            result.append(group_permission_to_dict(model_instance))
+    logger.info(LogMsg.END)
+    return result
 
 
 def group_permission_to_dict(model_instance):

@@ -46,7 +46,6 @@ def get_user_permissions(username, db_session):
     if user is None:
         logger.error(LogMsg.NOT_FOUND, {'username': username})
         raise Http_error(404, Message.INVALID_USERNAME)
-
     redis_key = 'PERMISSIONS_{}'.format(user.id)
     permission_list = app_redis.get(redis_key)
     if permission_list is not None:

@@ -241,7 +241,6 @@ def delete(id, db_session, username):
 def get_all(db_session, username):
     logger.info(LogMsg.START, username)
 
-    user = check_user(username,db_session)
     permissions, presses = get_user_permissions(username, db_session)
     has_permission([Permissions.PERSON_GET_PREMIUM],permissions)
     logger.debug(LogMsg.PERMISSION_VERIFIED)
