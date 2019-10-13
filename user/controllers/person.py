@@ -330,8 +330,6 @@ def person_to_dict(person, db_session):
         'name': person.name,
         'last_name': person.last_name,
         'phone': person.phone
-
-
         # 'library':library_to_dict(person.library,db_session)
 
     }

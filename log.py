@@ -423,6 +423,15 @@ class LogMsg:
     PERMISSION_DENIED = 'user has no permission for action : %s'
     PERMISSION_VERIFIED = 'user has permission for vthe action : %s'
 
+    # DISCUSSION_GROUP
+    DISCUSSION_GROUP_ADD = 'discussion group added by data : %s'
+    DISCUSSION_GROUP_MEMBERS_ADDED = 'members added to group : %s'
+    DISCUSSION_GROUP_NOT_ADMIN = 'user is not admin of group and cant change group properties: %s'
+    DISCUSSION_GROUP_OLD_MEMBERS_DELETED = 'members of group deleted successfully ...'
+    DISCUSSION_GROUP_DELETE = 'discussion group deleted successfully : %s'
+
+
+
 
     UPLOAD_FAILED = 'uploading files failed'
     FILE_EXISTS = 'this file exists by path : %s'

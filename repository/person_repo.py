@@ -1,6 +1,6 @@
 from sqlalchemy import or_
 
-from helper import Http_error
+from helper import Http_error, model_to_dict
 from messages import Message
 from user.models import Person
 
@@ -54,3 +54,11 @@ def fullname_persons(person_list, db_session):
         return res
     else:
         raise Http_error(404, Message.Invalid_persons)
+
+
+def get_persons(person_list,db_session):
+        result = db_session.query(Person).filter(Person.id.in_(set(person_list))).all()
+        res = []
+        for item in result:
+            res.append(model_to_dict(item))
+        return res

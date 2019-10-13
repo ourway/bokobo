@@ -20,6 +20,7 @@ class BookTypes(enum.Enum):
     Pdf = 'Pdf'
     Epub = 'Epub'
 
+
 class Genre(enum.Enum):
     Comedy = 'Comedy'
     Drama = 'Drama'
@@ -121,49 +122,51 @@ class Permissions(enum.Enum):
     USER_GET_PREMIUM = 'USER_GET_PREMIUM'
     USER_EDIT_PREMIUM = 'USER_EDIT_PREMIUM'
 
+    DISCUSSION_GROUP_PREMIUM = 'DISCUSSION_GROUP_PREMIUM'
+    DISCUSSION_MEMBER_PREMIUM = 'DISCUSSION_MEMBER_PREMIUM'
 
 
-
-
-
-
-def check_enums(data,enum_class):
+def check_enums(data, enum_class):
     for type in data:
         if type not in enum_class.__members__:
-            raise Http_error(404,Message.INVALID_ENUM)
+            raise Http_error(404, Message.INVALID_ENUM)
     return data
+
 
 def str_genre(genre_list):
     res = []
     if genre_list is None:
-        genre_list=[]
+        genre_list = []
     for genre in genre_list:
-        res.append((getattr(Genre,genre)).value)
+        res.append((getattr(Genre, genre)).value)
     return res
 
 
 def str_type(btype):
     if btype is not None:
-        return (getattr(BookTypes,btype)).value
+        return (getattr(BookTypes, btype)).value
     else:
         return ''
+
 
 def str_role(role):
     if role is not None:
-        return (getattr(Roles,role)).value
+        return (getattr(Roles, role)).value
     else:
         return ''
 
+
 def str_report(report):
     if report is not None:
-        if isinstance(report,str):
+        if isinstance(report, str):
             return report
         else:
             return report.value
     else:
         return None
 
-def check_enum(type,enum_class):
+
+def check_enum(type, enum_class):
     if type not in enum_class.__members__:
         raise Http_error(404, Message.INVALID_ENUM)
 
@@ -172,7 +175,7 @@ def check_enum(type,enum_class):
 
 def str_account_type(account_type):
     if account_type is not None:
-        if isinstance(account_type,str):
+        if isinstance(account_type, str):
             return account_type
         else:
             return account_type.value
