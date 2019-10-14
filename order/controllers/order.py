@@ -99,6 +99,7 @@ def get_user_orders(data, db_session, username=None):
 
     offset = data.get('offset', 0)
     limit = data.get('limit', 20)
+    filter=data.get('filter',None)
 
     user = check_user(username, db_session)
     if user is None:
@@ -107,10 +108,20 @@ def get_user_orders(data, db_session, username=None):
     if user.person_id is None:
         logger.error(LogMsg.USER_HAS_NO_PERSON, username)
         raise Http_error(400, Message.Invalid_persons)
+    if filter is None:
+        result = db_session.query(Order).filter(
+            Order.person_id == user.person_id).order_by(
+            Order.creation_date.desc()).slice(offset, offset + limit)
+    else:
+        status = filter.get('status',None)
+        if status is not None:
+            result = db_session.query(Order).filter(
+                Order.person_id == user.person_id,Order.status==status).order_by(
+                Order.creation_date.desc()).slice(offset, offset + limit)
+        else:
+            logger.error(LogMsg.DATA_MISSING,'status in filter')
+            raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
 
-    result = db_session.query(Order).filter(
-        Order.person_id == user.person_id).order_by(
-        Order.creation_date.desc()).slice(offset, offset + limit)
     res = []
     for item in result:
         res.append(order_to_dict(item, db_session, username))
@@ -145,6 +156,7 @@ def get_person_orders(data, db_session, username=None):
     logger.debug(LogMsg.ORDER_USER_ORDERS, res)
     logger.info(LogMsg.END)
     return res
+
 
 
 def delete(id, db_session, username=None):
