@@ -35,8 +35,10 @@ def add(db_session, data, username):
 
     if username is not None:
         per_data = {}
-        permissions, presses = get_user_permissions(username, db_session)
-        if username == SIGNUP_USER:
+        permissions = []
+        if username != SIGNUP_USER:
+            permissions, presses = get_user_permissions(username, db_session)
+        else:
             per_data.update({Permissions.IS_OWNER.value: True})
         has_permission([Permissions.PERSON_ADD_PREMIUM],
                                            permissions, None, per_data)
