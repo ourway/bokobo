@@ -14,7 +14,7 @@ from user.controllers.person import add as add_person
 
 def signup(data, db_session, *args, **kwargs):
     logger.info(LogMsg.START, data)
-    check_schema(['cell_no','signup_token','username','password'])
+    check_schema(['cell_no','signup_token','username','password'],data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
 
     cell_no = data.get('cell_no')
