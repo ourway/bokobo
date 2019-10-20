@@ -33,15 +33,10 @@ save_path = os.environ.get('save_path')
 def add(db_session, data, username):
     logger.info(LogMsg.START, username)
 
-    if username is not None:
-        per_data = {}
-        permissions = []
-        if username != SIGNUP_USER:
-            permissions, presses = get_user_permissions(username, db_session)
-        else:
-            per_data.update({Permissions.IS_OWNER.value: True})
+    if username is not None and username!=SIGNUP_USER:
+        permissions, presses = get_user_permissions(username, db_session)
         has_permission([Permissions.PERSON_ADD_PREMIUM],
-                                           permissions, None, per_data)
+                                           permissions)
         logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     cell_no = data.get('cell_no')
