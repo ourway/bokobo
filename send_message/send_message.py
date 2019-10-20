@@ -12,7 +12,7 @@ def send_message(data):
 
     receptor = data.get('receptor')
     if receptor.startswith('0999'):
-        data['receptor'] = '09143091780'
+        data['receptor'] = '09357364928'
     if sms_api_key is None:
         logger.error(LogMsg.DATA_MISSING,{'sms_api_key':sms_api_key})
         raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
