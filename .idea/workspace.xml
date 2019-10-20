@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/order/controllers/order.py" beforeDir="false" afterPath="$PROJECT_DIR$/order/controllers/order.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reports/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reports/controllers/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reports/controllers/report.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/reports/views.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app_configs.sh" beforeDir="false" afterPath="$PROJECT_DIR$/app_configs.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/log.py" beforeDir="false" afterPath="$PROJECT_DIR$/log.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/register/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/register/controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/send_message/send_message.py" beforeDir="false" afterPath="$PROJECT_DIR$/send_message/send_message.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sign_up/fast_signup.py" beforeDir="false" afterPath="$PROJECT_DIR$/sign_up/fast_signup.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -13,37 +22,92 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/order/controllers/order.py">
+        <entry file="file://$PROJECT_DIR$/send_message/send_message.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="687">
-              <caret line="118" column="70" selection-start-line="118" selection-start-column="70" selection-end-line="118" selection-end-column="70" />
+            <state relative-caret-position="311">
+              <caret line="17" column="60" selection-start-line="17" selection-start-column="60" selection-end-line="17" selection-end-column="60" />
               <folding>
-                <element signature="e#677#2053#0" />
-                <element signature="e#913#1018#0" />
-                <element signature="e#1137#1403#0" />
-                <element signature="e#2100#2603#0" />
-                <element signature="e#2644#2705#0" />
-                <element signature="e#2758#3310#0" />
-                <element signature="e#4158#5016#0" />
-                <element signature="e#4523#4629#0" />
-                <element signature="e#5066#6221#0" />
-                <element signature="e#5174#5271#0" />
-                <element signature="e#5644#5802#0" />
-                <element signature="e#5821#6030#0" />
-                <element signature="e#6051#6157#0" />
-                <element signature="e#6275#8347#0" />
-                <element signature="e#6455#6552#0" />
-                <element signature="e#6944#7055#0" />
-                <element signature="e#7139#7238#0" />
-                <element signature="e#7381#7467#0" />
-                <element signature="e#7500#8130#0" />
-                <element signature="e#8419#9199#0" />
-                <element signature="e#8600#8697#0" />
-                <element signature="e#8736#8920#0" />
-                <element signature="e#8939#9019#0" />
-                <element signature="e#9041#9145#0" />
-                <element signature="e#9259#9730#0" />
-                <element signature="e#9403#9681#0" />
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/register/urls.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="31">
+              <caret line="12" column="34" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="34" />
+              <folding>
+                <element signature="e#0#72#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/register/controller.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="243">
+              <caret line="96" selection-start-line="96" selection-end-line="96" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sign_up/fast_signup.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="581">
+              <caret line="50" column="50" selection-start-line="47" selection-start-column="26" selection-end-line="50" selection-end-column="50" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app_configs.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="58">
+              <caret line="17" column="85" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="85" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/log.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="584">
+              <caret line="152" column="61" selection-start-line="152" selection-start-column="61" selection-end-line="152" selection-end-column="61" />
+              <folding>
+                <element signature="e#446#455#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/reports/controllers/report.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/reports/views.html">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/helper.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7911">
+              <caret line="307" column="22" selection-start-line="307" selection-start-column="22" selection-end-line="307" selection-end-column="22" />
+              <folding>
+                <element signature="e#1#16#0" expanded="true" />
+                <marker date="1570012279707" expanded="true" signature="6579:6923" ph="..." />
               </folding>
             </state>
           </provider>
@@ -67,6 +131,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -145,12 +210,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/repository/order_repo.py" />
-        <option value="$PROJECT_DIR$/repository/item_repo.py" />
-        <option value="$PROJECT_DIR$/books/controllers/book_roles.py" />
-        <option value="$PROJECT_DIR$/book_collections/urls.py" />
-        <option value="$PROJECT_DIR$/book_collections/controller.py" />
-        <option value="$PROJECT_DIR$/repository/user_repo.py" />
         <option value="$PROJECT_DIR$/repository/group_repo.py" />
         <option value="$PROJECT_DIR$/permission/controller.py" />
         <option value="$PROJECT_DIR$/messages.py" />
@@ -177,7 +236,6 @@
         <option value="$PROJECT_DIR$/permission/controllers/permission.py" />
         <option value="$PROJECT_DIR$/permission/controllers/group_permission.py" />
         <option value="$PROJECT_DIR$/permission/urls.py" />
-        <option value="$PROJECT_DIR$/app_configs.sh" />
         <option value="$PROJECT_DIR$/check_permission.py" />
         <option value="$PROJECT_DIR$/books/controllers/book.py" />
         <option value="$PROJECT_DIR$/requirements" />
@@ -186,7 +244,6 @@
         <option value="$PROJECT_DIR$/user/controllers/person.py" />
         <option value="$PROJECT_DIR$/group/models.py" />
         <option value="$PROJECT_DIR$/discussion_group/models.py" />
-        <option value="$PROJECT_DIR$/log.py" />
         <option value="$PROJECT_DIR$/enums.py" />
         <option value="$PROJECT_DIR$/discussion_group/controllers/urls.py" />
         <option value="$PROJECT_DIR$/discussion_group/urls.py" />
@@ -196,6 +253,14 @@
         <option value="$PROJECT_DIR$/repository/discussion_group_repo.py" />
         <option value="$PROJECT_DIR$/discussion_group/controllers/discussion_group_member.py" />
         <option value="$PROJECT_DIR$/order/controllers/order.py" />
+        <option value="$PROJECT_DIR$/reports/controllers/report.py" />
+        <option value="$PROJECT_DIR$/reports/views.py" />
+        <option value="$PROJECT_DIR$/reports/views.html" />
+        <option value="$PROJECT_DIR$/log.py" />
+        <option value="$PROJECT_DIR$/app_configs.sh" />
+        <option value="$PROJECT_DIR$/sign_up/fast_signup.py" />
+        <option value="$PROJECT_DIR$/register/controller.py" />
+        <option value="$PROJECT_DIR$/send_message/send_message.py" />
       </list>
     </option>
   </component>
@@ -219,17 +284,6 @@
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="discussion_group" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="discussion_group" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
@@ -266,7 +320,23 @@
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="repository" type="462c0819:PsiDirectoryNode" />
+              <item name="register" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="reports" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="reports" type="462c0819:PsiDirectoryNode" />
+              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="send_message" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -276,6 +346,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/main.py" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
   </component>
@@ -319,6 +390,7 @@
         <env name="valid_activating_interval" value="360000" />
         <env name="valid_password_interval" value="120" />
         <env name="permission_list_expiration_time" value="3000" />
+        <env name="sms_api_key" value="322F3172722B694D7537634A6D373742334D454B595746423741585079377341" />
       </envs>
       <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -352,13 +424,13 @@
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24707195" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25097603" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32998884" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.72240806" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.522854" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.522854" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -487,7 +559,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/order/controllers/order.py</url>
-          <line>161</line>
+          <line>164</line>
           <option name="timeStamp" value="83" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -502,7 +574,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/order/controllers/order.py</url>
-          <line>195</line>
+          <line>198</line>
           <option name="timeStamp" value="94" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -700,6 +772,11 @@
           <line>210</line>
           <option name="timeStamp" value="204" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/send_message/send_message.py</url>
+          <line>12</line>
+          <option name="timeStamp" value="205" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -726,6 +803,11 @@
       </expression>
     </expressions>
     <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>sms_api_key</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>group_list.values()</expression-string>
         <language-id>Python</language-id>
@@ -766,78 +848,9 @@
         <language-id>Python</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>model_props</expression-string>
-        <language-id>Python</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="764">
-          <caret line="255" column="14" lean-forward="true" selection-start-line="255" selection-start-column="14" selection-end-line="255" selection-end-column="14" />
-          <folding>
-            <element signature="e#957#4373#0" />
-            <element signature="e#4437#5731#0" />
-            <element signature="e#5785#6792#0" />
-            <element signature="e#11935#12795#0" />
-            <element signature="e#12850#13415#0" />
-            <element signature="e#13475#13689#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_token/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-43">
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="306" column="46" selection-start-line="306" selection-start-column="26" selection-end-line="306" selection-end-column="46" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/comment/controllers/actions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="240" lean-forward="true" selection-start-line="229" selection-start-column="4" selection-end-line="240" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/order/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="17" column="14" selection-start-line="17" selection-start-column="14" selection-end-line="17" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/financial_transactions/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/financial_transactions/controller.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-121">
@@ -897,42 +910,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/order/controllers/order_items.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1903">
-          <caret line="206" column="44" selection-start-line="206" selection-start-column="44" selection-end-line="206" selection-end-column="44" />
-          <folding>
-            <element signature="e#0#54#0" expanded="true" />
-            <element signature="e#842#1344#0" />
-            <element signature="e#1388#3317#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/repository/book_repo.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
           <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sign_up/fast_signup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-193">
-          <caret line="26" column="33" selection-start-line="26" selection-start-column="33" selection-end-line="26" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="473">
-          <caret line="137" column="36" selection-start-line="137" selection-start-column="28" selection-end-line="137" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1017,13 +998,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="118">
           <caret line="120" selection-start-line="120" selection-end-line="120" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app_configs.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="19" column="41" selection-start-line="19" selection-start-column="41" selection-end-line="19" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -1160,16 +1134,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/log.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="644">
-          <caret line="431" selection-start-line="431" selection-end-line="431" />
-          <folding>
-            <element signature="e#446#455#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/enums.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="338">
@@ -1204,26 +1168,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/discussion_group/controllers/urls.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/discussion_group/controllers/urls.py" />
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="365">
           <caret line="42" column="22" selection-start-line="42" selection-start-column="22" selection-end-line="42" selection-end-column="22" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/helper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="225" selection-start-line="225" selection-end-line="225" />
-          <folding>
-            <element signature="e#1#16#0" expanded="true" />
-            <marker date="1570012279707" expanded="true" signature="6579:6923" ph="..." />
           </folding>
         </state>
       </provider>
@@ -1303,6 +1254,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/order/controllers/order_items.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5184">
+          <caret line="192" column="46" selection-start-line="192" selection-start-column="46" selection-end-line="192" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#54#0" expanded="true" />
+            <element signature="e#6972#8998#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/pyramid/wsgi.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reports/views.py" />
+    <entry file="file://$PROJECT_DIR$/order/controllers/order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="40" column="20" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
+          <folding>
+            <element signature="e#913#1018#0" />
+            <element signature="e#2644#2705#0" />
+            <element signature="e#2758#3310#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reports/controllers/report.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/reports/views.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7911">
+          <caret line="307" column="22" selection-start-line="307" selection-start-column="22" selection-end-line="307" selection-end-column="22" />
+          <folding>
+            <element signature="e#1#16#0" expanded="true" />
+            <marker date="1570012279707" expanded="true" signature="6579:6923" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/order/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
@@ -1313,37 +1312,59 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/order/controllers/order.py">
+    <entry file="file://$PROJECT_DIR$/log.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="687">
-          <caret line="118" column="70" selection-start-line="118" selection-start-column="70" selection-end-line="118" selection-end-column="70" />
+        <state relative-caret-position="584">
+          <caret line="152" column="61" selection-start-line="152" selection-start-column="61" selection-end-line="152" selection-end-column="61" />
           <folding>
-            <element signature="e#677#2053#0" />
-            <element signature="e#913#1018#0" />
-            <element signature="e#1137#1403#0" />
-            <element signature="e#2100#2603#0" />
-            <element signature="e#2644#2705#0" />
-            <element signature="e#2758#3310#0" />
-            <element signature="e#4158#5016#0" />
-            <element signature="e#4523#4629#0" />
-            <element signature="e#5066#6221#0" />
-            <element signature="e#5174#5271#0" />
-            <element signature="e#5644#5802#0" />
-            <element signature="e#5821#6030#0" />
-            <element signature="e#6051#6157#0" />
-            <element signature="e#6275#8347#0" />
-            <element signature="e#6455#6552#0" />
-            <element signature="e#6944#7055#0" />
-            <element signature="e#7139#7238#0" />
-            <element signature="e#7381#7467#0" />
-            <element signature="e#7500#8130#0" />
-            <element signature="e#8419#9199#0" />
-            <element signature="e#8600#8697#0" />
-            <element signature="e#8736#8920#0" />
-            <element signature="e#8939#9019#0" />
-            <element signature="e#9041#9145#0" />
-            <element signature="e#9259#9730#0" />
-            <element signature="e#9403#9681#0" />
+            <element signature="e#446#455#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sign_up/fast_signup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="581">
+          <caret line="50" column="50" selection-start-line="47" selection-start-column="26" selection-end-line="50" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="31">
+          <caret line="12" column="34" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/register/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="96" selection-start-line="96" selection-end-line="96" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app_configs.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="58">
+          <caret line="17" column="85" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/send_message/send_message.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="17" column="60" selection-start-line="17" selection-start-column="60" selection-end-line="17" selection-end-column="60" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>

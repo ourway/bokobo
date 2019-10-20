@@ -91,10 +91,10 @@ def register(data,db_session):
 
     password = str(random.randint(1000, 9999))
 
-
-    message = '  کتابخوان جام جم \n کد احراز هویت شما : {}'.format(password)
-    data = {'receptor': cell_no, 'message': message,'sender':value('sms_sender',None)}
-
+    data = {'receptor': cell_no,
+                    'token': password,
+                    'type': 'sms',
+                    'template': 'register'}
     logger.debug(LogMsg.SEND_CODE_BY_SMS.format(cell_no))
     sent_data = send_message(data)
     if sent_data.get('status') != 200:
@@ -129,8 +129,12 @@ def forget_pass(data, db_session):
         person = validate_person(user.person_id,db_session)
         logger.debug(LogMsg.PERSON_EXISTS,username)
         password = str(random.randint(1000, 9999))
-        message = ' نام کاربر : {} \n کد ورود :  {}'.format(user.username,password)
-        sending_data = {'receptor': person.cell_no, 'message': message}
+
+        sending_data = {'receptor': person.cell_no,
+         'token': user.username,
+         'token2':password,
+         'type': 'sms',
+         'template': 'resetPassword'}
         send_message(sending_data)
         logger.debug(LogMsg.SMS_SENT, sending_data)
 

@@ -150,6 +150,7 @@ class LogMsg:
                                 'cell no : %s'
     SEND_CODE_BY_SMS = 'registery activation_code is going to send for user by SMS'
     SMS_SENT = 'message sent to user by cell no : %s'
+    MESSAGE_SENT = 'sms sent and response by operator is : %s'
     DATA_MISSING = 'required data doesnt exists in data : %s'
     REGISTER_KEY_INVALID = 'your register activation_code is wrong '
     REGISTER_KEY_DOESNT_EXIST = 'the activation_code expired or doesnt exist '

@@ -46,8 +46,9 @@ def signup(data, db_session, *args, **kwargs):
     full_name = '{} {}'.format(data.get('last_name', ''), data.get('name', ''))
 
     user_welcoming_data = {'receptor': cell_no,
-                           'message': ' {} به سرویس کتابخوان جام جم خوش آمدید.\n\n لحظات خوش مطالعه به سبک مدرن '.format(
-                               full_name)}
+                           'token': full_name,
+                           'type':'sms',
+                           'template':'welcoming'}
     send_message(user_welcoming_data)
     logger.debug(LogMsg.SMS_SENT,user_welcoming_data)
 
