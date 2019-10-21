@@ -302,7 +302,7 @@ def add_multiple_type_books(db_session, data, username):
         data['press'] = press
         unique_code = add_uniquecode(data, db_session)
 
-        book_data.update({'type': type, 'unique_code': unique_code.UniqueCode})
+        book_data.update({'type': type,'press':press, 'unique_code': unique_code.UniqueCode})
 
         logger.debug(LogMsg.ADD_BOOK, book_data)
         book = add(db_session, book_data, username)
