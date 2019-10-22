@@ -19,6 +19,8 @@ from book_library.urls import  call_router as library_routes
 from group.urls import call_router as group_routes
 from permission.urls import call_router as permission_routes
 from discussion_group.urls import call_router as discussion_routes
+from messaging.urls import call_router as messaging_routes
+
 
 app = Bottle()
 
@@ -41,6 +43,7 @@ library_routes(app)
 group_routes(app)
 permission_routes(app)
 discussion_routes(app)
+messaging_routes(app)
 
 
 

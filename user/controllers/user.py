@@ -154,9 +154,11 @@ def get_all(db_session, username):
 def serach_user(data, db_session, username):
     logger.info(LogMsg.START, username)
 
-    if username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED, username)
-        raise Http_error(403, Message.ACCESS_DENIED)
+    permissions, presses = get_user_permissions(username, db_session)
+
+    has_permission([Permissions.USER_GET_PREMIUM],
+                   permissions)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     limit = data.get('limit', 10)
     offset = data.get('offset', 0)

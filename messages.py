@@ -56,3 +56,6 @@ class Message:
     INVALID_GROUP = 'invalid_group'
     NOT_IN_GROUP = 'not_in_group'
     PERMISSION_NOT_FOUND = 'permission_not_found'
+    PERSON_CANT_SENT_MESSAGE = 'person_cant_send_message'
+    PERSON_CANT_DELETE_MESSAGE = 'person_cant_delete_message'
+    PERSON_CANT_EDIT_MESSAGE = 'person_cant_edit_message'

@@ -431,6 +431,19 @@ class LogMsg:
     DISCUSSION_GROUP_OLD_MEMBERS_DELETED = 'members of group deleted successfully ...'
     DISCUSSION_GROUP_DELETE = 'discussion group deleted successfully : %s'
 
+    # CHAT MESSAGING
+    CHAT_PERSON_NOT_IN_GROUP = 'sender is not in group: %s'
+    CHAT_CHECK_FOR_PARENT = 'checking for existance of parent message --'
+    CHAT_PARENT_EXISTS = 'parent of message exists by id : %s'
+    CHAT_PARENT_NOT_FOUND = 'chat parent not found by id : %s'
+    CHAT_GET_GROUP_MESSAGES = 'getting group messages by id : %s'
+    CHAT_GET_USER_MESSAGES = 'getting messages of person by id : %s'
+
+    LAST_SEEN_UPDATE = 'updating last_seen time of user by data: %s'
+    LAST_SEEN_ADD = 'last_seen record added to table by data : %s'
+
+
+
 
 
 

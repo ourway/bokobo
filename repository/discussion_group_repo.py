@@ -48,3 +48,13 @@ def get_groups_by_list(group_ids,db_session):
         group_dict.update(basics)
         result.append(group_dict)
     return result
+
+
+def user_group_ids(person_id, db_session):
+
+    group_mems = db_session.query(DiscussionMember).filter(
+        DiscussionMember.person_id == person_id).all()
+    group_ids = []
+    for item in group_mems:
+        group_ids.append(item.group_id)
+    return group_ids
