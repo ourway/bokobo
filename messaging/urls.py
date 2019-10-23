@@ -1,6 +1,6 @@
 from helper import check_auth, inject_db, jsonify, pass_data
-from messaging.controllers.message import add, get, get_all, get_group_messages, get_user_all_messages, \
-    edit, delete,get_user_unread_messages
+from messaging.controllers.message import add, get, get_all, get_group_messages, \
+    edit, delete,get_user_unread_messages,get_sender_messages
 
 
 def call_router(app):
@@ -16,6 +16,6 @@ def call_router(app):
     app.route('/messages/<id>', 'GET', get, apply=wrappers)
     app.route('/messages/<id>', 'PUT', edit, apply=data_plus_wrappers)
     app.route('/messages/group/<group_id>', 'POST', get_group_messages, apply=data_plus_wrappers)
-    app.route('/messages/user/<person_id>', 'POST', get_user_all_messages, apply=data_plus_wrappers)
-    app.route('/messages/user/<person_id>/unread', 'POST', get_user_unread_messages, apply=data_plus_wrappers)
+    app.route('/messages/direct/<sender_id>', 'POST', get_sender_messages, apply=data_plus_wrappers)
+    app.route('/messages/unread/<person_id>', 'GET', get_user_unread_messages, apply=wrappers)
 

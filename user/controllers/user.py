@@ -85,6 +85,7 @@ def get_profile(username, db_session):
     if model_instance:
         profile = get_person_profile(model_instance.person_id, db_session,
                                      username)
+        permissions,groups = get_user_permissions(username, db_session)
         logger.debug(LogMsg.GET_SUCCESS, profile)
 
     else:
@@ -93,6 +94,9 @@ def get_profile(username, db_session):
 
     result = model_to_dict(model_instance)
     result['person'] = profile
+    result['permissions'] = permissions
+    result['permission_groups'] = groups
+
     del result['password']
     logger.debug(LogMsg.USER_PROFILE_IS, result)
     logger.info(LogMsg.END)

@@ -1,15 +1,13 @@
 from sqlalchemy import or_, and_
 
-from check_permission import get_user_permissions, has_permission, \
-    has_permission_or_not
-
+from check_permission import get_user_permissions, has_permission
 from enums import Permissions
 from helper import Http_error, Http_response, \
     populate_basic_data, edit_basic_data, check_schema, Now
 from log import LogMsg, logger
 from messages import Message
-from messaging.controllers.last_seen import update_last_seen, get_by_receptor, \
-    get_receptor_group_last_seen
+from messaging.controllers.last_seen import update_last_seen, \
+    get_receptor_group_last_seen, get_receptor_sender_last_seen
 from messaging.models import ChatMessage
 from .last_seen import add as add_last_seen
 from repository.discussion_group_repo import is_group_member, is_admin_member, \
@@ -20,7 +18,7 @@ from repository.user_repo import check_user
 def add(db_session, data, username):
     logger.info(LogMsg.START, username)
 
-    check_schema(['body', 'sender'], data.keys())
+    check_schema(['body', 'receptor_id'], data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
     group_id = data.get('group_id', None)
     user = check_user(username, db_session)
@@ -44,7 +42,7 @@ def add(db_session, data, username):
     logger.debug(LogMsg.POPULATING_BASIC_DATA)
     populate_basic_data(model_instance, username, data.get('tags'))
     model_instance.sender_id = user.person_id
-    model_instance.receptor_id = data.get('receptor')
+    model_instance.receptor_id = data.get('receptor_id')
     model_instance.group_id = group_id
     model_instance.body = data.get('body')
     model_instance.parent_id = data.get('parent_id')
@@ -155,7 +153,7 @@ def delete(id, db_session, username, **kwargs):
 def get_group_messages(group_id, data, db_session, username, **kwargs):
     logger.info(LogMsg.START, username)
 
-    limit = data.get('limit', 10)
+    limit = data.get('limit', 1000)
     offset = data.get('offset', 0)
 
     user = check_user(username, db_session)
@@ -186,13 +184,42 @@ def get_group_messages(group_id, data, db_session, username, **kwargs):
     return result
 
 
-def get_user_direct_messages(person_id, data, db_session, username, **kwargs):
+def get_sender_messages(sender_id, data, db_session, username, **kwargs):
     logger.info(LogMsg.START, username)
-
-    limit = data.get('limit', 10)
+    limit = data.get('limit', 200)
     offset = data.get('offset', 0)
-    from_date = data.get('from_date', None)
 
+    user = check_user(username, db_session)
+
+    permissions, presses = get_user_permissions(username, db_session)
+    permission_data = {Permissions.IS_OWNER.value: True}
+    has_permission([Permissions.CHAT_GET_PREMIUM], permissions, None,
+                   permission_data)
+    seen_data = {'receptor_id': user.person_id, 'sender_id': sender_id,
+                 'last_seen': Now()}
+
+    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
+
+    try:
+        logger.debug(LogMsg.CHAT_GET_USER_MESSAGES,
+                     {'receptor': user.person_id, 'sender': sender_id})
+        result = db_session.query(ChatMessage).filter(
+            ChatMessage.sender_id == sender_id,
+            ChatMessage.receptor_id == user.person_id).order_by(
+            ChatMessage.creation_date.desc()).slice(offset, offset + limit)
+        add_last_seen(seen_data, db_session)
+
+
+    except:
+        logger.exception(LogMsg.GET_FAILED, exc_info=True)
+        raise Http_error(400, Message.NOT_FOUND)
+    logger.info(LogMsg.END)
+
+    return result
+
+
+def get_user_direct_counts(person_id, db_session, username, **kwargs):
+    logger.info(LogMsg.START, username)
     user = check_user(username, db_session)
 
     permissions, presses = get_user_permissions(username, db_session)
@@ -205,41 +232,31 @@ def get_user_direct_messages(person_id, data, db_session, username, **kwargs):
     logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
     try:
+        final_res = {}
         logger.debug(LogMsg.CHAT_GET_USER_MESSAGES, person_id)
-        if from_date is None:
-            result = db_session.query(ChatMessage).filter(and_(
-                or_(ChatMessage.sender_id == person_id,
-                    ChatMessage.receptor_id == person_id),
-                ChatMessage.group_id == None)
-            ).order_by(
-                ChatMessage.creation_date.desc()).slice(offset, offset + limit)
-        else:
-            result = db_session.query(ChatMessage).filter(and_(
-                or_(ChatMessage.sender_id == person_id,
-                    ChatMessage.receptor_id == person_id,
-                    ChatMessage.creation_date > from_date),
-                ChatMessage.group_id == None)
-            ).order_by(
-                ChatMessage.creation_date.desc()).slice(offset, offset + limit)
+        result = db_session.query(ChatMessage).filter(and_(
+            ChatMessage.receptor_id == person_id,
+            ChatMessage.group_id == None)
+        ).order_by(
+            ChatMessage.creation_date.desc()).all()
 
-        for message in result:
-            seen_data = {'receptor_id': user.person_id,
-                         'sender_id': message.sender_id,
-                         'last_seen': Now()}
-            add_last_seen(seen_data, db_session)
+        for item in result:
+            final_res[item.sender_id] = 0
+            seen = get_receptor_sender_last_seen(person_id, item.sender_id,
+                                                 db_session)
+            if seen.last_seen is None or item.creation_date > seen.last_seen:
+                final_res[item.sender_id] += 1
+
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
         raise Http_error(400, Message.NOT_FOUND)
     logger.info(LogMsg.END)
 
-    return result
+    return final_res
 
 
-def get_user_unread_messages(person_id, data, db_session, username, **kwargs):
+def get_user_group_unread_counts(person_id, db_session, username, **kwargs):
     logger.info(LogMsg.START, username)
-
-    limit = data.get('limit', 10)
-    offset = data.get('offset', 0)
 
     user = check_user(username, db_session)
 
@@ -261,70 +278,54 @@ def get_user_unread_messages(person_id, data, db_session, username, **kwargs):
         if seen_date is None:
             result = db_session.query(ChatMessage).filter(
                 ChatMessage.group_id == group_id).order_by(
-                ChatMessage.creation_date.desc()).all()
+                ChatMessage.creation_date.desc()).count()
         else:
             result = db_session.query(ChatMessage).filter(
                 ChatMessage.group_id == group_id,
                 ChatMessage.creation_date > seen_date.last_seen).order_by(
-                ChatMessage.creation_date.desc()).all()
-        group_messages.update({group_id:result})
-
-
+                ChatMessage.creation_date.desc()).count()
+        group_messages.update({group_id: result})
 
     logger.info(LogMsg.END)
 
-    return result
+    return group_messages
 
-
-def get_user_group_messages(person_id, data, db_session, username, **kwargs):
-    logger.info(LogMsg.START, username)
-
-    limit = data.get('limit', 10)
-    offset = data.get('offset', 0)
-    from_date = data.get('from_date', None)
-
-    user = check_user(username, db_session)
-
-    permissions, presses = get_user_permissions(username, db_session)
-    permission_data = {}
-    if user.person_id == person_id:
-        permission_data.update({Permissions.IS_OWNER.value: True})
-    has_permission([Permissions.CHAT_GET_PREMIUM], permissions, None,
-                   permission_data)
-
-    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
-    group_ids = user_group_ids(person_id, db_session)
-    try:
-        logger.debug(LogMsg.CHAT_GET_USER_MESSAGES, person_id)
-        if from_date is None:
-            result = db_session.query(ChatMessage).filter(
-                ChatMessage.group_id.in_(group_ids)).order_by(
-                ChatMessage.creation_date.desc()).slice(offset, offset + limit)
-        else:
-            result = db_session.query(ChatMessage).filter(
-                ChatMessage.group_id.in_(group_ids),
-                ChatMessage.creation_date > from_date).order_by(
-                ChatMessage.creation_date.desc()).slice(offset, offset + limit)
-
-        final_res = {}
-        for group_id in group_ids:
-            group_messages = []
-            for item in result:
-                if item.group_id == group_id:
-                    group_messages.append(item)
-            final_res[group_id] = group_messages
-    except:
-        logger.exception(LogMsg.GET_FAILED, exc_info=True)
-        raise Http_error(400, Message.NOT_FOUND)
-    logger.info(LogMsg.END)
+    #
+    # def get_user_group_unread_counts(person_id, db_session, username, **kwargs):
+    #     logger.info(LogMsg.START, username)
+    #
+    #     user = check_user(username, db_session)
+    #
+    #     permissions, presses = get_user_permissions(username, db_session)
+    #     permission_data = {}
+    #     if user.person_id == person_id:
+    #         permission_data.update({Permissions.IS_OWNER.value: True})
+    #     has_permission([Permissions.CHAT_GET_PREMIUM], permissions, None,
+    #                    permission_data)
+    #
+    #     logger.debug(LogMsg.PERMISSION_VERIFIED, username)
+    #     group_ids = user_group_ids(person_id, db_session)
+    #     try:
+    #         final_res = {}
+    #         for group_id in group_ids:
+    #
+    #             count = db_session.query(ChatMessage).filter(
+    #                 ChatMessage.group_id==group_id,
+    #                 ChatMessage.creation_date > from_date).order_by(
+    #                 ChatMessage.creation_date.desc()).count()
+    #             final_res[group_id] = count
+    #     except:
+    #         logger.exception(LogMsg.GET_FAILED, exc_info=True)
+    #         raise Http_error(400, Message.NOT_FOUND)
+    #     logger.info(LogMsg.END)
 
     return final_res
 
 
-def get_user_all_messages(person_id, data, db_session, username, **kwargs):
+def get_user_unread_messages(person_id, db_session, username, **kwargs):
     logger.info(LogMsg.START, username)
-    groups = get_user_group_messages(person_id, data, db_session, username)
-    directs = get_user_direct_messages(person_id, data, db_session, username)
+    groups = get_user_group_unread_counts(person_id, db_session, username)
+    directs = get_user_direct_counts(person_id, db_session, username)
     logger.info(LogMsg.END)
     return {'direct': directs, 'groups': groups}
 
