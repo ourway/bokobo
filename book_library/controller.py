@@ -43,6 +43,7 @@ def add(data, db_session, username=None):
     logger.debug(LogMsg.POPULATING_BASIC_DATA)
     model_instance.person_id = person_id
     model_instance.book_id = book_id
+    model_instance.progress = 0.00
     model_instance.status = {'status': 'buyed', 'reading_started': False,
                              'read_pages': 0, 'read_duration': 0.00}
 
@@ -153,6 +154,8 @@ def edit_status(id, data, db_session, username):
         model_instance.status['read_pages'] = data.get('read_pages')
     if data.get('read_duration'):
         model_instance.status['read_duration'] = data.get('read_duration')
+    if 'progress' in data:
+        model_instance.progress = data.get('progress')
     logger.debug(LogMsg.MODEL_ALTERED, data)
 
     logger.info(LogMsg.END)
@@ -168,6 +171,7 @@ def lib_to_dictlist(library, db_session):
             'book_id': item.book_id,
             'person_id': item.person_id,
             'status': item.status,
+            'progress': item.progress,
             'book': book_to_dict(db_session, item.book)
         }
         item_dict.update(res)
