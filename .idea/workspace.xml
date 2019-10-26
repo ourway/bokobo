@@ -35,7 +35,7 @@
         <entry file="file://$PROJECT_DIR$/book_library/controller.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="121">
-              <caret line="162" column="52" selection-start-line="162" selection-start-column="52" selection-end-line="162" selection-end-column="52" />
+              <caret line="165" column="22" selection-start-line="165" selection-start-column="22" selection-end-line="165" selection-end-column="22" />
               <folding>
                 <element signature="e#703#838#0" />
                 <element signature="e#1192#1321#0" />
@@ -52,7 +52,6 @@
                 <element signature="e#4136#4451#0" />
                 <element signature="e#4203#4336#0" />
                 <element signature="e#4945#5049#0" />
-                <element signature="e#5693#6048#0" />
                 <element signature="e#6111#6492#0" />
                 <element signature="e#6311#6448#0" />
                 <element signature="e#6551#6844#0" />
@@ -1402,7 +1401,7 @@
     <entry file="file://$PROJECT_DIR$/book_library/controller.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="121">
-          <caret line="162" column="52" selection-start-line="162" selection-start-column="52" selection-end-line="162" selection-end-column="52" />
+          <caret line="165" column="22" selection-start-line="165" selection-start-column="22" selection-end-line="165" selection-end-column="22" />
           <folding>
             <element signature="e#703#838#0" />
             <element signature="e#1192#1321#0" />
@@ -1419,7 +1418,6 @@
             <element signature="e#4136#4451#0" />
             <element signature="e#4203#4336#0" />
             <element signature="e#4945#5049#0" />
-            <element signature="e#5693#6048#0" />
             <element signature="e#6111#6492#0" />
             <element signature="e#6311#6448#0" />
             <element signature="e#6551#6844#0" />

@@ -7,7 +7,7 @@ from books.controllers.book import book_to_dict
 from check_permission import get_user_permissions, has_permission
 from enums import Permissions
 from helper import check_schema, populate_basic_data, Http_error, Http_response, \
-    model_basic_dict
+    model_basic_dict,edit_basic_data
 from log import LogMsg, logger
 from messages import Message
 from repository.person_repo import validate_person
@@ -159,6 +159,8 @@ def edit_status(id, data, db_session, username):
         model_instance.status['status'] = status.get('status')
     if 'progress' in data:
         model_instance.progress = data.get('progress')
+
+    edit_basic_data(model_instance,username)
     logger.debug(LogMsg.MODEL_ALTERED, data)
 
     logger.info(LogMsg.END)
