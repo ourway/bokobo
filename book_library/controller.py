@@ -145,22 +145,25 @@ def edit_status(id, data, db_session, username):
 
     validate_person(user.person_id, db_session)
     logger.debug(LogMsg.PERSON_EXISTS)
+    status = data.get('status',{})
 
     model_instance = db_session.query(Library).filter(Library.id == id).first()
 
-    if data.get('reading_started'):
-        model_instance.status['reading_started'] = data.get('reading_started')
-    if data.get('read_pages'):
-        model_instance.status['read_pages'] = data.get('read_pages')
-    if data.get('read_duration'):
-        model_instance.status['read_duration'] = data.get('read_duration')
+    if status.get('reading_started'):
+        model_instance.status['reading_started'] = status.get('reading_started')
+    if status.get('read_pages'):
+        model_instance.status['read_pages'] = status.get('read_pages')
+    if status.get('read_duration'):
+        model_instance.status['read_duration'] = status.get('read_duration')
+    if status.get('status'):
+        model_instance.status['status'] = status.get('status')
     if 'progress' in data:
         model_instance.progress = data.get('progress')
     logger.debug(LogMsg.MODEL_ALTERED, data)
 
     logger.info(LogMsg.END)
 
-    return lib_to_dictlist(model_instance,db_session)
+    return lib_to_dict(model_instance,db_session)
 
 
 def lib_to_dictlist(library, db_session):
@@ -201,3 +204,16 @@ def books_are_in_lib(person_id, books, db_session):
         if not is_book_in_library(person_id, id, db_session):
             return False
     return True
+
+
+def lib_to_dict(item,db_session):
+    res = model_basic_dict(item)
+    item_dict = {
+        'book_id': item.book_id,
+        'person_id': item.person_id,
+        'status': item.status,
+        'progress': item.progress,
+        'book': book_to_dict(db_session, item.book)
+    }
+    item_dict.update(res)
+    return item_dict
