@@ -9,7 +9,6 @@ from repository.item_repo import get_orders_items_internal
 from repository.order_repo import get as get_order
 from accounts.controller import get as get_account
 from financial_transactions.controller import add as add_transaction
-from configs import ADMINISTRATORS
 
 
 def checkout(order_id, data, db_session, username):

@@ -160,7 +160,7 @@ def edit_status(id, data, db_session, username):
 
     logger.info(LogMsg.END)
 
-    return model_instance
+    return lib_to_dictlist(model_instance,db_session)
 
 
 def lib_to_dictlist(library, db_session):
