@@ -18,7 +18,7 @@ from repository.user_repo import check_user
 def add(db_session, data, username):
     logger.info(LogMsg.START, username)
 
-    check_schema(['body', 'receptor_id'], data.keys())
+    check_schema(['body'], data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
     group_id = data.get('group_id', None)
     user = check_user(username, db_session)
