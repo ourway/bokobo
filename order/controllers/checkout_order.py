@@ -1,7 +1,7 @@
 from book_library.controller import add_books_to_library
 from check_permission import get_user_permissions, has_permission
 from enums import OrderStatus, Permissions
-from helper import Http_error
+from helper import Http_error, edit_basic_data
 from log import logger, LogMsg
 from messages import Message
 from order.controllers.order_items import recalc_order_price
@@ -63,7 +63,7 @@ def checkout(order_id, data, db_session, username):
 
     order.status = OrderStatus.Invoiced
     logger.debug(LogMsg.ORDER_INVOICED,order_id)
-
+    edit_basic_data(order,username)
 
     order_items = get_orders_items_internal(order_id, db_session)
     logger.debug(LogMsg.ORDER_GETTING_ITEMS,{'order_id':order_id})
