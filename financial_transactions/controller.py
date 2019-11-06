@@ -33,6 +33,8 @@ def add(data, db_session, username=None):
     model_instance.account_id = account_id
     model_instance.credit = data.get('credit')
     model_instance.debit = data.get('debit')
+    model_instance.payment_details = data.get('payment_details')
+
 
     db_session.add(model_instance)
     logger.debug(LogMsg.TRANSACTION_ADDED, model_to_dict(model_instance))
@@ -89,3 +91,28 @@ def delete(id, db_session, username=None):
         raise Http_error(404, Message.DELETE_FAILED)
     logger.info(LogMsg.END)
     return Http_response(204, True)
+
+
+
+def internal_add(data, db_session):
+    logger.info(LogMsg.START)
+
+    if data.get('credit') and data.get('debit'):
+        logger.error(LogMsg.DATA_MISSING)
+        raise Http_error(400, Message.CREDIT_DEBIT_ERROR)
+
+    account_id = data.get('account_id')
+
+    model_instance = Transaction()
+
+    populate_basic_data(model_instance, None)
+    model_instance.account_id = account_id
+    model_instance.credit = data.get('credit')
+    model_instance.debit = data.get('debit')
+    model_instance.payment_details = data.get('payment_details')
+
+    db_session.add(model_instance)
+    logger.debug(LogMsg.TRANSACTION_ADDED, model_to_dict(model_instance))
+    logger.info(LogMsg.END)
+
+    return model_instance

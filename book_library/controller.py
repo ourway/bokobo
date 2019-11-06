@@ -45,7 +45,7 @@ def add(data, db_session, username=None):
     model_instance.book_id = book_id
     model_instance.progress = 0.00
     model_instance.status = {'status': 'buyed', 'reading_started': False,
-                             'read_pages': 0, 'read_duration': 0.00}
+                             'read_pages': 0, 'read_duration': 0.00,'is_read':False}
 
     db_session.add(model_instance)
     logger.info(LogMsg.END)
@@ -157,6 +157,8 @@ def edit_status(id, data, db_session, username):
         model_instance.status['read_duration'] = status.get('read_duration')
     if status.get('status'):
         model_instance.status['status'] = status.get('status')
+    if status.get('is_read'):
+        model_instance.status['is_read'] = status.get('is_read')
     if 'progress' in data:
         model_instance.progress = data.get('progress')
 

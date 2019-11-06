@@ -300,6 +300,7 @@ def add_multiple_type_books(db_session, data, username):
     for type in types:
         data['type'] = type
         data['press'] = press
+        data['roles'] = roles_data
         unique_code = add_uniquecode(data, db_session)
 
         book_data.update({'type': type,'press':press, 'unique_code': unique_code.UniqueCode})

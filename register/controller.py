@@ -97,9 +97,6 @@ def register(data,db_session):
                     'template': 'register'}
     logger.debug(LogMsg.SEND_CODE_BY_SMS.format(cell_no))
     sent_data = send_message(data)
-    if sent_data.get('status') != 200:
-        logger.error(LogMsg.MESSAGE_NOT_SENT,sent_data)
-        raise Http_error(501,Message.MESSAGE_NOT_SENT)
 
     redis.set(cell_no, json.dumps({'activation_code':password}), ex=valid_registering_intervall)
     result = {'msg':Message.MESSAGE_SENT,'cell_no':cell_no,'time':redis.ttl(cell_no)}

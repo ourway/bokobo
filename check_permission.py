@@ -11,7 +11,7 @@ from repository.group_user_repo import get_user_group_list
 from repository.user_repo import check_user
 from app_redis import app_redis
 
-permission_list_expiration_time = value('permission_list_expiration_time', 300)
+permission_list_expiration_time = value('permission_list_expiration_time', 60)
 
 
 def has_permission(func_permissions, user_permission_list, model_instance=None,

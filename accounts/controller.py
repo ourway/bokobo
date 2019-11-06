@@ -316,9 +316,6 @@ def edit(id, data, db_session, username):
     if account is None:
         logger.error(LogMsg.NOT_FOUND, {'account_id': id})
         raise Http_error(404, Message.NOT_FOUND)
-    if account.creator != username and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED)
-        raise Http_error(403, Message.ACCESS_DENIED)
     account.value += value
     logger.debug(LogMsg.EDIT_SUCCESS)
     logger.info(LogMsg.END)
@@ -358,36 +355,30 @@ def add_initial_account(person_id, db_session, username):
 def edit_by_person(data, db_session, username):
     logger.info(LogMsg.START, username)
 
-    permissions,presses = get_user_permissions(username, db_session)
-    has_permission([Permissions.ACCOUNT_EDIT_PREMIUM], permissions)
+    user = check_user(username,db_session)
 
     check_schema(['value'], data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
 
     value = data.get('value')
     type = data.get('type', 'Main')
-    person_id = data.get('person_id')
-    if person_id is None:
-        user = check_user(username, db_session)
-        if user is None:
-            logger.error(LogMsg.INVALID_USER, username)
+    person_id = data.get('person_id',user.person_id)
 
-            raise Http_error(404, Message.INVALID_USER)
-
-        if user.person_id is None:
-            logger.error(LogMsg.PERSON_NOT_EXISTS, username)
-
-            raise Http_error(404, Message.Invalid_persons)
-        person_id = user.person_id
     logger.debug(LogMsg.GETTING_ACCOUNT_PERSON, data)
+
     account = db_session.query(Account).filter(
         and_(Account.person_id == person_id, Account.type == type)).first()
+
     if account is None:
         logger.error(LogMsg.NOT_FOUND, {'account_id': id})
         raise Http_error(404, Message.NOT_FOUND)
-    if account.creator != username and username not in ADMINISTRATORS:
-        logger.error(LogMsg.NOT_ACCESSED)
-        raise Http_error(403, Message.ACCESS_DENIED)
+
+    permissions,presses = get_user_permissions(username, db_session)
+    per_data = {}
+    if user.person_id == account.person_id:
+        per_data.update({Permissions.IS_OWNER.value:True})
+    has_permission([Permissions.ACCOUNT_EDIT_PREMIUM], permissions,None,per_data)
+
     account.value += value
     logger.debug(LogMsg.EDIT_SUCCESS)
     logger.info(LogMsg.END)

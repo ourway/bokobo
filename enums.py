@@ -129,6 +129,9 @@ class Permissions(enum.Enum):
     CHAT_GET_PREMIUM = 'CHAT_GET_PREMIUM'
     CHAT_EDIT_PREMIUM = 'CHAT_EDIT_PREMIUM'
 
+    PAYMENT_ADD_PREMIUM = 'PAYMENT_ADD_PREMIUM'
+    PAYMENT_ADD_PRESS = 'PAYMENT_ADD_PRESS'
+
 
 def check_enums(data, enum_class):
     for type in data:

@@ -20,6 +20,7 @@ from group.urls import call_router as group_routes
 from permission.urls import call_router as permission_routes
 from discussion_group.urls import call_router as discussion_routes
 from messaging.urls import call_router as messaging_routes
+from payment.urls import call_router as payment_routes
 
 
 app = Bottle()
@@ -44,6 +45,7 @@ group_routes(app)
 permission_routes(app)
 discussion_routes(app)
 messaging_routes(app)
+payment_routes(app)
 
 
 

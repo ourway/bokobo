@@ -229,25 +229,6 @@ def pass_data(func):
     return wrapper
 
 
-
-
-
-
-# def decode_url(func):
-#     def wrapper(*args, **kwargs):
-#         urllib.parse.urlencode(request.url, quote_via=urllib.parse.quote)
-#         # if request.url is not None:
-#         #
-#         #     url = request.url
-#         #     request.url = unquote(url)
-#         rtn = func(*args, **kwargs)
-#         return rtn
-#
-#     return wrapper
-
-
-
-
 def Now():
     now = time.mktime(datetime.datetime.now().timetuple())
     return int(now)

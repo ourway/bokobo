@@ -442,8 +442,18 @@ class LogMsg:
     LAST_SEEN_UPDATE = 'updating last_seen time of user by data: %s'
     LAST_SEEN_ADD = 'last_seen record added to table by data : %s'
 
-
-
+    # PAYMENT
+    PAYMENT_FAILED_KIPO = 'payment by kipo failed : %s'
+    KIPO_PAYMENT_INITIATED = 'KIPO pyment gate initiated successfully : %s'
+    ADDING_PAYMENT_ENTITY = 'payment entity is adding by data : %s'
+    PAYMENT_ADDED = 'payment entity added successfuly :%s'
+    PAYMENT_DATA_NOT_RECIEVED = 'payment data not recieved from bank gateway properly...'
+    PAYMENT_CANCELED = 'payment canceled and no transaction occured in bank : %s'
+    PAYMENT_NOT_FOUND = 'payment by the shopping_key %s not found in DB...'
+    PAYMENT_ALREADY_USED = 'payment by this shopping key used already : %s'
+    PAYMENT_UPDATED_TO_USED = 'payment entity updated to used : %s'
+    PAYMENT_INQUIRY_NOT_VALID = 'payment inquiry from kipo is not valid: %s'
+    PAYMENT_INQUIRY_AMOUNT_INVALID = 'payment amount in inquiry not equal with payment in DB : %s'
 
 
 

@@ -14,7 +14,7 @@ def add(book_data, db_session):
     edition = book_data.get('edition', None)
     pub_year = book_data.get('pub_year', None)
     language = book_data.get('language', None)
-    roles = book_data.get('roles', None)
+    roles = book_data.get('roles', [])
     type = book_data.get('type', None)
     role_codes = []
     for item in roles:
