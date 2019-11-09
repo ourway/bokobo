@@ -14,3 +14,4 @@ class Payment(Base,PrimaryModel):
     order_details = Column(JSON)
     agent = Column(String)
     used = Column(Boolean,default=False)
+    status = Column(String)

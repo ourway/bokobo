@@ -13,10 +13,13 @@ def add_payment(data, db_session, username):
     model_instance.amount = data.get('amount')
     model_instance.agent = data.get('agent')
     model_instance.details = data.get('details')
+    model_instance.details.update({'call_back_url':data.get('call_back_url')})
     model_instance.order_details = data.get('order_details')
     model_instance.shopping_key = data.get('shopping_key')
     model_instance.reference_code = data.get('reference_code')
     model_instance.used = False
+    model_instance.status = 'SendToBank'
+
 
     db_session.add(model_instance)
     logger.debug(LogMsg.DB_ADD, model_to_dict(model_instance))

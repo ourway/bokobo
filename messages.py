@@ -72,3 +72,4 @@ class Message:
     INVALID_SHOPPING_KEY = 'invalid_shopping_key'
     PAYMENT_ALREADY_CONSIDERED = 'payment_already_considered'
     PAYMENT_INQUIRY_NOT_VALID = 'payment_inquiry_invalid'
+    PAYMENT_BANK_RESPONSE_INVALID = 'payment_bank_response_invalid'

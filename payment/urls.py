@@ -1,5 +1,5 @@
 from helper import check_auth, inject_db, jsonify, pass_data
-from payment.controllers.kipo_pay import recieve_payment, pay_by_kipo
+from payment.controllers.kipo_pay import receive_payment, pay_by_kipo, sample_html_form
 
 
 def call_router(app):
@@ -7,6 +7,7 @@ def call_router(app):
     data_plus_wrappers = (wrappers[:])
     data_plus_wrappers.append(pass_data)
 
-    app.route('/payment_recieve', 'GET', recieve_payment,
+    app.route('/payment_receive', 'GET', receive_payment,
               apply=[inject_db, jsonify])
-    app.route('/payment_send', 'POST', pay_by_kipo, apply=data_plus_wrappers)
+    app.route('/payment_send', 'POST', pay_by_kipo, apply=[inject_db,pass_data])
+    app.route('/payment_sample','GET',sample_html_form,apply=[inject_db,pass_data])

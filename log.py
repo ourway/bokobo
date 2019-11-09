@@ -454,6 +454,8 @@ class LogMsg:
     PAYMENT_UPDATED_TO_USED = 'payment entity updated to used : %s'
     PAYMENT_INQUIRY_NOT_VALID = 'payment inquiry from kipo is not valid: %s'
     PAYMENT_INQUIRY_AMOUNT_INVALID = 'payment amount in inquiry not equal with payment in DB : %s'
+    PAYMENT_STATUS_NONE = 'payment status is None in url : %s'
+    REDIRECT_AFTER_PAYMENT = 'payment is completed and user is redirecting to page : %s'
 
 
 
