@@ -18,7 +18,7 @@ import json
 
 def model_to_dict(obj):
     object_dict = dict((name, getattr(obj, name)) for name in dir(obj) if
-                       not name.startswith('_')) if not isinstance(obj,
+                       (not name.startswith('_'))and not name.startswith('mongo')) if not isinstance(obj,
                                                                    dict) else obj
 
     if "metadata" in object_dict:
