@@ -1,4 +1,3 @@
-
 import datetime
 import logging
 from os import environ
@@ -18,13 +17,16 @@ import json
 
 def model_to_dict(obj):
     object_dict = dict((name, getattr(obj, name)) for name in dir(obj) if
-                       (not name.startswith('_'))and not name.startswith('mongo')) if not isinstance(obj,
-                                                                   dict) else obj
+                       (not name.startswith('_')) and not name.startswith(
+                           'mongo') and not name.startswith(
+                           'create_query')) if not isinstance(obj,
+                                                              dict) else obj
 
     if "metadata" in object_dict:
         del object_dict['metadata']
     print(object_dict)
     return object_dict
+
 
 def multi_model_to_dict(obj_list):
     result = []
@@ -48,6 +50,7 @@ def check_auth(func):
 
     return wrapper
 
+
 def if_login(func):
     def wrapper(*args, **kwargs):
         logging.debug(LogMsg.AUTH_CHECKING)
@@ -62,11 +65,12 @@ def if_login(func):
 
     return wrapper
 
+
 def check_login():
     db_session = get_db_session()
     auth = request.get_header('Authorization')
     if auth is None:
-        return {'username':None}
+        return {'username': None}
 
     username, password = decode(auth)
     print(username, password)
@@ -79,9 +83,8 @@ def check_login():
                                              User.password == password).first()
 
         if user is None:
-            return {'username':None}
+            return {'username': None}
         return model_to_dict(user)
-
 
 
 def check_Authorization():
@@ -180,7 +183,7 @@ def inject_db(func):
             db_session.commit()
         except:
 
-            logger.exception(LogMsg.COMMIT_ERROR,exc_info=True)
+            logger.exception(LogMsg.COMMIT_ERROR, exc_info=True)
 
             raise Http_error(500, Message.COMMIT_FAILED)
         return rtn
@@ -196,7 +199,7 @@ def jsonify(func):
             result = []
             for item in rtn:
                 print("list is here: ", rtn)
-                if isinstance(item,str):
+                if isinstance(item, str):
                     result.append(item)
                 else:
                     result.append(model_to_dict(item))
@@ -235,18 +238,18 @@ def Now():
 
 
 def Http_error(code, message):
-    if isinstance(message,str):
-        message = {'msg':message}
+    if isinstance(message, str):
+        message = {'msg': message}
     result = HTTPResponse(body=json.dumps(message), status=code,
-        headers = {'Content-type': 'application/json'})
+                          headers={'Content-type': 'application/json'})
     return result
 
 
 def Http_response(code, message):
-    if isinstance(message,str):
-        message = {'msg':message}
+    if isinstance(message, str):
+        message = {'msg': message}
     result = HTTPResponse(body=json.dumps(message), status=code,
-        headers = {'Content-type': 'application/json'})
+                          headers={'Content-type': 'application/json'})
     return result
 
 
@@ -257,33 +260,31 @@ def value(name, default):
 def validate_token(id, db_session):
     result = db_session.query(APP_Token).filter(APP_Token.id == id).first()
     if result is None or result.expiration_date < Now():
-        raise Http_error(401,Message.TOKEN_INVALID )
+        raise Http_error(401, Message.TOKEN_INVALID)
     return result
 
 
-def check_schema(required_list,data_keys):
+def check_schema(required_list, data_keys):
     required = set(required_list)
-    keys= set(data_keys)
+    keys = set(data_keys)
 
     result = required.issubset(keys)
 
-    if result==False:
-        raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
+    if result == False:
+        raise Http_error(400, Message.MISSING_REQUIERED_FIELD)
 
     return result
 
 
-
-def populate_basic_data(model_instance,username=None,tags=None):
-
+def populate_basic_data(model_instance, username=None, tags=None):
     model_instance.id = str(uuid4())
     model_instance.creation_date = Now()
     model_instance.creator = username
     model_instance.version = 1
     model_instance.tags = tags
 
-def edit_basic_data(model_instance, username, tags=None):
 
+def edit_basic_data(model_instance, username, tags=None):
     model_instance.modification_date = Now()
     model_instance.modifier = username
     model_instance.version += 1
@@ -297,7 +298,7 @@ def edit_basic_data(model_instance, username, tags=None):
 
 
 def model_basic_dict(model_instance):
-    result ={
+    result = {
 
         'creation_date': model_instance.creation_date,
         'creator': model_instance.creator,
@@ -308,5 +309,3 @@ def model_basic_dict(model_instance):
         'tags': model_instance.tags
     }
     return result
-
-
