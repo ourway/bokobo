@@ -21,6 +21,11 @@ class BookTypes(enum.Enum):
     Epub = 'Epub'
 
 
+class BookContentType(enum.Enum):
+    Brief = 'Brief'
+    Original = 'Original'
+
+
 class Genre(enum.Enum):
     Comedy = 'Comedy'
     Drama = 'Drama'

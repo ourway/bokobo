@@ -16,7 +16,9 @@ rabbitmq
 
 celery
 
-kipo-kpg
+mongosql
+
+
 
 
 

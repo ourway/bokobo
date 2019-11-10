@@ -1,5 +1,5 @@
-from sqlalchemy import Column, String, ForeignKey, UniqueConstraint, Boolean
-from sqlalchemy.dialects.postgresql import ARRAY, UUID
+from sqlalchemy import Column, String, ForeignKey, Boolean
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from db_session import PrimaryModel, Base
 
@@ -9,6 +9,7 @@ class Person(PrimaryModel,Base):
 
     name = Column(String,nullable=False)
     last_name = Column(String)
+    full_name = Column(String)
     address = Column(String)
     phone = Column(String)
     image = Column(UUID)

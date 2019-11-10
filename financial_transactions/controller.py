@@ -109,7 +109,9 @@ def internal_add(data, db_session):
     model_instance.account_id = account_id
     model_instance.credit = data.get('credit')
     model_instance.debit = data.get('debit')
-    model_instance.payment_details = data.get('payment_details')
+    model_instance.details = data.get('details')
+    model_instance.payment_id = data.get('payment_id')
+
 
     db_session.add(model_instance)
     logger.debug(LogMsg.TRANSACTION_ADDED, model_to_dict(model_instance))

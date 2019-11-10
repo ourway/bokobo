@@ -4,7 +4,7 @@ from check_permission import get_user_permissions, has_permission
 from enums import Permissions
 from financial_transactions.controller import internal_add as transaction_add
 from helper import Http_error, value, check_schema, populate_basic_data, \
-    model_to_dict, Http_response, edit_basic_data
+    model_to_dict, edit_basic_data
 from log import logger, LogMsg
 from messages import Message
 from payment.controllers.payment import add_payment
@@ -13,10 +13,7 @@ from repository.account_repo import edit_persons_main_account
 from repository.user_repo import check_user
 from payment.KipoKPG import KipoKPG
 from bottle import HTTPResponse
-"""
-    Initial Kipo Library and craete object from KipoKPG class
-    Merchant key is merchant phone number
-"""
+
 merchant_key = value('kipo_merchant_key', None)
 if merchant_key is None:
     logger.error(LogMsg.PAYMENT_FAILED_KIPO, {'merchant_key': merchant_key})
@@ -24,12 +21,6 @@ if merchant_key is None:
 
 kipo = KipoKPG(merchant_key)
 
-"""
-    Replace "YOUR CALLBACK URL" and "AMOUNT" with what you want
-    kpg_initiate return a Dictionary 
-    Successful - {"status": True, "shopping_key": SHOPING_KEY}
-    Failed - {"status": false, "message": ERROR_CODE}
-"""
 base_url = value('app_server_address', 'http://localhost:7000')
 
 
@@ -56,14 +47,7 @@ def pay_by_kipo(data, db_session, username='admin'):
                                      base_url + '/payment_receive')
 
     if kpg_initiate['status']:
-        """
-            Store kpg_initiate["shopping_key"] to session to verfiy
-            payment after user came back from gateway
-    
-            Call render_form function to render a html form and send
-            user to Kipo KPG Gateway (you can create this form manually
-            where you want - form example is at the end of Quick Start
-        """
+
         logger.debug(LogMsg.KIPO_PAYMENT_INITIATED, kpg_initiate)
         data.update(
             {'agent': 'kipo', 'shopping_key': kpg_initiate.get('shopping_key'),
@@ -73,24 +57,19 @@ def pay_by_kipo(data, db_session, username='admin'):
         payment = add_payment(data, db_session, username)
         logger.debug(LogMsg.PAYMENT_ADDED, model_to_dict(payment))
 
-        # kipo.render_form(kpg_initiate['shopping_key'])
     else:
-        """
-            Show error to user
-    
-            You can call getErrorMessage and send error code to that as input
-            and get error message
-            kipo.get_error_message(ERROR_CODE)
-        """
+
         logger.error(LogMsg.PAYMENT_FAILED_KIPO, kpg_initiate)
         error = kipo_error_code(kpg_initiate['code'])
         raise Http_error(402, error)
+
     html_content = '''
     <form id="kipopay-gateway" method="post" action="{url}" style="display: none;">
                 <input type="hidden" id="sk" name="sk" value="{shopping_key}"/>
             </form>
         <script language="javascript">document.forms['kipopay-gateway'].submit();</script>
     '''.format(url=kipo.kipo_webgate_url,shopping_key=kpg_initiate['shopping_key'] )
+
     return HTTPResponse(body=html_content,status=200,headers=dict(content_type='text/html'))
 
 
@@ -136,7 +115,7 @@ def receive_payment(db_session, **kwargs):
         logger.debug(LogMsg.ACCOUNT_VALUE_EDITED, model_to_dict(account))
 
         transaction_data = {'account_id': account.id, 'credit': payment.amount,
-                            'payment_details': model_to_dict(payment)}
+                            'payment_id': payment.id,'details':inquiry}
 
         transaction = transaction_add(transaction_data, db_session)
         logger.debug(LogMsg.TRANSACTION_ADDED, model_to_dict(transaction))
@@ -151,7 +130,7 @@ def receive_payment(db_session, **kwargs):
         call_back_url = payment.details.get('call_back_url')
         if call_back_url is not None:
             logger.debug(LogMsg.REDIRECT_AFTER_PAYMENT,call_back_url)
-            return HTTPResponse( status=200,
+            return HTTPResponse( status=302,
                                 headers=dict(location=call_back_url))
 
     logger.info(LogMsg.END)
@@ -174,6 +153,8 @@ def kipo_error_code(error_code):
         logger.error(LogMsg.NOT_FOUND, {'kipo_error_code': error_code})
         return 'PAYMENT_FAILED'
     return exchange_code.get(error_code)
+
+
 def sample_html_form(*args,**kwargs):
     html = '''
     <html>

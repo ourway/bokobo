@@ -58,6 +58,7 @@ def add(db_session, data, username):
     logger.debug(LogMsg.POPULATING_BASIC_DATA)
     model_instance.name = data.get('name')
     model_instance.last_name = data.get('last_name')
+    model_instance.full_name = '{} {}'.format(model_instance.last_name,model_instance.name)
     model_instance.address = data.get('address')
     model_instance.phone = data.get('phone')
     model_instance.email = data.get('email')
@@ -156,6 +157,7 @@ def edit(id, db_session, data, username):
         for key, value in data.items():
             # TODO  if key is valid attribute of class
             setattr(model_instance, key, value)
+        model_instance.full_name = '{} {}'.format(model_instance.last_name,model_instance.name)
         edit_basic_data(model_instance, username, data.get('tags'))
         db_session.flush()
 
@@ -271,8 +273,7 @@ def search_person(data, db_session, username):
                 raise Http_error(400, Message.MISSING_REQUIERED_FIELD)
 
             persons = db_session.query(Person).filter(
-                or_(Person.name.like('%{}%'.format(person_name)),
-                    Person.last_name.like('%{}%'.format(person_name)))
+                Person.full_name.like('%{}%'.format(person_name))
             ).order_by(
                 Person.creation_date.desc()).slice(offset,
                                                    offset + limit)
@@ -326,6 +327,7 @@ def person_to_dict(person, db_session):
         'image': person.image,
         'name': person.name,
         'last_name': person.last_name,
+        'full_name' : person.full_name,
         'phone': person.phone
         # 'library':library_to_dict(person.library,db_session)
 
