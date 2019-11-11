@@ -9,5 +9,5 @@ def call_router(app):
 
     app.route('/payment_receive', 'GET', receive_payment,
               apply=[inject_db])
-    app.route('/payment_send', 'POST', pay_by_kipo, apply=[inject_db,pass_data])
+    app.route('/payment_send', 'POST', pay_by_kipo, apply=[inject_db,pass_data,check_auth])
     app.route('/payment_sample','GET',sample_html_form,apply=[inject_db,pass_data])
