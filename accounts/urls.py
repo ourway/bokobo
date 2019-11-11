@@ -12,7 +12,7 @@ def call_router(app):
     app.route('/accounts/person/<person_id>', 'GET', get_person_accounts,
               apply=wrappers)
     app.route('/accounts/<id>', 'PUT', edit, apply=data_plus_wrappers)
-    app.route('/accounts', 'GET', get_user_accounts, apply=wrappers)
+    app.route('/accounts/user/_search', 'POST', get_user_accounts, apply=data_plus_wrappers)
     app.route('/accounts/_search', 'POST', get_all, apply=data_plus_wrappers)
     app.route('/accounts', 'POST', add, apply=data_plus_wrappers)
     app.route('/accounts/<id>', 'DELETE', delete, apply=[check_auth, inject_db])

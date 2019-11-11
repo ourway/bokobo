@@ -142,7 +142,7 @@ def get_all(data, db_session, username):
     return result
 
 
-def get_user_accounts(username, db_session):
+def get_user_accounts(username, db_session,data):
     logger.info(LogMsg.START, username)
 
     user = check_user(username, db_session)
@@ -158,10 +158,16 @@ def get_user_accounts(username, db_session):
     validate_person(user.person_id, db_session)
     logger.debug(LogMsg.PERSON_EXISTS, username)
 
+    if data['filter'] is None:
+        data.update({'filter':{'person_id':user.person_id}})
+    else:
+        data['filter'].update({'person_id':user.person_id})
+
     try:
-        result = db_session.query(Account).filter(
-            Account.person_id == user.person_id).order_by(
-            Account.creation_date.desc()).all()
+        result = Account.mongoquery(
+            db_session.query(Account)).query(
+            **data).end().all()
+
         final_res = []
         for account in result:
             final_res.append(account_to_dict(account))
