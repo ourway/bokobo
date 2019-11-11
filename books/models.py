@@ -48,4 +48,6 @@ class BookContent(Base,PrimaryModel):
     book_press = Column(UUID,ForeignKey(Person.id),nullable=False)
 
     UniqueConstraint(book_id,type)
+    book = relationship(Book, primaryjoin=book_id == Book.id )
+
 
