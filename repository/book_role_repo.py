@@ -7,3 +7,7 @@ def person_has_books(person_id, db_session):
     if result is None:
         return False
     return True
+
+
+def get_book_press(book_id,db_session):
+    return db_session.query(BookRole).filter(BookRole.book_id==book_id,BookRole.role=='Press').first()

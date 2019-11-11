@@ -458,6 +458,14 @@ class LogMsg:
     REDIRECT_AFTER_PAYMENT = 'payment is completed and user is redirecting to page : %s'
 
 
+    # BOOK CONTENT
+    CONTENT_EXIST = 'book content ba data exists : %s'
+    DELETING_BOOK_CONTENT = 'deleteing contents of book by id : %s'
+    BOOK_CONTENT_ALREADY_EXISTS = 'content entity by data already exists and its : %s'
+
+
+
+
 
     UPLOAD_FAILED = 'uploading files failed'
     FILE_EXISTS = 'this file exists by path : %s'

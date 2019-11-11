@@ -21,6 +21,7 @@ from permission.urls import call_router as permission_routes
 from discussion_group.urls import call_router as discussion_routes
 from messaging.urls import call_router as messaging_routes
 from payment.urls import call_router as payment_routes
+from db_migration.urls import call_router as db_routse
 
 
 app = Bottle()
@@ -46,7 +47,7 @@ permission_routes(app)
 discussion_routes(app)
 messaging_routes(app)
 payment_routes(app)
-
+db_routse(app)
 
 
 if __name__ == '__main__':

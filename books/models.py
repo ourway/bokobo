@@ -1,5 +1,6 @@
 from sqlalchemy.dialects.postgresql import ARRAY,UUID
-from sqlalchemy import String, JSON, Column, ForeignKey, Float, Enum
+from sqlalchemy import String, JSON, Column, ForeignKey, Float, Enum, \
+    UniqueConstraint
 from sqlalchemy.orm import relationship
 from db_session import Base, PrimaryModel
 from enums import Roles, BookTypes, BookContentType
@@ -44,4 +45,7 @@ class BookContent(Base,PrimaryModel):
     book_id = Column(UUID,ForeignKey(Book.id),nullable=False)
     type = Column(Enum(BookContentType),nullable=False)
     content = Column(JSON,nullable=False)
+    book_press = Column(UUID,ForeignKey(Person.id),nullable=False)
+
+    UniqueConstraint(book_id,type)
 

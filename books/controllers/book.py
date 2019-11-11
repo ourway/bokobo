@@ -19,7 +19,7 @@ from prices.controller import add_internal as add_price_internal, \
     get_book_price_internal
 from prices.controller import internal_edit as edit_price
 from log import LogMsg, logger
-from configs import ADMINISTRATORS
+from repository.book_content_repo import delete as delete_book_contents
 from constraint_handler.controllers.book_constraint import add as add_uniquecode
 from constraint_handler.controllers.common_methods import \
     delete as delete_uniquecode
@@ -441,6 +441,9 @@ def delete_book(id, db_session, username):
 
     logger.debug(LogMsg.DELETING_BOOK_ROLES, id)
     delete_book_roles(id, db_session)
+
+    logger.debug(LogMsg.DELETING_BOOK_CONTENT,id)
+    delete_book_contents(id,db_session)
 
     logger.debug(LogMsg.DELETING_BOOK_COMMENTS, id)
     delete_book_comments(id, db_session)

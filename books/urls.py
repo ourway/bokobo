@@ -1,4 +1,4 @@
-from books.controllers import book, book_roles
+from books.controllers import book, book_roles, book_content
 from helper import check_auth, inject_db, jsonify, pass_data
 
 
@@ -29,5 +29,13 @@ def call_router(app):
     app.route('/books-roles/<id>', 'DELETE', book_roles.delete, apply=[check_auth, inject_db])
     app.route('/books-roles', 'POST', book_roles.add, apply=data_plus_wrappers)
     app.route('/books-roles/multiple-role', 'POST', book_roles.add_book_roles, apply=data_plus_wrappers)
+
+
+
+    app.route('/book-contents/<id>', 'GET', book_content.get, apply=wrappers)
+    app.route('/book-contents/_search', 'POST', book_content.get_all, apply=data_plus_wrappers)
+    app.route('/book-contents/<id>', 'DELETE', book_content.delete, apply=[check_auth, inject_db])
+    app.route('/book-contents', 'POST', book_content.add, apply=data_plus_wrappers)
+    app.route('/book-contents/<id>', 'PUT', book_content.edit, apply=data_plus_wrappers)
 
 
