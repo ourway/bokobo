@@ -1,3 +1,5 @@
+from sqlalchemy import desc
+
 from check_permission import get_user_permissions, has_permission, \
     has_permission_or_not
 from repository.price_repo import delete_book_price
@@ -272,19 +274,19 @@ def add_multiple_type_books(db_session, data, username):
     roles_data = data.get('roles')
 
     book_data = {k: v for k, v in data.items() if k not in ['roles', 'types']}
-    logger.debug(LogMsg.PERMISSION_CHECK,username)
+    logger.debug(LogMsg.PERMISSION_CHECK, username)
     permissions, presses = get_user_permissions(username, db_session)
     has_permit = has_permission_or_not([Permissions.BOOK_ADD_PREMIUM],
                                        permissions)
     press = None
     for item in roles_data:
         if 'Press' in item.values():
-            person = item.get('person',None)
+            person = item.get('person', None)
             if person is not None:
-                press = person.get('id',None)
+                press = person.get('id', None)
     if press is None:
-        logger.error(LogMsg.DATA_MISSING,{'press':None})
-        raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
+        logger.error(LogMsg.DATA_MISSING, {'press': None})
+        raise Http_error(400, Message.MISSING_REQUIERED_FIELD)
 
     if not has_permit:
         if press in presses:
@@ -292,7 +294,7 @@ def add_multiple_type_books(db_session, data, username):
         else:
             logger.error(LogMsg.PERMISSION_DENIED)
             raise Http_error(403, Message.ACCESS_DENIED)
-    logger.debug(LogMsg.PERMISSION_VERIFIED,username)
+    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
     result = []
     logger.debug(LogMsg.ADDING_MULTIPLE_BOOKS, data)
@@ -303,7 +305,8 @@ def add_multiple_type_books(db_session, data, username):
         data['roles'] = roles_data
         unique_code = add_uniquecode(data, db_session)
 
-        book_data.update({'type': type,'press':press, 'unique_code': unique_code.UniqueCode})
+        book_data.update({'type': type, 'press': press,
+                          'unique_code': unique_code.UniqueCode})
 
         logger.debug(LogMsg.ADD_BOOK, book_data)
         book = add(db_session, book_data, username)
@@ -341,7 +344,7 @@ def edit_book(id, db_session, data, username):
         logger.error(LogMsg.NOT_FOUND, {'book_id': id})
         raise Http_error(404, Message.NOT_FOUND)
 
-    logger.debug(LogMsg.PERMISSION_CHECK,username)
+    logger.debug(LogMsg.PERMISSION_CHECK, username)
     permission_data = {}
     if model_instance.creator == username:
         permission_data = {Permissions.IS_OWNER.value: True}
@@ -355,8 +358,7 @@ def edit_book(id, db_session, data, username):
             logger.error(LogMsg.PERMISSION_DENIED)
             raise Http_error(403, Message.ACCESS_DENIED)
 
-    logger.debug(LogMsg.PERMISSION_VERIFIED,username)
-
+    logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
     logger.debug(LogMsg.GET_SUCCESS, id)
 
@@ -420,7 +422,7 @@ def delete_book(id, db_session, username):
 
     logger.info(LogMsg.DELETE_REQUEST, {'book_id': id})
 
-    model_instance = db_session.query(Book).filter(Book.id==id).first()
+    model_instance = db_session.query(Book).filter(Book.id == id).first()
 
     logger.debug(LogMsg.PERMISSION_CHECK, username)
     permission_data = {}
@@ -437,13 +439,11 @@ def delete_book(id, db_session, username):
             raise Http_error(403, Message.ACCESS_DENIED)
     logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
-
-
     logger.debug(LogMsg.DELETING_BOOK_ROLES, id)
     delete_book_roles(id, db_session)
 
-    logger.debug(LogMsg.DELETING_BOOK_CONTENT,id)
-    delete_book_contents(id,db_session)
+    logger.debug(LogMsg.DELETING_BOOK_CONTENT, id)
+    delete_book_contents(id, db_session)
 
     logger.debug(LogMsg.DELETING_BOOK_COMMENTS, id)
     delete_book_comments(id, db_session)
@@ -682,3 +682,26 @@ def get_current_book(id, db_session):
     logger.info(LogMsg.END)
 
     return book_dict
+
+
+def book_by_press(press_ids, db_session, username):
+    logger.info(LogMsg.START, username)
+
+    result = db_session.query(Book).filter(Book.press.in_(press_ids)).order_by(
+        desc(Book.creation_date)).all()
+    press_books = []
+    for book in result:
+        press_books.append(book_to_dict(db_session, book))
+
+    return press_books
+
+
+def books_in_admin(db_session, username):
+    logger.info(LogMsg.START, username)
+    logger.debug(LogMsg.PERMISSION_CHECK, username)
+
+    permissions, presses = get_user_permissions(username, db_session)
+
+    books = book_by_press(presses, db_session)
+    logger.info(LogMsg.END)
+    return books
