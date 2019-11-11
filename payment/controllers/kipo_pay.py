@@ -84,6 +84,19 @@ def receive_payment(db_session, **kwargs):
     if data is None:
         logger.error(LogMsg.PAYMENT_DATA_NOT_RECIEVED)
         raise Http_error(404, Message.PAYMENT_FAILED)
+
+    shopping_key = data.get('sk')[0]
+
+    payment = get_payment(shopping_key, db_session)
+    if payment is None:
+        logger.error(LogMsg.PAYMENT_NOT_FOUND, shopping_key)
+        raise Http_error(402, Message.INVALID_SHOPPING_KEY)
+    if payment.used:
+        logger.error(LogMsg.PAYMENT_ALREADY_USED, model_to_dict(payment))
+        raise Http_error(402, Message.PAYMENT_ALREADY_CONSIDERED)
+
+    call_back_url = payment.details.get('call_back_url')
+
     status = data.get('status')
     if status is None:
         logger.error(LogMsg.PAYMENT_STATUS_NONE,data)
@@ -91,28 +104,28 @@ def receive_payment(db_session, **kwargs):
 
     if status is not None and status[0] == '0':
         logger.error(LogMsg.PAYMENT_CANCELED, data)
-        raise Http_error(402, Message.PAYMENT_CANCELED)
+        return HTTPResponse(status=302,
+                            headers=dict(location='{}?status=payment-cancelled'.format(call_back_url)))
+
     if status is not None and status[0] == '1':
-        shopping_key = data.get('sk')[0]
         inquiry = kipo.kpg_inquery(shopping_key)
         print(inquiry)
         if not inquiry.get('status'):
             logger.error(LogMsg.PAYMENT_INQUIRY_NOT_VALID, inquiry)
             error = kipo_error_code(inquiry['code'])
-            raise Http_error(402, error)
-        payment = get_payment(shopping_key, db_session)
-        if payment is None:
-            logger.error(LogMsg.PAYMENT_NOT_FOUND, shopping_key)
-            raise Http_error(402, Message.INVALID_SHOPPING_KEY)
-        if payment.used:
-            logger.error(LogMsg.PAYMENT_ALREADY_USED, model_to_dict(payment))
-            raise Http_error(402, Message.PAYMENT_ALREADY_CONSIDERED)
+            return HTTPResponse(status=302,
+                                headers=dict(
+                                    location='{}?status=payment-inquiry-invalid'.format(
+                                        call_back_url)))
 
         if payment.amount != inquiry.get('amount'):
             logger.error(LogMsg.PAYMENT_INQUIRY_AMOUNT_INVALID,
                          {'payment': model_to_dict(payment),
                           'inquiry': inquiry})
-            raise Http_error(402, Message.PAYMENT_INQUIRY_NOT_VALID)
+            return HTTPResponse(status=302,
+                                headers=dict(
+                                    location='{}?status=payment-inquiry-invalid'.format(
+                                        call_back_url)))
 
         # TODO add transaction  and account charge
         account = edit_persons_main_account(payment.person_id, payment.amount,
@@ -132,15 +145,17 @@ def receive_payment(db_session, **kwargs):
         edit_basic_data(payment, None)
         logger.debug(LogMsg.PAYMENT_UPDATED_TO_USED, model_to_dict(payment))
 
-        call_back_url = payment.details.get('call_back_url')
-        if call_back_url is not None:
-            logger.debug(LogMsg.REDIRECT_AFTER_PAYMENT,call_back_url)
-            return HTTPResponse( status=302,
-                                headers=dict(location=call_back_url))
+        logger.debug(LogMsg.REDIRECT_AFTER_PAYMENT, call_back_url)
+        return HTTPResponse(status=302,
+                            headers=dict(
+                                location='{}?status=successful'.format(
+                                    call_back_url)))
 
     logger.info(LogMsg.END)
-    return {'msg': 'successful'}
-
+    return HTTPResponse(status=302,
+                            headers=dict(
+                                location='{}?status=unknown'.format(
+                                    call_back_url)))
 
 def kipo_error_code(error_code):
     exchange_code = {
