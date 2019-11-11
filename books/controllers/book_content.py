@@ -1,7 +1,7 @@
 from books.models import BookContent
 from check_permission import get_user_permissions, has_permission_or_not, \
     has_permission
-from enums import Permissions, BookContentType, check_enums
+from enums import Permissions, BookContentType, check_enums, check_enum
 from helper import populate_basic_data, check_schema, Http_error, model_to_dict, \
     edit_basic_data, Http_response, model_basic_dict
 from log import logger, LogMsg
@@ -19,7 +19,7 @@ def add(db_session, data, username):
     type = data.get('type')
 
     logger.debug(LogMsg.ENUM_CHECK, {'BOOK_CONTENT_TYpe': type})
-    check_enums([type], BookContentType)
+    check_enum(type, BookContentType)
 
     book = get_book(book_id, db_session)
     if not book:
