@@ -456,6 +456,7 @@ class LogMsg:
     PAYMENT_INQUIRY_AMOUNT_INVALID = 'payment amount in inquiry not equal with payment in DB : %s'
     PAYMENT_STATUS_NONE = 'payment status is None in url : %s'
     REDIRECT_AFTER_PAYMENT = 'payment is completed and user is redirecting to page : %s'
+    CALL_BACK_FROM_BANK_URL = 'bank call back url is : %s'
 
 
     # BOOK CONTENT

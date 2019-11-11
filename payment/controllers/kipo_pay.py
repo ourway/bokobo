@@ -21,7 +21,7 @@ if merchant_key is None:
 
 kipo = KipoKPG(merchant_key)
 
-base_url = value('app_server_address', 'http://localhost:7000')
+base_url = value('app_server_address','')
 
 
 def pay_by_kipo(data, db_session, username):
@@ -48,8 +48,11 @@ def pay_by_kipo(data, db_session, username):
         permissions,None,per_data)
     logger.debug(LogMsg.PERMISSION_VERIFIED)
 
-    kpg_initiate = kipo.kpg_initiate(data.get('amount'),
-                                     base_url + '/payment_receive')
+    from_bank_url = '{}/payment-receive'.format(base_url)
+
+    logger.debug(LogMsg.CALL_BACK_FROM_BANK_URL,from_bank_url)
+
+    kpg_initiate = kipo.kpg_initiate(data.get('amount'),from_bank_url)
 
     if kpg_initiate['status']:
 

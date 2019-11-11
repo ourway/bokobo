@@ -7,7 +7,7 @@ def call_router(app):
     data_plus_wrappers = (wrappers[:])
     data_plus_wrappers.append(pass_data)
 
-    app.route('/payment_receive', 'GET', receive_payment,
+    app.route('/payment-receive', 'GET', receive_payment,
               apply=[inject_db])
-    app.route('/payment_send', 'POST', pay_by_kipo, apply=[inject_db,pass_data,check_auth])
-    app.route('/payment_sample','GET',sample_html_form,apply=[inject_db,pass_data])
+    app.route('/payment-send', 'POST', pay_by_kipo, apply=[inject_db,pass_data,check_auth])
+    app.route('/payment-sample','GET',sample_html_form,apply=[inject_db,pass_data])
