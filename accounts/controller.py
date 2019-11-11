@@ -1,7 +1,7 @@
 from sqlalchemy import and_
 
 from accounts.models import Account
-from enums import check_enum, AccountTypes, str_account_type,Permissions
+from enums import check_enum, AccountTypes, str_account_type, Permissions
 from helper import Http_error, populate_basic_data, model_to_dict, \
     Http_response, model_basic_dict, check_schema
 from log import LogMsg
@@ -10,14 +10,14 @@ from repository.person_repo import validate_person
 from repository.user_repo import check_user
 from configs import ADMINISTRATORS
 from log import logger
-from check_permission import get_user_permissions,has_permission
+from check_permission import get_user_permissions, has_permission
 
 
 def add(data, db_session, username):
     logger.debug(LogMsg.START, username)
 
-    permissions,presses = get_user_permissions(username,db_session)
-    has_permission([Permissions.ACCOUNT_ADD_PREMIUM],permissions)
+    permissions, presses = get_user_permissions(username, db_session)
+    has_permission([Permissions.ACCOUNT_ADD_PREMIUM], permissions)
 
     check_enum(data.get('type'), AccountTypes)
     logger.debug(LogMsg.ENUM_CHECK,
@@ -121,16 +121,15 @@ def get_person_accounts(person_id, db_session, username):
 
 def get_all(data, db_session, username):
     logger.info(LogMsg.START, username)
-    permissions,presses = get_user_permissions(username, db_session)
+    permissions, presses = get_user_permissions(username, db_session)
     has_permission([Permissions.ACCOUNT_GET_PREMIUM], permissions)
-
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
-
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
     result = []
     try:
-        res = db_session.query(Account).order_by(
-            Account.creation_date.desc()).slice(offset, offset + limit)
+        res = Account.mongoquery(
+            db_session.query(Account)).query(
+            **data).end().all()
         for account in res:
             result.append(account_to_dict(account))
     except:
@@ -183,7 +182,7 @@ def get_user_accounts(username, db_session):
 def delete_all(username, db_session):
     logger.info(LogMsg.START, username)
 
-    permissions,presses = get_user_permissions(username, db_session)
+    permissions, presses = get_user_permissions(username, db_session)
     has_permission([Permissions.ACCOUNT_DELETE_PREMIUM], permissions)
 
     user = check_user(username, db_session)
@@ -216,7 +215,7 @@ def delete_all(username, db_session):
 def delete(id, db_session, username):
     logger.info(LogMsg.START, username)
 
-    permissions,presses = get_user_permissions(username, db_session)
+    permissions, presses = get_user_permissions(username, db_session)
     has_permission([Permissions.ACCOUNT_DELETE_PREMIUM], permissions)
 
     user = check_user(username, db_session)
@@ -246,11 +245,11 @@ def delete(id, db_session, username):
     return Http_response(204, True)
 
 
-def edit_account_value(account_id, value, db_session,username=None):
+def edit_account_value(account_id, value, db_session, username=None):
     logger.info(LogMsg.START)
 
     if username is not None:
-        permissions,presses = get_user_permissions(username, db_session)
+        permissions, presses = get_user_permissions(username, db_session)
         has_permission([Permissions.ACCOUNT_EDIT_PREMIUM], permissions)
 
     logger.debug(LogMsg.EDIT_ACCOUNT_VALUE,
@@ -304,7 +303,7 @@ def get_by_id(id, db_session, username):
 def edit(id, data, db_session, username):
     logger.info(LogMsg.START, username)
 
-    permissions,presses = get_user_permissions(username, db_session)
+    permissions, presses = get_user_permissions(username, db_session)
     has_permission([Permissions.ACCOUNT_EDIT_PREMIUM], permissions)
 
     check_schema(['value'], data.keys())
@@ -355,14 +354,14 @@ def add_initial_account(person_id, db_session, username):
 def edit_by_person(data, db_session, username):
     logger.info(LogMsg.START, username)
 
-    user = check_user(username,db_session)
+    user = check_user(username, db_session)
 
     check_schema(['value'], data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
 
     value = data.get('value')
     type = data.get('type', 'Main')
-    person_id = data.get('person_id',user.person_id)
+    person_id = data.get('person_id', user.person_id)
 
     logger.debug(LogMsg.GETTING_ACCOUNT_PERSON, data)
 
@@ -373,11 +372,12 @@ def edit_by_person(data, db_session, username):
         logger.error(LogMsg.NOT_FOUND, {'account_id': id})
         raise Http_error(404, Message.NOT_FOUND)
 
-    permissions,presses = get_user_permissions(username, db_session)
+    permissions, presses = get_user_permissions(username, db_session)
     per_data = {}
     if user.person_id == account.person_id:
-        per_data.update({Permissions.IS_OWNER.value:True})
-    has_permission([Permissions.ACCOUNT_EDIT_PREMIUM], permissions,None,per_data)
+        per_data.update({Permissions.IS_OWNER.value: True})
+    has_permission([Permissions.ACCOUNT_EDIT_PREMIUM], permissions, None,
+                   per_data)
 
     account.value += value
     logger.debug(LogMsg.EDIT_SUCCESS)

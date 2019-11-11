@@ -326,12 +326,13 @@ def arrange_collections(collection_items):
 
 def get_all(data, db_session, username):
     logger.info(LogMsg.START, username)
-    limit = data.get('limit', 10)
-    offset = data.get('offset', 0)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
     final_res = []
 
-    result = db_session.query(Collection).order_by(
-        Collection.creation_date.desc()).slice(offset, offset + limit)
+    result = Collection.mongoquery(
+        db_session.query(Collection)).query(
+        **data).end().all()
     for item in result:
         final_res.append(collection_to_dict(db_session, item))
     logger.info(LogMsg.END)

@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/books/controllers/book.py" beforeDir="false" afterPath="$PROJECT_DIR$/books/controllers/book.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/controllers/book_roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/books/controllers/book_roles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/payment/controllers/kipo_pay.py" beforeDir="false" afterPath="$PROJECT_DIR$/payment/controllers/kipo_pay.py" afterDir="false" />
-    </list>
+    <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,12 +164,53 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/payment/controllers/kipo_pay.py">
+        <entry file="file://$PROJECT_DIR$/accounts/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="38" column="32" lean-forward="true" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+            <state relative-caret-position="76">
+              <caret line="121" column="16" selection-start-line="121" selection-start-column="12" selection-end-line="121" selection-end-column="16" />
               <folding>
-                <element signature="e#0#26#0" expanded="true" />
+                <element signature="e#570#2133#0" />
+                <element signature="e#1029#1124#0" />
+                <element signature="e#1211#1314#0" />
+                <element signature="e#1583#1687#0" />
+                <element signature="e#2178#2818#0" />
+                <element signature="e#2275#2561#0" />
+                <element signature="e#2583#2770#0" />
+                <element signature="e#2883#3463#0" />
+                <element signature="e#2951#3232#0" />
+                <element signature="e#3253#3418#0" />
+                <element signature="e#4001#4118#0" />
+                <element signature="e#4218#5187#0" />
+                <element signature="e#4328#4424#0" />
+                <element signature="e#4465#4568#0" />
+                <element signature="e#4685#4995#0" />
+                <element signature="e#5019#5136#0" />
+                <element signature="e#5232#6180#0" />
+                <element signature="e#5482#5578#0" />
+                <element signature="e#5619#5723#0" />
+                <element signature="e#5840#5996#0" />
+                <element signature="e#6017#6115#0" />
+                <element signature="e#6225#7195#0" />
+                <element signature="e#6475#6571#0" />
+                <element signature="e#6612#6716#0" />
+                <element signature="e#6833#7011#0" />
+                <element signature="e#7032#7130#0" />
+                <element signature="e#7271#8009#0" />
+                <element signature="e#7335#7471#0" />
+                <element signature="e#7752#7859#0" />
+                <element signature="e#8057#9049#0" />
+                <element signature="e#8167#8263#0" />
+                <element signature="e#8304#8408#0" />
+                <element signature="e#8525#8869#0" />
+                <element signature="e#8743#8869#0" />
+                <element signature="e#8890#8985#0" />
+                <element signature="e#9098#9770#0" />
+                <element signature="e#9541#9640#0" />
+                <element signature="e#9807#10141#0" />
+                <element signature="e#9961#10087#0" />
+                <element signature="e#10206#10565#0" />
+                <element signature="e#10620#11618#0" />
+                <element signature="e#11115#11214#0" />
               </folding>
             </state>
           </provider>
@@ -351,6 +388,11 @@
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
+              <item name="accounts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
+              <item name="online_library" type="462c0819:PsiDirectoryNode" />
               <item name="books" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -456,8 +498,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16118237" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16118237" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -468,7 +511,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32998884" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49916342" visible="true" weight="0.51282054" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49916342" weight="0.51282054" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5008366" side_tool="true" weight="0.522854" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32998884" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -928,18 +971,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="118">
           <caret line="785" selection-start-line="785" selection-end-line="785" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="248" column="67" selection-start-line="248" selection-start-column="4" selection-end-line="248" selection-end-column="67" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-            <element signature="e#9098#9936#0" />
-            <element signature="e#10786#11800#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1440,6 +1471,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/payment/controllers/payment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="10" column="27" lean-forward="true" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/payment/controllers/kipo_pay.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="999">
+          <caret line="37" column="9" lean-forward="true" selection-start-line="37" selection-start-column="9" selection-end-line="37" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/books/controllers/book_roles.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="702">
@@ -1481,19 +1529,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/payment/controllers/payment.py">
+    <entry file="file://$PROJECT_DIR$/accounts/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="10" column="27" lean-forward="true" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/payment/controllers/kipo_pay.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="38" column="32" lean-forward="true" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+        <state relative-caret-position="76">
+          <caret line="121" column="16" selection-start-line="121" selection-start-column="12" selection-end-line="121" selection-end-column="16" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#570#2133#0" />
+            <element signature="e#1029#1124#0" />
+            <element signature="e#1211#1314#0" />
+            <element signature="e#1583#1687#0" />
+            <element signature="e#2178#2818#0" />
+            <element signature="e#2275#2561#0" />
+            <element signature="e#2583#2770#0" />
+            <element signature="e#2883#3463#0" />
+            <element signature="e#2951#3232#0" />
+            <element signature="e#3253#3418#0" />
+            <element signature="e#4001#4118#0" />
+            <element signature="e#4218#5187#0" />
+            <element signature="e#4328#4424#0" />
+            <element signature="e#4465#4568#0" />
+            <element signature="e#4685#4995#0" />
+            <element signature="e#5019#5136#0" />
+            <element signature="e#5232#6180#0" />
+            <element signature="e#5482#5578#0" />
+            <element signature="e#5619#5723#0" />
+            <element signature="e#5840#5996#0" />
+            <element signature="e#6017#6115#0" />
+            <element signature="e#6225#7195#0" />
+            <element signature="e#6475#6571#0" />
+            <element signature="e#6612#6716#0" />
+            <element signature="e#6833#7011#0" />
+            <element signature="e#7032#7130#0" />
+            <element signature="e#7271#8009#0" />
+            <element signature="e#7335#7471#0" />
+            <element signature="e#7752#7859#0" />
+            <element signature="e#8057#9049#0" />
+            <element signature="e#8167#8263#0" />
+            <element signature="e#8304#8408#0" />
+            <element signature="e#8525#8869#0" />
+            <element signature="e#8743#8869#0" />
+            <element signature="e#8890#8985#0" />
+            <element signature="e#9098#9770#0" />
+            <element signature="e#9541#9640#0" />
+            <element signature="e#9807#10141#0" />
+            <element signature="e#9961#10087#0" />
+            <element signature="e#10206#10565#0" />
+            <element signature="e#10620#11618#0" />
+            <element signature="e#11115#11214#0" />
           </folding>
         </state>
       </provider>

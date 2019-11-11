@@ -76,12 +76,14 @@ def delete(id, db_session, username):
     return {}
 
 
-def get_all(db_session, username):
+def get_all(db_session, username,data):
     logger.info(LogMsg.START,username)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
     try:
-        result = db_session.query(APP_Token).all()
-        logger.debug(LogMsg.GET_SUCCESS)
-
+        result = APP_Token.mongoquery(
+            db_session.query(APP_Token)).query(
+            **data).end().all()
     except:
         logger.error(LogMsg.GET_FAILED)
         raise Http_error(500, Message.GET_FAILED)
