@@ -60,7 +60,7 @@ def add(db_session, data, username):
 
     logger.info(LogMsg.END)
 
-    return content_to_dict(model_instance, db_session)
+    return model_instance
 
 
 def get(id, db_session, username):
