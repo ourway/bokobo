@@ -1,3 +1,5 @@
+import urllib
+
 from bottle import request
 
 from check_permission import get_user_permissions, has_permission
@@ -21,7 +23,7 @@ if merchant_key is None:
 
 kipo = KipoKPG(merchant_key)
 
-base_url = value('app_server_address','')
+base_url = value('app_server_address', '')
 
 
 def pay_by_kipo(data, db_session, username):
@@ -35,8 +37,8 @@ def pay_by_kipo(data, db_session, username):
 
     user = check_user(username, db_session)
     if user is None:
-        logger.error(LogMsg.INVALID_USER,username)
-        raise Http_error(404,Message.INVALID_USER)
+        logger.error(LogMsg.INVALID_USER, username)
+        raise Http_error(404, Message.INVALID_USER)
     if person_id is None:
         person_id = user.person_id
         per_data.update({Permissions.IS_OWNER.value: True})
@@ -45,14 +47,14 @@ def pay_by_kipo(data, db_session, username):
 
     has_permission(
         [Permissions.PAYMENT_ADD_PREMIUM, Permissions.PAYMENT_ADD_PRESS],
-        permissions,None,per_data)
+        permissions, None, per_data)
     logger.debug(LogMsg.PERMISSION_VERIFIED)
 
     from_bank_url = '{}/payment-receive'.format(base_url)
 
-    logger.debug(LogMsg.CALL_BACK_FROM_BANK_URL,from_bank_url)
+    logger.debug(LogMsg.CALL_BACK_FROM_BANK_URL, from_bank_url)
 
-    kpg_initiate = kipo.kpg_initiate(data.get('amount'),from_bank_url)
+    kpg_initiate = kipo.kpg_initiate(data.get('amount'), from_bank_url)
 
     if kpg_initiate['status']:
 
@@ -76,9 +78,11 @@ def pay_by_kipo(data, db_session, username):
                 <input type="hidden" id="sk" name="sk" value="{shopping_key}"/>
             </form>
         <script language="javascript">document.forms['kipopay-gateway'].submit();</script>
-    '''.format(url=kipo.kipo_webgate_url,shopping_key=kpg_initiate['shopping_key'] )
+    '''.format(url=kipo.kipo_webgate_url,
+               shopping_key=kpg_initiate['shopping_key'])
 
-    return HTTPResponse(body=html_content,status=200,headers=dict(content_type='text/html'))
+    return HTTPResponse(body=html_content, status=200,
+                        headers=dict(content_type='text/html'))
 
 
 def receive_payment(db_session, **kwargs):
@@ -99,16 +103,23 @@ def receive_payment(db_session, **kwargs):
         raise Http_error(402, Message.PAYMENT_ALREADY_CONSIDERED)
 
     call_back_url = payment.details.get('call_back_url')
+    url = urllib.parse.urlparse(call_back_url)
+    if url.query:
+        url._replace(query=url.query + '&status={}')
+    else:
+        url._replace(query='status={}')
+    url = url.geturl()
 
     status = data.get('status')
     if status is None:
-        logger.error(LogMsg.PAYMENT_STATUS_NONE,data)
-        raise Http_error(402,Message.PAYMENT_BANK_RESPONSE_INVALID)
+        logger.error(LogMsg.PAYMENT_STATUS_NONE, data)
+        raise Http_error(402, Message.PAYMENT_BANK_RESPONSE_INVALID)
 
     if status is not None and status[0] == '0':
         logger.error(LogMsg.PAYMENT_CANCELED, data)
         return HTTPResponse(status=302,
-                            headers=dict(location='{}?status=payment-cancelled'.format(call_back_url)))
+                            headers=dict(
+                                location=url.format('payment-cancelled')))
 
     if status is not None and status[0] == '1':
         inquiry = kipo.kpg_inquery(shopping_key)
@@ -118,8 +129,8 @@ def receive_payment(db_session, **kwargs):
             error = kipo_error_code(inquiry['code'])
             return HTTPResponse(status=302,
                                 headers=dict(
-                                    location='{}?status=payment-inquiry-invalid'.format(
-                                        call_back_url)))
+                                    location=url.format(
+                                        'payment-inquiry-invalid')))
 
         if payment.amount != inquiry.get('amount'):
             logger.error(LogMsg.PAYMENT_INQUIRY_AMOUNT_INVALID,
@@ -127,8 +138,8 @@ def receive_payment(db_session, **kwargs):
                           'inquiry': inquiry})
             return HTTPResponse(status=302,
                                 headers=dict(
-                                    location='{}?status=payment-inquiry-invalid'.format(
-                                        call_back_url)))
+                                    location=url.format(
+                                        'payment-inquiry-invalid')))
 
         # TODO add transaction  and account charge
         account = edit_persons_main_account(payment.person_id, payment.amount,
@@ -136,7 +147,7 @@ def receive_payment(db_session, **kwargs):
         logger.debug(LogMsg.ACCOUNT_VALUE_EDITED, model_to_dict(account))
 
         transaction_data = {'account_id': account.id, 'credit': payment.amount,
-                            'payment_id': payment.id,'details':inquiry}
+                            'payment_id': payment.id, 'details': inquiry}
 
         transaction = transaction_add(transaction_data, db_session)
         logger.debug(LogMsg.TRANSACTION_ADDED, model_to_dict(transaction))
@@ -149,16 +160,11 @@ def receive_payment(db_session, **kwargs):
         logger.debug(LogMsg.PAYMENT_UPDATED_TO_USED, model_to_dict(payment))
 
         logger.debug(LogMsg.REDIRECT_AFTER_PAYMENT, call_back_url)
-        return HTTPResponse(status=302,
-                            headers=dict(
-                                location='{}?status=successful'.format(
-                                    call_back_url)))
+        return HTTPResponse(status=302,headers=dict(location=url.format('successful')))
 
     logger.info(LogMsg.END)
-    return HTTPResponse(status=302,
-                            headers=dict(
-                                location='{}?status=unknown'.format(
-                                    call_back_url)))
+    return HTTPResponse(status=302,headers=dict(location=url.format('unknown')))
+
 
 def kipo_error_code(error_code):
     exchange_code = {
@@ -178,7 +184,7 @@ def kipo_error_code(error_code):
     return exchange_code.get(error_code)
 
 
-def sample_html_form(*args,**kwargs):
+def sample_html_form(*args, **kwargs):
     html = '''
     <html>
         <body>
@@ -190,4 +196,5 @@ def sample_html_form(*args,**kwargs):
         </body>
     </html>
     '''
-    return HTTPResponse(body=html,headers=dict(content_type="text/html", status=200))
+    return HTTPResponse(body=html,
+                        headers=dict(content_type="text/html", status=200))
