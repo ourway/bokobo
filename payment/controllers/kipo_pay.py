@@ -24,7 +24,7 @@ kipo = KipoKPG(merchant_key)
 base_url = value('app_server_address', 'http://localhost:7000')
 
 
-def pay_by_kipo(data, db_session, username='admin'):
+def pay_by_kipo(data, db_session, username):
     logger.info(LogMsg.START, username)
 
     check_schema(['amount'], data.keys())
@@ -34,8 +34,8 @@ def pay_by_kipo(data, db_session, username='admin'):
     per_data = {}
 
     user = check_user(username, db_session)
-    if user.person_id is None:
-        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
+    if user is None:
+        logger.error(LogMsg.INVALID_USER,username)
         raise Http_error(404,Message.INVALID_USER)
     if person_id is None:
         person_id = user.person_id
