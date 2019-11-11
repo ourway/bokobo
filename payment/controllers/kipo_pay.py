@@ -27,17 +27,19 @@ base_url = value('app_server_address', 'http://localhost:7000')
 def pay_by_kipo(data, db_session, username='admin'):
     logger.info(LogMsg.START, username)
 
-    check_schema(['person_id', 'amount'], data.keys())
+    check_schema(['amount'], data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
 
     person_id = data.get('person_id')
+    per_data = {}
 
     user = check_user(username, db_session)
-
-    per_data = {}
-    permissions, presses = get_user_permissions(username, db_session)
-    if user.person_id == person_id:
+    if person_id is None:
+        person_id = user.person_id
         per_data.update({Permissions.IS_OWNER.value: True})
+
+    permissions, presses = get_user_permissions(username, db_session)
+
     has_permission(
         [Permissions.PAYMENT_ADD_PREMIUM, Permissions.PAYMENT_ADD_PRESS],
         permissions,None,per_data)

@@ -195,13 +195,19 @@ def delete(id, db_session, username):
     return Http_response(204, True)
 
 
-def get_all(db_session):
+def get_all(db_session,data=None):
     logger.info(LogMsg.START)
     logger.info(LogMsg.GETTING_ALL_BOOKS)
     try:
         final_res = []
-        result = db_session.query(Book).order_by(
-            Book.creation_date.desc()).all()
+        if data is None:
+            result = db_session.query(Book).order_by(
+                Book.creation_date.desc()).all()
+        else:
+            result = Book.mongoquery(
+                db_session.query(Book)).query(
+                **data).end().all()
+
         logger.debug(LogMsg.GET_SUCCESS)
 
         for item in result:
