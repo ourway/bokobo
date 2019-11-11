@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="" />
+    <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/books/controllers/book_content.py" beforeDir="false" afterPath="$PROJECT_DIR$/books/controllers/book_content.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,10 +15,25 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/books/controllers/book_content.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
-              <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
+            <state relative-caret-position="241">
+              <caret line="196" column="8" selection-start-line="196" selection-start-column="8" selection-end-line="196" selection-end-column="8" />
               <folding>
-                <element signature="e#0#36#0" expanded="true" />
+                <element signature="e#0#47#0" expanded="true" />
+                <element signature="e#2211#3350#0" />
+                <element signature="e#3721#5719#0" />
+                <element signature="e#5764#6983#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/books/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="672">
+              <caret line="50" column="57" selection-start-line="50" selection-start-column="57" selection-end-line="50" selection-end-column="57" />
+              <folding>
+                <element signature="e#0#53#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -46,7 +63,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>book_data</find>
       <find>collection_to_dict(collection)</find>
       <find>collection_to_dict(</find>
       <find>e58715438c77</find>
@@ -76,6 +92,7 @@
       <find>user_group_ids</find>
       <find>&quot;</find>
       <find>-5</find>
+      <find>content_to_dict</find>
     </findStrings>
     <replaceStrings>
       <replace>USERNAME_EXISTS</replace>
@@ -159,7 +176,6 @@
         <option value="$PROJECT_DIR$/repository/book_content_repo.py" />
         <option value="$PROJECT_DIR$/books/controllers/book.py" />
         <option value="$PROJECT_DIR$/repository/group_user_repo.py" />
-        <option value="$PROJECT_DIR$/books/models.py" />
         <option value="$PROJECT_DIR$/db_migrations.py" />
         <option value="$PROJECT_DIR$/repository/book_role_repo.py" />
         <option value="$PROJECT_DIR$/main.py" />
@@ -169,6 +185,7 @@
         <option value="$PROJECT_DIR$/db_migration/permissions.py" />
         <option value="$PROJECT_DIR$/db_migration/urls.py" />
         <option value="$PROJECT_DIR$/order/controllers/order_items.py" />
+        <option value="$PROJECT_DIR$/books/models.py" />
         <option value="$PROJECT_DIR$/books/controllers/book_content.py" />
       </list>
     </option>
@@ -291,6 +308,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16118237" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -677,12 +695,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/books/controllers/book_content.py</url>
-          <line>67</line>
+          <line>68</line>
           <option name="timeStamp" value="243" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/books/controllers/book_content.py</url>
-          <line>165</line>
+          <line>166</line>
           <option name="timeStamp" value="245" />
         </line-breakpoint>
       </breakpoints>
@@ -1207,16 +1225,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/books/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="554">
-          <caret line="47" column="14" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/helper.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="466">
@@ -1234,12 +1242,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/books/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="672">
+          <caret line="50" column="57" selection-start-line="50" selection-start-column="57" selection-end-line="50" selection-end-column="57" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/books/controllers/book_content.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="21" column="12" selection-start-line="21" selection-start-column="12" selection-end-line="21" selection-end-column="12" />
+        <state relative-caret-position="241">
+          <caret line="196" column="8" selection-start-line="196" selection-start-column="8" selection-end-line="196" selection-end-column="8" />
           <folding>
-            <element signature="e#0#36#0" expanded="true" />
+            <element signature="e#0#47#0" expanded="true" />
+            <element signature="e#2211#3350#0" />
+            <element signature="e#3721#5719#0" />
+            <element signature="e#5764#6983#0" />
           </folding>
         </state>
       </provider>

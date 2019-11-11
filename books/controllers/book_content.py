@@ -60,7 +60,7 @@ def add(db_session, data, username):
 
     logger.info(LogMsg.END)
 
-    return content_to_dict(model_instance,db_session)
+    return content_to_dict(model_instance, db_session)
 
 
 def get(id, db_session, username):
@@ -90,7 +90,7 @@ def get(id, db_session, username):
             raise Http_error(403, Message.ACCESS_DENIED)
     logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
-    return content_to_dict(content,db_session)
+    return content_to_dict(content, db_session)
 
 
 def get_internal(id, db_session):
@@ -107,9 +107,8 @@ def edit(id, data, db_session, username):
 
     content = get_internal(id, db_session)
     if content is None:
-        logger.error(LogMsg.NOT_FOUND,{'content_id':id})
-        raise Http_error(404,Message.NOT_FOUND)
-
+        logger.error(LogMsg.NOT_FOUND, {'content_id': id})
+        raise Http_error(404, Message.NOT_FOUND)
 
     book = get_book(content.book_id, db_session)
     if 'book_id' in data.keys():
@@ -138,10 +137,11 @@ def edit(id, data, db_session, username):
             # TODO  if key is valid attribute of class
             setattr(content, key, value)
 
-        new_content = get_be_data(content.book_id,content.type,db_session)
-        if new_content is not None and new_content.id!=content.id:
-            logger.error(LogMsg.BOOK_CONTENT_ALREADY_EXISTS,content_to_dict(new_content,db_session))
-            raise Http_error(409,Message.ALREADY_EXISTS)
+        new_content = get_be_data(content.book_id, content.type, db_session)
+        if new_content is not None and new_content.id != content.id:
+            logger.error(LogMsg.BOOK_CONTENT_ALREADY_EXISTS,
+                         content_to_dict(new_content, db_session))
+            raise Http_error(409, Message.ALREADY_EXISTS)
 
         edit_basic_data(content, username, data.get('tags'))
         content.book_press = book.press
@@ -150,7 +150,7 @@ def edit(id, data, db_session, username):
         raise Http_error(409, Message.ALREADY_EXISTS)
     logger.debug(LogMsg.EDIT_SUCCESS, model_to_dict(content))
     logger.info(LogMsg.END)
-    return content_to_dict(content,db_session)
+    return content_to_dict(content, db_session)
 
 
 def delete(id, db_session, username):
@@ -191,38 +191,40 @@ def get_all(db_session, username, data=None):
 
     permission_data = {}
     permissions, presses = get_user_permissions(username, db_session)
-    has_permit = has_permission_or_not([Permissions.BOOK_ADD_PREMIUM,Permissions.BOOK_CONTENT_GET_PREMIUM,
-                                 Permissions.BOOK_CONTENT_GET_PRESS],
-                                permissions, None, permission_data)
+    has_permit = has_permission_or_not(
+        [Permissions.BOOK_ADD_PREMIUM, Permissions.BOOK_CONTENT_GET_PREMIUM,
+         Permissions.BOOK_CONTENT_GET_PRESS],
+        permissions, None, permission_data)
 
     logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
     if data is None:
         result = db_session.query(BookContent).all()
     else:
-        result = BookContent.mongoquery(db_session.query(BookContent)).query(**data).end().all()
+        result = BookContent.mongoquery(db_session.query(BookContent)).query(
+            **data).end().all()
 
     final_res = []
-    if not has_permit:
-        for content in result:
-            if content.book_press in presses or content.creator==username:
-                final_res.append(content_to_dict(content,db_session))
+    for content in result:
+        if has_permit or content.book_press in presses or content.creator == username:
+            final_res.append(content_to_dict(content, db_session))
+
 
     return final_res
 
 
-def content_to_dict(content,db_session):
+def content_to_dict(content, db_session):
     result = model_to_dict(content)
     attrs = {
-        'book_id':content.book_id,
-        'content':content.content,
-        'book_press':content.book_press,
-        'book':book_to_dict(db_session,content.book)
+        'book_id': content.book_id,
+        'content': content.content,
+        'book_press': content.book_press,
+        'book': book_to_dict(db_session, content.book)
 
     }
-    if isinstance(content.type,str):
-        attrs.update({'type':content.type})
+    if isinstance(content.type, str):
+        attrs.update({'type': content.type})
     else:
-        attrs.update({'type':content.type.value})
+        attrs.update({'type': content.type.value})
     result.update(attrs)
     return result
