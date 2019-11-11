@@ -34,6 +34,9 @@ def pay_by_kipo(data, db_session, username='admin'):
     per_data = {}
 
     user = check_user(username, db_session)
+    if user.person_id is None:
+        logger.error(LogMsg.USER_HAS_NO_PERSON,username)
+        raise Http_error(404,Message.INVALID_USER)
     if person_id is None:
         person_id = user.person_id
         per_data.update({Permissions.IS_OWNER.value: True})
