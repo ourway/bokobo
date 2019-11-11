@@ -86,6 +86,7 @@ def pay_by_kipo(data, db_session, username):
 
 
 def receive_payment(db_session, **kwargs):
+    logger.info(LogMsg.START)
     my_dict = request.query.decode()
     data = my_dict.dict
     if data is None:
@@ -102,7 +103,11 @@ def receive_payment(db_session, **kwargs):
         logger.error(LogMsg.PAYMENT_ALREADY_USED, model_to_dict(payment))
         raise Http_error(402, Message.PAYMENT_ALREADY_CONSIDERED)
 
+    logger.debug(LogMsg.PAYMENT_ENTITY_GET,model_to_dict(payment))
+
     call_back_url = payment.details.get('call_back_url')
+
+    logger.debug(LogMsg.CALL_BACK_APP_URL,call_back_url)
     url = urllib.parse.urlparse(call_back_url)
     if url.query:
         url._replace(query=url.query + '&status={}')
@@ -110,7 +115,10 @@ def receive_payment(db_session, **kwargs):
         url._replace(query='status={}')
     url = url.geturl()
 
+    logger.debug(LogMsg.PARSED_URL,url)
+
     status = data.get('status')
+    logger.debug(LogMsg.PAYMENT_STATUS,status)
     if status is None:
         logger.error(LogMsg.PAYMENT_STATUS_NONE, data)
         raise Http_error(402, Message.PAYMENT_BANK_RESPONSE_INVALID)
@@ -123,14 +131,14 @@ def receive_payment(db_session, **kwargs):
 
     if status is not None and status[0] == '1':
         inquiry = kipo.kpg_inquery(shopping_key)
-        print(inquiry)
+        logger.debug(LogMsg.PAYMENT_INQUIRY_RESULT,inquiry)
         if not inquiry.get('status'):
             logger.error(LogMsg.PAYMENT_INQUIRY_NOT_VALID, inquiry)
             error = kipo_error_code(inquiry['code'])
             return HTTPResponse(status=302,
                                 headers=dict(
                                     location=url.format(
-                                        'payment-inquiry-invalid')))
+                                        error)))
 
         if payment.amount != inquiry.get('amount'):
             logger.error(LogMsg.PAYMENT_INQUIRY_AMOUNT_INVALID,
@@ -139,7 +147,7 @@ def receive_payment(db_session, **kwargs):
             return HTTPResponse(status=302,
                                 headers=dict(
                                     location=url.format(
-                                        'payment-inquiry-invalid')))
+                                        'payment-amount-invalid')))
 
         # TODO add transaction  and account charge
         account = edit_persons_main_account(payment.person_id, payment.amount,
@@ -159,7 +167,7 @@ def receive_payment(db_session, **kwargs):
         edit_basic_data(payment, None)
         logger.debug(LogMsg.PAYMENT_UPDATED_TO_USED, model_to_dict(payment))
 
-        logger.debug(LogMsg.REDIRECT_AFTER_PAYMENT, call_back_url)
+        logger.debug(LogMsg.REDIRECT_AFTER_PAYMENT, url.format('successful'))
         return HTTPResponse(status=302,headers=dict(location=url.format('successful')))
 
     logger.info(LogMsg.END)

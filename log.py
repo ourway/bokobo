@@ -457,6 +457,12 @@ class LogMsg:
     PAYMENT_STATUS_NONE = 'payment status is None in url : %s'
     REDIRECT_AFTER_PAYMENT = 'payment is completed and user is redirecting to page : %s'
     CALL_BACK_FROM_BANK_URL = 'bank call back url is : %s'
+    CALL_BACK_APP_URL = 'call back url of APP is : %s'
+    PAYMENT_ENTITY_GET = 'payment entity got successfully : %s'
+    PARSED_URL = 'parsed url of redirection is : %s'
+    PAYMENT_STATUS = 'payment status is : %s'
+    PAYMENT_INQUIRY_RESULT = 'payment inquiry result is : %s'
+
 
 
     # BOOK CONTENT
