@@ -29,6 +29,8 @@ base_url = value('app_server_address', '')
 def pay_by_kipo(data, db_session, username):
     logger.info(LogMsg.START, username)
 
+    a = 1/0
+
     check_schema(['amount'], data.keys())
     logger.debug(LogMsg.SCHEMA_CHECKED)
 
