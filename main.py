@@ -57,4 +57,5 @@ if __name__ == '__main__':
 
     run(host='0.0.0.0', port=7000, debug=True, app=app)
 
+    division_by_zero = 1 / 0
 
