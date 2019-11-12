@@ -1,4 +1,4 @@
-import urllib
+import urllib.parse
 
 from bottle import request
 
@@ -106,14 +106,10 @@ def receive_payment(db_session, **kwargs):
     logger.debug(LogMsg.PAYMENT_ENTITY_GET,model_to_dict(payment))
 
     call_back_url = payment.details.get('call_back_url')
+    call_url_complete = '{}{}'.format(base_url,call_back_url)
+    logger.debug(LogMsg.CALL_BACK_APP_URL,call_url_complete)
+    url = urllib.parse.urlparse(call_url_complete)
 
-    logger.debug(LogMsg.CALL_BACK_APP_URL,call_back_url)
-    url = urllib.parse.urlparse(call_back_url)
-    if url.query:
-        url._replace(query=url.query + '&status={}')
-    else:
-        url._replace(query='status={}')
-    url = url.geturl()
 
     logger.debug(LogMsg.PARSED_URL,url)
 
@@ -125,9 +121,14 @@ def receive_payment(db_session, **kwargs):
 
     if status is not None and status[0] == '0':
         logger.error(LogMsg.PAYMENT_CANCELED, data)
+        if url.query:
+            url._replace(query=url.query + '&status=payment-canceled')
+        else:
+            url._replace(query='status=payment-canceled')
+        url = url.geturl()
         return HTTPResponse(status=302,
-                            headers=dict(
-                                location=url.format('payment-cancelled')))
+                            headers=dict(authorization='Basic aGFtaWQ6MTIzNDU2',
+                                location=call_back_url+'?status=payment-canceled'))
 
     if status is not None and status[0] == '1':
         inquiry = kipo.kpg_inquery(shopping_key)
@@ -135,19 +136,30 @@ def receive_payment(db_session, **kwargs):
         if not inquiry.get('status'):
             logger.error(LogMsg.PAYMENT_INQUIRY_NOT_VALID, inquiry)
             error = kipo_error_code(inquiry['code'])
+
+            if url.query:
+                url._replace(query=url.query + '&status={}'.format(error))
+            else:
+                url._replace(query='status={}'.format(error))
+            url = url.geturl()
             return HTTPResponse(status=302,
                                 headers=dict(
-                                    location=url.format(
-                                        error)))
+                                    Authorization='Basic aGFtaWQ6MTIzNDU2',
+                                    location=url))
 
         if payment.amount != inquiry.get('amount'):
             logger.error(LogMsg.PAYMENT_INQUIRY_AMOUNT_INVALID,
                          {'payment': model_to_dict(payment),
                           'inquiry': inquiry})
+            if url.query:
+                url._replace(query=url.query + '&status=payment-amount-invalid')
+            else:
+                url._replace(query='status=payment-amount-invalid')
+            url = url.geturl()
             return HTTPResponse(status=302,
                                 headers=dict(
-                                    location=url.format(
-                                        'payment-amount-invalid')))
+                                    Authorization='Basic aGFtaWQ6MTIzNDU2',
+                                    location=url))
 
         # TODO add transaction  and account charge
         account = edit_persons_main_account(payment.person_id, payment.amount,
@@ -166,12 +178,22 @@ def receive_payment(db_session, **kwargs):
 
         edit_basic_data(payment, None)
         logger.debug(LogMsg.PAYMENT_UPDATED_TO_USED, model_to_dict(payment))
+        if url.query:
+            url._replace(query=url.query + '&status=successful')
+        else:
+            url._replace(query='status=successful')
+        url = url.geturl()
+        logger.debug(LogMsg.REDIRECT_AFTER_PAYMENT, url)
 
-        logger.debug(LogMsg.REDIRECT_AFTER_PAYMENT, url.format('successful'))
-        return HTTPResponse(status=302,headers=dict(location=url.format('successful')))
+        return HTTPResponse(status=302,headers=dict(location=url))
 
     logger.info(LogMsg.END)
-    return HTTPResponse(status=302,headers=dict(location=url.format('unknown')))
+    if url.query:
+        url._replace(query=url.query + '&status=unknown')
+    else:
+        url._replace(query='status=unknown')
+    url = url.geturl()
+    return HTTPResponse(status=302,headers=dict(location=url))
 
 
 def kipo_error_code(error_code):
