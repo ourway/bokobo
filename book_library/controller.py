@@ -72,7 +72,7 @@ def get_personal_library(data,db_session, username):
     if data.get('sort') is None:
         data['sort'] = ['creation_date-']
 
-    if data['filter'] is None:
+    if data.get('filter') is None:
         data.update({'filter':{'person_id':user.person_id}})
     else:
         data['filter'].update({'person_id':user.person_id})
