@@ -17,7 +17,7 @@ def call_router(app):
     app.route('/collections/book', 'POST', add_book_to_collections,
               apply=data_plus_wrappers)
 
-    app.route('/collections', 'GET', get_all_collections, apply=wrappers)
+    app.route('/collections/user', 'POST', get_all_collections, apply=data_plus_wrappers)
     app.route('/collections/collection', 'POST', get_collection, apply=wrappers)
     app.route('/collections', 'PUT', rename_collection, apply=data_plus_wrappers)
     app.route('/collections/_search', 'POST', get_all, apply=data_plus_wrappers)
