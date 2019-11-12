@@ -1,4 +1,5 @@
 from bottle import Bottle, run, request
+import sentry
 
 from register.urls import call_router as register_routes
 from user.urls import call_router as user_routes
