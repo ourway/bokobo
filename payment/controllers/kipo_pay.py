@@ -62,7 +62,7 @@ def pay_by_kipo(data, db_session, username):
         data.update(
             {'agent': 'kipo', 'shopping_key': kpg_initiate.get('shopping_key'),
              'reference_code': kipo.get_referent_code(),
-             'details': kpg_initiate})
+             'details': kpg_initiate,'person_id':person_id})
         logger.debug(LogMsg.ADDING_PAYMENT_ENTITY, data)
         payment = add_payment(data, db_session, username)
         logger.debug(LogMsg.PAYMENT_ADDED, model_to_dict(payment))
