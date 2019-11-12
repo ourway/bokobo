@@ -128,7 +128,7 @@ def receive_payment(db_session, **kwargs):
         url = url.geturl()
         return HTTPResponse(status=302,
                             headers=dict(authorization='Basic aGFtaWQ6MTIzNDU2',
-                                location=call_back_url+'?status=payment-canceled'))
+                                location=call_back_url+'/payment-canceled'))
 
     if status is not None and status[0] == '1':
         inquiry = kipo.kpg_inquery(shopping_key)
