@@ -110,7 +110,7 @@ def get_user_orders(data, db_session, username=None):
         raise Http_error(400, Message.Invalid_persons)
 
 
-    if data['filter'] is None:
+    if data.get('filter') is None:
         data.update({'filter':{'person_id':user.person_id}})
     else:
         data['filter'].update({'person_id':user.person_id})

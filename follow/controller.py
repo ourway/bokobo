@@ -77,7 +77,7 @@ def get_following_list(data,username, db_session):
     if data.get('sort') is None:
         data['sort'] = ['creation_date-']
 
-    if data['filter'] is None:
+    if data.get('filter') is None:
         data.update({'filter':{'follower_id':user.person_id}})
     else:
         data['filter'].update({'follower_id':user.person_id})
@@ -113,7 +113,7 @@ def get_follower_list(data,username, db_session):
     if data.get('sort') is None:
         data['sort'] = ['creation_date-']
 
-    if data['filter'] is None:
+    if data.get('filter') is None:
         data.update({'filter': {'following_id': user.person_id}})
     else:
         data['filter'].update({'following_id': user.person_id})

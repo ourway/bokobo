@@ -147,8 +147,11 @@ def add_book_to_collections(data, db_session, username):
     return data
 
 
-def get_all_collections(db_session, username):
+def get_all_collections(data,db_session, username):
     logger.info(LogMsg.START, username)
+    if data.get('sort') is None:
+        data['sort'] = ['title+']
+
     user = check_user(username, db_session)
     if user is None:
         raise Http_error(400, Message.INVALID_USER)
@@ -160,9 +163,15 @@ def get_all_collections(db_session, username):
     validate_person(user.person_id, db_session)
     logger.debug(LogMsg.PERSON_EXISTS)
 
-    collection_items = db_session.query(Collection).filter(and_(
-        Collection.person_id == user.person_id)).order_by(
-        Collection.title.asc()).all()
+    if data.get('filter') is None:
+        data.update({'filter':{'person_id':user.person_id}})
+    else:
+        data['filter'].update({'person_id':user.person_id})
+
+
+    collection_items =Collection.mongoquery(
+        db_session.query(Collection)).query(
+        **data).end().all()
     collections, titles = arrange_collections(collection_items)
     logger.debug(LogMsg.COLLECTION_ARRANGE_BY_TITLE)
 

@@ -169,9 +169,13 @@ def delete_comments(book_id, db_session, username, **kwargs):
 
 def get_book_comments(book_id, data, db_session, username, **kwargs):
     logger.info(LogMsg.START, username)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
-    limit = data.get('limit') or 10
-    offset = data.get('offset') or 0
+    if data.get('filter') is None:
+        data.update({'filter':{'book_id':book_id}})
+    else:
+        data['filter'].update({'person_id':book_id})
 
     # permissions, presses = get_user_permissions(username, db_session)
     #
@@ -183,9 +187,7 @@ def get_book_comments(book_id, data, db_session, username, **kwargs):
 
     try:
         logger.debug(LogMsg.COMMENT_GETTING_BOOK_COMMENTS, book_id)
-        res = db_session.query(Comment).filter(
-            Comment.book_id == book_id).order_by(
-            Comment.creation_date.desc()).slice(offset, offset + limit)
+        res =  Comment.mongoquery(db_session.query(Comment)).query(**data).end().all()
         result = []
         for item in res:
             result.append(comment_to_dict(db_session, item, username))

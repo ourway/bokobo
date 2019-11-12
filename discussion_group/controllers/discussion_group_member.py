@@ -147,15 +147,25 @@ def edit(id, data, db_session, username):
     return discussion_member_to_dict(group_member)
 
 
-def user_discuss_groups(db_session, username):
+def user_discuss_groups(data,db_session, username):
     logger.info(LogMsg.START, username)
 
     user = check_user(username, db_session)
     if user is None:
         logger.error(LogMsg.INVALID_USER, username)
         raise Http_error(404, Message.INVALID_USERNAME)
-    group_mems = db_session.query(DiscussionMember).filter(
-        DiscussionMember.person_id == user.person_id).all()
+
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
+    if data.get('filter') is None:
+        data.update({'filter': {'person_id': user.person_id}})
+    else:
+        data['filter'].update({'person_id': user.person_id})
+
+    group_mems = DiscussionMember.mongoquery(
+        db_session.query(DiscussionMember)).query(
+        **data).end().all()
     group_ids = []
     for item in group_mems:
         group_ids.append(item.group_id)

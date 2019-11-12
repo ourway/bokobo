@@ -155,7 +155,7 @@ def get_group_messages(group_id, data, db_session, username, **kwargs):
     if data.get('sort') is None:
         data['sort'] = ['creation_date-']
 
-    if data['filter'] is None:
+    if data.get('filter') is None:
         data.update({'filter':{'group_id':group_id}})
     else:
         data['filter'].update({'group_id':group_id})
@@ -197,7 +197,7 @@ def get_sender_messages( data, db_session, username, **kwargs):
     if data.get('sort') is None:
         data['sort'] = ['creation_date-']
 
-    if data['filter'] is None:
+    if data.get('filter') is None:
         data.update({'filter': {'receptor_id': user.person_id,'last_seen': Now()}})
     else:
         data['filter'].update({'receptor_id': user.person_id,'last_seen': Now()})

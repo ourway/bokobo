@@ -188,6 +188,8 @@ def delete(id, db_session, username):
 
 def get_all(db_session, username, data=None):
     logger.info(LogMsg.START, username)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
     permission_data = {}
     permissions, presses = get_user_permissions(username, db_session)

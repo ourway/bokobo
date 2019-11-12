@@ -178,21 +178,14 @@ def get_all(data, db_session, username):
     has_permission([Permissions.DISCUSSION_GROUP_PREMIUM], permissions)
     logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
-    limit = data.get('limit', 10)
-    offset = data.get('offset', 0)
-    filter = data.get('filter', None)
+
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
     try:
-        if filter is None:
-            result = db_session.query(DiscussionGroup).slice(offset,
-                                                             offset + limit)
-
-        else:
-            title = filter.get('title')
-            result = db_session.query(DiscussionGroup).filter(
-                DiscussionGroup.title.like('%{}%'.format(title))).slice(offset,
-                                                                        offset + limit)
-
+        result = DiscussionGroup.mongoquery(
+        db_session.query(DiscussionGroup)).query(
+        **data).end().all()
         logger.debug(LogMsg.GET_SUCCESS)
     except:
         logger.error(LogMsg.GET_FAILED)
@@ -203,28 +196,18 @@ def get_all(data, db_session, username):
 
 
 def search_group(data, db_session, username=None):
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
-    filter = data.get('filter', None)
+
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
     permissions, presses = get_user_permissions(username, db_session)
     has_permission([Permissions.DISCUSSION_GROUP_PREMIUM], permissions)
     logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
     result = []
-    if filter is None:
-        groups = db_session.query(DiscussionGroup).order_by(
-            DiscussionGroup.creation_date.desc()).slice(offset,
-                                                        offset + limit)
-
-    else:
-        title = filter.get('title')
-        if title is None:
-            raise Http_error(400, Message.MISSING_REQUIERED_FIELD)
-        groups = db_session.query(DiscussionGroup).filter(
-            DiscussionGroup.title.like('%{}%'.format(title))).order_by(
-            DiscussionGroup.creation_date.desc()).slice(offset,
-                                                        offset + limit)
+    groups = DiscussionGroup.mongoquery(
+        db_session.query(DiscussionGroup)).query(
+        **data).end().all()
     for group in groups:
         result.append(discuss_group_to_dict(group, db_session))
     logger.debug(LogMsg.GET_SUCCESS, result)
