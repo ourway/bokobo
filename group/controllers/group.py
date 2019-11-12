@@ -128,10 +128,14 @@ def delete(id, db_session, username):
     return Http_response(204, True)
 
 
-def get_all(db_session, username):
+def get_all(data,db_session, username):
     logger.info(LogMsg.START, username)
+
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
     try:
-        result = db_session.query(Group).all()
+        result = Group.mongoquery(db_session.query(Group)).query(**data).end().all()
         logger.debug(LogMsg.GET_SUCCESS)
     except:
         logger.error(LogMsg.GET_FAILED)
@@ -142,24 +146,12 @@ def get_all(db_session, username):
 
 
 def search_group(data, db_session,username=None):
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
-    filter = data.get('filter', None)
+
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
     result = []
-    if filter is None:
-        groups = db_session.query(Group).order_by(
-            Group.creation_date.desc()).slice(offset,
-                                              offset + limit)
-
-    else:
-        title = filter.get('title')
-        if title is None:
-            raise Http_error(400, Message.MISSING_REQUIERED_FIELD)
-        groups = db_session.query(Group).filter(
-            Group.title.like('%{}%'.format(title))).order_by(
-            Group.creation_date.desc()).slice(offset,
-                                              offset + limit)
+    groups = Group.mongoquery(db_session.query(Group)).query(**data).end().all()
     for group in groups:
         result.append(model_to_dict(group))
     logger.debug(LogMsg.GET_SUCCESS, result)

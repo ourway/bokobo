@@ -6,5 +6,3 @@ app = Celery('celery_works', backend=CELERY_DATABASE_URI, broker='pyamqp://guest
              include=['celery_works.tasks'])
 
 app.config_from_object('celery_works.celeryconfig')
-
-

@@ -71,10 +71,15 @@ def delete(id, db_session, username):
     return Http_response(204, True)
 
 
-def get_all(db_session, username):
+def get_all(data,db_session, username):
     logger.info(LogMsg.START, username)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
     try:
-        result = db_session.query(GroupPermission).all()
+        result = GroupPermission.mongoquery(
+            db_session.query(GroupPermission)).query(
+            **data).end().all()
         logger.debug(LogMsg.GET_SUCCESS)
         final_res = []
         for item in result:
@@ -211,29 +216,13 @@ def get_by_data(data, db_session, username):
         logger.error(LogMsg.NOT_ACCESSED, {'username': username})
         raise Http_error(403, Message.ACCESS_DENIED)
 
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
-    filter = data.get('filter', None)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
     result = []
-    if filter is None:
-        permissions = db_session.query(GroupPermission).order_by(
-            GroupPermission.creation_date.desc()).slice(offset,
-                                                        offset + limit)
-
-    else:
-        permission = filter.get('permission', None)
-        if permission is not None:
-            permissions = db_session.query(GroupPermission).filter(
-                GroupPermission.permission_id == permission).order_by(
-                GroupPermission.creation_date.desc()).slice(offset,
-                                                            offset + limit)
-        group = filter.get('group', None)
-        if group is not None:
-            permissions = db_session.query(GroupPermission).filter(
-                GroupPermission.group_id == group).order_by(
-                GroupPermission.creation_date.desc()).slice(offset,
-                                                            offset + limit)
+    permissions = GroupPermission.mongoquery(
+        db_session.query(GroupPermission)).query(
+        **data).end().all()
     for permission in permissions:
         result.append(group_permission_to_dict(permission))
     logger.debug(LogMsg.GET_SUCCESS, result)

@@ -152,9 +152,14 @@ def delete(id, db_session, username, **kwargs):
 
 def get_group_messages(group_id, data, db_session, username, **kwargs):
     logger.info(LogMsg.START, username)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
-    limit = data.get('limit', 1000)
-    offset = data.get('offset', 0)
+    if data['filter'] is None:
+        data.update({'filter':{'group_id':group_id}})
+    else:
+        data['filter'].update({'group_id':group_id})
+
 
     user = check_user(username, db_session)
 
@@ -172,9 +177,8 @@ def get_group_messages(group_id, data, db_session, username, **kwargs):
 
     try:
         logger.debug(LogMsg.CHAT_GET_GROUP_MESSAGES, group_id)
-        result = db_session.query(ChatMessage).filter(
-            ChatMessage.group_id == group_id).order_by(
-            ChatMessage.creation_date.desc()).slice(offset, offset + limit)
+        result = ChatMessage.mongoquery(db_session.query(ChatMessage)).query(
+           **data).end().all()
 
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)
@@ -184,12 +188,21 @@ def get_group_messages(group_id, data, db_session, username, **kwargs):
     return result
 
 
-def get_sender_messages(sender_id, data, db_session, username, **kwargs):
+def get_sender_messages( data, db_session, username, **kwargs):
     logger.info(LogMsg.START, username)
-    limit = data.get('limit', 200)
-    offset = data.get('offset', 0)
 
     user = check_user(username, db_session)
+
+
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
+    if data['filter'] is None:
+        data.update({'filter': {'receptor_id': user.person_id,'last_seen': Now()}})
+    else:
+        data['filter'].update({'receptor_id': user.person_id,'last_seen': Now()})
+
+    sender_id = data.filter.get('sender_id')
 
     permissions, presses = get_user_permissions(username, db_session)
     permission_data = {Permissions.IS_OWNER.value: True}
@@ -203,10 +216,9 @@ def get_sender_messages(sender_id, data, db_session, username, **kwargs):
     try:
         logger.debug(LogMsg.CHAT_GET_USER_MESSAGES,
                      {'receptor': user.person_id, 'sender': sender_id})
-        result = db_session.query(ChatMessage).filter(
-            ChatMessage.sender_id == sender_id,
-            ChatMessage.receptor_id == user.person_id).order_by(
-            ChatMessage.creation_date.desc()).slice(offset, offset + limit)
+
+        result = ChatMessage.mongoquery(db_session.query(ChatMessage)).query(
+           **data).end().all()
         add_last_seen(seen_data, db_session)
 
 
@@ -332,10 +344,9 @@ def get_user_unread_messages(person_id, db_session, username, **kwargs):
 
 def get_all(data, db_session, username, **kwargs):
     logger.info(LogMsg.START, username)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
-    limit = data.get('limit') or 10
-    offset = data.get('offset') or 0
-    filter = data.get('filter') or None
 
     permissions, presses = get_user_permissions(username, db_session)
 
@@ -346,8 +357,8 @@ def get_all(data, db_session, username, **kwargs):
     logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
     try:
-        result = db_session.query(ChatMessage).order_by(
-            ChatMessage.creation_date.desc()).slice(offset, offset + limit)
+        result = ChatMessage.mongoquery(db_session.query(ChatMessage)).query(
+            **data).end().all()
 
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)

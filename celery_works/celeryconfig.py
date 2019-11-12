@@ -12,11 +12,14 @@ task_default_queue = 'default'
 
 
 task_routes = {
-    'jjp.sms': {'queue': 'sms'}
+    'jjp.sms': {'queue': 'sms'},
+    'jjp.book_generate':{'queue':'book_generate'}
 }
 
 task_queues = {
-    Queue('sms',Exchange('sms'),routing_key='sms')
+    Queue('sms',Exchange('sms'),routing_key='sms'),
+    Queue('book_generate', Exchange('book_generate'), routing_key='book_generate')
+
 }
 
 

@@ -52,12 +52,13 @@ def add(data, db_session, username=None):
     return model_instance
 
 
-def get_personal_library(db_session, username):
+def get_personal_library(data,db_session, username):
     logger.info(LogMsg.START, username)
 
     permissions,presses = get_user_permissions(username, db_session)
     has_permission([Permissions.LIBRARY_DELETE_PREMIUM], permissions, None,
                    {Permissions.IS_OWNER.value: True})
+
 
     user = check_user(username, db_session)
     if user.person_id is None:
@@ -67,10 +68,21 @@ def get_personal_library(db_session, username):
     validate_person(user.person_id, db_session)
     logger.debug(LogMsg.PERSON_EXISTS)
 
+
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
+    if data['filter'] is None:
+        data.update({'filter':{'person_id':user.person_id}})
+    else:
+        data['filter'].update({'person_id':user.person_id})
+
+
     logger.debug(LogMsg.LIBRARY_GET_PERSON_LIBRARY, username)
 
-    result = db_session.query(Library).filter(
-        Library.person_id == user.person_id).all()
+    result = Library.mongoquery(
+        db_session.query(Library)).query(
+        **data).end().all()
 
     logger.info(LogMsg.END)
 

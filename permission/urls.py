@@ -19,7 +19,7 @@ def call_router(app):
 
 
     app.route('/group-permissions', 'POST', group_permission.add_permissions_to_groups, apply=data_plus_wrappers)
-    app.route('/group-permissions', 'GET', group_permission.get_all, apply=wrappers)
+    app.route('/group-permissions/filter-group', 'POST', group_permission.get_all, apply=data_plus_wrappers)
     app.route('/group-permissions/_search', 'POST', group_permission.get_by_data, apply=data_plus_wrappers)
     app.route('/group-permissions/<id>', 'DELETE', group_permission.delete, apply=[check_auth, inject_db])
     app.route('/group-permissions/<id>', 'GET', group_permission.get, apply=wrappers)

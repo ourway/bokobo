@@ -16,6 +16,6 @@ def call_router(app):
     app.route('/messages/<id>', 'GET', get, apply=wrappers)
     app.route('/messages/<id>', 'PUT', edit, apply=data_plus_wrappers)
     app.route('/messages/group/<group_id>', 'POST', get_group_messages, apply=data_plus_wrappers)
-    app.route('/messages/direct/<sender_id>', 'POST', get_sender_messages, apply=data_plus_wrappers)
-    app.route('/messages/unread/<person_id>', 'GET', get_user_unread_messages, apply=wrappers)
+    app.route('/messages/direct', 'POST', get_sender_messages, apply=data_plus_wrappers)
+    app.route('/messages/unread', 'POST', get_user_unread_messages, apply=data_plus_wrappers)
 

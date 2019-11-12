@@ -64,11 +64,12 @@ def get_all(data, db_session, username):
         has_permission([Permissions.TRANSACTION_GET_PREMIUM], permissions)
     logger.debug(LogMsg.PERMISSION_VERIFIED)
 
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
-    result = db_session.query(Transaction).order_by(
-        Transaction.creation_date.desc()).slice(offset, offset + limit)
+
+    result = Transaction.mongoquery(db_session.query(Transaction)).query(
+        **data).end().all()
     res = []
     for item in result:
         res.append(model_to_dict(item))
@@ -91,7 +92,6 @@ def delete(id, db_session, username=None):
         raise Http_error(404, Message.DELETE_FAILED)
     logger.info(LogMsg.END)
     return Http_response(204, True)
-
 
 
 def internal_add(data, db_session):

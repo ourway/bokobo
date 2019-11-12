@@ -200,9 +200,9 @@ def get_book_comments(book_id, data, db_session, username, **kwargs):
 def get_all(data, db_session, username, **kwargs):
     logger.info(LogMsg.START, username)
 
-    limit = data.get('limit') or 10
-    offset = data.get('offset') or 0
-    filter = data.get('filter') or None
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
 
     permissions, presses = get_user_permissions(username, db_session)
 
@@ -213,15 +213,12 @@ def get_all(data, db_session, username, **kwargs):
     logger.debug(LogMsg.PERMISSION_VERIFIED, username)
 
     try:
-        res = db_session.query(Comment).order_by(
-            Comment.creation_date.desc()).slice(offset, offset + limit)
+        res = Comment.mongoquery(db_session.query(Comment)).query(**data).end().all()
         result = []
         for item in res:
-            if filter is not None:
-                comment = comment_to_dict(db_session, item, username)
-                if 'book' in filter.keys():
-                    book = get_book(item.book_id, db_session)
-                    comment['book'] = book
+            comment = comment_to_dict(db_session, item, username)
+            book = get_book(item.book_id, db_session)
+            comment['book'] = book
             result.append(comment)
     except:
         logger.exception(LogMsg.GET_FAILED, exc_info=True)

@@ -138,6 +138,7 @@ class Permissions(enum.Enum):
 
     PAYMENT_ADD_PREMIUM = 'PAYMENT_ADD_PREMIUM'
     PAYMENT_ADD_PRESS = 'PAYMENT_ADD_PRESS'
+    PAYMENT_GET_PREMIUM = 'PAYMENT_GET_PREMIUM'
 
 
 def check_enums(data, enum_class):

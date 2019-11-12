@@ -122,24 +122,14 @@ def get_all(db_session, username):
 
 
 def search_permission(data, db_session, username=None):
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
-    filter = data.get('filter', None)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
 
     result = []
-    if filter is None:
-        permissions = db_session.query(Permission).order_by(
-            Permission.creation_date.desc()).slice(offset,
-                                                   offset + limit)
-
-    else:
-        title = filter.get('permission')
-        if title is None:
-            raise Http_error(400, Message.MISSING_REQUIERED_FIELD)
-        permissions = db_session.query(Permission).filter(
-            Permission.permission.like('%{}%'.format(title))).order_by(
-            Permission.creation_date.desc()).slice(offset,
-                                                   offset + limit)
+    permissions = Permission.mongoquery(
+            db_session.query(Permission)).query(
+            **data).end().all()
     for permission in permissions:
         result.append(model_to_dict(permission))
     logger.debug(LogMsg.GET_SUCCESS, result)

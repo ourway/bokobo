@@ -112,16 +112,17 @@ def get(id, db_session, username=None):
 
 def get_all(data, db_session, username=None):
     logger.info(LogMsg.START)
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
     if username is not None:
         permissions, presses = get_user_permissions(username, db_session)
         has_permission([Permissions.ORDER_ITEM_GET_PREMIUM], permissions)
         logger.debug(LogMsg.PERMISSION_VERIFIED)
 
-    result = db_session.query(OrderItem).order_by(
-        OrderItem.creation_date.desc()).slice(offset, offset + limit)
+    result = OrderItem.mongoquery(
+        db_session.query(OrderItem)).query(
+        **data).end().all()
     res = []
     for item in result:
         res.append(item_to_dict(item, db_session))

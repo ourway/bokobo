@@ -57,7 +57,7 @@ def add(db_session, data, username):
     return model_instance
 
 
-def get_following_list(username, db_session):
+def get_following_list(data,username, db_session):
     logger.info(LogMsg.START, username)
 
     result = []
@@ -73,8 +73,19 @@ def get_following_list(username, db_session):
     validate_person(user.person_id, db_session)
     logger.debug(LogMsg.PERSON_EXISTS)
 
-    res = db_session.query(Follow).filter(
-        Follow.follower_id == user.person_id).all()
+
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
+    if data['filter'] is None:
+        data.update({'filter':{'follower_id':user.person_id}})
+    else:
+        data['filter'].update({'follower_id':user.person_id})
+
+    res = Follow.mongoquery(db_session.query(Follow)).query(**data).end().all()
+
+    # res = db_session.query(Follow).filter(
+    #     Follow.follower_id == user.person_id).all()
     for item in res:
         result.append(follow_to_dict(item))
     logger.debug(LogMsg.FOLLOWING_LIST, result)
@@ -83,7 +94,7 @@ def get_following_list(username, db_session):
     return result
 
 
-def get_follower_list(username, db_session):
+def get_follower_list(data,username, db_session):
     logger.info(LogMsg.START, username)
 
     result = []
@@ -99,8 +110,17 @@ def get_follower_list(username, db_session):
     validate_person(user.person_id, db_session)
     logger.debug(LogMsg.PERSON_EXISTS)
 
-    res = db_session.query(Follow).filter(
-        Follow.following_id == user.person_id).all()
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
+    if data['filter'] is None:
+        data.update({'filter': {'following_id': user.person_id}})
+    else:
+        data['filter'].update({'following_id': user.person_id})
+
+    res = Follow.mongoquery(db_session.query(Follow)).query(**data).end().all()
+    # res = db_session.query(Follow).filter(
+    #     Follow.following_id == user.person_id).all()
     for item in res:
         result.append(follow_to_dict(item))
     logger.debug(LogMsg.FOLLOWER_LIST, result)

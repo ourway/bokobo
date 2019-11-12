@@ -255,28 +255,16 @@ def get_all(db_session, username):
 
 
 def search_person(data, db_session, username):
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
-    filter = data.get('filter', None)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
 
     result = []
 
     try:
-        if filter is None:
-            persons = db_session.query(Person).order_by(
-                Person.creation_date.desc()).slice(offset,
-                                                   offset + limit)
-
-        else:
-            person_name = filter.get('person')
-            if person_name is None:
-                raise Http_error(400, Message.MISSING_REQUIERED_FIELD)
-
-            persons = db_session.query(Person).filter(
-                Person.full_name.like('%{}%'.format(person_name))
-            ).order_by(
-                Person.creation_date.desc()).slice(offset,
-                                                   offset + limit)
+        persons =  Person.mongoquery(
+            db_session.query(Person)).query(
+            **data).end().all()
 
         for person in persons:
             result.append(model_to_dict(person))

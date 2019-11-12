@@ -180,14 +180,14 @@ def delete(id, db_session, username):
     return Http_response(204, True)
 
 
-def get_all(db_session,data=None):
+def get_all(db_session,data):
     logger.info(LogMsg.START)
+
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
     try:
-        if data is None:
-            result = db_session.query(BookRole).order_by(
-                BookRole.creation_date.desc()).all()
-        else:
-            result = BookRole.mongoquery(
+        result = BookRole.mongoquery(
                 db_session.query(BookRole)).query(
                 **data).end().all()
 

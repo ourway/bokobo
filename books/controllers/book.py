@@ -470,7 +470,7 @@ def search_by_title(data, db_session):
     logger.info(LogMsg.START)
 
     search_phrase = data.get('search_phrase')
-    offset = data.get('offset', 0)
+    skip = data.get('skip', 0)
     limit = data.get('limit', 20)
 
     logger.debug(LogMsg.SEARCH_BOOK_BY_TITLE, search_phrase)
@@ -479,8 +479,8 @@ def search_by_title(data, db_session):
         result = []
         books = db_session.query(Book).filter(
             Book.title.like('%{}%'.format(search_phrase))).order_by(
-            Book.creation_date.desc()).slice(offset,
-                                             offset + limit)
+            Book.creation_date.desc()).slice(skip,
+                                             skip + limit)
         for book in books:
             result.append(book_to_dict(db_session, book))
         logger.debug(LogMsg.GET_SUCCESS)
@@ -497,7 +497,7 @@ def search_by_writer(data, db_session):
     logger.info(LogMsg.START)
     result = []
 
-    offset = data.get('offset', 0)
+    skip = data.get('skip', 0)
     limit = data.get('limit', 20)
     person_id = data.get('person_id')
     book_id = data.get('book_id', None)
@@ -509,7 +509,7 @@ def search_by_writer(data, db_session):
         if book_id is not None and book_id in book_ids:
             book_ids.remove(book_id)
         books = db_session.query(Book).filter(Book.id.in_(book_ids)).order_by(
-            Book.creation_date.desc()).slice(offset, offset + limit)
+            Book.creation_date.desc()).slice(skip, skip + limit)
         for book in books:
             result.append(book_to_dict(db_session, book))
     except:
@@ -523,7 +523,7 @@ def search_by_genre(data, db_session):
     logger.info(LogMsg.START)
 
     search_phrase = data.get('search_phrase')
-    offset = data.get('offset')
+    skip = data.get('skip')
     limit = data.get('limit')
     logger.debug(LogMsg.SEARCH_BOOK_BY_GENRE, search_phrase)
     result = []
@@ -531,7 +531,7 @@ def search_by_genre(data, db_session):
 
         books = db_session.query(Book).filter(
             Book.genre.any(search_phrase)).order_by(
-            Book.creation_date.desc()).slice(offset, offset + limit)
+            Book.creation_date.desc()).slice(skip, skip + limit)
         for book in books:
             result.append(book_to_dict(db_session, book))
 
@@ -549,7 +549,7 @@ def search_by_tags(data, db_session):
     logger.debug(LogMsg.MODEL_GETTING)
 
     search_phrase = data.get('search_phrase')
-    offset = data.get('offset')
+    skip = data.get('skip')
     limit = data.get('limit')
 
     logger.debug(LogMsg.SEARCH_BOOK_BY_TAGS, search_phrase)
@@ -559,7 +559,7 @@ def search_by_tags(data, db_session):
 
         books = db_session.query(Book).filter(
             Book.tags.any(search_phrase)).order_by(
-            Book.creation_date.desc()).slice(offset, offset + limit)
+            Book.creation_date.desc()).slice(skip, skip + limit)
         for book in books:
             result.append(book_to_dict(db_session, book))
 
@@ -573,9 +573,12 @@ def search_by_tags(data, db_session):
 
 def search_book(data, db_session):
     logger.info(LogMsg.START)
-    offset = data.get('offset', 0)
+    skip = data.get('skip', 0)
     limit = data.get('limit', 100)
     filter = data.get('filter', None)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
 
     logger.debug(LogMsg.SEARCH_BOOKS, filter)
     result = []
@@ -586,8 +589,8 @@ def search_book(data, db_session):
     search_key = next(iter(filter.keys()))
     search_phrase = filter.get(search_key)
 
-    search_data = {'limit': limit, 'offset': offset,
-                   'search_phrase': search_phrase}
+    search_data = {'limit': limit, 'skip': skip,
+                   'search_phrase': search_phrase,'sort': data.get('sort')}
     if search_key == 'genre':
         result = search_by_genre(search_data, db_session)
     elif search_key == 'title':
@@ -630,7 +633,7 @@ def book_by_ids(id_list, db_session):
 
 def search_by_phrase(data, db_session):
     logger.info(LogMsg.START)
-    search_data = {'from': data.get('offset'), 'size': data.get('limit'),
+    search_data = {'from': data.get('skip'), 'size': data.get('limit'),
                    'search_phrase': data.get('filter')['search_phrase']}
 
     logger.debug(LogMsg.SEARCH_ELASTIC_INDEXES, search_data['search_phrase'])
@@ -646,13 +649,15 @@ def search_by_phrase(data, db_session):
 
 def newest_books(data, db_session):
     logger.info(LogMsg.START)
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
 
     try:
         logger.debug(LogMsg.GETTING_NEWEST_BOOKS)
-        news = db_session.query(Book).order_by(Book.creation_date.desc()).slice(
-            offset, offset + limit)
+        news =  Book.mongoquery(
+            db_session.query(Book)).query(
+            **data).end().all()
         res = []
         for book in news:
             res.append(book_to_dict(db_session, book))

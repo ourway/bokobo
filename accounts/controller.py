@@ -158,6 +158,9 @@ def get_user_accounts(username, db_session,data):
     validate_person(user.person_id, db_session)
     logger.debug(LogMsg.PERSON_EXISTS, username)
 
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
     if data['filter'] is None:
         data.update({'filter':{'person_id':user.person_id}})
     else:

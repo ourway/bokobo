@@ -1,3 +1,5 @@
+from check_permission import get_user_permissions, has_permission
+from enums import Permissions
 from helper import populate_basic_data, model_to_dict
 from log import logger, LogMsg
 from payment.models import Payment
@@ -31,4 +33,21 @@ def get(shopping_id, db_session):
     return db_session.query(Payment).filter(
         Payment.shopping_key == shopping_id).first()
 
+
+def get_all(data,db_session,username):
+    logger.info(LogMsg.START,username)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
+    permissions, presses = get_user_permissions(username, db_session)
+    has_permission(
+        [Permissions.PAYMENT_GET_PREMIUM], permissions)
+    logger.debug(LogMsg.PERMISSION_VERIFIED)
+
+    result = Payment.mongoquery(
+        db_session.query(Payment)).query(
+        **data).end().all()
+
+    logger.info(LogMsg.END)
+    return result
 

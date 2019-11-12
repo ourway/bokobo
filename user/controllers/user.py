@@ -164,20 +164,12 @@ def serach_user(data, db_session, username):
                    permissions)
     logger.debug(LogMsg.PERMISSION_VERIFIED)
 
-    limit = data.get('limit', 10)
-    offset = data.get('offset', 0)
-    filter = data.get('filter', None)
-    if filter is None:
-        result = db_session.query(User).filter(User.username != None).order_by(
-            User.creation_date.desc()).slice(offset, offset + limit)
-    else:
-        search_username = filter.get('username')
-        logger.debug(LogMsg.USER_GET_BY_FILTER, {'username': search_username})
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
-        result = db_session.query(User).filter(
-            User.username.like('%{}%'.format(search_username))).order_by(
-            User.creation_date.desc()).slice(
-            offset, offset + limit)
+    result =  User.mongoquery(
+            db_session.query(User)).query(
+            **data).end().all()
     final_res = []
     for item in result:
         final_res.append(user_to_dict(item))

@@ -64,16 +64,17 @@ def get_by_book(book_id, db_session, username=None):
 def get_all(data, db_session, username=None):
     logger.info(LogMsg.START, username)
 
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
     if username is not None:
         permissions, presses = get_user_permissions(username, db_session)
         has_permission([Permissions.PRICE_GET_PREMIUM], permissions)
         logger.debug(LogMsg.PERMISSION_VERIFIED)
 
-    result = db_session.query(Price).order_by(
-        Price.creation_date.desc()).slice(offset, offset + limit)
+    result = Price.mongoquery(
+            db_session.query(Price)).query(
+            **data).end().all()
     res = []
     for item in result:
         res.append(model_to_dict(item))

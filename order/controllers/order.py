@@ -76,16 +76,17 @@ def internal_get(id, db_session):
 def get_all(data, db_session, username=None):
     logger.info(LogMsg.START, username)
 
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
     permissions, presses = get_user_permissions(username, db_session)
     has_permission(
         [Permissions.ORDER_GET_PREMIUM], permissions)
     logger.debug(LogMsg.PERMISSION_VERIFIED)
 
-    result = db_session.query(Order).order_by(
-        Order.creation_date.desc()).slice(offset, offset + limit)
+    result = Order.mongoquery(
+            db_session.query(Order)).query(
+            **data).end().all()
     res = []
     for item in result:
         res.append(order_to_dict(item, db_session, username))
@@ -97,9 +98,8 @@ def get_all(data, db_session, username=None):
 def get_user_orders(data, db_session, username=None):
     logger.info(LogMsg.START, username)
 
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
-    filter=data.get('filter',None)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
     user = check_user(username, db_session)
     if user is None:
@@ -108,19 +108,16 @@ def get_user_orders(data, db_session, username=None):
     if user.person_id is None:
         logger.error(LogMsg.USER_HAS_NO_PERSON, username)
         raise Http_error(400, Message.Invalid_persons)
-    if filter is None:
-        result = db_session.query(Order).filter(
-            Order.person_id == user.person_id).order_by(
-            Order.creation_date.desc()).slice(offset, offset + limit)
+
+
+    if data['filter'] is None:
+        data.update({'filter':{'person_id':user.person_id}})
     else:
-        status = filter.get('status',None)
-        if status is not None:
-            result = db_session.query(Order).filter(
-                Order.person_id == user.person_id,Order.status==status).order_by(
-                Order.creation_date.desc()).slice(offset, offset + limit)
-        else:
-            logger.error(LogMsg.DATA_MISSING,'status in filter')
-            raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
+        data['filter'].update({'person_id':user.person_id})
+
+    result = Order.mongoquery(
+            db_session.query(Order)).query(
+            **data).end().all()
 
     res = []
     for item in result:
@@ -133,23 +130,17 @@ def get_user_orders(data, db_session, username=None):
 
 def get_person_orders(data, db_session, username=None):
     logger.info(LogMsg.START, username)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
 
     permissions, presses = get_user_permissions(username, db_session)
     has_permission(
         [Permissions.ORDER_GET_PREMIUM], permissions)
     logger.debug(LogMsg.PERMISSION_VERIFIED)
 
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 20)
-    filter = data.get('filter', None)
-    if filter is None:
-        logger.error(LogMsg.DATA_MISSING, 'filter')
-        raise Http_error(400, Message.MISSING_REQUIERED_FIELD)
-    person_id = filter.get('person')
-
-    result = db_session.query(Order).filter(
-        Order.person_id == person_id).order_by(
-        Order.creation_date.desc()).slice(offset, offset + limit)
+    result = Order.mongoquery(
+        db_session.query(Order)).query(
+        **data).end().all()
     res = []
     for item in result:
         res.append(order_to_dict(item, db_session, username))

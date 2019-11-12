@@ -53,8 +53,9 @@ def add(data, db_session, username):
 
 def get_wish_list(data, db_session, username):
     logger.info(LogMsg.START)
-    offset = data.get('offset', 0)
-    limit = data.get('limit', 10)
+    if data.get('sort') is None:
+        data['sort'] = ['creation_date-']
+
     user = check_user(username, db_session)
     if user is None:
         raise Http_error(400, Message.INVALID_USER)
@@ -67,8 +68,15 @@ def get_wish_list(data, db_session, username):
     logger.debug(LogMsg.PERSON_EXISTS,username)
     result = []
 
-    book_ids = db_session.query(WishList).filter(
-        WishList.person_id == user.person_id).slice(offset, offset + limit)
+    if data['filter'] is None:
+        data.update({'filter':{'person_id':user.person_id}})
+    else:
+        data['filter'].update({'person_id':user.person_id})
+
+
+    book_ids = WishList.mongoquery(
+            db_session.query(WishList)).query(
+            **data).end().all()
     for item in book_ids:
         logger.debug(LogMsg.BOOK_CHECKING_IF_EXISTS,item)
         book = get_book(item.book_id, db_session)
