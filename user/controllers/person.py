@@ -58,7 +58,7 @@ def add(db_session, data, username):
     logger.debug(LogMsg.POPULATING_BASIC_DATA)
     model_instance.name = data.get('name')
     model_instance.last_name = data.get('last_name')
-    model_instance.full_name = '{} {}'.format(model_instance.last_name,model_instance.name)
+    model_instance.full_name = '{} {}'.format(model_instance.last_name or '',model_instance.name or '')
     model_instance.address = data.get('address')
     model_instance.phone = data.get('phone')
     model_instance.email = data.get('email')
@@ -157,7 +157,7 @@ def edit(id, db_session, data, username):
         for key, value in data.items():
             # TODO  if key is valid attribute of class
             setattr(model_instance, key, value)
-        model_instance.full_name = '{} {}'.format(model_instance.last_name,model_instance.name)
+        model_instance.full_name ='{} {}'.format(model_instance.last_name or '',model_instance.name or '')
         edit_basic_data(model_instance, username, data.get('tags'))
         db_session.flush()
 

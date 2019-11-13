@@ -1,9 +1,8 @@
 from helper import check_auth, inject_db, jsonify, pass_data
-from celery_works.workers.main_producer import generate_book, check_status
+from celery_works.main_producer import generate_book, check_status
 
 
 def call_router(app):
-    readonly_wrappers = [inject_db, jsonify]
     wrappers = [check_auth, inject_db, jsonify]
     data_plus_wrappers = (wrappers[:])
     data_plus_wrappers.append(pass_data)
