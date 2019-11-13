@@ -31,7 +31,7 @@ from celery_works.urls import call_router as celery_routes
 
 app = Bottle()
 
-# app.catchall = False
+app.catchall = False
 # app = Sentry(app, sentry.sentry_client)
 #
 user_routes(app)
