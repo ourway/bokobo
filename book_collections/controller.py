@@ -168,6 +168,8 @@ def get_all_collections(data,db_session, username):
     else:
         data['filter'].update({'person_id':user.person_id})
 
+    logger.debug(LogMsg.QUERY_OBJECT,data)
+
 
     collection_items =Collection.mongoquery(
         db_session.query(Collection)).query(

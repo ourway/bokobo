@@ -480,3 +480,4 @@ class LogMsg:
     GET_FILE_FAILED = 'file can not be got'
 
     COMMIT_ERROR = 'commiting to db encountered problem'
+    QUERY_OBJECT = 'query object is : %s'

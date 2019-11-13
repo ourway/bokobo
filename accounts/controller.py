@@ -18,7 +18,8 @@ def add(data, db_session, username):
 
     permissions, presses = get_user_permissions(username, db_session)
     has_permission([Permissions.ACCOUNT_ADD_PREMIUM], permissions)
-
+    check_schema(['person_id','type'],data.keys())
+    logger.debug(LogMsg.SCHEMA_CHECKED)
     check_enum(data.get('type'), AccountTypes)
     logger.debug(LogMsg.ENUM_CHECK,
                  {'enum': data.get('type'), 'reference_enum': 'AccountTypes'})
@@ -40,11 +41,13 @@ def add(data, db_session, username):
     validate_person(user.person_id, db_session)
     logger.info(LogMsg.PERSON_EXISTS, username)
 
-    type = data.get('type')
+    type = data.get('type','Main')
+    value = data.get('value',0.0)
+    person_id = data.get('person_id')
 
     logger.info(LogMsg.GETTING_USER_ACCOUNTS, type)
 
-    account = get(user.person_id, type, db_session)
+    account = get(person_id, type, db_session)
     if account is not None:
         logger.error(LogMsg.ACCOUNT_BY_TYPE_EXISTS, type)
 
@@ -56,8 +59,8 @@ def add(data, db_session, username):
     logger.debug(LogMsg.POPULATING_BASIC_DATA)
 
     model_instance.type = type
-    model_instance.person_id = user.person_id
-    model_instance.value = data.get('value')
+    model_instance.person_id = person_id
+    model_instance.value = value
 
     db_session.add(model_instance)
 
@@ -71,6 +74,8 @@ def add(data, db_session, username):
 def get(person_id, type, db_session):
     logger.info(LogMsg.START)
     logger.debug(LogMsg.GETTING_USER_ACCOUNTS, type)
+
+
 
     try:
         result = db_session.query(Account).filter(
@@ -96,6 +101,9 @@ def get(person_id, type, db_session):
 
 def get_person_accounts(person_id, db_session, username):
     logger.info(LogMsg.START, username)
+
+    permissions, presses = get_user_permissions(username, db_session)
+    has_permission([Permissions.ACCOUNT_GET_PREMIUM], permissions)
 
     rtn = []
 
@@ -280,6 +288,9 @@ def edit_account_value(account_id, value, db_session, username=None):
 def get_by_id(id, db_session, username):
     logger.info(LogMsg.START, username)
 
+    permissions, presses = get_user_permissions(username, db_session)
+    has_permission([Permissions.ACCOUNT_GET_PREMIUM], permissions)
+
     user = check_user(username, db_session)
     if user is None:
         logger.error(LogMsg.INVALID_USER, username)
@@ -365,12 +376,16 @@ def edit_by_person(data, db_session, username):
 
     user = check_user(username, db_session)
 
-    check_schema(['value'], data.keys())
+    check_schema(['person_id','value'],data.keys())
+
+    permissions, presses = get_user_permissions(username, db_session)
+    has_permission([Permissions.ACCOUNT_EDIT_PREMIUM], permissions)
+
     logger.debug(LogMsg.SCHEMA_CHECKED)
 
     value = data.get('value')
     type = data.get('type', 'Main')
-    person_id = data.get('person_id', user.person_id)
+    person_id = data.get('person_id')
 
     logger.debug(LogMsg.GETTING_ACCOUNT_PERSON, data)
 
