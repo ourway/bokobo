@@ -8,13 +8,17 @@ accept_content = ['json']
 timezone = 'Europe/Oslo'
 enable_utc = True
 
-task_default_queue = 'default'
+# task_default_queue = 'default'
 
 
 task_routes = {
     'jjp.sms': {'queue': 'sms'},
-    'jjp.book_generate':{'queue':'book_generate'}
+    'book_generate':{'queue':'book_generate'}
 }
+
+# task_routes = {
+#     'celery.generate_book_content': 'book_generate',
+# }
 
 task_queues = {
     Queue('sms',Exchange('sms'),routing_key='sms'),

@@ -2,8 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bd924ac9-a533-48d8-a0ae-18ca14e17889" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/book_collections/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/book_collections/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/log.py" beforeDir="false" afterPath="$PROJECT_DIR$/log.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/celery_works/configs.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/celery_works/snippets.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/celery_works/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/celery_works/workers/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/celery_works/workers/helpers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/celery_works/workers/main_producer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/celery_works/workers/smtp.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/celery_works/workers/xmpp_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/celery_works/celery.py" beforeDir="false" afterPath="$PROJECT_DIR$/celery_works/celery.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/celery_works/celeryconfig.py" beforeDir="false" afterPath="$PROJECT_DIR$/celery_works/celeryconfig.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements" beforeDir="false" afterPath="$PROJECT_DIR$/requirements" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sentry.py" beforeDir="false" afterPath="$PROJECT_DIR$/sentry.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,252 +26,100 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/accounts/controller.py">
+        <entry file="file://$PROJECT_DIR$/celery_works/celery.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="674">
-              <caret line="163" column="18" lean-forward="true" selection-start-line="163" selection-start-column="18" selection-end-line="163" selection-end-column="18" />
+            <state relative-caret-position="351">
+              <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
               <folding>
-                <element signature="e#572#2138#0" />
-                <element signature="e#1034#1129#0" />
-                <element signature="e#1216#1319#0" />
-                <element signature="e#1588#1692#0" />
-                <element signature="e#2183#2823#0" />
-                <element signature="e#2280#2566#0" />
-                <element signature="e#2588#2775#0" />
-                <element signature="e#3258#3423#0" />
+                <element signature="e#0#22#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/book_collections/urls.py">
+        <entry file="file://$PROJECT_DIR$/celery_works/workers/helpers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="121">
-              <caret line="19" column="88" selection-start-line="19" selection-start-column="88" selection-end-line="19" selection-end-column="88" />
-              <folding>
-                <element signature="e#0#60#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="324">
+              <caret line="12" column="58" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/celery/worker/consumer/consumer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="134">
+              <caret line="558" selection-start-line="558" selection-end-line="558" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/celery/app/base.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="97">
+              <caret line="230" column="33" selection-start-line="230" selection-start-column="33" selection-end-line="230" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/celery_works/celeryconfig.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="139">
+              <caret line="13" selection-start-line="13" selection-end-line="16" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/celery_works/workers/main_producer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="284">
+              <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
+        <entry file="file://$PROJECT_DIR$/sentry.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="173" column="20" selection-start-line="173" selection-start-column="4" selection-end-line="173" selection-end-column="20" />
+            <state relative-caret-position="108">
+              <caret line="4" column="22" lean-forward="true" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
               <folding>
-                <element signature="e#957#4373#0" />
-                <element signature="e#1194#1544#0" />
-                <element signature="e#1363#1471#0" />
-                <element signature="e#1813#1994#0" />
-                <element signature="e#1851#1940#0" />
-                <element signature="e#2033#2106#0" />
-                <element signature="e#2273#2940#0" />
-                <element signature="e#2778#2881#0" />
-                <element signature="e#2976#4356#0" />
-                <element signature="e#3277#3396#0" />
-                <element signature="e#3474#3631#0" />
-                <element signature="e#4219#4322#0" />
-                <element signature="e#4437#5731#0" />
-                <element signature="e#4621#4929#0" />
-                <element signature="e#4789#4894#0" />
-                <element signature="e#5287#5686#0" />
-                <element signature="e#5366#5511#0" />
-                <element signature="e#5422#5510#0" />
-                <element signature="e#5536#5635#0" />
+                <element signature="e#0#63#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/payment/controllers/payment.py">
+        <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="608">
-              <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/log.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="482" column="41" selection-start-line="482" selection-start-column="41" selection-end-line="482" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/permission/controllers/group_permission.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4590">
-              <caret line="263" column="12" lean-forward="true" selection-start-line="263" selection-start-column="12" selection-end-line="263" selection-end-column="12" />
+            <state relative-caret-position="121">
+              <caret line="33" column="2" selection-start-line="33" selection-start-column="2" selection-end-line="33" selection-end-column="2" />
               <folding>
-                <element signature="e#455#984#0" />
-                <element signature="e#566#668#0" />
-                <element signature="e#1031#1565#0" />
-                <element signature="e#1243#1327#0" />
-                <element signature="e#1346#1436#0" />
-                <element signature="e#1610#2370#0" />
-                <element signature="e#1762#1872#0" />
-                <element signature="e#2018#2126#0" />
-                <element signature="e#2199#2304#0" />
-                <element signature="e#7308#7906#0" />
-                <element signature="e#7973#8434#0" />
+                <element signature="e#0#39#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/permission/controllers/permission.py">
+        <entry file="file://$PROJECT_DIR$/celery_works/configs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-337">
-              <caret line="157" column="14" lean-forward="true" selection-start-line="157" selection-start-column="14" selection-end-line="157" selection-end-column="14" />
-              <folding>
-                <element signature="e#341#1009#0" />
-                <element signature="e#425#535#0" />
-                <element signature="e#1056#1554#0" />
-                <element signature="e#1258#1342#0" />
-                <element signature="e#1361#1451#0" />
-                <element signature="e#1603#2716#0" />
-                <element signature="e#1762#1872#0" />
-                <element signature="e#2105#2218#0" />
-                <element signature="e#2237#2535#0" />
-                <element signature="e#2281#2371#0" />
-                <element signature="e#2557#2661#0" />
-                <element signature="e#2761#3499#0" />
-                <element signature="e#2907#3017#0" />
-                <element signature="e#3153#3255#0" />
-                <element signature="e#3329#3434#0" />
-                <element signature="e#3541#3827#0" />
-                <element signature="e#3594#3678#0" />
-                <element signature="e#3699#3779#0" />
-              </folding>
+            <state relative-caret-position="945">
+              <caret line="35" column="19" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/prices/controller.py">
+        <entry file="file://$PROJECT_DIR$/requirements">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1052">
-              <caret line="201" column="9" lean-forward="true" selection-start-line="201" selection-start-column="9" selection-end-line="201" selection-end-column="9" />
-              <folding>
-                <element signature="e#458#1967#0" />
-                <element signature="e#700#1322#0" />
-                <element signature="e#1031#1273#0" />
-                <element signature="e#1166#1273#0" />
-                <element signature="e#1481#1626#0" />
-                <element signature="e#1646#1912#0" />
-                <element signature="e#2027#2139#0" />
-                <element signature="e#2849#2951#0" />
-                <element signature="e#3001#4274#0" />
-                <element signature="e#3106#3208#0" />
-                <element signature="e#3295#3970#0" />
-                <element signature="e#3674#3921#0" />
-                <element signature="e#3812#3921#0" />
-                <element signature="e#3990#4081#0" />
-                <element signature="e#4102#4208#0" />
-                <element signature="e#4328#5713#0" />
-                <element signature="e#4534#4636#0" />
-                <element signature="e#4732#5403#0" />
-                <element signature="e#5109#5354#0" />
-                <element signature="e#5245#5354#0" />
-                <element signature="e#5422#5535#0" />
-                <element signature="e#5556#5658#0" />
-                <element signature="e#5767#6200#0" />
-                <element signature="e#5938#6040#0" />
-                <element signature="e#6257#6500#0" />
-                <element signature="e#6551#8237#0" />
-                <element signature="e#6776#8066#0" />
-                <element signature="e#7003#7119#0" />
-                <element signature="e#7244#7370#0" />
-                <element signature="e#7468#7765#0" />
-                <element signature="e#7533#7601#0" />
-                <element signature="e#7636#7765#0" />
-                <element signature="e#7787#7939#0" />
-                <element signature="e#8297#8907#0" />
-                <element signature="e#8476#8691#0" />
-                <element signature="e#8573#8691#0" />
-                <element signature="e#8751#8857#0" />
-                <element signature="e#8970#9585#0" />
-                <element signature="e#9123#9256#0" />
-                <element signature="e#9276#9530#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/user/controllers/person.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1039">
-              <caret line="264" column="25" selection-start-line="264" selection-start-column="25" selection-end-line="264" selection-end-column="25" />
-              <caret line="265" column="35" selection-start-line="265" selection-start-column="35" selection-end-line="265" selection-end-column="35" />
-              <folding>
-                <element signature="e#1364#3417#0" />
-                <element signature="e#1464#1691#0" />
-                <element signature="e#1795#1905#0" />
-                <element signature="e#2002#2108#0" />
-                <element signature="e#3236#3362#0" />
-                <element signature="e#3464#4450#0" />
-                <element signature="e#3649#3793#0" />
-                <element signature="e#3812#3902#0" />
-                <element signature="e#3941#4350#0" />
-                <element signature="e#4499#7554#0" />
-                <element signature="e#4540#4618#0" />
-                <element signature="e#5023#5122#0" />
-                <element signature="e#5286#5395#0" />
-                <element signature="e#5768#6083#0" />
-                <element signature="e#5898#6083#0" />
-                <element signature="e#6125#6395#0" />
-                <element signature="e#6239#6395#0" />
-                <element signature="e#6294#6395#0" />
-                <element signature="e#6414#7376#0" />
-                <element signature="e#6458#6548#0" />
-                <element signature="e#7007#7376#0" />
-                <element signature="e#7397#7499#0" />
-                <element signature="e#7599#9655#0" />
-                <element signature="e#7812#7910#0" />
-                <element signature="e#8329#8441#0" />
-                <element signature="e#8460#9462#0" />
-                <element signature="e#8843#9079#0" />
-                <element signature="e#8878#9079#0" />
-                <element signature="e#9106#9201#0" />
-                <element signature="e#9301#9462#0" />
-                <element signature="e#9484#9589#0" />
-                <element signature="e#10032#10112#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/user/controllers/user.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="837">
-              <caret line="170" column="24" selection-start-line="170" selection-start-column="24" selection-end-line="170" selection-end-column="24" />
-              <folding>
-                <element signature="e#784#1960#0" />
-                <element signature="e#989#1089#0" />
-                <element signature="e#1460#1805#0" />
-                <element signature="e#1690#1805#0" />
-                <element signature="e#2002#2502#0" />
-                <element signature="e#2200#2286#0" />
-                <element signature="e#2305#2401#0" />
-                <element signature="e#2548#3423#0" />
-                <element signature="e#2780#3015#0" />
-                <element signature="e#3035#3143#0" />
-                <element signature="e#3468#4460#0" />
-                <element signature="e#3597#3690#0" />
-                <element signature="e#4038#4290#0" />
-                <element signature="e#4312#4417#0" />
-                <element signature="e#4502#5056#0" />
-              </folding>
+            <state relative-caret-position="267">
+              <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -276,7 +136,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>collection_to_dict(</find>
       <find>e58715438c77</find>
       <find>709e75ace9e</find>
       <find>709e75ace9e7</find>
@@ -306,9 +165,9 @@
       <find>-5</find>
       <find>content_to_dict</find>
       <find>offset</find>
+      <find>fanava</find>
     </findStrings>
     <replaceStrings>
-      <replace>SIGNUP_TOKEN_NOT_EXISTS</replace>
       <replace>INVALID_SIGNUP_TOKEN</replace>
       <replace>TOKEN_INVALID</replace>
       <replace>TOKEN_EXPIRED</replace>
@@ -338,6 +197,7 @@
       <replace>'PAYMENT_CANCELED'</replace>
       <replace>''</replace>
       <replace>skip</replace>
+      <replace>Jam_e_Jam</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/files</dir>
@@ -349,17 +209,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/repository/group_user_repo.py" />
-        <option value="$PROJECT_DIR$/db_migrations.py" />
-        <option value="$PROJECT_DIR$/repository/book_role_repo.py" />
-        <option value="$PROJECT_DIR$/db_migration/book.py" />
-        <option value="$PROJECT_DIR$/db_migration/permissions.py" />
-        <option value="$PROJECT_DIR$/books/models.py" />
-        <option value="$PROJECT_DIR$/app_token/urls.py" />
         <option value="$PROJECT_DIR$/app_token/controller.py" />
         <option value="$PROJECT_DIR$/accounts/urls.py" />
-        <option value="$PROJECT_DIR$/sentry.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/book_library/urls.py" />
         <option value="$PROJECT_DIR$/books/controllers/book.py" />
         <option value="$PROJECT_DIR$/books/controllers/book_roles.py" />
@@ -368,7 +219,6 @@
         <option value="$PROJECT_DIR$/follow/urls.py" />
         <option value="$PROJECT_DIR$/group/controllers/group.py" />
         <option value="$PROJECT_DIR$/group/controllers/group_user.py" />
-        <option value="$PROJECT_DIR$/celery_works/celeryconfig.py" />
         <option value="$PROJECT_DIR$/messaging/urls.py" />
         <option value="$PROJECT_DIR$/order/controllers/order_items.py" />
         <option value="$PROJECT_DIR$/enums.py" />
@@ -383,14 +233,11 @@
         <option value="$PROJECT_DIR$/wish_list/controller.py" />
         <option value="$PROJECT_DIR$/db_migration/person.py" />
         <option value="$PROJECT_DIR$/db_migration/urls.py" />
-        <option value="$PROJECT_DIR$/requirements" />
         <option value="$PROJECT_DIR$/celery_works/celery_notes" />
-        <option value="$PROJECT_DIR$/celery_works/celery.py" />
         <option value="$PROJECT_DIR$/celery_works/tasks.py" />
         <option value="$PROJECT_DIR$/payment/controllers/kipo_pay.py" />
         <option value="$PROJECT_DIR$/book_library/controller.py" />
         <option value="$PROJECT_DIR$/follow/controller.py" />
-        <option value="$PROJECT_DIR$/accounts/controller.py" />
         <option value="$PROJECT_DIR$/books/controllers/book_content.py" />
         <option value="$PROJECT_DIR$/comment/controllers/comment.py" />
         <option value="$PROJECT_DIR$/discussion_group/controllers/discussion_group_member.py" />
@@ -400,6 +247,19 @@
         <option value="$PROJECT_DIR$/book_collections/urls.py" />
         <option value="$PROJECT_DIR$/book_collections/controller.py" />
         <option value="$PROJECT_DIR$/log.py" />
+        <option value="$PROJECT_DIR$/accounts/controller.py" />
+        <option value="$PROJECT_DIR$/celery_works/snippets.py" />
+        <option value="$PROJECT_DIR$/requirements" />
+        <option value="$PROJECT_DIR$/celery_works/workers/smtp.py" />
+        <option value="$PROJECT_DIR$/celery_works/workers/helpers.py" />
+        <option value="$PROJECT_DIR$/celery_works/workers/xmpp_client.py" />
+        <option value="$PROJECT_DIR$/celery_works/urls.py" />
+        <option value="$PROJECT_DIR$/celery_works/configs.py" />
+        <option value="$PROJECT_DIR$/celery_works/celeryconfig.py" />
+        <option value="$PROJECT_DIR$/celery_works/celery.py" />
+        <option value="$PROJECT_DIR$/celery_works/workers/main_producer.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/sentry.py" />
       </list>
     </option>
   </component>
@@ -447,18 +307,13 @@
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="books" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
-              <item name="online_library" type="462c0819:PsiDirectoryNode" />
-              <item name="books" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
+              <item name="celery_works" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
               <item name="online_library" type="462c0819:PsiDirectoryNode" />
               <item name="celery_works" type="462c0819:PsiDirectoryNode" />
+              <item name="workers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="online_library" type="b2602c69:ProjectViewProjectNode" />
@@ -678,16 +533,16 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32998884" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49916342" visible="true" weight="0.5117057" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49916342" weight="0.5117057" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5008366" side_tool="true" weight="0.522854" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32998884" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.63322186" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24986057" />
       <window_info anchor="right" id="ReST Console" order="3" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16564417" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16564417" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -698,9 +553,9 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32998884" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.49916342" weight="0.5117057" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49916342" visible="true" weight="0.5117057" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5008366" side_tool="true" weight="0.522854" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32998884" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.63322186" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24986057" />
@@ -827,7 +682,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/accounts/controller.py</url>
-          <line>25</line>
+          <line>26</line>
           <option name="timeStamp" value="101" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -1050,6 +905,11 @@
           <line>166</line>
           <option name="timeStamp" value="245" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/celery_works/workers/main_producer.py</url>
+          <line>24</line>
+          <option name="timeStamp" value="253" />
+        </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
         <breakpoint type="python-exception">
@@ -1124,212 +984,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/books/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="43" column="37" selection-start-line="43" selection-start-column="37" selection-end-line="43" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/comment/controllers/actions.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="277" column="8" selection-start-line="277" selection-start-column="8" selection-end-line="277" selection-end-column="8" />
-          <folding>
-            <element signature="e#549#1733#0" />
-            <element signature="e#647#748#0" />
-            <element signature="e#930#1037#0" />
-            <element signature="e#1784#3059#0" />
-            <element signature="e#1961#2052#0" />
-            <element signature="e#2210#2314#0" />
-            <element signature="e#2569#2663#0" />
-            <element signature="e#3113#4271#0" />
-            <element signature="e#3290#3397#0" />
-            <element signature="e#3556#3660#0" />
-            <element signature="e#3850#3952#0" />
-            <element signature="e#4005#4101#0" />
-            <element signature="e#4330#5746#0" />
-            <element signature="e#4507#4614#0" />
-            <element signature="e#4773#4877#0" />
-            <element signature="e#5137#5249#0" />
-            <element signature="e#5312#5405#0" />
-            <element signature="e#5803#6957#0" />
-            <element signature="e#5979#6058#0" />
-            <element signature="e#6217#6311#0" />
-            <element signature="e#6555#6658#0" />
-            <element signature="e#6711#6807#0" />
-            <element signature="e#7002#8429#0" />
-            <element signature="e#7230#7309#0" />
-            <element signature="e#7394#7485#0" />
-            <element signature="e#7854#7947#0" />
-            <element signature="e#8101#8197#0" />
-            <element signature="e#8262#8364#0" />
-            <element signature="e#8488#9232#0" />
-            <element signature="e#8668#8747#0" />
-            <element signature="e#8766#8986#0" />
-            <element signature="e#9007#9106#0" />
-            <element signature="e#9288#10079#0" />
-            <element signature="e#9470#9549#0" />
-            <element signature="e#9568#9868#0" />
-            <element signature="e#9889#9988#0" />
-            <element signature="e#10144#10376#0" />
-            <element signature="e#10439#10670#0" />
-            <element signature="e#10730#11050#0" />
-            <element signature="e#10841#10935#0" />
-            <element signature="e#11113#11606#0" />
-            <element signature="e#11213#11341#0" />
-            <element signature="e#11242#11341#0" />
-            <element signature="e#11382#11486#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/comment/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/financial_transactions/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="10" column="50" lean-forward="true" selection-start-line="10" selection-start-column="50" selection-end-line="10" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/group/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="11" column="36" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/messaging/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="19" column="56" selection-start-line="19" selection-start-column="56" selection-end-line="19" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/enums.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="584">
-          <caret line="140" column="47" selection-start-line="140" selection-start-column="47" selection-end-line="140" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/payment/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="14" column="75" selection-start-line="14" selection-start-column="75" selection-end-line="14" selection-end-column="75" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/permission/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="12" column="63" selection-start-line="12" selection-start-column="46" selection-end-line="12" selection-end-column="63" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/register/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#594#623#0" />
-            <element signature="e#669#1962#0" />
-            <element signature="e#768#866#0" />
-            <element signature="e#968#1062#0" />
-            <element signature="e#1185#1294#0" />
-            <element signature="e#1454#1560#0" />
-            <element signature="e#1625#1727#0" />
-            <element signature="e#2000#3547#0" />
-            <element signature="e#2098#2197#0" />
-            <element signature="e#2300#2390#0" />
-            <element signature="e#2506#2923#0" />
-            <element signature="e#2676#2820#0" />
-            <element signature="e#2847#2923#0" />
-            <element signature="e#3043#3182#0" />
-            <element signature="e#3590#4790#0" />
-            <element signature="e#3936#4038#0" />
-            <element signature="e#4061#4699#0" />
-            <element signature="e#4240#4391#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reports/controllers/report.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/user/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#129#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wish_list/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="76" column="23" selection-start-line="76" selection-start-column="23" selection-end-line="76" selection-end-column="23" />
-          <caret line="77" column="37" selection-start-line="77" selection-start-column="37" selection-end-line="77" selection-end-column="37" />
-          <folding>
-            <element signature="e#400#1801#0" />
-            <element signature="e#593#696#0" />
-            <element signature="e#861#1784#0" />
-            <element signature="e#998#1098#0" />
-            <element signature="e#1289#1431#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db_migration/person.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/db_migration/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="10" column="11" lean-forward="true" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="11" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db_migration/book.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
@@ -1337,48 +991,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/requirements">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="14" column="2" selection-start-line="14" selection-start-column="2" selection-end-line="14" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/celery_works/celery_notes">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/celery_works/celeryconfig.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="15" column="47" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/celery_works/tasks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/payment/controllers/kipo_pay.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-382">
           <caret line="64" column="58" selection-start-line="64" selection-start-column="58" selection-end-line="64" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/celery_works/celery.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="17" column="23" selection-start-line="17" selection-start-column="23" selection-end-line="17" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1876,13 +1492,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/payment/controllers/payment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
-          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/permission/controllers/group_permission.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4590">
@@ -2045,40 +1654,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="674">
-          <caret line="163" column="18" lean-forward="true" selection-start-line="163" selection-start-column="18" selection-end-line="163" selection-end-column="18" />
-          <folding>
-            <element signature="e#572#2138#0" />
-            <element signature="e#1034#1129#0" />
-            <element signature="e#1216#1319#0" />
-            <element signature="e#1588#1692#0" />
-            <element signature="e#2183#2823#0" />
-            <element signature="e#2280#2566#0" />
-            <element signature="e#2588#2775#0" />
-            <element signature="e#3258#3423#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/book_collections/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="121">
-          <caret line="19" column="88" selection-start-line="19" selection-start-column="88" selection-end-line="19" selection-end-column="88" />
-          <folding>
-            <element signature="e#0#60#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/log.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="482" column="41" selection-start-line="482" selection-start-column="41" selection-end-line="482" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/book_collections/controller.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="81">
@@ -2103,6 +1678,244 @@
             <element signature="e#5366#5511#0" />
             <element signature="e#5422#5510#0" />
             <element signature="e#5536#5635#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/book_collections/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="19" column="88" selection-start-line="19" selection-start-column="88" selection-end-line="19" selection-end-column="88" />
+          <folding>
+            <element signature="e#0#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/payment/controllers/payment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="608">
+          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="482" column="41" selection-start-line="482" selection-start-column="41" selection-end-line="482" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#0#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="172" column="50" selection-start-line="172" selection-start-column="50" selection-end-line="172" selection-end-column="50" />
+          <folding>
+            <element signature="e#572#2138#0" />
+            <element signature="e#1034#1129#0" />
+            <element signature="e#1216#1319#0" />
+            <element signature="e#1588#1692#0" />
+            <element signature="e#2183#2823#0" />
+            <element signature="e#2280#2566#0" />
+            <element signature="e#2588#2775#0" />
+            <element signature="e#2888#3468#0" />
+            <element signature="e#2956#3237#0" />
+            <element signature="e#3258#3423#0" />
+            <element signature="e#3516#4166#0" />
+            <element signature="e#3797#3980#0" />
+            <element signature="e#4001#4118#0" />
+            <element signature="e#4333#4429#0" />
+            <element signature="e#4470#4573#0" />
+            <element signature="e#4933#5201#0" />
+            <element signature="e#5225#5342#0" />
+            <element signature="e#5438#6387#0" />
+            <element signature="e#5689#5785#0" />
+            <element signature="e#5826#5930#0" />
+            <element signature="e#6047#6203#0" />
+            <element signature="e#6224#6322#0" />
+            <element signature="e#6432#7403#0" />
+            <element signature="e#6683#6779#0" />
+            <element signature="e#6820#6924#0" />
+            <element signature="e#7041#7219#0" />
+            <element signature="e#7240#7338#0" />
+            <element signature="e#7962#8069#0" />
+            <element signature="e#8267#9259#0" />
+            <element signature="e#8377#8473#0" />
+            <element signature="e#8514#8618#0" />
+            <element signature="e#8735#9079#0" />
+            <element signature="e#8953#9079#0" />
+            <element signature="e#9100#9195#0" />
+            <element signature="e#9308#9981#0" />
+            <element signature="e#9752#9851#0" />
+            <element signature="e#10018#10352#0" />
+            <element signature="e#10172#10298#0" />
+            <element signature="e#10417#10776#0" />
+            <element signature="e#10831#11854#0" />
+            <element signature="e#11328#11427#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/celery_works/snippets.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-378">
+          <caret line="13" column="10" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/celery_works/workers/xmpp_client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="608">
+          <caret line="37" column="46" selection-start-line="37" selection-start-column="37" selection-end-line="37" selection-end-column="46" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="20" column="11" lean-forward="true" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/celery_works/tasks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/celery_works/celery_notes">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="20" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/celery_works/workers/smtp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="21" column="39" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/comment/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="12" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="195" selection-start-line="195" selection-end-line="195" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/celery_works/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="10" column="29" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/celery/app/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="97">
+          <caret line="230" column="33" selection-start-line="230" selection-start-column="33" selection-end-line="230" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/celery_works/configs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="945">
+          <caret line="35" column="19" selection-start-line="35" selection-start-column="19" selection-end-line="35" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/lib/python3.6/site-packages/celery/worker/consumer/consumer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="558" selection-start-line="558" selection-end-line="558" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/celery_works/celeryconfig.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="13" selection-start-line="13" selection-end-line="16" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/celery_works/celery.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="13" column="1" selection-start-line="13" selection-start-column="1" selection-end-line="13" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/celery_works/workers/helpers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="12" column="58" selection-start-line="12" selection-start-column="58" selection-end-line="12" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/celery_works/workers/main_producer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="284">
+          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="121">
+          <caret line="33" column="2" selection-start-line="33" selection-start-column="2" selection-end-line="33" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sentry.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="4" column="22" lean-forward="true" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#63#0" expanded="true" />
           </folding>
         </state>
       </provider>

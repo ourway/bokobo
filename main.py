@@ -1,4 +1,7 @@
 from bottle import Bottle, run, request
+from raven.contrib.bottle import Sentry
+import bottle
+
 import sentry
 
 from register.urls import call_router as register_routes
@@ -23,10 +26,14 @@ from discussion_group.urls import call_router as discussion_routes
 from messaging.urls import call_router as messaging_routes
 from payment.urls import call_router as payment_routes
 from db_migration.urls import call_router as db_routse
+from celery_works.urls import call_router as celery_routes
 
 
 app = Bottle()
 
+# app.catchall = False
+# app = Sentry(app, sentry.sentry_client)
+#
 user_routes(app)
 register_routes(app)
 signup_routes(app)
@@ -49,6 +56,7 @@ discussion_routes(app)
 messaging_routes(app)
 payment_routes(app)
 db_routse(app)
+celery_routes(app)
 
 
 if __name__ == '__main__':
