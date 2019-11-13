@@ -16,7 +16,7 @@ task_routes = {
 }
 
 @app.task(name='book_generate',bind=True)
-def generate_book_content(data,**kwargs):
+def generate_book_content(self,data,**kwargs):
 
     sleep(60)
     # if True:

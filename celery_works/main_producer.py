@@ -2,6 +2,7 @@
 from celery_works.celery_consumers import generate_book_content
 from celery.result import AsyncResult
 
+from helper import model_to_dict
 
 
 def generate_book( data):
