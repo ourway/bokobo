@@ -1,4 +1,3 @@
-
 import datetime
 import logging
 from os import environ
@@ -6,10 +5,9 @@ import time
 from base64 import b64encode, b64decode
 from uuid import uuid4
 
-import magic
 from bottle import request, HTTPResponse
 
-from log import LogMsg
+from log import LogMsg, logger
 from app_token.models import APP_Token
 from messages import Message
 from user.models import User
@@ -19,13 +17,16 @@ import json
 
 def model_to_dict(obj):
     object_dict = dict((name, getattr(obj, name)) for name in dir(obj) if
-                       not name.startswith('_')) if not isinstance(obj,
-                                                                   dict) else obj
+                       (not name.startswith('_')) and not name.startswith(
+                           'mongo') and not name.startswith(
+                           'create_query')) if not isinstance(obj,
+                                                              dict) else obj
 
     if "metadata" in object_dict:
         del object_dict['metadata']
     print(object_dict)
     return object_dict
+
 
 def multi_model_to_dict(obj_list):
     result = []
@@ -49,6 +50,7 @@ def check_auth(func):
 
     return wrapper
 
+
 def if_login(func):
     def wrapper(*args, **kwargs):
         logging.debug(LogMsg.AUTH_CHECKING)
@@ -63,11 +65,12 @@ def if_login(func):
 
     return wrapper
 
+
 def check_login():
     db_session = get_db_session()
     auth = request.get_header('Authorization')
     if auth is None:
-        return {'username':None}
+        return {'username': None}
 
     username, password = decode(auth)
     print(username, password)
@@ -80,16 +83,15 @@ def check_login():
                                              User.password == password).first()
 
         if user is None:
-            return {'username':None}
+            return {'username': None}
         return model_to_dict(user)
-
 
 
 def check_Authorization():
     db_session = get_db_session()
     auth = request.get_header('Authorization')
     if auth is None:
-        raise Http_error(401, Message.MSG17)
+        raise Http_error(401, Message.NO_AUTH)
 
     username, password = decode(auth)
     print(username, password)
@@ -102,7 +104,7 @@ def check_Authorization():
                                              User.password == password).first()
 
         if user is None:
-            raise Http_error(401, Message.MSG18)
+            raise Http_error(401, Message.INVALID_USERNAME)
         return model_to_dict(user)
 
 
@@ -130,7 +132,7 @@ def decode(encoded_str):
         try:
             username, password = b64decode(split[0]).decode().split(':', 1)
         except:
-            raise Http_error(400, Message.MSG15)
+            raise Http_error(400, Message.AUTH_DECODING_FAILED)
 
     # If there are only two elements, check the first and ensure it says
     # 'basic' so that we know we're about to decode the right thing. If not,
@@ -141,7 +143,7 @@ def decode(encoded_str):
             try:
                 username, password = b64decode(split[1]).decode().split(':', 1)
             except:
-                raise Http_error(400, Message.MSG15)
+                raise Http_error(400, Message.AUTH_DECODING_FAILED)
 
         elif split[0].strip().lower() == 'bearer':
             logging.debug("auth is bearer")
@@ -151,12 +153,12 @@ def decode(encoded_str):
             logging.debug(
                 "token is {} and pass is {}".format(username, password))
         else:
-            raise Http_error(400, Message.MSG15)
+            raise Http_error(400, Message.AUTH_DECODING_FAILED)
 
     # If there are more than 2 elements, something crazy must be happening.
     # Bail.
     else:
-        raise Http_error(400, Message.MSG15)
+        raise Http_error(400, Message.AUTH_DECODING_FAILED)
 
     if password is None:
         return str(username), password
@@ -181,9 +183,9 @@ def inject_db(func):
             db_session.commit()
         except:
 
-            logging.error(db_session.transaction._rollback_exception.orig.pgerror)
+            logger.exception(LogMsg.COMMIT_ERROR, exc_info=True)
 
-            raise Http_error(500, {'msg':Message.MSG16})
+            raise Http_error(500, Message.COMMIT_FAILED)
         return rtn
 
     return wrapper
@@ -197,7 +199,7 @@ def jsonify(func):
             result = []
             for item in rtn:
                 print("list is here: ", rtn)
-                if isinstance(item,str):
+                if isinstance(item, str):
                     result.append(item)
                 else:
                     result.append(model_to_dict(item))
@@ -236,18 +238,18 @@ def Now():
 
 
 def Http_error(code, message):
-    if isinstance(message,str):
-        message = {'msg':message}
+    if isinstance(message, str):
+        message = {'msg': message}
     result = HTTPResponse(body=json.dumps(message), status=code,
-        headers = {'Content-type': 'application/json'})
+                          headers={'Content-type': 'application/json'})
     return result
 
 
 def Http_response(code, message):
-    if isinstance(message,str):
-        message = {'msg':message}
+    if isinstance(message, str):
+        message = {'msg': message}
     result = HTTPResponse(body=json.dumps(message), status=code,
-        headers = {'Content-type': 'application/json'})
+                          headers={'Content-type': 'application/json'})
     return result
 
 
@@ -258,33 +260,31 @@ def value(name, default):
 def validate_token(id, db_session):
     result = db_session.query(APP_Token).filter(APP_Token.id == id).first()
     if result is None or result.expiration_date < Now():
-        raise Http_error(401,Message.MSG11 )
+        raise Http_error(401, Message.TOKEN_INVALID)
     return result
 
 
-def check_schema(required_list,data_keys):
+def check_schema(required_list, data_keys):
     required = set(required_list)
-    keys= set(data_keys)
+    keys = set(data_keys)
 
     result = required.issubset(keys)
 
-    if result==False:
-        raise Http_error(400,Message.MISSING_REQUIERED_FIELD)
+    if result == False:
+        raise Http_error(400, Message.MISSING_REQUIERED_FIELD)
 
     return result
 
 
-
-def populate_basic_data(model_instance,username=None,tags=None):
-
+def populate_basic_data(model_instance, username=None, tags=None):
     model_instance.id = str(uuid4())
     model_instance.creation_date = Now()
     model_instance.creator = username
     model_instance.version = 1
     model_instance.tags = tags
 
-def edit_basic_data(model_instance, username, tags=None):
 
+def edit_basic_data(model_instance, username, tags=None):
     model_instance.modification_date = Now()
     model_instance.modifier = username
     model_instance.version += 1
@@ -298,7 +298,7 @@ def edit_basic_data(model_instance, username, tags=None):
 
 
 def model_basic_dict(model_instance):
-    result ={
+    result = {
 
         'creation_date': model_instance.creation_date,
         'creator': model_instance.creator,

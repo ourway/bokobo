@@ -1,0 +1,12 @@
+CREATE OR REPLACE VIEW book_press_view AS
+  SELECT book.id AS book_id,
+    book.creation_data AS book_creation_date,
+    book.creator AS book_creator,
+    book.press AS book_press,
+    book.genre AS book_genre,
+    book.type AS book_type,
+    lib.person_id AS person_id
+  FROM books book
+    left OUTER JOIN  library lib ON ((book.id)::text = (lib.book_id)::text )
+    left OUTER JOIN  book_roles roles ON ((book_roles.book_id)::text = (book.id)::text);
+

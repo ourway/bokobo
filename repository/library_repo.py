@@ -12,3 +12,4 @@ def library_to_dict(library,db_session):
         lib_item.update(lib_attrs)
         result.append(lib_item)
     return result
+

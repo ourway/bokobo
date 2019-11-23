@@ -2,7 +2,6 @@ from sqlalchemy.dialects.postgresql import UUID,ENUM
 from sqlalchemy import String, Column, ForeignKey, BOOLEAN
 from sqlalchemy.orm import relationship
 
-from books.models import Book
 from db_session import Base, PrimaryModel
 from enums import ReportComment
 from user.models import Person

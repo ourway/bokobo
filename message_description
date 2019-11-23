@@ -1,24 +1,24 @@
-MSG1 = user already exists
-MSG2 = there is no valid activation code for cell_no, expired or doesnt exist
-MSG3 = activation code is invalid
-MSG4 = already has valid key
-MSG5 = message not sent to users cell_no
-MSG6 = cell_no is required
-MSG7 = message sent to cell_no successfully
-MSG8 = username already exists.please choose another one
-MSG9 = signup_token is expired or doesnt exist
-MSG10 = signup_token is invalid
-MSG11 = token invalid
-MSG12 = token expired
+USER_ALREADY_EXISTS = user already exists
+NO_VALID_ACTIVATION_CODE = there is no valid activation code for cell_no, expired or doesnt exist
+WRONG_ACTIVATION_CODE = activation code is invalid
+ALREADY_HAS_VALID_KEY = already has valid key
+MESSAGE_NOT_SENT = message not sent to users cell_no
+CELL_NO_REQUIRED = cell_no is required
+MESSAGE_SENT = message sent to cell_no successfully
+USERNAME_EXISTS = username already exists.please choose another one
+SIGNUP_TOKEN_NOT_EXISTS = signup_token is expired or doesnt exist
+INVALID_SIGNUP_TOKEN = signup_token is invalid
+TOKEN_INVALID = token invalid
+TOKEN_EXPIRED = token expired
 
-MSG13 = deleting failed
-MSG14 = getting failed
-MSG15 = Authentication decoding failed
-MSG16 = commiting to database failed
-MSG17 = no auth found
-MSG18 = username is not valid
-MSG19 = enum is not correct  type
-MSG20 = entity not found
+DELETE_FAILED = deleting failed
+GET_FAILED = getting failed
+AUTH_DECODING_FAILED = Authentication decoding failed
+COMMIT_FAILED = commiting to database failed
+NO_AUTH = no auth found
+INVALID_USERNAME = username is not valid
+INVALID_ENUM = enum is not correct  type
+NOT_FOUND = entity not found
 
 Invalid_persons = there is invalid person id in list
 ADDITION_ERROR = adding model to database failed
@@ -43,8 +43,13 @@ CREDIT_DEBIT_ERROR = credit and debit can not have amount at the same time
 NO_PRICE_FOUND = there is no price for this book in our tables
 DISCOUNT_IS_FLOAT = discount should be sent in float format
 INSUFFICIANT_BALANCE = your account value is lower than your reciept
+BOOK_NOT_IN_LIB = book is not in users library
+BOOK_IS_ALREADY_PURCHASED = book is already purchased and in library to use
 
 
 USER_HAS_NO_ACCOUNT = user has no account
 
 ORDER_INVOICED = order is invoiced and not deletable
+
+COMMIT_ERROR = error while commiting in db
+PERSON_HAS_BOOKS = person already has roles for books

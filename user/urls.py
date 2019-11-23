@@ -1,4 +1,4 @@
-from user.controllers.user import add as add_user, get, get_all, delete, edit, get_profile, edit_profile, reset_pass
+from user.controllers.user import add as add_user, get, get_all, delete, edit, get_profile, edit_profile, reset_pass, serach_user
 from user.controllers import person
 from helper import check_auth, inject_db, jsonify, pass_data
 
@@ -12,6 +12,7 @@ def call_router(app):
     app.route('/users', 'GET', get_all, apply=wrappers)
     app.route('/users/<id>', 'DELETE', delete, apply=[check_auth, inject_db])
     app.route('/users', 'POST', add_user, apply=data_plus_wrappers)
+    app.route('/users/_search', 'POST', serach_user, apply=data_plus_wrappers)
     app.route('/users/<id>', 'PUT', edit, apply=data_plus_wrappers)
     app.route('/users/profile', 'GET', get_profile, apply=wrappers)
     app.route('/profile/<id>', 'PUT', edit_profile, apply=data_plus_wrappers)
